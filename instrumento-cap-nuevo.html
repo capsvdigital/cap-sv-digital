@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAP-SV-DIGITAL · Seguridad Vial · Ciudad Bolívar 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#f0f2ff; --bg-card:#ffffff; --bg-elevated:#f8f9ff; --bg-input:#f1f3ff;
+  --border:#e2e5f0; --border-hover:#c7cce8;
+  --purple:#5b6ceb; --purple-glow:rgba(91,108,235,0.15); --purple-dim:rgba(91,108,235,0.08);
+  --violet:#6a3fa8; --violet-glow:rgba(106,63,168,0.15); --violet-dim:rgba(106,63,168,0.07);
+  --green:#00b894; --green-glow:rgba(0,184,148,0.15); --green-dim:rgba(0,184,148,0.07);
+  --amber:#f59e0b; --amber-glow:rgba(245,158,11,0.15); --amber-dim:rgba(245,158,11,0.08);
+  --rose:#e17055; --rose-glow:rgba(225,112,85,0.15); --rose-dim:rgba(225,112,85,0.07);
+  --text:#2d3436; --text-sec:#636e72; --text-muted:#b2bec3;
+  --font-h:'Montserrat',sans-serif; --font-b:'Inter',sans-serif;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px;
+}
+
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-b);
+  background:linear-gradient(135deg,#5b6ceb 0%,#7c5cbf 50%,#6a3fa8 100%);
+  min-height:100vh; color:var(--text); line-height:1.6; font-size:15px; padding:16px;
+}
+
+/* ── LAYOUT ── */
+.page-wrap{
+  max-width:860px; margin:0 auto;
+  background:rgba(255,255,255,0.97);
+  border-radius:var(--r-xl);
+  box-shadow:0 20px 60px rgba(0,0,0,0.25);
+  overflow:hidden;
+}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,#5b6ceb 0%,#7c5cbf 50%,#6a3fa8 100%);
+  padding:36px 40px 28px; position:relative; overflow:hidden;
+}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.02) 20px,rgba(255,255,255,0.02) 40px);}
+.hero-inner{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:1;}
+.hero-avatar{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:rgba(255,255,255,0.85);flex-shrink:0;}
+.hero-text{text-align:left;}
+.hero-title{font-family:var(--font-h);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:white;letter-spacing:-0.5px;line-height:1.1;margin-bottom:6px;}
+.hero-subtitle{font-family:var(--font-h);font-size:1rem;font-weight:600;color:rgba(255,255,255,0.88);margin-bottom:4px;}
+.hero-inst{font-family:var(--font-h);font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.75);}
+.hero-info-box{background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:14px 20px;max-width:580px;margin:0 auto 16px;position:relative;z-index:1;}
+.hero-info-box p{font-size:0.83rem;color:rgba(255,255,255,0.88);line-height:1.6;display:flex;align-items:flex-start;gap:7px;}
+.hero-info-box p+p{margin-top:5px;}
+.hero-participant-bar{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;max-width:580px;margin:0 auto;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:10px 18px;position:relative;z-index:1;}
+.hpb-label{font-family:var(--font-h);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#82e8ce;}
+.hpb-code{font-family:monospace;font-size:1rem;font-weight:700;color:white;letter-spacing:3px;background:rgba(255,255,255,0.15);padding:3px 12px;border-radius:8px;min-width:90px;text-align:center;}
+#modoBadge{padding:4px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.72rem;font-weight:700;background:rgba(91,108,235,0.3);border:1px solid rgba(91,108,235,0.5);color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:0.5px;}
+.hpb-back{font-family:var(--font-h);font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.65);text-decoration:none;transition:color 0.2s;}
+.hpb-back:hover{color:white;}
+
+/* ── CONSENTIMIENTO ── */
+.consent-gate{
+  margin:20px 16px; padding:28px 28px 24px;
+  background:linear-gradient(135deg,#f8f9ff,#f0f2ff);
+  border:2px solid var(--border); border-radius:var(--r-xl);
+  box-shadow:0 4px 20px rgba(91,108,235,0.10);
+  position:relative; overflow:hidden;
+}
+.consent-gate::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5b6ceb,#6a3fa8);}
+.consent-icon{width:52px;height:52px;border-radius:var(--r-md);background:linear-gradient(135deg,#5b6ceb,#6a3fa8);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:white;margin-bottom:16px;}
+.consent-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:12px;}
+.consent-body{font-size:0.875rem;color:var(--text-sec);line-height:1.7;margin-bottom:20px;}
+.consent-body strong{color:var(--text);font-weight:600;}
+.consent-body ul{margin:10px 0 10px 20px;}
+.consent-body ul li{margin-bottom:4px;}
+.consent-check-wrap{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 20px;
+  background:white;border:2px solid var(--border);
+  border-radius:var(--r-lg);cursor:pointer;
+  transition:all 0.2s; user-select:none;
+}
+.consent-check-wrap:hover{border-color:var(--purple);box-shadow:0 0 0 3px rgba(91,108,235,0.1);}
+.consent-check-wrap.checked{border-color:var(--green);background:linear-gradient(135deg,rgba(0,184,148,0.05),rgba(0,184,148,0.02));box-shadow:0 0 0 3px rgba(0,184,148,0.1);}
+#consentCheck{width:20px;height:20px;accent-color:var(--green);cursor:pointer;flex-shrink:0;margin-top:2px;}
+.consent-check-txt{font-size:0.88rem;color:var(--text);line-height:1.5;}
+.consent-check-txt strong{color:var(--purple);}
+.consent-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;margin-top:16px;padding:14px;
+  background:linear-gradient(135deg,#5b6ceb,#6a3fa8);
+  color:white;border:none;border-radius:var(--r-lg);
+  font-family:var(--font-h);font-size:0.95rem;font-weight:800;
+  cursor:pointer;transition:all 0.25s;
+  box-shadow:0 4px 16px rgba(91,108,235,0.35);
+  opacity:0.45;pointer-events:none;
+}
+.consent-btn.active{opacity:1;pointer-events:auto;}
+.consent-btn.active:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(91,108,235,0.45);}
+
+/* ── FORMULARIO (oculto hasta consentir) ── */
+#formWrapper{display:none;}
+
+/* ── BARRA DE PROGRESO ── */
+.progress-bar-sticky{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  padding:10px 16px;
+  display:flex;align-items:center;gap:16px;
+}
+.pb-label{font-family:var(--font-h);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-sec);white-space:nowrap;}
+.pb-track{flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
+.pb-fill{height:100%;background:linear-gradient(90deg,#5b6ceb,#6a3fa8);border-radius:3px;width:0%;transition:width 0.4s cubic-bezier(0.4,0,0.2,1);}
+.pb-count{font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#5b6ceb;white-space:nowrap;}
+
+/* ── SECCIÓN BLOCK ── */
+.section-block{background:var(--bg-card);border:2px solid #e8eaf6;border-radius:var(--r-xl);overflow:hidden;margin-bottom:16px;box-shadow:0 4px 20px rgba(91,108,235,0.08);}
+.section-header{padding:20px 28px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:#f8f9ff;}
+.section-header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.sh-purple::before{background:var(--purple);}
+.sh-violet::before{background:var(--violet);}
+.sh-green::before{background:var(--green);}
+.sh-amber::before{background:var(--amber);}
+.sh-rose::before{background:var(--rose);}
+.section-num{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:1.3rem;font-weight:900;flex-shrink:0;border:2px solid;}
+.sn-purple{background:var(--purple-dim);border-color:var(--purple);color:var(--purple);}
+.sn-violet{background:var(--violet-dim);border-color:var(--violet);color:var(--violet);}
+.sn-green{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.sn-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+.sn-rose{background:var(--rose-dim);border-color:var(--rose);color:var(--rose);}
+.section-meta h2{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:var(--text);}
+.section-meta p{font-size:0.78rem;color:var(--text-muted);margin-top:2px;}
+.section-badge{margin-left:auto;padding:4px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;border:1px solid;white-space:nowrap;}
+.sb-purple{background:var(--purple-dim);border-color:var(--purple);color:var(--purple);}
+.sb-violet{background:var(--violet-dim);border-color:var(--violet);color:var(--violet);}
+.sb-green{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.sb-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+.sb-rose{background:var(--rose-dim);border-color:var(--rose);color:var(--rose);}
+.section-notice{margin:16px 28px 0;padding:10px 14px;border-left:3px solid var(--purple);border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:0.82rem;color:#5a5f9e;background:#eef0ff;margin-bottom:16px;}
+.section-notice.green{border-left-color:var(--green);background:#ecfdf5;color:#065f46;}
+.section-notice.amber{border-left-color:var(--amber);background:#fffbeb;color:#92400e;}
+.section-notice.rose{border-left-color:var(--rose);background:#fff4f0;color:#9a4a30;}
+.section-body{padding:0 28px 28px;}
+
+/* ── Q BLOCK ── */
+.q-block{background:#f8f9ff;border:2px solid #e8eaf6;border-radius:var(--r-md);margin-bottom:12px;transition:border-color 0.2s,box-shadow 0.2s;overflow:hidden;box-shadow:0 2px 8px rgba(91,108,235,0.06);}
+.q-block:hover{border-color:#5b6ceb;box-shadow:0 4px 16px rgba(91,108,235,0.12);}
+.q-block.answered{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,184,148,0.1);}
+.q-head{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid #e8eaf6;background:white;}
+.q-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:0.82rem;flex-shrink:0;margin-top:1px;color:white;}
+.qn-purple{background:var(--purple);}
+.qn-violet{background:var(--violet);}
+.qn-green{background:var(--green);}
+.qn-amber{background:var(--amber);}
+.qn-rose{background:var(--rose);}
+.q-text{font-size:0.92rem;font-weight:600;color:var(--text);line-height:1.5;flex:1;font-family:var(--font-h);}
+.q-source{font-size:0.68rem;color:var(--text-muted);font-family:var(--font-b);font-weight:400;font-style:italic;display:block;margin-top:3px;}
+.q-body{padding:14px 20px;background:#f8f9ff;}
+
+/* ── SELECTS / OPTS ── */
+.sel-wrap{position:relative;}
+.sel-wrap::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;}
+.sel-field{width:100%;background:white;border:1.5px solid var(--border);border-radius:var(--r-sm);padding:9px 36px 9px 14px;color:var(--text);font-family:var(--font-b);font-size:0.88rem;appearance:none;cursor:pointer;transition:border-color 0.15s;}
+.sel-field:focus{outline:none;border-color:var(--purple);}
+.opts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.opts-col{display:flex;flex-direction:column;gap:8px;}
+.opt-label{display:flex;align-items:center;gap:10px;padding:11px 14px;background:white;border:2px solid #e8eaf6;border-radius:var(--r-sm);cursor:pointer;transition:all 0.15s;font-size:0.88rem;color:var(--text-sec);user-select:none;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.opt-label:hover{border-color:var(--purple);color:var(--text);background:#f0f2ff;transform:translateY(-1px);}
+.opt-label input[type="radio"]{width:16px;height:16px;flex-shrink:0;accent-color:var(--purple);cursor:pointer;}
+.opt-label:has(input:checked){border-color:var(--purple);background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;font-weight:600;box-shadow:0 4px 12px rgba(91,108,235,0.28);}
+.opt-label.g:has(input:checked){background:linear-gradient(135deg,#00b894,#55efc4);border-color:var(--green);}
+.opt-label.a:has(input:checked){background:linear-gradient(135deg,#f59e0b,#fcd34d);border-color:var(--amber);color:var(--text);}
+
+/* ── V/F ── */
+.vf-list{display:flex;flex-direction:column;gap:8px;}
+.vf-row{display:flex;align-items:center;gap:14px;padding:10px 14px;background:white;border:1.5px solid var(--border);border-radius:var(--r-sm);transition:border-color 0.15s;}
+.vf-row.vf-true{border-color:#059669;background:#f0fdf4;}
+.vf-row.vf-false{border-color:#dc2626;background:#fef2f2;}
+.vf-q{flex:1;font-size:0.85rem;color:var(--text-sec);line-height:1.4;}
+.vf-row.vf-true .vf-q{color:#065f46;}
+.vf-row.vf-false .vf-q{color:#991b1b;}
+.vf-num{font-family:var(--font-h);font-size:0.72rem;font-weight:800;color:var(--violet);background:var(--violet-dim);border-radius:6px;padding:2px 7px;flex-shrink:0;}
+.vf-btns{display:flex;gap:6px;flex-shrink:0;}
+.vf-btn{padding:5px 18px;border-radius:20px;border:1.5px solid var(--border);background:white;color:var(--text-sec);font-family:var(--font-h);font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.15s;text-transform:uppercase;letter-spacing:0.5px;}
+.vf-btn:hover{border-color:#93c5fd;color:var(--violet);}
+.vf-btn.v-active{background:#dcfce7;border-color:#059669;color:#065f46;}
+.vf-btn.f-active{background:#fee2e2;border-color:#dc2626;color:#991b1b;}
+
+/* ── LIKERT ── */
+.likert-list{display:flex;flex-direction:column;gap:8px;}
+.likert-item{border:1.5px solid var(--border);border-radius:var(--r-sm);background:white;overflow:hidden;transition:border-color 0.15s;}
+.likert-q{padding:10px 14px;font-size:0.85rem;color:var(--text);border-bottom:1px solid var(--border);line-height:1.4;background:#f8fafc;font-weight:500;}
+.likert-opts{display:grid;grid-template-columns:repeat(4,1fr);}
+.likert-opt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;cursor:pointer;transition:background 0.15s;border-right:1px solid var(--border);text-align:center;}
+.likert-opt:last-child{border-right:none;}
+.likert-opt:hover{background:#f0f2ff;}
+.likert-opt input[type="radio"]{accent-color:var(--green);width:16px;height:16px;cursor:pointer;}
+.likert-lbl{font-size:0.67rem;color:var(--text-muted);line-height:1.2;}
+.likert-item:has(input:checked){border-color:#059669;}
+.freq-item .likert-opt input[type="radio"]{accent-color:var(--amber);}
+.freq-item:has(input:checked){border-color:var(--amber);}
+.freq-item .likert-opt:hover{background:#fffbeb;}
+@media(max-width:480px){.likert-opts{grid-template-columns:repeat(2,1fr);}.likert-opt{border-bottom:1px solid var(--border);}}
+
+/* ── POST-TEST ── */
+.post-toggle{display:flex;align-items:center;justify-content:center;gap:14px;padding:14px 28px;background:#f8fafc;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.post-toggle p{font-size:0.85rem;color:var(--text-sec);}
+.toggle-wrap{display:flex;gap:4px;background:#e2e8f0;border-radius:20px;padding:3px;}
+.toggle-btn{padding:5px 16px;border-radius:16px;border:none;font-family:var(--font-h);font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;color:var(--text-muted);background:transparent;text-transform:uppercase;letter-spacing:0.5px;}
+.toggle-btn.active{background:var(--violet);color:white;box-shadow:0 2px 8px var(--violet-glow);}
+.post-content{display:none;}
+.post-content.visible{display:block;}
+.pre-msg{padding:40px 28px;text-align:center;color:var(--text-muted);font-size:0.88rem;}
+.pre-msg i{font-size:2rem;display:block;margin-bottom:14px;color:var(--violet);}
+
+/* ── FOOTER FORM ── */
+.form-footer{background:white;border:1px solid var(--border);border-radius:var(--r-xl);padding:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.footer-info{text-align:center;flex:1;}
+.footer-info p{font-size:0.82rem;color:var(--text-muted);}
+.f-count{font-family:var(--font-h);font-size:1.4rem;font-weight:800;color:var(--purple);}
+.btn-action{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;border:none;cursor:pointer;font-family:var(--font-h);font-size:0.92rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;}
+.btn-primary{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;box-shadow:0 4px 16px rgba(91,108,235,0.35);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,108,235,0.5);}
+.btn-ghost{background:white;color:var(--text-sec);border:1.5px solid var(--border);}
+.btn-ghost:hover{border-color:#a5b4fc;color:var(--purple);}
+
+/* ── ADVERTENCIA INCOMPLETO ── */
+.incomplete-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:16px;}
+.incomplete-overlay.show{display:flex;}
+.incomplete-card{background:white;border-radius:var(--r-xl);padding:32px;max-width:480px;width:100%;position:relative;overflow:hidden;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+.incomplete-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#ef4444,#f59e0b);}
+.incomplete-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.incomplete-icon{width:48px;height:48px;border-radius:12px;background:#fef2f2;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.incomplete-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:#991b1b;}
+.incomplete-subtitle{font-size:0.82rem;color:var(--text-sec);margin-top:2px;}
+.missing-list{background:#f8f9ff;border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-bottom:20px;max-height:260px;overflow-y:auto;}
+.missing-sec{margin-bottom:12px;}
+.missing-sec:last-child{margin-bottom:0;}
+.missing-sec-title{font-family:var(--font-h);font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.missing-item{display:flex;align-items:center;gap:8px;padding:6px 10px;background:white;border:1px solid #fecaca;border-radius:8px;margin-bottom:4px;cursor:pointer;transition:all 0.15s;}
+.missing-item:hover{border-color:#ef4444;background:#fef2f2;transform:translateX(3px);}
+.missing-item i{color:#ef4444;font-size:0.75rem;flex-shrink:0;}
+.missing-item span{font-size:0.82rem;color:var(--text);line-height:1.3;}
+.missing-item .q-id{font-family:var(--font-h);font-weight:800;font-size:0.72rem;color:#ef4444;background:#fef2f2;border-radius:4px;padding:1px 6px;flex-shrink:0;}
+
+/* ── MODAL RESULTADOS ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(12px);z-index:1000;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.show{display:flex;}
+.modal-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:48px;max-width:520px;width:100%;text-align:center;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden;}
+.modal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--rose),var(--violet));}
+@keyframes popIn{from{transform:scale(0.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal-ring{width:130px;height:130px;border-radius:50%;border:4px solid var(--purple);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 40px rgba(91,108,235,0.25);background:var(--purple-dim);}
+.modal-score{font-family:var(--font-h);font-size:2.8rem;font-weight:900;color:var(--purple);line-height:1;}
+.modal-max{font-size:0.72rem;color:var(--text-muted);font-family:var(--font-h);font-weight:700;}
+.modal-level{font-family:var(--font-h);font-size:1.4rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.modal-desc{font-size:0.88rem;color:var(--text-sec);line-height:1.6;margin-bottom:24px;max-width:380px;margin-left:auto;margin-right:auto;}
+.modal-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;}
+.bk-item{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;}
+.bk-lbl{font-size:0.65rem;color:var(--text-muted);font-family:var(--font-h);font-weight:700;text-transform:uppercase;margin-bottom:3px;}
+.bk-val{font-family:var(--font-h);font-size:1.1rem;font-weight:800;color:var(--text);}
+.modal-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+/* ── FOOTER INSTITUCIONAL ── */
+.inst-footer{background:#2d3436;color:#dfe6e9;padding:40px 28px;border-radius:0 0 var(--r-xl) var(--r-xl);position:relative;overflow:hidden;margin-top:16px;}
+.inst-footer::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);}
+.inst-footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-bottom:32px;}
+.inst-footer-sec h4{font-family:var(--font-h);color:var(--green);margin-bottom:12px;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;position:relative;padding-bottom:8px;}
+.inst-footer-sec h4::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:2px;background:var(--green);border-radius:1px;}
+.inst-footer-sec p{margin-bottom:8px;font-size:0.82rem;color:#b2bec3;}
+.inst-footer-sec p i{margin-right:8px;color:var(--green);width:14px;}
+.inst-footer-sep{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0;}
+.inst-authors-box{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:24px;background:rgba(255,255,255,0.04);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,0.08);max-width:700px;margin:0 auto;}
+.inst-udo-logo{width:80px;height:80px;border-radius:50%;border:3px solid var(--green);background:white;padding:6px;object-fit:contain;flex-shrink:0;}
+.inst-authors-info{flex:1;min-width:200px;}
+.inst-authors-label{font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+.inst-authors-names{font-family:var(--font-h);font-size:1rem;font-weight:800;color:white;margin-bottom:4px;}
+.inst-authors-dept{font-size:0.8rem;color:#b2bec3;margin-bottom:4px;}
+.inst-authors-tutor{font-size:0.78rem;color:#74b9ff;}
+.inst-copyright{text-align:center;font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:24px;}
+
+@media print{body>*{display:none!important;}.modal-overlay,.modal-overlay *{display:block!important;}.modal-overlay{position:static!important;background:white!important;padding:0!important;}.modal-card{box-shadow:none!important;}.modal-actions{display:none!important;}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}
+@media(max-width:600px){.hero{padding:24px 16px 20px;}.hero-inner{flex-direction:column;text-align:center;}.hero-text{text-align:center;}.hero-participant-bar{flex-direction:column;}.section-body{padding:0 16px 20px;}.section-header{padding:16px 20px;}.q-head{padding:12px 14px;}.q-body{padding:12px 14px;}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar"><i class="fas fa-motorcycle"></i></div>
+    <div class="hero-text">
+      <div class="hero-title">CAP-SV-DIGITAL</div>
+      <div class="hero-subtitle">Seguridad Vial · Mototaxistas y Delivery</div>
+      <div class="hero-inst">Universidad de Oriente · Núcleo Bolívar · Dpto. Enfermería</div>
+    </div>
+  </div>
+  <div class="hero-info-box">
+    <p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">6–7 minutos</strong> · 39 ítems en 5 secciones</p>
+    <p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y se usan con fines académicos</p>
+  </div>
+  <div class="hero-participant-bar">
+    <span class="hpb-label"><i class="fas fa-fingerprint"></i> Código</span>
+    <span class="hpb-code" id="codigoDisplay">——</span>
+    <span id="modoBadge">📋 PRE-TEST</span>
+    <input type="hidden" id="codigoParticipante">
+    <a href="landing-cap.html" class="hpb-back"><i class="fas fa-arrow-left"></i> Volver</a>
+  </div>
+</div>
+
+<!-- ══════════════════ CONSENTIMIENTO ══════════════════ -->
+<div class="consent-gate" id="consentGate">
+  <div class="consent-icon"><i class="fas fa-file-signature"></i></div>
+  <div class="consent-title">Consentimiento Informado</div>
+  <div class="consent-body">
+    <p>Estimado/a participante, antes de iniciar el cuestionario lea detenidamente la siguiente información:</p>
+    <ul>
+      <li>Esta investigación es de <strong>carácter académico</strong>, desarrollada por estudiantes de Enfermería de la Universidad de Oriente.</li>
+      <li>Su participación es <strong>completamente voluntaria</strong>. Puede abandonar en cualquier momento sin ninguna consecuencia.</li>
+      <li>El cuestionario es <strong>anónimo</strong>. Su nombre no aparece en ningún registro — solo se usa el código que usted mismo generó.</li>
+      <li>Los datos serán tratados de forma <strong>confidencial</strong> y usados únicamente con fines estadísticos y académicos.</li>
+      <li>No existen respuestas "correctas" o "incorrectas" — responda con total <strong>honestidad</strong>.</li>
+    </ul>
+  </div>
+  <label class="consent-check-wrap" id="consentWrap">
+    <input type="checkbox" id="consentCheck" onchange="onConsentChange()">
+    <span class="consent-check-txt">
+      He leído y comprendido la información anterior. <strong>Acepto participar voluntariamente</strong> en esta investigación y autorizo el uso anónimo de mis respuestas con fines académicos.
+    </span>
+  </label>
+  <button class="consent-btn" id="consentBtn" onclick="habilitarFormulario()">
+    <i class="fas fa-play-circle"></i> Comenzar Cuestionario
+  </button>
+</div>
+
+<!-- ══════════════════ FORMULARIO ══════════════════ -->
+<div id="formWrapper">
+
+  <!-- Barra de progreso -->
+  <div class="progress-bar-sticky">
+    <span class="pb-label"><i class="fas fa-tasks"></i> Progreso</span>
+    <div class="pb-track"><div class="pb-fill" id="pbFill"></div></div>
+    <span class="pb-count" id="pbCount">0 / 39</span>
+  </div>
+
+  <form id="capForm">
+  <div style="padding:0 16px 16px;">
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN I — PERFIL SOCIODEMOGRÁFICO
+  ══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header sh-purple">
+      <div class="section-num sn-purple">I</div>
+      <div class="section-meta">
+        <h2>Perfil Sociodemográfico y Laboral</h2>
+        <p>Información general sobre usted y su actividad como conductor</p>
+      </div>
+      <span class="section-badge sb-purple">8 preguntas</span>
+    </div>
+    <div class="section-body" style="padding-top:20px;">
+
+      <!-- P1 Edad -->
+      <div class="q-block" id="qb-p1" data-qid="p1">
+        <div class="q-head"><div class="q-num qn-purple">1</div><span class="q-text">¿Cuál es su rango de edad?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p1" value="18-24" onchange="markQ('p1')"> 18 – 24 años</label>
+            <label class="opt-label"><input type="radio" name="p1" value="25-34" onchange="markQ('p1')"> 25 – 34 años</label>
+            <label class="opt-label"><input type="radio" name="p1" value="35-44" onchange="markQ('p1')"> 35 – 44 años</label>
+            <label class="opt-label"><input type="radio" name="p1" value="45-54" onchange="markQ('p1')"> 45 – 54 años</label>
+            <label class="opt-label"><input type="radio" name="p1" value="55+" onchange="markQ('p1')"> 55 años o más</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 Sexo -->
+      <div class="q-block" id="qb-p2" data-qid="p2">
+        <div class="q-head"><div class="q-num qn-purple">2</div><span class="q-text">Sexo</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p2" value="Masculino" onchange="markQ('p2')"> Masculino</label>
+            <label class="opt-label"><input type="radio" name="p2" value="Femenino" onchange="markQ('p2')"> Femenino</label>
+            <label class="opt-label"><input type="radio" name="p2" value="Prefiero no indicar" onchange="markQ('p2')"> Prefiero no indicar</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 Educación -->
+      <div class="q-block" id="qb-p3" data-qid="p3">
+        <div class="q-head"><div class="q-num qn-purple">3</div><span class="q-text">Nivel educativo alcanzado</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p3" value="Sin estudios" onchange="markQ('p3')"> Sin estudios</label>
+            <label class="opt-label"><input type="radio" name="p3" value="Primaria" onchange="markQ('p3')"> Primaria</label>
+            <label class="opt-label"><input type="radio" name="p3" value="Bachillerato" onchange="markQ('p3')"> Bachillerato</label>
+            <label class="opt-label"><input type="radio" name="p3" value="Técnico superior" onchange="markQ('p3')"> Técnico superior</label>
+            <label class="opt-label"><input type="radio" name="p3" value="Universitario" onchange="markQ('p3')"> Universitario</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 Años trabajando -->
+      <div class="q-block" id="qb-p4" data-qid="p4">
+        <div class="q-head"><div class="q-num qn-purple">4</div><span class="q-text">¿Cuántos años lleva trabajando como mototaxista o delivery?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p4" value="<1 año" onchange="markQ('p4')"> Menos de 1 año</label>
+            <label class="opt-label"><input type="radio" name="p4" value="1-3 años" onchange="markQ('p4')"> 1 – 3 años</label>
+            <label class="opt-label"><input type="radio" name="p4" value="4-6 años" onchange="markQ('p4')"> 4 – 6 años</label>
+            <label class="opt-label"><input type="radio" name="p4" value="7-10 años" onchange="markQ('p4')"> 7 – 10 años</label>
+            <label class="opt-label"><input type="radio" name="p4" value=">10 años" onchange="markQ('p4')"> Más de 10 años</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P5 Licencia -->
+      <div class="q-block" id="qb-p5" data-qid="p5">
+        <div class="q-head"><div class="q-num qn-purple">5</div><span class="q-text">¿Posee licencia de conducir vigente?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p5" value="Sí, tipo A" onchange="markQ('p5')"> Sí, tipo A</label>
+            <label class="opt-label"><input type="radio" name="p5" value="Sí, otro tipo" onchange="markQ('p5')"> Sí, otro tipo</label>
+            <label class="opt-label"><input type="radio" name="p5" value="Vencida" onchange="markQ('p5')"> Vencida</label>
+            <label class="opt-label"><input type="radio" name="p5" value="No poseo" onchange="markQ('p5')"> No poseo</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P6 Capacitación -->
+      <div class="q-block" id="qb-p6" data-qid="p6">
+        <div class="q-head"><div class="q-num qn-purple">6</div><span class="q-text">¿Ha recibido alguna capacitación en seguridad vial?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p6" value="Nunca" onchange="markQ('p6')"> Nunca</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Hace más de 2 años" onchange="markQ('p6')"> Hace más de 2 años</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Último año" onchange="markQ('p6')"> En el último año</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Más de una vez" onchange="markQ('p6')"> Más de una vez</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P7 Accidentes -->
+      <div class="q-block" id="qb-p7" data-qid="p7">
+        <div class="q-head"><div class="q-num qn-purple">7</div><span class="q-text">¿Ha tenido algún accidente de tránsito en los últimos 12 meses?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p7" value="Ninguno" onchange="markQ('p7')"> Ninguno</label>
+            <label class="opt-label"><input type="radio" name="p7" value="1 accidente" onchange="markQ('p7')"> 1 accidente</label>
+            <label class="opt-label"><input type="radio" name="p7" value="2 accidentes" onchange="markQ('p7')"> 2 accidentes</label>
+            <label class="opt-label"><input type="radio" name="p7" value="3 o más" onchange="markQ('p7')"> 3 o más</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P8 Red social -->
+      <div class="q-block" id="qb-p8" data-qid="p8">
+        <div class="q-head"><div class="q-num qn-purple">8</div><span class="q-text">¿Qué plataforma digital preferiría para recibir información sobre seguridad vial?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p8" value="WhatsApp" onchange="markQ('p8')"> WhatsApp</label>
+            <label class="opt-label"><input type="radio" name="p8" value="Instagram" onchange="markQ('p8')"> Instagram</label>
+            <label class="opt-label"><input type="radio" name="p8" value="TikTok" onchange="markQ('p8')"> TikTok</label>
+            <label class="opt-label"><input type="radio" name="p8" value="YouTube" onchange="markQ('p8')"> YouTube</label>
+            <label class="opt-label"><input type="radio" name="p8" value="Indiferente" onchange="markQ('p8')"> Indiferente</label>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /section-body -->
+  </div><!-- /section I -->
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN II — CONOCIMIENTOS (V/F)
+  ══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header sh-violet">
+      <div class="section-num sn-violet">II</div>
+      <div class="section-meta">
+        <h2>Conocimientos sobre Seguridad Vial</h2>
+        <p>Marque V (Verdadero) o F (Falso) según su criterio</p>
+      </div>
+      <span class="section-badge sb-violet">10 preguntas</span>
+    </div>
+    <div class="section-notice">
+      <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+      Basado en la Ley de Transporte Terrestre de Venezuela, normas INTT y evidencia internacional de seguridad vial.
+    </div>
+    <div class="section-body" style="padding-top:4px;">
+      <div class="vf-list">
+
+        <div class="vf-row" id="vf-c1">
+          <span class="vf-num">C1</span>
+          <span class="vf-q">Para obtener la licencia tipo "A" en Venezuela, el solicitante debe tener al menos 16 años de edad cumplidos.</span>
+          <input type="hidden" id="c1v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c1','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c1','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c2">
+          <span class="vf-num">C2</span>
+          <span class="vf-q">Todo conductor de motocicleta está obligado a contar con un seguro de responsabilidad civil vigente.</span>
+          <input type="hidden" id="c2v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c2','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c2','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c3">
+          <span class="vf-num">C3</span>
+          <span class="vf-q">Ante un accidente con heridos, lo primero que debe hacerse es mover a las víctimas del lugar para evitar más daños.</span>
+          <input type="hidden" id="c3v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c3','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c3','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c4">
+          <span class="vf-num">C4</span>
+          <span class="vf-q">Consumir alcohol en pequeñas cantidades antes de conducir no afecta significativamente los reflejos ni la capacidad de reacción.</span>
+          <input type="hidden" id="c4v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c4','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c4','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c5">
+          <span class="vf-num">C5</span>
+          <span class="vf-q">El manejo defensivo consiste en anticipar las acciones de otros conductores para reducir el riesgo de colisión.</span>
+          <input type="hidden" id="c5v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c5','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c5','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c6">
+          <span class="vf-num">C6</span>
+          <span class="vf-q">Los conductores de motocicleta tienen aproximadamente 8 veces más probabilidad de morir en un accidente que los ocupantes de un automóvil.</span>
+          <input type="hidden" id="c6v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c6','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c6','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c7">
+          <span class="vf-num">C7</span>
+          <span class="vf-q">Usar el teléfono celular mientras se conduce una motocicleta genera un riesgo equivalente a manejar con una alcoholemia de 0,8 g/L.</span>
+          <input type="hidden" id="c7v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c7','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c7','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c8">
+          <span class="vf-num">C8</span>
+          <span class="vf-q">El uso del casco homologado reduce el riesgo de muerte en accidentes de motocicleta hasta en un 40%.</span>
+          <input type="hidden" id="c8v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c8','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c8','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c9">
+          <span class="vf-num">C9</span>
+          <span class="vf-q">En Venezuela, el uso de casco es obligatorio únicamente para el conductor, no para el pasajero de la motocicleta.</span>
+          <input type="hidden" id="c9v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c9','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c9','F',this)">F</button>
+          </div>
+        </div>
+
+        <div class="vf-row" id="vf-c10">
+          <span class="vf-num">C10</span>
+          <span class="vf-q">Conducir bajo lluvia intensa no afecta la distancia de frenado ni la capacidad de maniobra de la motocicleta.</span>
+          <input type="hidden" id="c10v">
+          <div class="vf-btns">
+            <button type="button" class="vf-btn" onclick="setVF('c10','V',this)">V</button>
+            <button type="button" class="vf-btn" onclick="setVF('c10','F',this)">F</button>
+          </div>
+        </div>
+
+      </div><!-- /vf-list -->
+    </div>
+  </div><!-- /section II -->
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN III — ACTITUDES (Likert 4)
+  ══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header sh-green">
+      <div class="section-num sn-green">III</div>
+      <div class="section-meta">
+        <h2>Actitudes hacia la Seguridad Vial</h2>
+        <p>¿Qué tan de acuerdo está con cada afirmación?</p>
+      </div>
+      <span class="section-badge sb-green">8 preguntas</span>
+    </div>
+    <div class="section-notice green">
+      <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+      <strong>1</strong> = Totalmente en desacuerdo &nbsp;·&nbsp; <strong>2</strong> = En desacuerdo &nbsp;·&nbsp; <strong>3</strong> = De acuerdo &nbsp;·&nbsp; <strong>4</strong> = Totalmente de acuerdo
+    </div>
+    <div class="section-body" style="padding-top:4px;">
+      <div class="likert-list">
+
+        <div class="likert-item" id="qb-a1" data-qid="a1">
+          <div class="likert-q">A1. El uso del casco protector es imprescindible en cada viaje, independientemente de la distancia.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a1" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a1" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a1" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a1" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a2" data-qid="a2">
+          <div class="likert-q">A2. Respetar los límites de velocidad es una responsabilidad que asumo como conductor, aunque el cliente exija rapidez.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a2" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a2" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a2" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a2" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a3" data-qid="a3">
+          <div class="likert-q">A3. Usar el celular mientras conduzco pone en riesgo mi vida y la de otras personas.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a3" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a3" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a3" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a3" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a4" data-qid="a4">
+          <div class="likert-q">A4. Conducir bajo los efectos del alcohol o sustancias es completamente inaceptable bajo cualquier circunstancia.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a4" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a4" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a4" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a4" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a5" data-qid="a5">
+          <div class="likert-q">A5. Las normas de tránsito deben cumplirse siempre, incluso cuando no hay autoridades presentes.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a5" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a5" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a5" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a5" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a6" data-qid="a6">
+          <div class="likert-q">A6. La capacitación en seguridad vial reduce realmente el número de accidentes de tránsito.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a6" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a6" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a6" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a6" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a7" data-qid="a7">
+          <div class="likert-q">A7. Estoy dispuesto/a a cambiar mis hábitos de conducción si recibo información que demuestre que son riesgosos.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a7" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a7" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a7" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a7" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item" id="qb-a8" data-qid="a8">
+          <div class="likert-q">A8. Mi seguridad al conducir depende principalmente de mis propias decisiones, no solo de los demás.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="a8" value="1" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a8" value="2" onchange="checkLikert()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a8" value="3" onchange="checkLikert()"><span class="likert-lbl">De<br>acuerdo</span></label>
+            <label class="likert-opt"><input type="radio" name="a8" value="4" onchange="checkLikert()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /section III -->
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN IV — PRÁCTICAS (Likert frecuencia)
+  ══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header sh-amber">
+      <div class="section-num sn-amber">IV</div>
+      <div class="section-meta">
+        <h2>Prácticas de Conducción</h2>
+        <p>¿Con qué frecuencia realiza cada comportamiento?</p>
+      </div>
+      <span class="section-badge sb-amber">8 preguntas</span>
+    </div>
+    <div class="section-notice amber">
+      <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+      <strong>1</strong> = Nunca &nbsp;·&nbsp; <strong>2</strong> = A veces &nbsp;·&nbsp; <strong>3</strong> = Casi siempre &nbsp;·&nbsp; <strong>4</strong> = Siempre
+    </div>
+    <div class="section-body" style="padding-top:4px;">
+      <div class="likert-list">
+
+        <div class="likert-item freq-item" id="qb-pr1" data-qid="pr1">
+          <div class="likert-q">PR1. Uso el casco reglamentario en cada trayecto, incluyendo recorridos cortos o dentro del barrio.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr1" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr1" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr1" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr1" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr2" data-qid="pr2">
+          <div class="likert-q">PR2. Respeto los semáforos y señales de tránsito, incluso cuando hay poca circulación vehicular.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr2" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr2" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr2" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr2" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr3" data-qid="pr3">
+          <div class="likert-q">PR3. Evito usar el teléfono celular (llamadas, mensajes, redes) mientras conduzco.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr3" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr3" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr3" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr3" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr4" data-qid="pr4">
+          <div class="likert-q">PR4. Reviso el estado de frenos, neumáticos y luces antes de iniciar la jornada laboral.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr4" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr4" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr4" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr4" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr5" data-qid="pr5">
+          <div class="likert-q">PR5. Mantengo una distancia de seguridad adecuada con respecto al vehículo que va delante.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr5" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr5" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr5" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr5" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr6" data-qid="pr6">
+          <div class="likert-q">PR6. Evito conducir cuando siento fatiga, sueño o bajo los efectos de alguna sustancia.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr6" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr6" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr6" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr6" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr7" data-qid="pr7">
+          <div class="likert-q">PR7. Cedo el paso a peatones en cruces y zonas escolares.</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr7" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr7" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr7" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr7" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+        <div class="likert-item freq-item" id="qb-pr8" data-qid="pr8">
+          <div class="likert-q">PR8. Busco información sobre seguridad vial de forma voluntaria (videos, publicaciones, charlas).</div>
+          <div class="likert-opts">
+            <label class="likert-opt"><input type="radio" name="pr8" value="1" onchange="checkPracticas()"><span class="likert-lbl">Nunca</span></label>
+            <label class="likert-opt"><input type="radio" name="pr8" value="2" onchange="checkPracticas()"><span class="likert-lbl">A veces</span></label>
+            <label class="likert-opt"><input type="radio" name="pr8" value="3" onchange="checkPracticas()"><span class="likert-lbl">Casi<br>siempre</span></label>
+            <label class="likert-opt"><input type="radio" name="pr8" value="4" onchange="checkPracticas()"><span class="likert-lbl">Siempre</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /section IV -->
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN V — EVALUACIÓN DIGITAL (solo post-test)
+  ══════════════════════════════════════════ -->
+  <div class="section-block" id="seccionV">
+    <div class="section-header sh-rose">
+      <div class="section-num sn-rose">V</div>
+      <div class="section-meta">
+        <h2>Evaluación de la Intervención Digital</h2>
+        <p>Solo para el post-test — luego de la intervención educativa</p>
+      </div>
+      <span class="section-badge sb-rose">5 preguntas · POST-TEST</span>
+    </div>
+
+    <div class="post-toggle">
+      <p><i class="fas fa-lock" style="margin-right:6px;color:#6a3fa8;"></i> Esta sección se habilita en el post-test</p>
+      <div class="toggle-wrap">
+        <button type="button" class="toggle-btn active" id="btnPre" onclick="setModoSecV('pre')">Pre-test</button>
+        <button type="button" class="toggle-btn" id="btnPost" onclick="setModoSecV('post')">Post-test</button>
+      </div>
+    </div>
+
+    <div id="preMsg" class="pre-msg">
+      <i class="fas fa-hourglass-half"></i>
+      Esta sección estará disponible luego de la intervención educativa digital de 8 semanas.<br>
+      <span style="font-size:0.78rem;margin-top:6px;display:inline-block;">Si estás en el <strong>post-test</strong>, activa el modo arriba.</span>
+    </div>
+
+    <div id="postContent" class="post-content">
+      <div class="section-notice rose" style="margin-top:16px;">
+        <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+        <strong>1</strong> = Totalmente en desacuerdo &nbsp;·&nbsp; <strong>2</strong> = En desacuerdo &nbsp;·&nbsp; <strong>3</strong> = De acuerdo &nbsp;·&nbsp; <strong>4</strong> = Totalmente de acuerdo
+      </div>
+      <div class="section-body" style="padding-top:4px;">
+        <div class="likert-list">
+
+          <div class="likert-item" id="qb-d1" data-qid="d1">
+            <div class="likert-q">D1. Los contenidos publicados en redes sociales fueron claros y fáciles de entender.</div>
+            <div class="likert-opts">
+              <label class="likert-opt"><input type="radio" name="d1" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d1" value="2" onchange="checkDigital()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d1" value="3" onchange="checkDigital()"><span class="likert-lbl">De<br>acuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d1" value="4" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+            </div>
+          </div>
+
+          <div class="likert-item" id="qb-d2" data-qid="d2">
+            <div class="likert-q">D2. La información recibida cambió o reforzó positivamente mi forma de conducir.</div>
+            <div class="likert-opts">
+              <label class="likert-opt"><input type="radio" name="d2" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d2" value="2" onchange="checkDigital()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d2" value="3" onchange="checkDigital()"><span class="likert-lbl">De<br>acuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d2" value="4" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+            </div>
+          </div>
+
+          <div class="likert-item" id="qb-d3" data-qid="d3">
+            <div class="likert-q">D3. El formato digital (videos, infografías, mensajes) fue adecuado para aprender sobre seguridad vial.</div>
+            <div class="likert-opts">
+              <label class="likert-opt"><input type="radio" name="d3" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d3" value="2" onchange="checkDigital()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d3" value="3" onchange="checkDigital()"><span class="likert-lbl">De<br>acuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d3" value="4" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+            </div>
+          </div>
+
+          <div class="likert-item" id="qb-d4" data-qid="d4">
+            <div class="likert-q">D4. Compartiría los contenidos de este programa con otros mototaxistas o conductores de delivery.</div>
+            <div class="likert-opts">
+              <label class="likert-opt"><input type="radio" name="d4" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d4" value="2" onchange="checkDigital()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d4" value="3" onchange="checkDigital()"><span class="likert-lbl">De<br>acuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d4" value="4" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+            </div>
+          </div>
+
+          <div class="likert-item" id="qb-d5" data-qid="d5">
+            <div class="likert-q">D5. La intervención digital aumentó mi motivación para cumplir las normas de tránsito.</div>
+            <div class="likert-opts">
+              <label class="likert-opt"><input type="radio" name="d5" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d5" value="2" onchange="checkDigital()"><span class="likert-lbl">En<br>desacuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d5" value="3" onchange="checkDigital()"><span class="likert-lbl">De<br>acuerdo</span></label>
+              <label class="likert-opt"><input type="radio" name="d5" value="4" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>de acuerdo</span></label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /section V -->
+
+  <!-- ── FOOTER DEL FORMULARIO ── -->
+  <div class="form-footer">
+    <button type="button" class="btn-action btn-ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <i class="fas fa-arrow-up"></i> Inicio
+    </button>
+    <div class="footer-info">
+      <div class="f-count" id="footerCount">0 / 39</div>
+      <p>ítems respondidos</p>
+    </div>
+    <button type="button" class="btn-action btn-primary" onclick="submitForm()">
+      <i class="fas fa-paper-plane"></i> Ver resultados
+    </button>
+  </div>
+
+  </div><!-- /inner pad -->
+  </form>
+
+  <!-- ── FOOTER INSTITUCIONAL ── -->
+  <footer class="inst-footer">
+    <div class="inst-footer-grid">
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-graduation-cap"></i> Contexto Académico</h4>
+        <p><i class="fas fa-book"></i> Investigación de Pregrado</p>
+        <p><i class="fas fa-university"></i> Universidad de Oriente · Núcleo Bolívar</p>
+        <p><i class="fas fa-stethoscope"></i> Departamento de Enfermería</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-map-marker-alt"></i> Muestra</h4>
+        <p><i class="fas fa-map-pin"></i> Ciudad Bolívar, Estado Bolívar</p>
+        <p><i class="fas fa-motorcycle"></i> Mototaxistas y delivery activos</p>
+        <p><i class="fas fa-calendar-alt"></i> Período: 2025</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-flask"></i> Diseño Metodológico</h4>
+        <p><i class="fas fa-cogs"></i> Cuasi-experimental</p>
+        <p><i class="fas fa-chart-line"></i> Pre / Post test</p>
+        <p><i class="fas fa-calculator"></i> Análisis estadístico inferencial</p>
+      </div>
+    </div>
+    <hr class="inst-footer-sep">
+    <div class="inst-authors-box">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Logo_UDO.svg" alt="UDO" class="inst-udo-logo">
+      <div class="inst-authors-info">
+        <div class="inst-authors-label">Investigadoras Principales</div>
+        <div class="inst-authors-names">Meredith La Torraca &amp; Ana Carolina González</div>
+        <div class="inst-authors-dept">Escuela de Ciencias de la Salud "Dr. Francisco Battistini Casalta" · Depto. Enfermería</div>
+        <div class="inst-authors-tutor"><i class="fas fa-chalkboard-teacher"></i> Tutor Académico: Prof. Norsol Mata</div>
+      </div>
+    </div>
+    <p class="inst-copyright">© 2025 CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · Venezuela</p>
+  </footer>
+
+</div><!-- /formWrapper -->
+
+<!-- ══════════════════ MODAL INCOMPLETO ══════════════════ -->
+<div class="incomplete-overlay" id="incompleteModal">
+  <div class="incomplete-card">
+    <div class="incomplete-header">
+      <div class="incomplete-icon">⚠️</div>
+      <div>
+        <div class="incomplete-title">Cuestionario incompleto</div>
+        <div class="incomplete-subtitle">Responde todas las preguntas antes de enviar</div>
+      </div>
+    </div>
+    <div class="missing-list" id="missingList"></div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn-action btn-ghost" onclick="cerrarIncompleto()" style="font-size:0.88rem;padding:10px 20px;">
+        <i class="fas fa-times"></i> Cerrar
+      </button>
+      <button class="btn-action btn-primary" onclick="irAPrimeraPendiente()" style="font-size:0.88rem;padding:10px 20px;">
+        <i class="fas fa-arrow-right"></i> Ir a la primera pendiente
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL RESULTADOS ══════════════════ -->
+<div class="modal-overlay" id="resultModal">
+  <div class="modal-card">
+    <div class="modal-ring">
+      <div class="modal-score" id="mScore">—</div>
+      <div class="modal-max">/ 10 pts</div>
+    </div>
+    <div class="modal-level" id="mLevel">—</div>
+    <div class="modal-desc" id="mDesc">—</div>
+    <div class="modal-breakdown">
+      <div class="bk-item"><div class="bk-lbl">Correctas</div><div class="bk-val" id="bkCorrectas">—</div></div>
+      <div class="bk-item"><div class="bk-lbl">Incorrectas</div><div class="bk-val" id="bkIncorrectas">—</div></div>
+      <div class="bk-item"><div class="bk-lbl">Porcentaje</div><div class="bk-val" id="bkPct">—</div></div>
+    </div>
+    <div class="modal-actions" id="modalAcciones">
+      <button class="btn-action btn-ghost" onclick="document.getElementById('resultModal').classList.remove('show')">
+        <i class="fas fa-edit"></i> Revisar
+      </button>
+      <button class="btn-action btn-primary" onclick="imprimirResultados()">
+        <i class="fas fa-print"></i> Imprimir
+      </button>
+      <button class="btn-action btn-primary" onclick="enviarYExportar()">
+        <i class="fas fa-paper-plane"></i> Enviar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- iframe oculto para envío a Sheets -->
+<iframe name="_sheetsFrame" id="_sheetsFrame" style="display:none;"></iframe>
+
+</div><!-- /page-wrap -->
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzI5Ultiybzol3RiytllbSJCd6m2eSX51xe-BFq6d9lp9yPq8aDZ1dwVQLiXT1wTwR5/exec';
+const TOTAL = 39; // 8 perfil + 10 VF + 8 actitudes + 8 prácticas + 5 digital
+
+// Respuestas correctas sección II (V/F)
+const correctas = {
+  c1:'V',  // 16 años licencia A
+  c2:'V',  // seguro obligatorio
+  c3:'F',  // NO mover heridos
+  c4:'F',  // alcohol SÍ afecta
+  c5:'V',  // manejo defensivo
+  c6:'V',  // 8x más riesgo
+  c7:'V',  // celular = alcohol
+  c8:'V',  // casco reduce 40%
+  c9:'F',  // casco es para ambos
+  c10:'F'  // lluvia SÍ afecta
+};
+
+const vfAnswers = {};
+const answered  = new Set();
+let isPostTest  = false;
+
+// ══════════════════════════════════════════
+// CONSENTIMIENTO
+// ══════════════════════════════════════════
+function onConsentChange() {
+  const checked = document.getElementById('consentCheck').checked;
+  document.getElementById('consentBtn').classList.toggle('active', checked);
+  document.getElementById('consentWrap').classList.toggle('checked', checked);
+}
+
+function habilitarFormulario() {
+  if (!document.getElementById('consentCheck').checked) return;
+  // Recordar consentimiento para este código+modo
+  const ckey = 'cap_consent_' + (sessionStorage.getItem('cap_codigo') || 'x') + '_' + (sessionStorage.getItem('cap_modo') || 'pre');
+  try { localStorage.setItem(ckey, '1'); } catch(e) {}
+  document.getElementById('consentGate').style.display = 'none';
+  document.getElementById('formWrapper').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════
+// CARGAR CÓDIGO DESDE URL / sessionStorage
+// ══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  let codigo = params.get('codigo');
+  let modo   = params.get('modo') || 'pre';
+
+  if (!codigo) codigo = sessionStorage.getItem('cap_codigo');
+  if (!modo)   modo   = sessionStorage.getItem('cap_modo') || 'pre';
+
+  if (codigo) {
+    codigo = codigo.toUpperCase();
+    document.getElementById('codigoParticipante').value = codigo;
+    document.getElementById('codigoDisplay').textContent = codigo;
+    sessionStorage.setItem('cap_codigo', codigo);
+    sessionStorage.setItem('cap_modo',   modo);
+  }
+
+  // Si ya consintió antes para este código+modo, saltar la pantalla de consentimiento
+  try {
+    const ckey = 'cap_consent_' + (codigo || 'x') + '_' + modo;
+    if (localStorage.getItem(ckey) === '1') {
+      document.getElementById('consentGate').style.display = 'none';
+      document.getElementById('formWrapper').style.display = 'block';
+    }
+  } catch(e) {}
+
+  const badge = document.getElementById('modoBadge');
+  if (modo === 'post') {
+    badge.textContent = '📋 POST-TEST';
+    badge.style.background = 'rgba(0,184,148,0.25)';
+    badge.style.borderColor = '#00b894';
+    badge.style.color = '#82e8ce';
+    document.getElementById('seccionV').style.display = 'block';
+    setModoSecV('post');
+  } else {
+    badge.textContent = '📋 PRE-TEST';
+    // Sección V no aplica en pre-test — ocultar completamente
+    document.getElementById('seccionV').style.display = 'none';
+  }
+
+  updateProgress();
+
+  // Cargar progreso guardado si existe
+  if (codigo) cargarProgresoInicial(codigo, modo);
+});
+
+// ══════════════════════════════════════════
+// V/F
+// ══════════════════════════════════════════
+function setVF(field, val, btn) {
+  const row = document.getElementById('vf-' + field);
+  row.querySelectorAll('.vf-btn').forEach(b => b.classList.remove('v-active','f-active'));
+  btn.classList.add(val === 'V' ? 'v-active' : 'f-active');
+  row.className = 'vf-row ' + (val === 'V' ? 'vf-true' : 'vf-false');
+  document.getElementById(field + 'v').value = val;
+  vfAnswers[field] = val;
+
+  const vfDone = Object.keys(correctas).filter(k => vfAnswers[k]).length;
+  if (vfDone === 10) answered.add('vf');
+  else answered.delete('vf');
+
+  updateProgress();
+  guardarProgreso();
+}
+
+// ══════════════════════════════════════════
+// ACTITUDES
+// ══════════════════════════════════════════
+function checkLikert() {
+  const fields = ['a1','a2','a3','a4','a5','a6','a7','a8'];
+  const done = fields.every(f => document.querySelector(`input[name="${f}"]:checked`));
+  if (done) answered.add('actitudes'); else answered.delete('actitudes');
+  // marcar ítems individuales
+  fields.forEach(f => {
+    const el = document.getElementById('qb-' + f);
+    if (el) el.classList.toggle('answered', !!document.querySelector(`input[name="${f}"]:checked`));
+  });
+  updateProgress();
+  guardarProgreso();
+}
+
+// ══════════════════════════════════════════
+// PRÁCTICAS
+// ══════════════════════════════════════════
+function checkPracticas() {
+  const fields = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'];
+  const done = fields.every(f => document.querySelector(`input[name="${f}"]:checked`));
+  if (done) answered.add('practicas'); else answered.delete('practicas');
+  fields.forEach(f => {
+    const el = document.getElementById('qb-' + f);
+    if (el) el.classList.toggle('answered', !!document.querySelector(`input[name="${f}"]:checked`));
+  });
+  updateProgress();
+  guardarProgreso();
+}
+
+// ══════════════════════════════════════════
+// DIGITAL (post-test)
+// ══════════════════════════════════════════
+function checkDigital() {
+  const fields = ['d1','d2','d3','d4','d5'];
+  const done = fields.every(f => document.querySelector(`input[name="${f}"]:checked`));
+  if (done) answered.add('digital'); else answered.delete('digital');
+  fields.forEach(f => {
+    const el = document.getElementById('qb-' + f);
+    if (el) el.classList.toggle('answered', !!document.querySelector(`input[name="${f}"]:checked`));
+  });
+  updateProgress();
+  guardarProgreso();
+}
+
+// ══════════════════════════════════════════
+// PERFIL — marcar individual
+// ══════════════════════════════════════════
+function markQ(qid) {
+  answered.add(qid);
+  const el = document.getElementById('qb-' + qid);
+  if (el) el.classList.add('answered');
+  updateProgress();
+  guardarProgreso();
+}
+
+// ══════════════════════════════════════════
+// MODO SECCIÓN V
+// ══════════════════════════════════════════
+function setModoSecV(modo) {
+  isPostTest = (modo === 'post');
+  document.getElementById('btnPre').classList.toggle('active', !isPostTest);
+  document.getElementById('btnPost').classList.toggle('active', isPostTest);
+  document.getElementById('preMsg').style.display    = isPostTest ? 'none'  : 'block';
+  document.getElementById('postContent').classList.toggle('visible', isPostTest);
+  updateProgress();
+}
+
+// ══════════════════════════════════════════
+// PROGRESO
+// ══════════════════════════════════════════
+function updateProgress() {
+  let count = 0;
+
+  // Perfil (8)
+  for (let i = 1; i <= 8; i++) {
+    if (answered.has('p' + i)) count++;
+  }
+
+  // V/F (10 individuales)
+  count += Object.keys(correctas).filter(k => vfAnswers[k]).length;
+
+  // Actitudes (8)
+  ['a1','a2','a3','a4','a5','a6','a7','a8'].forEach(f => {
+    if (document.querySelector(`input[name="${f}"]:checked`)) count++;
+  });
+
+  // Prácticas (8)
+  ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].forEach(f => {
+    if (document.querySelector(`input[name="${f}"]:checked`)) count++;
+  });
+
+  // Digital (5) — solo si post-test activo
+  if (isPostTest) {
+    ['d1','d2','d3','d4','d5'].forEach(f => {
+      if (document.querySelector(`input[name="${f}"]:checked`)) count++;
+    });
+  }
+
+  const total = isPostTest ? TOTAL : 34; // 34 sin sección V
+  count = Math.min(count, total);
+  const pct = Math.round((count / total) * 100);
+
+  document.getElementById('pbFill').style.width     = pct + '%';
+  document.getElementById('pbCount').textContent    = count + ' / ' + total;
+  document.getElementById('footerCount').textContent = count + ' / ' + total;
+}
+
+// ══════════════════════════════════════════
+// CALCULAR Y MOSTRAR RESULTADOS
+// ══════════════════════════════════════════
+// ── Etiquetas de preguntas para el aviso de incompleto ──
+const qLabels = {
+  p1:'Rango de edad', p2:'Sexo', p3:'Nivel educativo', p4:'Años trabajando',
+  p5:'Licencia de conducir', p6:'Capacitación previa', p7:'Accidentes (12 meses)', p8:'Plataforma preferida',
+  c1:'Licencia tipo A (V/F)', c2:'Seguro obligatorio (V/F)', c3:'Mover heridos (V/F)',
+  c4:'Alcohol y reflejos (V/F)', c5:'Manejo defensivo (V/F)', c6:'Riesgo en motos (V/F)',
+  c7:'Celular al conducir (V/F)', c8:'Casco reduce mortalidad (V/F)', c9:'Casco pasajero (V/F)', c10:'Lluvia y frenado (V/F)',
+  a1:'Actitud: uso del casco', a2:'Actitud: velocidad', a3:'Actitud: celular',
+  a4:'Actitud: alcohol', a5:'Actitud: normas', a6:'Actitud: capacitación',
+  a7:'Actitud: cambio de hábitos', a8:'Actitud: autoresponsabilidad',
+  pr1:'Práctica: uso de casco', pr2:'Práctica: semáforos', pr3:'Práctica: evita celular',
+  pr4:'Práctica: revisión vehículo', pr5:'Práctica: distancia seguridad',
+  pr6:'Práctica: evita fatiga', pr7:'Práctica: cede a peatones', pr8:'Práctica: busca información',
+  d1:'Digital: claridad contenidos', d2:'Digital: cambio de conducta', d3:'Digital: formato adecuado',
+  d4:'Digital: compartiría', d5:'Digital: motivación'
+};
+
+let _primeraPendiente = null;
+
+function obtenerFaltantes() {
+  const faltantes = { perfil:[], conocimientos:[], actitudes:[], practicas:[], digital:[] };
+
+  // Perfil
+  for (let i = 1; i <= 8; i++) {
+    if (!document.querySelector(`input[name="p${i}"]:checked`))
+      faltantes.perfil.push('p' + i);
+  }
+  // V/F
+  Object.keys(correctas).forEach(k => {
+    if (!vfAnswers[k]) faltantes.conocimientos.push(k);
+  });
+  // Actitudes
+  ['a1','a2','a3','a4','a5','a6','a7','a8'].forEach(k => {
+    if (!document.querySelector(`input[name="${k}"]:checked`)) faltantes.actitudes.push(k);
+  });
+  // Prácticas
+  ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].forEach(k => {
+    if (!document.querySelector(`input[name="${k}"]:checked`)) faltantes.practicas.push(k);
+  });
+  // Digital (solo post-test)
+  if (isPostTest) {
+    ['d1','d2','d3','d4','d5'].forEach(k => {
+      if (!document.querySelector(`input[name="${k}"]:checked`)) faltantes.digital.push(k);
+    });
+  }
+  return faltantes;
+}
+
+function hayFaltantes(f) {
+  return f.perfil.length + f.conocimientos.length + f.actitudes.length + f.practicas.length + f.digital.length > 0;
+}
+
+function mostrarIncompleto(faltantes) {
+  const secInfo = [
+    { key:'perfil',        label:'I · Perfil sociodemográfico',    color:'#5b6ceb' },
+    { key:'conocimientos', label:'II · Conocimientos (V/F)',        color:'#6a3fa8' },
+    { key:'actitudes',     label:'III · Actitudes',                 color:'#00b894' },
+    { key:'practicas',     label:'IV · Prácticas',                  color:'#f59e0b' },
+    { key:'digital',       label:'V · Evaluación digital',          color:'#e17055' },
+  ];
+
+  let html = '';
+  _primeraPendiente = null;
+
+  secInfo.forEach(sec => {
+    const items = faltantes[sec.key];
+    if (!items || items.length === 0) return;
+    if (!_primeraPendiente) _primeraPendiente = items[0];
+
+    html += `<div class="missing-sec">
+      <div class="missing-sec-title" style="color:${sec.color};">
+        <i class="fas fa-circle" style="font-size:0.5rem;"></i>${sec.label}
+        <span style="margin-left:auto;background:${sec.color}18;color:${sec.color};border-radius:10px;padding:1px 8px;font-size:0.68rem;">${items.length} pendiente${items.length > 1 ? 's' : ''}</span>
+      </div>`;
+    items.forEach(k => {
+      html += `<div class="missing-item" onclick="irAItem('${k}')">
+        <i class="fas fa-exclamation-circle"></i>
+        <span class="q-id">${k.toUpperCase()}</span>
+        <span>${qLabels[k] || k}</span>
+        <i class="fas fa-chevron-right" style="margin-left:auto;color:#b2bec3;font-size:0.7rem;"></i>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  document.getElementById('missingList').innerHTML = html;
+  document.getElementById('incompleteModal').classList.add('show');
+}
+
+function cerrarIncompleto() {
+  document.getElementById('incompleteModal').classList.remove('show');
+}
+
+function irAItem(qid) {
+  cerrarIncompleto();
+  // Scroll al elemento
+  const el = document.getElementById('qb-' + qid) || document.getElementById('vf-' + qid);
+  if (el) {
+    setTimeout(function() {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.style.transition = 'box-shadow 0.3s';
+      el.style.boxShadow = '0 0 0 3px #ef444460';
+      setTimeout(function() { el.style.boxShadow = ''; }, 2000);
+    }, 200);
+  }
+}
+
+function irAPrimeraPendiente() {
+  if (_primeraPendiente) irAItem(_primeraPendiente);
+}
+
+function submitForm() {
+  // Validar primero
+  const faltantes = obtenerFaltantes();
+  if (hayFaltantes(faltantes)) {
+    mostrarIncompleto(faltantes);
+    return;
+  }
+
+  const scoreC = Object.keys(correctas).filter(k => vfAnswers[k] === correctas[k]).length;
+  const pct    = Math.round((scoreC / 10) * 100);
+
+  let level, desc, color;
+  if      (scoreC >= 9)  { level = '🏆 Conocimiento Excelente'; desc = 'Dominio sobresaliente de la normativa vial venezolana. Sus conocimientos son una base sólida para una conducción segura.'; color = '#10b981'; }
+  else if (scoreC >= 7)  { level = '✅ Conocimiento Bueno';     desc = 'Buen nivel de conocimiento. Algunos aspectos normativos pueden reforzarse con la intervención educativa.'; color = '#3b82f6'; }
+  else if (scoreC >= 5)  { level = '⚠️ Conocimiento Regular';   desc = 'Existen vacíos importantes. La intervención educativa digital es especialmente útil para usted.'; color = '#f59e0b'; }
+  else                   { level = '🔴 Conocimiento Bajo';       desc = 'Se identifican brechas significativas en el conocimiento de la normativa. La intervención puede marcar una diferencia importante.'; color = '#ef4444'; }
+
+  const ring = document.querySelector('.modal-ring');
+  ring.style.borderColor    = color;
+  ring.style.background     = color + '18';
+  ring.style.boxShadow      = `0 0 40px ${color}40`;
+  document.getElementById('mScore').style.color = color;
+  document.getElementById('mScore').textContent  = scoreC;
+  document.getElementById('mLevel').textContent  = level;
+  document.getElementById('mLevel').style.color  = color;
+  document.getElementById('mDesc').textContent   = desc;
+  document.getElementById('bkCorrectas').textContent   = scoreC + ' / 10';
+  document.getElementById('bkIncorrectas').textContent = (10 - scoreC) + ' / 10';
+  document.getElementById('bkPct').textContent         = pct + '%';
+
+  // Guardar score para impresión
+  window._lastScore = scoreC;
+  window._lastColor = color;
+  window._lastNivel = level.replace(/^[^\s]+\s/,''); // sin emoji
+
+  // Botones fijos — sin opción de revisar ni enviar manual
+  document.getElementById('modalAcciones').innerHTML = `
+    <button class="btn-action btn-primary" onclick="imprimirResultados()">
+      <i class="fas fa-print"></i> Imprimir resultados
+    </button>
+    <button class="btn-action btn-ghost" onclick="volverAlMenu()">
+      <i class="fas fa-home"></i> Volver al menú
+    </button>`;
+
+  // Enviar automáticamente si no fue enviado aún
+  verificarEnviadoEnSheets(function(yaEnv) {
+    if (!yaEnv) {
+      enviarAGoogleSheets(scoreC);
+      try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
+    }
+  });
+
+  // Bloquear formulario completo — no se pueden cambiar respuestas
+  bloquearFormulario();
+
+  document.getElementById('resultModal').classList.add('show');
+}
+
+function volverAlMenu() {
+  window.location.href = 'landing-cap.html';
+}
+
+function bloquearFormulario() {
+  // Deshabilitar todos los inputs y botones del formulario
+  document.querySelectorAll('#capForm input, #capForm select, #capForm button, #capForm .vf-btn').forEach(function(el) {
+    el.disabled = true;
+  });
+  // Estilo visual de bloqueado
+  document.querySelectorAll('#capForm .q-block, #capForm .vf-row, #capForm .likert-item').forEach(function(el) {
+    el.style.opacity = '0.7';
+    el.style.pointerEvents = 'none';
+  });
+  // Ocultar botón de ver resultados del footer
+  const btnSubmit = document.querySelector('.form-footer .btn-primary');
+  if (btnSubmit) {
+    btnSubmit.style.display = 'none';
+  }
+  // Mostrar badge de completado en la barra de progreso
+  const pbLabel = document.querySelector('.pb-label');
+  if (pbLabel) {
+    pbLabel.innerHTML = '<i class="fas fa-check-circle" style="color:#00b894;margin-right:6px;"></i><span style="color:#00b894;">Completado</span>';
+  }
+}
+
+function enviarYExportar() {
+  const scoreC = Object.keys(correctas).filter(k => vfAnswers[k] === correctas[k]).length;
+  enviarAGoogleSheets(scoreC);
+  // Marcar como enviado en localStorage
+  const skey = claveSent();
+  try { localStorage.setItem(skey, '1'); } catch(e) {}
+  // Cerrar modal automáticamente
+  document.getElementById('resultModal').classList.remove('show');
+  mostrarSync('✅ Enviado correctamente');
+}
+
+// Verificar en Sheets si el código ya tiene registro final (no progreso)
+function verificarEnviadoEnSheets(callback) {
+  const codigo = document.getElementById('codigoParticipante').value || '';
+  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
+  if (!codigo) { callback(false); return; }
+
+  const cb = '_cb_chk_' + Date.now();
+  const to = setTimeout(function() {
+    try { delete window[cb]; } catch(e) {}
+    callback(yaEnviado()); // fallback a localStorage si timeout
+  }, 5000);
+
+  window[cb] = function(data) {
+    clearTimeout(to);
+    try { delete window[cb]; } catch(e) {}
+    // Buscar si el código aparece en la hoja pre/post con registro completo
+    const lista = modo === 'post' ? (data.post || []) : (data.pre || []);
+    const encontrado = lista.some(function(r) {
+      const cod = ((r.codigo || r['c_digo'] || r['código'] || '') + '').trim().toUpperCase();
+      return cod === codigo.toUpperCase();
+    });
+    if (encontrado) {
+      try { localStorage.setItem(claveSent(), '1'); } catch(e) {} // cachear
+    }
+    callback(encontrado);
+  };
+
+  const s = document.createElement('script');
+  s.src = SHEETS_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() {
+    clearTimeout(to);
+    try { delete window[cb]; } catch(e) {}
+    s.remove();
+    callback(yaEnviado()); // fallback
+  };
+  document.head.appendChild(s);
+}
+
+function claveSent() {
+  const codigo = document.getElementById('codigoParticipante').value || 'x';
+  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
+  return 'cap_sent_' + codigo.toUpperCase() + '_' + modo;
+}
+
+function yaEnviado() {
+  try { return localStorage.getItem(claveSent()) === '1'; } catch(e) { return false; }
+}
+
+// ══════════════════════════════════════════
+// GUARDAR PROGRESO (localStorage + Sheets)
+// ══════════════════════════════════════════
+function recopilarRespuestas() {
+  const codigo = document.getElementById('codigoParticipante')?.value || '';
+  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
+  const datos  = { codigo, modo, _ts: Date.now() };
+
+  // Perfil
+  for (let i = 1; i <= 8; i++) {
+    const r = document.querySelector(`input[name="p${i}"]:checked`);
+    if (r) datos['p' + i] = r.value;
+  }
+
+  // V/F
+  Object.keys(correctas).forEach(k => { if (vfAnswers[k]) datos[k] = vfAnswers[k]; });
+
+  // Actitudes
+  ['a1','a2','a3','a4','a5','a6','a7','a8'].forEach(n => {
+    const r = document.querySelector(`input[name="${n}"]:checked`);
+    if (r) datos[n] = r.value;
+  });
+
+  // Prácticas
+  ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].forEach(n => {
+    const r = document.querySelector(`input[name="${n}"]:checked`);
+    if (r) datos[n] = r.value;
+  });
+
+  // Digital
+  ['d1','d2','d3','d4','d5'].forEach(n => {
+    const r = document.querySelector(`input[name="${n}"]:checked`);
+    if (r) datos[n] = r.value;
+  });
+
+  return datos;
+}
+
+function claveStorage(codigo, modo) { return `cap_progress_${(codigo||'x').toUpperCase()}_${modo||'pre'}`; }
+function guardarEnLocal(datos) { try { localStorage.setItem(claveStorage(datos.codigo, datos.modo), JSON.stringify(datos)); } catch(e) {} }
+function leerDeLocal(codigo, modo) { try { const r = localStorage.getItem(claveStorage(codigo, modo)); return r ? JSON.parse(r) : null; } catch(e) { return null; } }
+
+let _syncT = null;
+function guardarProgreso() {
+  const datos = recopilarRespuestas();
+  guardarEnLocal(datos);
+  clearTimeout(_syncT);
+  _syncT = setTimeout(function() {
+    const cb = '_cb_s_' + Date.now();
+    window[cb] = function() { try { delete window[cb]; } catch(e) {} mostrarSync('✓ Guardado'); };
+    const s = document.createElement('script');
+    s.src = SHEETS_URL + '?action=saveProgress&data=' + encodeURIComponent(JSON.stringify(datos)) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('💾 Local'); };
+    document.head.appendChild(s);
+  }, 1500);
+}
+
+let _syncEl = null;
+function mostrarSync(txt) {
+  if (_syncEl) _syncEl.remove();
+  const el = document.createElement('div');
+  el.textContent = txt;
+  el.style.cssText = 'position:fixed;bottom:16px;right:16px;background:#5b6ceb;color:white;padding:7px 14px;border-radius:20px;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;z-index:8888;box-shadow:0 4px 12px rgba(91,108,235,0.4);transition:opacity 0.5s;';
+  document.body.appendChild(el);
+  _syncEl = el;
+  setTimeout(() => { el.style.opacity = '0'; }, 2500);
+  setTimeout(() => { el.remove(); }, 3200);
+}
+
+function cargarProgresoInicial(codigo, modo) {
+  const cb = '_cb_load_' + Date.now();
+  const to = setTimeout(function() {
+    try { delete window[cb]; } catch(e) {}
+    const local = leerDeLocal(codigo, modo);
+    if (local) restaurar(local);
+  }, 5000);
+
+  window[cb] = function(data) {
+    clearTimeout(to);
+    try { delete window[cb]; } catch(e) {}
+    if (data && data.respuestas && Object.keys(data.respuestas).length > 2) {
+      guardarEnLocal(data.respuestas);
+      restaurar(data.respuestas);
+    } else {
+      const local = leerDeLocal(codigo, modo);
+      if (local) restaurar(local);
+    }
+  };
+
+  const s = document.createElement('script');
+  s.src = SHEETS_URL + '?action=getProgress&codigo=' + encodeURIComponent(codigo) + '&modo=' + encodeURIComponent(modo) + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() {
+    clearTimeout(to);
+    try { delete window[cb]; } catch(e) {}
+    s.remove();
+    const local = leerDeLocal(codigo, modo);
+    if (local) restaurar(local);
+  };
+  document.head.appendChild(s);
+}
+
+function restaurar(datos) {
+  if (!datos) return;
+
+  // Perfil
+  for (let i = 1; i <= 8; i++) {
+    const k = 'p' + i;
+    if (!datos[k]) continue;
+    const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
+    if (r) { r.checked = true; answered.add(k); const el = document.getElementById('qb-' + k); if (el) el.classList.add('answered'); }
+  }
+
+  // V/F
+  Object.keys(correctas).forEach(k => {
+    if (!datos[k]) return;
+    vfAnswers[k] = datos[k];
+    const row = document.getElementById('vf-' + k);
+    if (!row) return;
+    row.querySelectorAll('.vf-btn').forEach(b => b.classList.remove('v-active','f-active'));
+    const target = datos[k] === 'V' ? row.querySelector('.vf-btn:first-child') : row.querySelector('.vf-btn:last-child');
+    if (target) target.classList.add(datos[k] === 'V' ? 'v-active' : 'f-active');
+    row.className = 'vf-row ' + (datos[k] === 'V' ? 'vf-true' : 'vf-false');
+    const hid = document.getElementById(k + 'v');
+    if (hid) hid.value = datos[k];
+  });
+
+  // Actitudes, prácticas, digital
+  ['a1','a2','a3','a4','a5','a6','a7','a8',
+   'pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8',
+   'd1','d2','d3','d4','d5'].forEach(n => {
+    if (!datos[n]) return;
+    const r = document.querySelector(`input[name="${n}"][value="${datos[n]}"]`);
+    if (r) { r.checked = true; const el = document.getElementById('qb-' + n); if (el) el.classList.add('answered'); }
+  });
+
+  checkLikert(); checkPracticas(); checkDigital();
+  updateProgress();
+
+  // Banner
+  const banner = document.createElement('div');
+  banner.innerHTML = '<i class="fas fa-history" style="margin-right:6px;"></i> Progreso restaurado — continúa desde donde lo dejaste.';
+  banner.style.cssText = 'background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;text-align:center;padding:10px 20px;font-family:Montserrat,sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+  banner.onclick = function() { this.remove(); };
+  const fw = document.getElementById('formWrapper');
+  if (fw) fw.insertAdjacentElement('afterbegin', banner);
+  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 6000);
+}
+
+// ══════════════════════════════════════════
+// ENVIAR A SHEETS
+// ══════════════════════════════════════════
+function enviarAGoogleSheets(scoreC) {
+  const codigo = document.getElementById('codigoParticipante').value || '---';
+  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
+  const fecha  = new Date().toISOString().slice(0,10);
+  const hora   = new Date().toLocaleTimeString('es-VE');
+
+  const datos  = recopilarRespuestas();
+  datos.fecha  = fecha; datos.hora = hora;
+  datos.score_conocimientos = scoreC;
+  datos.nivel_conocimientos = scoreC >= 9 ? 'Excelente' : scoreC >= 7 ? 'Bueno' : scoreC >= 5 ? 'Regular' : 'Bajo';
+
+  const form = document.createElement('form');
+  form.method = 'POST'; form.action = SHEETS_URL; form.target = '_sheetsFrame'; form.style.display = 'none';
+  const inp = document.createElement('input');
+  inp.type = 'hidden'; inp.name = 'payload'; inp.value = JSON.stringify(datos);
+  form.appendChild(inp);
+  document.body.appendChild(form);
+  document.getElementById('_sheetsFrame').onload = function() { mostrarSync('✅ Enviado'); };
+  form.submit();
+  setTimeout(() => form.remove(), 3000);
+}
+
+// ══════════════════════════════════════════
+// EXPORTAR CSV
+// ══════════════════════════════════════════
+function exportarCSV(scoreC) {
+  const codigo = document.getElementById('codigoParticipante').value || '---';
+  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
+  const fecha  = new Date().toISOString().slice(0,10);
+  const hora   = new Date().toLocaleTimeString('es-VE');
+  const rows   = [['codigo','modo','fecha','hora','seccion','item','respuesta']];
+
+  const datos = recopilarRespuestas();
+  for (let i = 1; i <= 8; i++) {
+    const k = 'p' + i;
+    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'I-Perfil', k, `"${datos[k]}"`]);
+  }
+  Object.keys(correctas).forEach(k => {
+    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'II-Conocimientos', k, datos[k]]);
+  });
+  rows.push([codigo, modo, fecha, hora, 'II-Score', 'conocimientos', `${scoreC}/10`]);
+  ['a1','a2','a3','a4','a5','a6','a7','a8'].forEach(k => {
+    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'III-Actitudes', k, datos[k]]);
+  });
+  ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].forEach(k => {
+    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'IV-Practicas', k, datos[k]]);
+  });
+  ['d1','d2','d3','d4','d5'].forEach(k => {
+    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'V-Digital', k, datos[k]]);
+  });
+
+  const csv  = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `${codigo}_${modo}_${fecha}.csv`; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════
+// IMPRIMIR RESULTADOS
+// ══════════════════════════════════════════
+function imprimirResultados() {
+  const codigo = document.getElementById('codigoParticipante').value || '---';
+  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
+  const score  = window._lastScore !== undefined ? window._lastScore : (parseInt(document.getElementById('mScore').textContent) || 0);
+  const color  = window._lastColor || '#5b6ceb';
+  const nivel  = document.getElementById('mLevel').textContent.replace(/^[^\w\s]+\s*/,'');
+  const pct    = Math.round((score / 10) * 100);
+  const fecha  = new Date().toISOString().slice(0,10);
+  const hora   = new Date().toLocaleTimeString('es-VE');
+
+  const perfilDefs = [
+    ['Edad','p1'],['Sexo','p2'],['Nivel educativo','p3'],['Años trabajando','p4'],
+    ['Licencia de conducir','p5'],['Capacitación previa','p6'],
+    ['Accidentes (12 meses)','p7'],['Plataforma preferida','p8']
+  ];
+  const perfilHTML = perfilDefs.map(function(x) {
+    const el = document.querySelector('input[name="'+x[1]+'"]:checked');
+    if (!el) return '';
+    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+x[0]+'</td>'
+          +'<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+el.value+'</td></tr>';
+  }).join('');
+
+  const vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
+  const vfHTML = vfKeys.map(function(k,i) {
+    const resp = vfAnswers[k] || '—';
+    const ok   = resp === correctas[k];
+    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+';">'
+      +'<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+'</td>'
+      +'<td style="padding:6px 10px;font-size:0.78rem;">'+(ok?'&#10003;':'&#10007;')+' '+resp+'</td>'
+      +'</tr>';
+  }).join('');
+
+  const actLabels=['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Cambio de hábitos','Autoresponsabilidad'];
+  const actHTML = ['a1','a2','a3','a4','a5','a6','a7','a8'].map(function(k,i) {
+    const el = document.querySelector('input[name="'+k+'"]:checked');
+    if (!el) return '';
+    const v = parseInt(el.value);
+    const bars = [1,2,3,4].map(function(n){
+      return '<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#5b6ceb':'#e2e5f0')+'"></span>';
+    }).join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+actLabels[i]+'</td>'
+          +'<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#5b6ceb;font-weight:700;">'+v+'/4</span></td></tr>';
+  }).join('');
+
+  const prLabels=['Uso de casco','Respeto semáforos','Evita celular','Revisión vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
+  const prHTML = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].map(function(k,i) {
+    const el = document.querySelector('input[name="'+k+'"]:checked');
+    if (!el) return '';
+    const v = parseInt(el.value);
+    const bars = [1,2,3,4].map(function(n){
+      return '<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#f59e0b':'#e2e5f0')+'"></span>';
+    }).join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+prLabels[i]+'</td>'
+          +'<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#f59e0b;font-weight:700;">'+v+'/4</span></td></tr>';
+  }).join('');
+
+  const modoLabel = modo.toUpperCase() + '-TEST';
+  const w = window.open('', '_blank', 'width=760,height=900');
+  const html = '<!DOCTYPE html><html lang="es"><head>'
+    + '<meta charset="UTF-8">'
+    + '<title>'+modoLabel+' '+codigo+' \u00b7 CAP-SV-DIGITAL</title>'
+    + '<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
+    + '<style>'
+    + '*{margin:0;padding:0;box-sizing:border-box;}'
+    + 'body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
+    + '.header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
+    + '.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
+    + '.header p{font-size:0.82rem;opacity:0.85;}'
+    + '.code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}'
+    + '.code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}'
+    + '.code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}'
+    + '.score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}'
+    + '.ring{width:90px;height:90px;border-radius:50%;border:4px solid '+color+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:'+color+'18;}'
+    + '.ring .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:'+color+';line-height:1;}'
+    + '.ring .max{font-size:0.68rem;color:#b2bec3;font-weight:700;}'
+    + '.si h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:'+color+';margin-bottom:4px;}'
+    + '.si p{font-size:0.82rem;color:#636e72;}'
+    + '.pills{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}'
+    + '.pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:4px 10px;font-size:0.72rem;color:#636e72;}'
+    + '.pill strong{color:#2d3436;}'
+    + '.sec{margin-bottom:20px;}'
+    + '.sec-t{font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:6px 12px;border-radius:6px;margin-bottom:8px;display:inline-block;}'
+    + '.c1{background:#5b6ceb;}.c2{background:#6a3fa8;}.c3{background:#00b894;}.c4{background:#f59e0b;}'
+    + 'table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}'
+    + '.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}'
+    + '.footer{text-align:center;margin-top:24px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:14px;}'
+    + '@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
+    + '</style></head><body>'
+    + '<div class="header">'
+    +   '<div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial \u00b7 '+modoLabel+'</p>'
+    +   '<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente \u00b7 Dpto. Enfermer\u00eda \u00b7 Ciudad Bol\u00edvar 2025</p></div>'
+    +   '<div class="code-badge"><div class="lbl">C\u00f3digo</div><div class="val">'+codigo+'</div></div>'
+    + '</div>'
+    + '<div class="score-box">'
+    +   '<div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
+    +   '<div class="si"><h2>'+nivel+'</h2><p>Secci\u00f3n de Conocimientos \u00b7 '+modoLabel+' completado</p>'
+    +   '<div class="pills">'
+    +     '<span class="pill">&#128197; <strong>'+fecha+'</strong></span>'
+    +     '<span class="pill">&#128336; <strong>'+hora+'</strong></span>'
+    +     '<span class="pill">&#128202; <strong>'+pct+'%</strong> de acierto</span>'
+    +   '</div></div>'
+    + '</div>'
+    + '<div class="sec"><span class="sec-t c1">I \u00b7 Perfil</span>'
+    +   '<table>'+(perfilHTML||'<tr><td style="padding:10px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table>'
+    + '</div>'
+    + '<div class="grid">'
+    +   '<div class="sec"><span class="sec-t c2">II \u00b7 Conocimientos V/F</span><table>'+vfHTML+'</table></div>'
+    +   '<div>'
+    +     '<div class="sec"><span class="sec-t c3">III \u00b7 Actitudes</span>'
+    +       '<table>'+(actHTML||'<tr><td style="padding:10px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
+    +     '<div class="sec"><span class="sec-t c4">IV \u00b7 Pr\u00e1cticas</span>'
+    +       '<table>'+(prHTML||'<tr><td style="padding:10px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="footer">CAP-SV-DIGITAL \u00b7 Instrumento de Seguridad Vial \u00b7 Universidad de Oriente \u00b7 '+new Date().toLocaleDateString('es-VE')+'</div>'
+    + '<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt>'
+    + '</body></html>';
+  w.document.write(html);
+  w.document.close();
+}
+
+// Cerrar modales al hacer clic fuera
+document.getElementById('resultModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+document.getElementById('incompleteModal').addEventListener('click', function(e) {
+  if (e.target === this) cerrarIncompleto();
+});
+
+updateProgress();
+</script>
+</body>
+</html>

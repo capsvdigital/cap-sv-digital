@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAP-SV-DIGITAL · Bienvenida · Ciudad Bolívar 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --purple:   #5b6ceb;
+  --violet:   #6a3fa8;
+  --green:    #00b894;
+  --green2:   #55efc4;
+  --coral:    #e8937a;
+  --dark:     #2d3436;
+  --gray:     #636e72;
+  --light:    #f8f9ff;
+  --border:   #e8eaf6;
+  --white:    #ffffff;
+  --grad:     linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
+  --font-h:   'Montserrat', sans-serif;
+  --font-b:   'Inter', sans-serif;
+  --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+  --shadow-sm: 0 2px 10px rgba(123,143,232,0.1);
+  --shadow-md: 0 6px 24px rgba(123,143,232,0.15);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.14);
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family: var(--font-b);
+  background: var(--grad);
+  min-height: 100vh;
+  padding: 16px;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* ── WRAPPER ── */
+.wrap{
+  max-width: 960px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.97);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* ── NAVBAR ── */
+.navbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--grad);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.nav-brand{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-logo{
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  border: 2px solid rgba(255,255,255,0.35);
+}
+.nav-name{
+  font-family: var(--font-h);
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: white;
+  letter-spacing: -0.3px;
+}
+.nav-links{
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.nav-link{
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: background 0.2s;
+  font-family: var(--font-h);
+}
+.nav-link:hover{ background: rgba(255,255,255,0.15); color: white; }
+.nav-link.active{ background: rgba(255,255,255,0.2); color: white; }
+
+/* ── HERO HEADER ── */
+.hero{
+  position: relative;
+  background: var(--grad);
+  padding: 56px 32px 48px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.02) 20px,rgba(255,255,255,0.02) 40px);
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  top:-60px; right:-60px;
+  width:300px; height:300px;
+  background: radial-gradient(circle, rgba(255,150,100,0.25), transparent 70%);
+  pointer-events:none;
+}
+.hero-icon-wrap{
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 80px; height: 80px;
+  background: white;
+  border-radius: 50%;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+  position: relative; z-index:1;
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 6px 24px rgba(0,0,0,0.2);}
+  50%{box-shadow:0 6px 32px rgba(255,255,255,0.4),0 0 0 8px rgba(255,255,255,0.08);}
+}
+.hero h1{
+  font-family: var(--font-h);
+  font-size: clamp(2.6rem,7vw,4rem);
+  font-weight: 900;
+  color: white;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  margin-bottom: 14px;
+  position: relative; z-index:1;
+  text-shadow: 0 3px 16px rgba(0,0,0,0.2);
+}
+.hero-tagline{
+  font-family: var(--font-h);
+  font-size: clamp(1rem,2.5vw,1.2rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 6px;
+  position: relative; z-index:1;
+}
+.hero-sub{
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+  position: relative; z-index:1;
+}
+.hero-divider{
+  width: 48px; height: 3px;
+  background: var(--green);
+  border-radius: 2px;
+  margin: 0 auto 24px;
+  position: relative; z-index:1;
+}
+.hero-badges{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative; z-index:1;
+}
+.hbadge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 24px;
+  font-family: var(--font-h);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: white;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(6px);
+  transition: all 0.2s;
+}
+.hbadge:hover{ background:rgba(255,255,255,0.25); transform:translateY(-2px); }
+
+/* ── MAIN CONTENT ── */
+.main{ padding: 28px 28px 0; }
+
+/* ── LOGIN BOX ── */
+.login-section{
+  background: linear-gradient(135deg, #f8f9ff, #f0f2ff);
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 36px 40px;
+  max-width: 780px;
+  margin: 0 auto 32px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.login-section::before{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background: var(--grad);
+}
+.login-title{
+  font-family: var(--font-h);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--purple);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.login-title i{ color: var(--green); }
+.login-desc{
+  font-size: 0.88rem;
+  color: var(--gray);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.code-example-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 8px 14px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--purple);
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.code-example-pill span{ color: var(--gray); font-family: var(--font-b); font-size:0.78rem; letter-spacing:0; }
+.input-wrap{
+  position: relative;
+  margin-bottom: 12px;
+}
+.input-wrap i{
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--purple);
+  font-size: 0.9rem;
+}
+.code-input{
+  width: 100%;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px 12px 40px;
+  color: var(--dark);
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.code-input:focus{
+  outline:none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(91,108,235,0.15);
+}
+.code-input::placeholder{
+  letter-spacing: 0;
+  font-size: 0.85rem;
+  opacity: 0.4;
+  font-family: var(--font-b);
+  text-transform: none;
+}
+.code-hint{
+  font-size: 0.78rem;
+  color: var(--gray);
+  margin-bottom: 20px;
+}
+.btn-start{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  background: var(--grad);
+  color: white;
+  border: none;
+  border-radius: var(--r-md);
+  font-family: var(--font-h);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(91,108,235,0.35);
+  text-decoration: none;
+}
+.btn-start:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(91,108,235,0.45);
+}
+.btn-start:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+#loginError{
+  display: none;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #fff0f0;
+  border: 1px solid #fecaca;
+  border-radius: var(--r-sm);
+  font-size: 0.82rem;
+  color: #dc2626;
+}
+
+/* ── SECCIÓN INFORMATIVA ── */
+.info-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.info-card{
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.info-card::before{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  border-radius: 3px 3px 0 0;
+}
+.info-card.c1::before{ background: var(--purple); }
+.info-card.c2::before{ background: var(--green); }
+.info-card.c3::before{ background: var(--violet); }
+.info-card.c4::before{ background: var(--coral); }
+.info-card:hover{
+  border-color: var(--purple);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.info-card-icon{
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+}
+.ic1{ background: rgba(91,108,235,0.1); color: var(--purple); }
+.ic2{ background: rgba(0,184,148,0.1); color: var(--green); }
+.ic3{ background: rgba(142,68,173,0.1); color: var(--violet); }
+.ic4{ background: rgba(225,112,85,0.1); color: var(--coral); }
+.info-card h3{
+  font-family: var(--font-h);
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+.info-card p{
+  font-size: 0.84rem;
+  color: var(--gray);
+  line-height: 1.55;
+}
+
+/* ── PLATAFORMAS ── */
+.platforms-section{
+  background: linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+  margin-bottom: 28px;
+}
+.platforms-header{
+  text-align: center;
+  margin-bottom: 28px;
+}
+.platforms-title{
+  font-family: var(--font-h);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+}
+.platforms-title i{
+  margin-right: 10px;
+  font-size: 1.3rem;
+}
+.platforms-sub{
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.72);
+}
+.platforms-grid{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+.platform-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 10px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.22);
+  border-radius: var(--r-md);
+  cursor: default;
+  transition: all 0.2s;
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+.platform-card:hover{
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.platform-icon{
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  transition: transform 0.2s;
+}
+.platform-card:hover .platform-icon{ transform: scale(1.1); }
+.p-ig{ background: rgba(225,48,108,0.25); color: #ff6b9d; }
+.p-tt{ background: rgba(255,255,255,0.2); color: white; }
+.p-wp{ background: rgba(37,211,102,0.25); color: #55efc4; }
+.p-yt{ background: rgba(255,0,0,0.25); color: #ff7675; }
+.p-gf{ background: rgba(66,133,244,0.25); color: #74b9ff; }
+.p-qr{ background: rgba(255,255,255,0.15); color: white; }
+.platform-name{
+  font-family: var(--font-h);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+}
+.platform-desc{
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.62);
+  line-height: 1.3;
+}
+@media(max-width:700px){
+  .platforms-grid{ grid-template-columns: repeat(3,1fr); }
+}
+@media(max-width:420px){
+  .platforms-grid{ grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── NOTICIAS/NOVEDADES ── */
+.news-section{ margin-bottom: 28px; }
+.news-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+.news-card{
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.news-card:hover{
+  border-color: var(--purple);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.news-dot{
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.nd1{ background: var(--green); }
+.nd2{ background: var(--purple); }
+.nd3{ background: var(--coral); }
+.news-card h4{
+  font-family: var(--font-h);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+.news-card p{
+  font-size: 0.8rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
+.news-tag{
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: var(--font-h);
+}
+.nt-green{ background:#dcfce7; color:#16a34a; }
+.nt-blue{ background:#ede9fe; color:#5b6ceb; }
+.nt-orange{ background:#ffedd5; color:#ea580c; }
+
+/* ── FOOTER INSTITUCIONAL ── */
+.inst-footer{
+  background: #2d3436;
+  color: #dfe6e9;
+  padding: 40px 28px 24px;
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
+  position: relative;
+  overflow: hidden;
+  margin-top: 0;
+}
+.inst-footer::before{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:4px;
+  background: var(--grad);
+}
+.inst-footer-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+.inst-footer-sec h4{
+  font-family: var(--font-h);
+  color: var(--green);
+  margin-bottom: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 8px;
+}
+.inst-footer-sec h4::after{
+  content:'';
+  position:absolute; bottom:0; left:0;
+  width:28px; height:2px;
+  background: var(--green);
+  border-radius:1px;
+}
+.inst-footer-sec p{
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #b2bec3;
+}
+.inst-footer-sec p i{ margin-right:6px; color:var(--green); width:14px; }
+.inst-footer-sep{
+  border:none;
+  border-top:1px solid rgba(255,255,255,0.07);
+  margin: 20px 0;
+}
+.inst-authors-box{
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 20px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  max-width: 700px;
+  margin: 0 auto;
+}
+.inst-udo-logo{
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--green);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  background: white;
+  padding: 5px;
+  object-fit: contain;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.inst-udo-logo:hover{ transform:scale(1.05); }
+.inst-authors-info{ flex:1; min-width:200px; }
+.inst-authors-label{
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  font-family: var(--font-h);
+}
+.inst-authors-names{
+  font-family: var(--font-h);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+}
+.inst-authors-dept{
+  font-size: 0.8rem;
+  color: #b2bec3;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+.inst-authors-tutor{
+  font-size: 0.8rem;
+  color: #b2bec3;
+}
+.inst-authors-tutor i{ color:var(--green); margin-right:5px; }
+.inst-copyright{
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .navbar{ padding:12px 16px; }
+  .hero{ padding:40px 16px 36px; }
+  .main{ padding:16px 16px 0; }
+  .platforms-grid{ grid-template-columns:repeat(2,1fr); }
+  .inst-authors-box{ flex-direction:column; text-align:center; }
+  .inst-footer-sec h4::after{ left:50%; transform:translateX(-50%); }
+  .inst-footer{ padding:32px 16px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-brand" href="#">
+      <div class="nav-logo">🏍️</div>
+      <span class="nav-name">CAP-SV-DIGITAL</span>
+    </a>
+    <div class="nav-links">
+      <a href="#instrumento" class="nav-link active">Instrumento</a>
+      <a href="#plataformas" class="nav-link">Plataformas</a>
+      <a href="#noticias" class="nav-link">Novedades</a>
+      <a href="#equipo" class="nav-link">Equipo</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-icon-wrap">🏍️</div>
+    <h1>CAP-SV-DIGITAL</h1>
+    <p class="hero-tagline">Instrumento de Seguridad Vial para Motociclistas</p>
+    <p class="hero-sub">Intervención Educativa Digital · Ciudad Bolívar, Venezuela 2025</p>
+    <div class="hero-divider"></div>
+    <div class="hero-badges">
+      <span class="hbadge"><i class="fas fa-flask"></i> Cuasi-experimental</span>
+      <span class="hbadge"><i class="fas fa-chart-line"></i> Pre/Post evaluación</span>
+      <span class="hbadge"><i class="fas fa-mobile-alt"></i> Digital nativo</span>
+      <span class="hbadge"><i class="fas fa-book-open"></i> Basado en evidencia</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- LOGIN / CÓDIGO -->
+    <div id="instrumento" class="login-section" style="margin-top:28px;">
+      <p class="login-title"><i class="fas fa-key"></i> Ingreso del Participante</p>
+      <p class="login-desc">Para iniciar el instrumento ingrese su <strong>código personal de participante</strong>. Este código garantiza el emparejamiento anónimo de sus respuestas en el pre-test y post-test.</p>
+      <div class="code-example-pill">
+        <i class="fas fa-info-circle" style="color:var(--purple)"></i>
+        <strong>CAPE2311</strong>
+        <span>= Carlos Pérez · nacido 23 nov</span>
+      </div>
+      <p class="login-desc" style="margin-bottom:8px;">Fórmula: <strong>2 letras nombre</strong> + <strong>2 letras apellido</strong> + <strong>día</strong> (2 dígitos) + <strong>mes</strong> (2 dígitos)</p>
+      <div class="input-wrap">
+        <i class="fas fa-fingerprint"></i>
+        <input type="text" class="code-input" id="codigoInput" maxlength="8"
+               placeholder="Ej: MALA0315"
+               oninput="this.value=this.value.toUpperCase(); validateCode()">
+      </div>
+      <p class="code-hint"><i class="fas fa-lock" style="color:var(--green);margin-right:4px"></i> Sus respuestas son completamente anónimas y se usan únicamente con fines académicos.</p>
+
+      <!-- Spinner verificando -->
+      <div id="spinnerCheck" style="display:none;text-align:center;padding:14px 0;color:var(--gray);font-size:0.88rem;">
+        <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando código...
+      </div>
+
+      <button class="btn-start" id="btnStart" onclick="iniciarVerificacion()" disabled>
+        <i class="fas fa-play-circle"></i> Comenzar Instrumento
+      </button>
+      <div id="loginError"><i class="fas fa-exclamation-circle"></i> Por favor ingrese un código válido de 8 caracteres (ej: CAPE1123)</div>
+
+      <!-- ══════════════════════════════════════
+           WIZARD — aparece solo si código existe
+      ══════════════════════════════════════ -->
+      <div id="wizardBox" style="display:none;margin-top:20px;border-top:2px solid var(--border);padding-top:20px;">
+
+        <!-- Pregunta: ¿ya hiciste el pre-test? -->
+        <div id="wPregunta" style="display:none;">
+          <div style="background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
+            <div style="font-size:1.6rem;margin-bottom:8px;">🔍</div>
+            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:var(--dark);margin-bottom:6px;">Este código ya está registrado</p>
+            <p style="font-size:0.83rem;color:var(--gray);margin-bottom:18px;">¿Ya completaste el <strong>pre-test</strong> anteriormente con este código?</p>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+              <button onclick="respuestaPretest(true)"
+                style="padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(135deg,#00b894,#00cec9);color:white;font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.25);">
+                <i class="fas fa-check"></i> Sí, ya lo hice
+              </button>
+              <button onclick="respuestaPretest(false)"
+                style="padding:10px 24px;border-radius:8px;border:2px solid var(--border);background:white;color:var(--gray);font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;">
+                <i class="fas fa-times"></i> No, es mi primera vez
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post-test disponible -->
+        <div id="wPostOk" style="display:none;">
+          <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.6rem;margin-bottom:8px;">🏁</div>
+            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#065f46;margin-bottom:4px;">¡El post-test está disponible!</p>
+            <p style="font-size:0.83rem;color:#047857;">Tu código fue verificado. Puedes iniciar la segunda fase del estudio.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-start" onclick="irAlInstrumento('post')">
+              <i class="fas fa-flag-checkered"></i> Iniciar Post-test
+            </button>
+            <button class="btn-start" id="btnImprimirPreOk"
+              style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
+              onclick="imprimirPretest()">
+              <i class="fas fa-print"></i> Imprimir Pre-test
+            </button>
+          </div>
+        </div>
+
+        <!-- Post-test no disponible aún -->
+        <div id="wPostEspera" style="display:none;">
+          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.6rem;margin-bottom:8px;">⏳</div>
+            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#92400e;margin-bottom:4px;">Post-test aún no disponible</p>
+            <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">La segunda fase será habilitada por el investigador al finalizar la intervención educativa. Espera la indicación del equipo.</p>
+          </div>
+          <button class="btn-start" id="btnImprimirPreEspera"
+            style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
+            onclick="imprimirPretest()">
+            <i class="fas fa-print"></i> Imprimir Pre-test
+          </button>
+        </div>
+
+        <!-- Colisión: código existe pero dice que no hizo pre-test -->
+        <div id="wColision" style="display:none;">
+          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;margin-bottom:14px;">
+            <p style="font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#92400e;margin-bottom:6px;"><i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>Código posiblemente duplicado</p>
+            <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">Otra persona podría tener el mismo código. Intenta con una variación — por ejemplo, usando la <strong>inicial de tu segundo nombre</strong> como la 2da letra, o tu <strong>segundo apellido</strong>.</p>
+          </div>
+          <button class="btn-start" onclick="resetWizard()">
+            <i class="fas fa-redo"></i> Intentar con otro código
+          </button>
+        </div>
+
+        <!-- Spinner verificando post -->
+        <div id="wSpinnerPost" style="display:none;text-align:center;padding:16px 0;color:var(--gray);font-size:0.88rem;">
+          <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando disponibilidad del post-test...
+        </div>
+
+      </div><!-- /wizardBox -->
+    </div>
+
+    <!-- INFO CARDS -->
+    <div id="sobre" style="margin-bottom:10px;">
+      <p class="section-label"><i class="fas fa-info-circle"></i> Sobre el instrumento</p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card c1">
+        <div class="info-card-icon ic1"><i class="fas fa-clipboard-list"></i></div>
+        <h3>¿Qué mide?</h3>
+        <p>Evalúa <strong>Conocimientos, Actitudes y Prácticas</strong> (CAP) sobre seguridad vial en conductores de motocicletas activos en Ciudad Bolívar.</p>
+      </div>
+      <div class="info-card c2">
+        <div class="info-card-icon ic2"><i class="fas fa-sync-alt"></i></div>
+        <h3>Diseño Pre / Post</h3>
+        <p>Aplicado en <strong>dos momentos</strong>: antes y después de la intervención educativa digital de 8 semanas. Sus respuestas se emparejan por código anónimo.</p>
+      </div>
+      <div class="info-card c3">
+        <div class="info-card-icon ic3"><i class="fas fa-list-ol"></i></div>
+        <h3>Estructura</h3>
+        <p><strong>46 ítems</strong> distribuidos en 5 secciones: perfil sociodemográfico, conocimientos (V/F), actitudes (Likert 4 puntos), prácticas y evaluación digital.</p>
+      </div>
+      <div class="info-card c4">
+        <div class="info-card-icon ic4"><i class="fas fa-clock"></i></div>
+        <h3>Duración</h3>
+        <p>El cuestionario completo toma aproximadamente <strong>15 a 20 minutos</strong>. Puede completarse desde cualquier dispositivo móvil con internet.</p>
+      </div>
+    </div>
+
+    <!-- PLATAFORMAS -->
+    <div id="plataformas" class="platforms-section">
+      <div class="platforms-header">
+        <h2 class="platforms-title"><i class="fas fa-rocket"></i> Tecnologías y Plataformas de Intervención</h2>
+        <p class="platforms-sub">Herramientas digitales integradas en la investigación</p>
+      </div>
+      <div class="platforms-grid">
+        <div class="platform-card">
+          <div class="platform-icon p-ig"><i class="fab fa-instagram"></i></div>
+          <div class="platform-name">Instagram</div>
+          <div class="platform-desc">Stories, Reels, IGTV</div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon p-tt"><i class="fab fa-tiktok"></i></div>
+          <div class="platform-name">TikTok</div>
+          <div class="platform-desc">Videos educativos virales</div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon p-wp"><i class="fab fa-whatsapp"></i></div>
+          <div class="platform-name">WhatsApp</div>
+          <div class="platform-desc">Canales y recordatorios</div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon p-yt"><i class="fab fa-youtube"></i></div>
+          <div class="platform-name">YouTube</div>
+          <div class="platform-desc">Tutoriales y testimonios</div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon p-gf"><i class="fab fa-google"></i></div>
+          <div class="platform-name">Google Forms</div>
+          <div class="platform-desc">Recolección de datos</div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon p-qr"><i class="fas fa-qrcode"></i></div>
+          <div class="platform-name">QR Codes</div>
+          <div class="platform-desc">Acceso rápido en campo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTICIAS -->
+    <div id="noticias" class="news-section">
+      <p class="section-label"><i class="fas fa-bell"></i> Novedades del estudio</p>
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-dot nd1"></div>
+          <div>
+            <h4>Pre-test activo</h4>
+            <p>La primera fase de recolección de datos está en curso. Si eres mototaxista o delivery en Ciudad Bolívar, ¡tu participación es clave!</p>
+            <span class="news-tag nt-green">Activo</span>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-dot nd2"></div>
+          <div>
+            <h4>Intervención digital: 8 semanas</h4>
+            <p>Contenido educativo sobre seguridad vial publicado semanalmente en WhatsApp, TikTok, Instagram y YouTube.</p>
+            <span class="news-tag nt-blue">En proceso</span>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-dot nd3"></div>
+          <div>
+            <h4>Validación por expertos</h4>
+            <p>El instrumento CAP-SV-DIGITAL fue sometido a juicio de 3 expertos en seguridad vial, enfermería y metodología de investigación.</p>
+            <span class="news-tag nt-orange">Completado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER INSTITUCIONAL -->
+  <footer id="equipo" class="inst-footer">
+    <div class="inst-footer-grid">
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-graduation-cap"></i> Contexto Académico</h4>
+        <p><i class="fas fa-book"></i> Investigación de Pregrado</p>
+        <p><i class="fas fa-university"></i> Universidad de Oriente · Núcleo Bolívar</p>
+        <p><i class="fas fa-stethoscope"></i> Departamento de Enfermería</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-map-marker-alt"></i> Ubicación y Muestra</h4>
+        <p><i class="fas fa-map-pin"></i> Ciudad Bolívar, Estado Bolívar, Venezuela</p>
+        <p><i class="fas fa-motorcycle"></i> Mototaxistas y delivery activos</p>
+        <p><i class="fas fa-calendar-alt"></i> Período: Julio – Diciembre 2025</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-flask"></i> Diseño Metodológico</h4>
+        <p><i class="fas fa-cogs"></i> Enfoque Cuasi-experimental</p>
+        <p><i class="fas fa-chart-line"></i> Diseño Pre / Post test</p>
+        <p><i class="fas fa-calculator"></i> Análisis estadístico inferencial</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-check-circle"></i> Validación</h4>
+        <p><i class="fas fa-user-check"></i> Juicio de 3 expertos</p>
+        <p><i class="fas fa-vial"></i> Prueba piloto (n=30)</p>
+        <p><i class="fas fa-chart-pie"></i> Alfa de Cronbach > 0.70</p>
+      </div>
+    </div>
+
+    <hr class="inst-footer-sep">
+
+    <div class="inst-authors-box">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Logo_UDO.svg"
+           alt="Logo Universidad de Oriente"
+           class="inst-udo-logo" />
+      <div class="inst-authors-info">
+        <div class="inst-authors-label">Investigadoras Principales</div>
+        <div class="inst-authors-names">Meredith La Torraca &amp; Ana Carolina González</div>
+        <div class="inst-authors-dept">Escuela de Ciencias de la Salud "Dr. Francisco Battistini Casalta" · Depto. Enfermería</div>
+        <div class="inst-authors-tutor"><i class="fas fa-chalkboard-teacher"></i> Tutor Académico: Prof. Norsol Mata</div>
+      </div>
+    </div>
+
+    <p class="inst-copyright">© 2025 CAP-SV-DIGITAL · Instrumento de Seguridad Vial para Motociclistas · Universidad de Oriente, Venezuela · Todos los derechos reservados para fines académicos.</p>
+    <p style="margin-top:12px;">
+      <a href="admin-cap.html" style="font-size:0.72rem;color:rgba(255,255,255,0.2);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">
+        <i class="fas fa-lock" style="margin-right:4px;font-size:0.65rem;"></i>Acceso Administrador
+      </a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzI5Ultiybzol3RiytllbSJCd6m2eSX51xe-BFq6d9lp9yPq8aDZ1dwVQLiXT1wTwR5/exec';
+
+// ══════════════════════════════════════════
+// VALIDACIÓN DEL INPUT (igual que antes)
+// ══════════════════════════════════════════
+function validateCode(){
+  const val = document.getElementById('codigoInput').value;
+  const btn = document.getElementById('btnStart');
+  const err = document.getElementById('loginError');
+  const valid = /^[A-Z]{4}[0-9]{4}$/.test(val);
+  btn.disabled = !valid;
+  err.style.display = (val.length === 8 && !valid) ? 'block' : 'none';
+  // Si cambia el código, ocultar wizard previo
+  ocultarWizard();
+}
+
+// Enter también funciona
+document.getElementById('codigoInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') iniciarVerificacion();
+});
+
+// ══════════════════════════════════════════
+// INICIAR — verificar si el código ya existe
+// ══════════════════════════════════════════
+function iniciarVerificacion(){
+  const codigo = document.getElementById('codigoInput').value;
+  if(!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
+
+  // Bloquear input y botón mientras verifica
+  document.getElementById('codigoInput').disabled = true;
+  document.getElementById('btnStart').style.display = 'none';
+  document.getElementById('spinnerCheck').style.display = 'block';
+  ocultarWizard();
+
+  const cbName = '_cb_ver_' + Date.now();
+  const timeout = setTimeout(function(){
+    limpiarCb(cbName);
+    desbloquearInput();
+    // Sin conexión: asumir código nuevo, ir directo
+    irAlInstrumento('pre');
+  }, 8000);
+
+  window[cbName] = function(data){
+    clearTimeout(timeout);
+    limpiarCb(cbName);
+    document.getElementById('spinnerCheck').style.display = 'none';
+
+    if(data.existe){
+      // Código ya existe → mostrar wizard
+      mostrarWizardPanel('wPregunta');
+    } else {
+      // Código nuevo → ir directo al pre-test
+      irAlInstrumento('pre');
+    }
+  };
+
+  const s = document.createElement('script');
+  s.src = SHEETS_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){
+    clearTimeout(timeout);
+    limpiarCb(cbName);
+    desbloquearInput();
+    irAlInstrumento('pre'); // Sin conexión: dejar pasar
+  };
+  document.head.appendChild(s);
+}
+
+// ══════════════════════════════════════════
+// RESPUESTA ¿ya hiciste el pre-test?
+// ══════════════════════════════════════════
+function respuestaPretest(yaHizo){
+  if(yaHizo){
+    // Verificar si post-test está habilitado
+    mostrarWizardPanel('wSpinnerPost');
+    const cbName = '_cb_cfg_' + Date.now();
+    const timeout = setTimeout(function(){
+      limpiarCb(cbName);
+      mostrarWizardPanel('wPostEspera');
+    }, 8000);
+
+    window[cbName] = function(data){
+      clearTimeout(timeout);
+      limpiarCb(cbName);
+      const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
+      mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
+    };
+
+    const s = document.createElement('script');
+    s.src = SHEETS_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
+    s.onerror = function(){
+      clearTimeout(timeout);
+      limpiarCb(cbName);
+      mostrarWizardPanel('wPostEspera');
+    };
+    document.head.appendChild(s);
+  } else {
+    // Dice que no hizo pre-test pero código existe → colisión
+    mostrarWizardPanel('wColision');
+  }
+}
+
+// ══════════════════════════════════════════
+// IR AL INSTRUMENTO
+// ══════════════════════════════════════════
+function irAlInstrumento(modo){
+  const codigo = document.getElementById('codigoInput').value;
+  sessionStorage.setItem('cap_codigo', codigo);
+  sessionStorage.setItem('cap_modo', modo);
+  const archivo = modo === 'post' ? 'instrumento-cap-post.html' : 'instrumento-cap-nuevo.html';
+  window.location.href = archivo + '?codigo=' + codigo + '&modo=' + modo;
+}
+
+// ══════════════════════════════════════════
+// HELPERS DE UI
+// ══════════════════════════════════════════
+function mostrarWizardPanel(id){
+  var box = document.getElementById('wizardBox');
+  box.style.display = 'block';
+  ['wPregunta','wPostOk','wPostEspera','wColision','wSpinnerPost'].forEach(function(p){
+    document.getElementById(p).style.display = 'none';
+  });
+  document.getElementById(id).style.display = 'block';
+  desbloquearInput();
+}
+
+function ocultarWizard(){
+  document.getElementById('wizardBox').style.display = 'none';
+}
+
+function desbloquearInput(){
+  document.getElementById('codigoInput').disabled = false;
+  document.getElementById('btnStart').style.display = 'flex';
+  document.getElementById('spinnerCheck').style.display = 'none';
+}
+
+function resetWizard(){
+  ocultarWizard();
+  desbloquearInput();
+  document.getElementById('codigoInput').value = '';
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('codigoInput').focus();
+}
+
+function limpiarCb(name){
+  try { delete window[name]; } catch(e){}
+  document.querySelectorAll('script[src*="' + name + '"]').forEach(function(s){ s.remove(); });
+}
+
+// ── Imprimir resumen del pre-test consultando Sheets ──────────
+function imprimirPretest(){
+  var codigo = document.getElementById('codigoInput').value;
+  if(!codigo){ alert('Por favor ingrese su código primero.'); return; }
+
+  // Mostrar spinner en el botón
+  var btns = document.querySelectorAll('#btnImprimirPreOk, #btnImprimirPreEspera');
+  btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...'; b.disabled = true; });
+
+  var cbName = '_cb_print_' + Date.now();
+  var timeout = setTimeout(function(){
+    limpiarCb(cbName);
+    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+    alert('No se pudo conectar a la base de datos. Verifique su conexión e intente nuevamente.');
+  }, 8000);
+
+  window[cbName] = function(data){
+    clearTimeout(timeout);
+    limpiarCb(cbName);
+    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+
+    // Buscar registro del código en hoja pre
+    var lista = data.pre || [];
+    var registro = null;
+    lista.forEach(function(r){
+      var cod = ((r.codigo || r['c_digo'] || r['código'] || '') + '').trim().toUpperCase();
+      if(cod === codigo.toUpperCase()) registro = r;
+    });
+
+    if(!registro){
+      alert('No se encontraron datos del pre-test para este código. Si acaba de enviar, espere unos segundos e intente de nuevo.');
+      return;
+    }
+
+    abrirVentanaImpresion(codigo, registro);
+  };
+
+  var s = document.createElement('script');
+  s.src = SHEETS_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){
+    clearTimeout(timeout);
+    limpiarCb(cbName);
+    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+    alert('Error de conexión. Intente nuevamente.');
+  };
+  document.head.appendChild(s);
+}
+
+function abrirVentanaImpresion(codigo, r){
+  var score = parseInt(r.score_conocimientos) || 0;
+  var nivel = r.nivel_conocimientos || '—';
+  var fecha = r.fecha || '—';
+  var hora  = r.hora  || '—';
+  var modo  = r.modo  || 'pre';
+  var pct   = Math.round((score / 10) * 100);
+
+  // Color según nivel
+  var color = score >= 9 ? '#10b981' : score >= 7 ? '#3b82f6' : score >= 5 ? '#f59e0b' : '#ef4444';
+
+  // Secciones a mostrar
+  var perfilItems = [
+    ['Edad', r.p1], ['Sexo', r.p2], ['Nivel educativo', r.p3],
+    ['Años trabajando', r.p4], ['Licencia', r.p5],
+    ['Capacitación previa', r.p6], ['Accidentes (12 meses)', r.p7],
+    ['Plataforma preferida', r.p8]
+  ].filter(function(x){ return x[1]; });
+
+  var perfilHTML = perfilItems.map(function(x){
+    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[0] + '</td>'
+         + '<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[1] + '</td></tr>';
+  }).join('');
+
+  var vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
+  var correctas = {c1:'V',c2:'V',c3:'F',c4:'F',c5:'V',c6:'V',c7:'V',c8:'V',c9:'F',c10:'F'};
+  var vfHTML = vfKeys.map(function(k, i){
+    var resp = r[k] || '—';
+    var ok   = resp === correctas[k];
+    var bg   = ok ? '#f0fdf4' : '#fef2f2';
+    var col  = ok ? '#065f46' : '#991b1b';
+    return '<tr style="background:' + bg + ';">'
+      + '<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C' + (i+1) + '</td>'
+      + '<td style="padding:6px 10px;font-size:0.78rem;">' + (ok ? '✓' : '✗') + ' ' + resp + '</td>'
+      + '</tr>';
+  }).join('');
+
+  var actFields = ['a1','a2','a3','a4','a5','a6','a7','a8'];
+  var actLabels = ['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Disposición al cambio','Autoresponsabilidad'];
+  var actHTML = actFields.map(function(k, i){
+    var val = r[k];
+    if(!val) return '';
+    var bars = [1,2,3,4].map(function(n){
+      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:' + (n <= parseInt(val) ? '#5b6ceb' : '#e2e5f0') + ';"></span>';
+    }).join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">' + actLabels[i] + '</td>'
+         + '<td style="padding:5px 10px;">' + bars + ' <span style="font-size:0.75rem;color:#5b6ceb;font-weight:700;">' + val + '/4</span></td></tr>';
+  }).join('');
+
+  var prFields = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'];
+  var prLabels = ['Uso de casco','Respeto semáforos','Evita celular','Revisión del vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
+  var prHTML = prFields.map(function(k, i){
+    var val = r[k];
+    if(!val) return '';
+    var bars = [1,2,3,4].map(function(n){
+      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:' + (n <= parseInt(val) ? '#f59e0b' : '#e2e5f0') + ';"></span>';
+    }).join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">' + prLabels[i] + '</td>'
+         + '<td style="padding:5px 10px;">' + bars + ' <span style="font-size:0.75rem;color:#f59e0b;font-weight:700;">' + val + '/4</span></td></tr>';
+  }).join('');
+
+  var w = window.open('', '_blank', 'width=760,height=900');
+  w.document.write(`<!DOCTYPE html><html lang="es"><head>
+<meta charset="UTF-8">
+<title>Pre-test ${codigo} · CAP-SV-DIGITAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}
+  .header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .header-left h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}
+  .header-left p{font-size:0.82rem;opacity:0.85;}
+  .code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}
+  .code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}
+  .code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}
+  .score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}
+  .score-ring{width:90px;height:90px;border-radius:50%;border:4px solid ${color};display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:${color}18;}
+  .score-num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:${color};line-height:1;}
+  .score-max{font-size:0.68rem;color:#b2bec3;font-weight:700;}
+  .score-info h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:${color};margin-bottom:4px;}
+  .score-info p{font-size:0.82rem;color:#636e72;line-height:1.5;}
+  .pills{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+  .pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:5px 12px;font-size:0.75rem;color:#636e72;}
+  .pill strong{color:#2d3436;}
+  .section{margin-bottom:20px;}
+  .sec-title{font-family:Montserrat,sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:7px 14px;border-radius:6px;margin-bottom:8px;display:inline-block;}
+  .sec-purple{background:#5b6ceb;}.sec-violet{background:#6a3fa8;}.sec-green{background:#00b894;}.sec-amber{background:#f59e0b;}
+  table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}
+  .footer{text-align:center;margin-top:28px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:16px;}
+  @media print{body{padding:16px;}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.score-ring,.sec-title,.pill{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style></head><body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>CAP-SV-DIGITAL</h1>
+    <p>Instrumento de Seguridad Vial · Pre-test</p>
+    <p style="margin-top:4px;font-size:0.75rem;opacity:0.7;">Universidad de Oriente · Dpto. Enfermería · Ciudad Bolívar 2025</p>
+  </div>
+  <div class="code-badge">
+    <div class="lbl">Código</div>
+    <div class="val">${codigo}</div>
+  </div>
+</div>
+
+<div class="score-box">
+  <div class="score-ring">
+    <div class="score-num">${score}</div>
+    <div class="score-max">/ 10</div>
+  </div>
+  <div class="score-info">
+    <h2>${nivel}</h2>
+    <p>Sección de Conocimientos · Pre-test completado</p>
+    <div class="pills">
+      <span class="pill">📅 <strong>${fecha}</strong></span>
+      <span class="pill">🕐 <strong>${hora}</strong></span>
+      <span class="pill">📊 <strong>${pct}%</strong> de acierto</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <span class="sec-title sec-purple">I · Perfil</span>
+  <table>${perfilHTML}</table>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+  <div class="section">
+    <span class="sec-title sec-violet">II · Conocimientos V/F</span>
+    <table>${vfHTML}</table>
+  </div>
+  <div>
+    <div class="section">
+      <span class="sec-title sec-green">III · Actitudes</span>
+      <table>${actHTML || '<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>'}</table>
+    </div>
+    <div class="section">
+      <span class="sec-title sec-amber">IV · Prácticas</span>
+      <table>${prHTML || '<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>'}</table>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · ${new Date().toLocaleDateString('es-VE')}
+</div>
+
+<script>window.onload=function(){window.print();};<\/script>
+</body></html>`);
+  w.document.close();
+}
+</script>
+</body>
+</html>
