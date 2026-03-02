@@ -158,39 +158,15 @@ body{
 .hero-sub{
   font-size: 0.9rem;
   color: rgba(255,255,255,0.7);
-  margin-bottom: 20px;
   position: relative; z-index:1;
 }
 .hero-divider{
   width: 48px; height: 3px;
   background: var(--green);
   border-radius: 2px;
-  margin: 0 auto 24px;
+  margin: 20px auto 0;
   position: relative; z-index:1;
 }
-.hero-badges{
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-  position: relative; z-index:1;
-}
-.hbadge{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 16px;
-  border-radius: 24px;
-  font-family: var(--font-h);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: white;
-  background: rgba(255,255,255,0.15);
-  border: 1.5px solid rgba(255,255,255,0.3);
-  backdrop-filter: blur(6px);
-  transition: all 0.2s;
-}
-.hbadge:hover{ background:rgba(255,255,255,0.25); transform:translateY(-2px); }
 
 /* ── MAIN CONTENT ── */
 .main{ padding: 28px 28px 0; }
@@ -670,12 +646,6 @@ body{
     <p class="hero-tagline">Instrumento de Seguridad Vial para Motociclistas</p>
     <p class="hero-sub">Intervención Educativa Digital · Ciudad Bolívar, Venezuela 2025</p>
     <div class="hero-divider"></div>
-    <div class="hero-badges">
-      <span class="hbadge"><i class="fas fa-flask"></i> Cuasi-experimental</span>
-      <span class="hbadge"><i class="fas fa-chart-line"></i> Pre/Post evaluación</span>
-      <span class="hbadge"><i class="fas fa-mobile-alt"></i> Digital nativo</span>
-      <span class="hbadge"><i class="fas fa-book-open"></i> Basado en evidencia</span>
-    </div>
   </div>
 
   <!-- MAIN -->
@@ -699,7 +669,6 @@ body{
       </div>
       <p class="code-hint"><i class="fas fa-lock" style="color:var(--green);margin-right:4px"></i> Sus respuestas son completamente anónimas y se usan únicamente con fines académicos.</p>
 
-      <!-- Spinner verificando -->
       <div id="spinnerCheck" style="display:none;text-align:center;padding:14px 0;color:var(--gray);font-size:0.88rem;">
         <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando código...
       </div>
@@ -709,12 +678,9 @@ body{
       </button>
       <div id="loginError"><i class="fas fa-exclamation-circle"></i> Por favor ingrese un código válido de 8 caracteres (ej: CAPE1123)</div>
 
-      <!-- ══════════════════════════════════════
-           WIZARD — aparece solo si código existe
-      ══════════════════════════════════════ -->
+      <!-- WIZARD -->
       <div id="wizardBox" style="display:none;margin-top:20px;border-top:2px solid var(--border);padding-top:20px;">
 
-        <!-- Pregunta: ¿ya hiciste el pre-test? -->
         <div id="wPregunta" style="display:none;">
           <div style="background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
             <div style="font-size:1.6rem;margin-bottom:8px;">🔍</div>
@@ -733,7 +699,6 @@ body{
           </div>
         </div>
 
-        <!-- Post-test disponible -->
         <div id="wPostOk" style="display:none;">
           <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
             <div style="font-size:1.6rem;margin-bottom:8px;">🏁</div>
@@ -752,7 +717,6 @@ body{
           </div>
         </div>
 
-        <!-- Post-test no disponible aún -->
         <div id="wPostEspera" style="display:none;">
           <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
             <div style="font-size:1.6rem;margin-bottom:8px;">⏳</div>
@@ -766,7 +730,6 @@ body{
           </button>
         </div>
 
-        <!-- Colisión: código existe pero dice que no hizo pre-test -->
         <div id="wColision" style="display:none;">
           <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;margin-bottom:14px;">
             <p style="font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#92400e;margin-bottom:6px;"><i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>Código posiblemente duplicado</p>
@@ -777,7 +740,6 @@ body{
           </button>
         </div>
 
-        <!-- Spinner verificando post -->
         <div id="wSpinnerPost" style="display:none;text-align:center;padding:16px 0;color:var(--gray);font-size:0.88rem;">
           <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando disponibilidad del post-test...
         </div>
@@ -939,14 +901,8 @@ body{
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════════
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzI5Ultiybzol3RiytllbSJCd6m2eSX51xe-BFq6d9lp9yPq8aDZ1dwVQLiXT1wTwR5/exec';
 
-// ══════════════════════════════════════════
-// VALIDACIÓN DEL INPUT (igual que antes)
-// ══════════════════════════════════════════
 function validateCode(){
   const val = document.getElementById('codigoInput').value;
   const btn = document.getElementById('btnStart');
@@ -954,23 +910,17 @@ function validateCode(){
   const valid = /^[A-Z]{4}[0-9]{4}$/.test(val);
   btn.disabled = !valid;
   err.style.display = (val.length === 8 && !valid) ? 'block' : 'none';
-  // Si cambia el código, ocultar wizard previo
   ocultarWizard();
 }
 
-// Enter también funciona
 document.getElementById('codigoInput').addEventListener('keydown', function(e){
   if(e.key === 'Enter') iniciarVerificacion();
 });
 
-// ══════════════════════════════════════════
-// INICIAR — verificar si el código ya existe
-// ══════════════════════════════════════════
 function iniciarVerificacion(){
   const codigo = document.getElementById('codigoInput').value;
   if(!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
 
-  // Bloquear input y botón mientras verifica
   document.getElementById('codigoInput').disabled = true;
   document.getElementById('btnStart').style.display = 'none';
   document.getElementById('spinnerCheck').style.display = 'block';
@@ -980,7 +930,6 @@ function iniciarVerificacion(){
   const timeout = setTimeout(function(){
     limpiarCb(cbName);
     desbloquearInput();
-    // Sin conexión: asumir código nuevo, ir directo
     irAlInstrumento('pre');
   }, 8000);
 
@@ -990,10 +939,8 @@ function iniciarVerificacion(){
     document.getElementById('spinnerCheck').style.display = 'none';
 
     if(data.existe){
-      // Código ya existe → mostrar wizard
       mostrarWizardPanel('wPregunta');
     } else {
-      // Código nuevo → ir directo al pre-test
       irAlInstrumento('pre');
     }
   };
@@ -1004,17 +951,13 @@ function iniciarVerificacion(){
     clearTimeout(timeout);
     limpiarCb(cbName);
     desbloquearInput();
-    irAlInstrumento('pre'); // Sin conexión: dejar pasar
+    irAlInstrumento('pre');
   };
   document.head.appendChild(s);
 }
 
-// ══════════════════════════════════════════
-// RESPUESTA ¿ya hiciste el pre-test?
-// ══════════════════════════════════════════
 function respuestaPretest(yaHizo){
   if(yaHizo){
-    // Verificar si post-test está habilitado
     mostrarWizardPanel('wSpinnerPost');
     const cbName = '_cb_cfg_' + Date.now();
     const timeout = setTimeout(function(){
@@ -1038,14 +981,10 @@ function respuestaPretest(yaHizo){
     };
     document.head.appendChild(s);
   } else {
-    // Dice que no hizo pre-test pero código existe → colisión
     mostrarWizardPanel('wColision');
   }
 }
 
-// ══════════════════════════════════════════
-// IR AL INSTRUMENTO
-// ══════════════════════════════════════════
 function irAlInstrumento(modo){
   const codigo = document.getElementById('codigoInput').value;
   sessionStorage.setItem('cap_codigo', codigo);
@@ -1054,9 +993,6 @@ function irAlInstrumento(modo){
   window.location.href = archivo + '?codigo=' + codigo + '&modo=' + modo;
 }
 
-// ══════════════════════════════════════════
-// HELPERS DE UI
-// ══════════════════════════════════════════
 function mostrarWizardPanel(id){
   var box = document.getElementById('wizardBox');
   box.style.display = 'block';
@@ -1090,12 +1026,10 @@ function limpiarCb(name){
   document.querySelectorAll('script[src*="' + name + '"]').forEach(function(s){ s.remove(); });
 }
 
-// ── Imprimir resumen del pre-test consultando Sheets ──────────
 function imprimirPretest(){
   var codigo = document.getElementById('codigoInput').value;
   if(!codigo){ alert('Por favor ingrese su código primero.'); return; }
 
-  // Mostrar spinner en el botón
   var btns = document.querySelectorAll('#btnImprimirPreOk, #btnImprimirPreEspera');
   btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...'; b.disabled = true; });
 
@@ -1111,7 +1045,6 @@ function imprimirPretest(){
     limpiarCb(cbName);
     btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
 
-    // Buscar registro del código en hoja pre
     var lista = data.pre || [];
     var registro = null;
     lista.forEach(function(r){
@@ -1143,13 +1076,9 @@ function abrirVentanaImpresion(codigo, r){
   var nivel = r.nivel_conocimientos || '—';
   var fecha = r.fecha || '—';
   var hora  = r.hora  || '—';
-  var modo  = r.modo  || 'pre';
   var pct   = Math.round((score / 10) * 100);
-
-  // Color según nivel
   var color = score >= 9 ? '#10b981' : score >= 7 ? '#3b82f6' : score >= 5 ? '#f59e0b' : '#ef4444';
 
-  // Secciones a mostrar
   var perfilItems = [
     ['Edad', r.p1], ['Sexo', r.p2], ['Nivel educativo', r.p3],
     ['Años trabajando', r.p4], ['Licencia', r.p5],
@@ -1167,125 +1096,72 @@ function abrirVentanaImpresion(codigo, r){
   var vfHTML = vfKeys.map(function(k, i){
     var resp = r[k] || '—';
     var ok   = resp === correctas[k];
-    var bg   = ok ? '#f0fdf4' : '#fef2f2';
-    var col  = ok ? '#065f46' : '#991b1b';
-    return '<tr style="background:' + bg + ';">'
-      + '<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C' + (i+1) + '</td>'
-      + '<td style="padding:6px 10px;font-size:0.78rem;">' + (ok ? '✓' : '✗') + ' ' + resp + '</td>'
-      + '</tr>';
+    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+'"><td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+'</td>'
+         + '<td style="padding:6px 10px;font-size:0.78rem;">'+(ok?'✓':'✗')+' '+resp+'</td></tr>';
   }).join('');
 
   var actFields = ['a1','a2','a3','a4','a5','a6','a7','a8'];
   var actLabels = ['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Disposición al cambio','Autoresponsabilidad'];
   var actHTML = actFields.map(function(k, i){
-    var val = r[k];
-    if(!val) return '';
+    var val = r[k]; if(!val) return '';
     var bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:' + (n <= parseInt(val) ? '#5b6ceb' : '#e2e5f0') + ';"></span>';
+      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#5b6ceb':'#e2e5f0')+'"></span>';
     }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">' + actLabels[i] + '</td>'
-         + '<td style="padding:5px 10px;">' + bars + ' <span style="font-size:0.75rem;color:#5b6ceb;font-weight:700;">' + val + '/4</span></td></tr>';
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+actLabels[i]+'</td>'
+         + '<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.75rem;color:#5b6ceb;font-weight:700;">'+val+'/4</span></td></tr>';
   }).join('');
 
   var prFields = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'];
   var prLabels = ['Uso de casco','Respeto semáforos','Evita celular','Revisión del vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
   var prHTML = prFields.map(function(k, i){
-    var val = r[k];
-    if(!val) return '';
+    var val = r[k]; if(!val) return '';
     var bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:' + (n <= parseInt(val) ? '#f59e0b' : '#e2e5f0') + ';"></span>';
+      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#f59e0b':'#e2e5f0')+'"></span>';
     }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">' + prLabels[i] + '</td>'
-         + '<td style="padding:5px 10px;">' + bars + ' <span style="font-size:0.75rem;color:#f59e0b;font-weight:700;">' + val + '/4</span></td></tr>';
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+prLabels[i]+'</td>'
+         + '<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.75rem;color:#f59e0b;font-weight:700;">'+val+'/4</span></td></tr>';
   }).join('');
 
   var w = window.open('', '_blank', 'width=760,height=900');
-  w.document.write(`<!DOCTYPE html><html lang="es"><head>
-<meta charset="UTF-8">
-<title>Pre-test ${codigo} · CAP-SV-DIGITAL</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}
-  .header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
-  .header-left h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}
-  .header-left p{font-size:0.82rem;opacity:0.85;}
-  .code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}
-  .code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}
-  .code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}
-  .score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}
-  .score-ring{width:90px;height:90px;border-radius:50%;border:4px solid ${color};display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:${color}18;}
-  .score-num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:${color};line-height:1;}
-  .score-max{font-size:0.68rem;color:#b2bec3;font-weight:700;}
-  .score-info h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:${color};margin-bottom:4px;}
-  .score-info p{font-size:0.82rem;color:#636e72;line-height:1.5;}
-  .pills{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
-  .pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:5px 12px;font-size:0.75rem;color:#636e72;}
-  .pill strong{color:#2d3436;}
-  .section{margin-bottom:20px;}
-  .sec-title{font-family:Montserrat,sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:7px 14px;border-radius:6px;margin-bottom:8px;display:inline-block;}
-  .sec-purple{background:#5b6ceb;}.sec-violet{background:#6a3fa8;}.sec-green{background:#00b894;}.sec-amber{background:#f59e0b;}
-  table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}
-  .footer{text-align:center;margin-top:28px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:16px;}
-  @media print{body{padding:16px;}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.score-ring,.sec-title,.pill{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
-</style></head><body>
-
-<div class="header">
-  <div class="header-left">
-    <h1>CAP-SV-DIGITAL</h1>
-    <p>Instrumento de Seguridad Vial · Pre-test</p>
-    <p style="margin-top:4px;font-size:0.75rem;opacity:0.7;">Universidad de Oriente · Dpto. Enfermería · Ciudad Bolívar 2025</p>
-  </div>
-  <div class="code-badge">
-    <div class="lbl">Código</div>
-    <div class="val">${codigo}</div>
-  </div>
-</div>
-
-<div class="score-box">
-  <div class="score-ring">
-    <div class="score-num">${score}</div>
-    <div class="score-max">/ 10</div>
-  </div>
-  <div class="score-info">
-    <h2>${nivel}</h2>
-    <p>Sección de Conocimientos · Pre-test completado</p>
-    <div class="pills">
-      <span class="pill">📅 <strong>${fecha}</strong></span>
-      <span class="pill">🕐 <strong>${hora}</strong></span>
-      <span class="pill">📊 <strong>${pct}%</strong> de acierto</span>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <span class="sec-title sec-purple">I · Perfil</span>
-  <table>${perfilHTML}</table>
-</div>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-  <div class="section">
-    <span class="sec-title sec-violet">II · Conocimientos V/F</span>
-    <table>${vfHTML}</table>
-  </div>
-  <div>
-    <div class="section">
-      <span class="sec-title sec-green">III · Actitudes</span>
-      <table>${actHTML || '<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>'}</table>
-    </div>
-    <div class="section">
-      <span class="sec-title sec-amber">IV · Prácticas</span>
-      <table>${prHTML || '<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>'}</table>
-    </div>
-  </div>
-</div>
-
-<div class="footer">
-  CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · ${new Date().toLocaleDateString('es-VE')}
-</div>
-
-<script>window.onload=function(){window.print();};<\/script>
-</body></html>`);
+  w.document.write('<!DOCTYPE html><html lang="es"><head>'
+    +'<meta charset="UTF-8"><title>Pre-test '+codigo+' · CAP-SV-DIGITAL</title>'
+    +'<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
+    +'<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
+    +'.header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
+    +'.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
+    +'.code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}'
+    +'.code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}'
+    +'.code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}'
+    +'.score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}'
+    +'.ring{width:90px;height:90px;border-radius:50%;border:4px solid '+color+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:'+color+'18;}'
+    +'.ring .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:'+color+';line-height:1;}'
+    +'.ring .max{font-size:0.68rem;color:#b2bec3;font-weight:700;}'
+    +'.si h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:'+color+';margin-bottom:4px;}'
+    +'.si p{font-size:0.82rem;color:#636e72;}'
+    +'.pills{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}'
+    +'.pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:4px 10px;font-size:0.72rem;color:#636e72;}'
+    +'.sec{margin-bottom:20px;}'
+    +'.sec-t{font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:6px 12px;border-radius:6px;margin-bottom:8px;display:inline-block;}'
+    +'.c1{background:#5b6ceb;}.c2{background:#6a3fa8;}.c3{background:#00b894;}.c4{background:#f59e0b;}'
+    +'table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}'
+    +'.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}'
+    +'.footer{text-align:center;margin-top:28px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:16px;}'
+    +'@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
+    +'</style></head><body>'
+    +'<div class="header"><div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial · Pre-test</p>'
+    +'<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente · Dpto. Enfermería · Ciudad Bolívar 2025</p></div>'
+    +'<div class="code-badge"><div class="lbl">Código</div><div class="val">'+codigo+'</div></div></div>'
+    +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
+    +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
+    +'<div class="pills"><span class="pill">📅 <strong>'+fecha+'</strong></span><span class="pill">🕐 <strong>'+hora+'</strong></span><span class="pill">📊 <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
+    +'<div class="sec"><span class="sec-t c1">I · Perfil</span><table>'+perfilHTML+'</table></div>'
+    +'<div class="grid">'
+    +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><table>'+vfHTML+'</table></div>'
+    +'<div><div class="sec"><span class="sec-t c3">III · Actitudes</span><table>'+(actHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
+    +'<div class="sec"><span class="sec-t c4">IV · Prácticas</span><table>'+(prHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div></div>'
+    +'</div>'
+    +'<div class="footer">CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · '+new Date().toLocaleDateString('es-VE')+'</div>'
+    +'<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt></body></html>');
   w.document.close();
 }
 </script>
