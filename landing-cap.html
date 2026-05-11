@@ -388,7 +388,7 @@ body{
 }
 .platforms-grid{
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 12px;
 }
 .platform-card{
@@ -400,13 +400,15 @@ body{
   background: rgba(255,255,255,0.12);
   border: 1.5px solid rgba(255,255,255,0.22);
   border-radius: var(--r-md);
-  cursor: default;
+  cursor: pointer;
   transition: all 0.2s;
   backdrop-filter: blur(6px);
   text-align: center;
+  text-decoration: none;
+  color: white;
 }
 .platform-card:hover{
-  background: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.27);
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
@@ -422,7 +424,6 @@ body{
 .p-tt{ background: rgba(255,255,255,0.2); color: white; }
 .p-wp{ background: rgba(37,211,102,0.25); color: #55efc4; }
 .p-yt{ background: rgba(255,0,0,0.25); color: #ff7675; }
-.p-gf{ background: rgba(66,133,244,0.25); color: #74b9ff; }
 .p-qr{ background: rgba(255,255,255,0.15); color: white; }
 .platform-name{
   font-family: var(--font-h);
@@ -909,38 +910,33 @@ body{
       </div>
     </div>
 
-    <!-- PLATAFORMAS -->
+    <!-- PLATAFORMAS - Se han eliminado Google Forms y añadido enlaces reales -->
     <div id="plataformas" class="platforms-section">
       <div class="platforms-header">
         <h2 class="platforms-title"><i class="fas fa-rocket"></i> Tecnologías y Plataformas de Intervención</h2>
         <p class="platforms-sub">Herramientas digitales integradas en la investigación</p>
       </div>
       <div class="platforms-grid">
-        <div class="platform-card">
+        <a href="https://www.instagram.com/caps.codigobiker" target="_blank" class="platform-card" rel="noopener noreferrer">
           <div class="platform-icon p-ig"><i class="fab fa-instagram"></i></div>
           <div class="platform-name">Instagram</div>
-          <div class="platform-desc">Stories, Reels, IGTV</div>
-        </div>
-        <div class="platform-card">
+          <div class="platform-desc">@caps.codigobiker</div>
+        </a>
+        <a href="https://www.tiktok.com/@caps.codigobiker" target="_blank" class="platform-card" rel="noopener noreferrer">
           <div class="platform-icon p-tt"><i class="fab fa-tiktok"></i></div>
           <div class="platform-name">TikTok</div>
-          <div class="platform-desc">Videos educativos virales</div>
-        </div>
-        <div class="platform-card">
+          <div class="platform-desc">@caps.codigobiker</div>
+        </a>
+        <a href="https://chat.whatsapp.com/FuPCEcufkagFhETyE8VMFw" target="_blank" class="platform-card" rel="noopener noreferrer">
           <div class="platform-icon p-wp"><i class="fab fa-whatsapp"></i></div>
           <div class="platform-name">WhatsApp</div>
-          <div class="platform-desc">Canales y recordatorios</div>
-        </div>
-        <div class="platform-card">
+          <div class="platform-desc">Comunidad oficial</div>
+        </a>
+        <a href="https://www.youtube.com/@CodigoBiker" target="_blank" class="platform-card" rel="noopener noreferrer">
           <div class="platform-icon p-yt"><i class="fab fa-youtube"></i></div>
           <div class="platform-name">YouTube</div>
-          <div class="platform-desc">Tutoriales y testimonios</div>
-        </div>
-        <div class="platform-card">
-          <div class="platform-icon p-gf"><i class="fab fa-google"></i></div>
-          <div class="platform-name">Google Forms</div>
-          <div class="platform-desc">Recolección de datos</div>
-        </div>
+          <div class="platform-desc">@CodigoBiker</div>
+        </a>
         <div class="platform-card" onclick="abrirModalQR()" style="cursor:pointer;" title="Ver código QR">
           <div class="platform-icon p-qr"><i class="fas fa-qrcode"></i></div>
           <div class="platform-name">QR Codes</div>
@@ -1422,7 +1418,7 @@ function abrirVentanaImpresion(codigo, r){
 
   var perfilHTML = perfilItems.map(function(x){
     return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[0] + '</td>'
-         + '<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[1] + '</td></tr>';
+         + '<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[1] + 'NonNullCell</td></tr>';
   }).join('');
 
   var vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
@@ -1488,10 +1484,10 @@ function abrirVentanaImpresion(codigo, r){
     +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
     +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
     +'<div class="pills"><span class="pill">📅 <strong>'+fecha+'</strong></span><span class="pill">🕐 <strong>'+hora+'</strong></span><span class="pill">📊 <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
-    +'<div class="sec"><span class="sec-t c1">I · Perfil</span><table>'+perfilHTML+'</table></div>'
+    +'<div class="sec"><span class="sec-t c1">I · Perfil</span><tr>'+perfilHTML+'</table></div>'
     +'<div class="grid">'
-    +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><table>'+vfHTML+'</table></div>'
-    +'<div><div class="sec"><span class="sec-t c3">III · Actitudes</span><table>'+(actHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
+    +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><td>'+vfHTML+'</table></div>'
+    +'<div><div class="sec"><span class="sec-t c3">III · Actitudes</span></td>'+(actHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
     +'<div class="sec"><span class="sec-t c4">IV · Prácticas</span><table>'+(prHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div></div>'
     +'</div>'
     +'<div class="footer">CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · '+new Date().toLocaleDateString('es-VE')+'</div>'
