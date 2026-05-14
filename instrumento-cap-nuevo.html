@@ -1826,5 +1826,104 @@ document.getElementById('incompleteModal').addEventListener('click', function(e)
 
 updateProgress();
 </script>
+<!-- Al final del body, antes de </body> -->
+<script src="database.js"></script>
+<script>
+    // Función para recolectar todas las respuestas
+    function recolectarRespuestas() {
+        const getRadioValue = (name) => {
+            const elem = document.querySelector(`input[name="${name}"]:checked`);
+            return elem ? elem.value : '';
+        };
+        
+        // Recopilar según tu estructura
+        const respuestas = {
+            Código: sessionStorage.getItem('cap_codigo') || '',
+            Modo: 'pre',
+            Fecha: new Date().toLocaleDateString('es-VE'),
+            Hora: new Date().toLocaleTimeString(),
+            'Score Conocimientos': 0,
+            Nivel: '',
+            'P1-Edad': getRadioValue('p1'),
+            'P2-Sexo': getRadioValue('p2'),
+            'P3-Educación': getRadioValue('p3'),
+            'P4-Parroquia': getRadioValue('p4'),
+            'P5-AñosTrabajo': getRadioValue('p5'),
+            'P6-HorasDiarias': getRadioValue('p6'),
+            'P7-ViajesDiarios': getRadioValue('p7'),
+            'P8-Licencia': getRadioValue('p8'),
+            'P9-Capacitación': getRadioValue('p9'),
+            'P10-RedSocial': getRadioValue('p10'),
+            'P11-Accidentes': getRadioValue('p11'),
+            'P12-Infracciones': getRadioValue('p12'),
+            'P13-PlataformaPreferida': getRadioValue('p13'),
+            // Conocimientos C1 a C12
+            C1: getRadioValue('c1'), C2: getRadioValue('c2'), C3: getRadioValue('c3'),
+            C4: getRadioValue('c4'), C5: getRadioValue('c5'), C6: getRadioValue('c6'),
+            C7: getRadioValue('c7'), C8: getRadioValue('c8'), C9: getRadioValue('c9'),
+            C10: getRadioValue('c10'), C11: getRadioValue('c11'), C12: getRadioValue('c12'),
+            // Actitudes A1 a A8
+            A1: getRadioValue('a1'), A2: getRadioValue('a2'), A3: getRadioValue('a3'),
+            A4: getRadioValue('a4'), A5: getRadioValue('a5'), A6: getRadioValue('a6'),
+            A7: getRadioValue('a7'), A8: getRadioValue('a8'),
+            // Prácticas PR1 a PR8
+            PR1: getRadioValue('pr1'), PR2: getRadioValue('pr2'), PR3: getRadioValue('pr3'),
+            PR4: getRadioValue('pr4'), PR5: getRadioValue('pr5'), PR6: getRadioValue('pr6'),
+            PR7: getRadioValue('pr7'), PR8: getRadioValue('pr8'),
+            // Digitales D1 a D5
+            D1: getRadioValue('d1'), D2: getRadioValue('d2'), D3: getRadioValue('d3'),
+            D4: getRadioValue('d4'), D5: getRadioValue('d5')
+        };
+        
+        const score = calcularScoreConocimientos(respuestas);
+        respuestas['Score Conocimientos'] = score;
+        respuestas.Nivel = obtenerNivel(score);
+        
+        return respuestas;
+    }
+    
+    // Guardar y enviar
+    async function guardarYEnviar() {
+        const btn = document.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            btn.disabled = true;
+        }
+        
+        try {
+            const respuestas = recolectarRespuestas();
+            const guardado = await guardarPretest(respuestas);
+            
+            if (guardado) {
+                alert('✅ ¡Respuestas guardadas exitosamente!');
+                window.location.href = 'landing-cap.html';
+            } else {
+                alert('❌ Error al guardar. Intenta nuevamente.');
+                if (btn) {
+                    btn.innerHTML = 'Enviar respuestas';
+                    btn.disabled = false;
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error de conexión');
+            if (btn) {
+                btn.innerHTML = 'Enviar respuestas';
+                btn.disabled = false;
+            }
+        }
+    }
+    
+    // Al cargar la página, conectar el botón
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnEnviar = document.querySelector('button[type="submit"]');
+        if (btnEnviar) {
+            btnEnviar.addEventListener('click', (e) => {
+                e.preventDefault();
+                guardarYEnviar();
+            });
+        }
+    });
+</script>
 </body>
 </html>
