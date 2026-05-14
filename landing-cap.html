@@ -1495,5 +1495,38 @@ function abrirVentanaImpresion(codigo, r){
   w.document.close();
 }
 </script>
+<!-- Al final del body, antes de </body> -->
+<script src="database.js"></script>
+<script>
+    // Tu código existente del landing-cap.html
+    // Pero REEMPLAZA las funciones de verificación con estas:
+    
+    async function iniciarVerificacion() {
+        const codigo = document.getElementById('codigoInput').value;
+        if (!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
+        
+        document.getElementById('codigoInput').disabled = true;
+        document.getElementById('btnStart').style.display = 'none';
+        document.getElementById('spinnerCheck').style.display = 'block';
+        
+        try {
+            const existe = await verificarCodigo(codigo);
+            
+            document.getElementById('spinnerCheck').style.display = 'none';
+            
+            if (existe) {
+                mostrarWizardPanel('wPregunta');
+            } else {
+                irAlInstrumento('pre');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('spinnerCheck').style.display = 'none';
+            irAlInstrumento('pre');
+        }
+    }
+    
+    // El resto de tu código del landing-cap.html sigue igual...
+</script>
 </body>
 </html>
