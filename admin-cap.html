@@ -678,7 +678,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
 // CONFIG
 // ══════════════════════════════════════════
 const CLAVE_ADMIN = 'UDO2025';
-const SHEETS_URL  = 'https://script.google.com/macros/s/AKfycbzI5Ultiybzol3RiytllbSJCd6m2eSX51xe-BFq6d9lp9yPq8aDZ1dwVQLiXT1wTwR5/exec';
+const API_URL = 'https://api.sheetbest.com/sheets/966e7004-81ba-454a-97fe-773822062d56';
 let modoActual = 'pre';
 let datosPre  = {};
 let datosPost = {};
@@ -686,72 +686,59 @@ let datosPost = {};
 // ══════════════════════════════════════════
 // CARGAR DATOS DESDE GOOGLE SHEETS (JSONP)
 // ══════════════════════════════════════════
-function cargarDesdeSheets(){
+async function cargarDesdeSheets(){
   const btn = document.querySelector('.tb-btn-green');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
   btn.disabled = true;
 
-  // Timeout por si no responde
-  const timeout = setTimeout(()=>{
-    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar desde Sheets'; }, 3000);
-  }, 10000);
+  try {
+    // Cargar todos los registros de la hoja
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const todos = await res.json();
 
-  window._sheetsCallback = function(data){
-    clearTimeout(timeout);
     datosPre  = {};
     datosPost = {};
 
-    if(data.pre && data.pre.length){
-      data.pre.forEach(row => {
-        // Buscar el código con distintas variantes de key
-        const codigo = (row.codigo || row['c_digo'] || row['código'] || '').toString().trim();
-        const score  = parseInt(row.score_conocimientos || row['score conocimientos'] || row['score_conocimientos'] || 0);
-        if(codigo) datosPre[codigo] = isNaN(score) ? 0 : score;
-      });
-    }
-    if(data.post && data.post.length){
-      data.post.forEach(row => {
-        const codigo = (row.codigo || row['c_digo'] || row['código'] || '').toString().trim();
-        const score  = parseInt(row.score_conocimientos || row['score conocimientos'] || row['score_conocimientos'] || 0);
-        if(codigo) datosPost[codigo] = isNaN(score) ? 0 : score;
+    if (Array.isArray(todos)) {
+      todos.forEach(row => {
+        const codigo = (row.codigo || '').toString().trim().toUpperCase();
+        const modo   = (row.modo   || '').toString().trim().toLowerCase();
+        const score  = parseInt(row.score_conocimientos || 0);
+        if (!codigo) return;
+        if (modo === 'post') {
+          datosPost[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
+        } else {
+          datosPre[codigo]  = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
+        }
       });
     }
 
     const nPre  = Object.keys(datosPre).length;
     const nPost = Object.keys(datosPost).length;
+    const nPreComp  = Object.values(datosPre).filter(r => r.completado === 'SI').length;
+    const nPostComp = Object.values(datosPost).filter(r => r.completado === 'SI').length;
 
-    document.getElementById('infoPre').textContent  = `✓ ${nPre} participantes cargados`;
+    document.getElementById('infoPre').textContent  = `✓ ${nPre} registros · ${nPreComp} completados`;
     document.getElementById('infoPre').style.display = 'block';
-    document.getElementById('infoPost').textContent = `✓ ${nPost} participantes cargados`;
+    document.getElementById('infoPost').textContent = `✓ ${nPost} registros · ${nPostComp} completados`;
     document.getElementById('infoPost').style.display = 'block';
     document.getElementById('boxPre').classList.add('loaded');
     document.getElementById('boxPost').classList.add('loaded');
 
     btn.innerHTML = `<i class="fas fa-check"></i> ${nPre} pre · ${nPost} post`;
     btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar desde Sheets'; }, 3000);
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
 
     verificarSiAnalizarDisponible();
     if(nPre > 0 && nPost > 0) analizarDatos();
 
-    const old = document.getElementById('jsonpScript');
-    if(old) old.remove();
-  };
-
-  const old = document.getElementById('jsonpScript');
-  if(old) old.remove();
-  const script = document.createElement('script');
-  script.id  = 'jsonpScript';
-  script.src = SHEETS_URL + '?action=getData&callback=_sheetsCallback&t=' + Date.now();
-  script.onerror = function(){
-    clearTimeout(timeout);
+  } catch(e) {
+    console.error('Error al cargar desde Sheet.best:', e);
     btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
     btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar desde Sheets'; }, 3000);
-  };
-  document.head.appendChild(script);
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
+  }
 }
 function verificarClave(){
   const clave = document.getElementById('claveInput').value;
@@ -776,61 +763,48 @@ function cerrarSesion(){
 // ══════════════════════════════════════════
 // TOGGLE POST-TEST
 // ══════════════════════════════════════════
-function togglePostTest(habilitar){
-  const valor = habilitar ? 'true' : 'false';
-  const msg   = document.getElementById('toggleMsg');
+async function togglePostTest(habilitar){
+  const msg = document.getElementById('toggleMsg');
   msg.style.display = 'block';
   msg.style.cssText = 'display:block;margin-top:12px;padding:10px 14px;border-radius:8px;font-size:0.83rem;background:rgba(255,255,255,0.05);color:var(--muted);';
   msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Aplicando cambio...';
-
-  const cbName = '_cb_cfg_' + Date.now();
-  const timeout = setTimeout(() => {
-    limpiarCb(cbName);
-    msg.style.background = 'rgba(225,112,85,0.1)';
+  try {
+    // Buscar si ya existe la fila de configuración
+    const checkRes = await fetch(API_URL + '?codigo=_CONFIG_');
+    const existentes = await checkRes.json();
+    const existe = Array.isArray(existentes) && existentes.length > 0;
+    const payload = { codigo: '_CONFIG_', post_habilitado: habilitar ? 'true' : 'false', modo: 'config' };
+    if (existe) {
+      await fetch(API_URL + '/codigo/_CONFIG_', {
+        method: 'PATCH', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
+      });
+    } else {
+      await fetch(API_URL, {
+        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
+      });
+    }
+    actualizarBadgePost(habilitar);
+    msg.style.background = habilitar ? 'rgba(0,184,148,0.1)' : 'rgba(225,112,85,0.1)';
+    msg.style.color = habilitar ? '#00b894' : '#e17055';
+    msg.innerHTML = habilitar
+      ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>. Los participantes ya pueden acceder.'
+      : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>. Los participantes verán mensaje de espera.';
+    setTimeout(() => { msg.style.display = 'none'; }, 5000);
+  } catch(e) {
     msg.style.color = '#e17055';
     msg.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Error de conexión. Intente nuevamente.';
-  }, 8000);
-
-  window[cbName] = function(data){
-    clearTimeout(timeout);
-    limpiarCb(cbName);
-    actualizarBadgePost(habilitar);
-    if(data.ok){
-      msg.style.background = habilitar ? 'rgba(0,184,148,0.1)' : 'rgba(225,112,85,0.1)';
-      msg.style.color = habilitar ? '#00b894' : '#e17055';
-      msg.innerHTML = habilitar
-        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>. Los participantes ya pueden acceder.'
-        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>. Los participantes verán mensaje de espera.';
-    } else {
-      msg.style.color = '#e17055';
-      msg.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i> Error: ' + (data.error || 'desconocido');
-    }
-    setTimeout(() => { msg.style.display = 'none'; }, 5000);
-  };
-
-  const s = document.createElement('script');
-  s.src = SHEETS_URL + '?action=setConfig&clave=post_habilitado&valor=' + valor + '&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){
-    clearTimeout(timeout);
-    limpiarCb(cbName);
-    msg.style.color = '#e17055';
-    msg.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Sin conexión al servidor.';
-  };
-  document.head.appendChild(s);
+  }
 }
 
-function verificarEstadoPost(){
-  const cbName = '_cb_vcfg_' + Date.now();
-  const timeout = setTimeout(() => { limpiarCb(cbName); }, 8000);
-  window[cbName] = function(data){
-    clearTimeout(timeout);
-    limpiarCb(cbName);
-    const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-    actualizarBadgePost(hab);
-  };
-  const s = document.createElement('script');
-  s.src = SHEETS_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-  document.head.appendChild(s);
+async function verificarEstadoPost(){
+  try {
+    const res = await fetch(API_URL + '?codigo=_CONFIG_');
+    const data = await res.json();
+    if (Array.isArray(data) && data.length > 0) {
+      const hab = String(data[0].post_habilitado).toLowerCase().trim() === 'true';
+      actualizarBadgePost(hab);
+    }
+  } catch(e) { /* silencioso */ }
 }
 
 function actualizarBadgePost(habilitado){
