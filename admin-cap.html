@@ -494,7 +494,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
         <i class="fas fa-home"></i> Inicio
       </a>
       <button class="tb-btn tb-btn-green" onclick="cargarDesdeSheets()">
-        <i class="fas fa-sync-alt"></i> Actualizar desde Sheets
+        <i class="fas fa-sync-alt"></i> Actualizar datos
       </button>
       <button class="tb-btn tb-btn-primary" onclick="exportarReporte()">
         <i class="fas fa-file-csv"></i> Exportar reporte
@@ -705,7 +705,8 @@ async function cargarDesdeSheets(){
         const codigo = (row.codigo || '').toString().trim().toUpperCase();
         const modo   = (row.modo   || '').toString().trim().toLowerCase();
         const score  = parseInt(row.score_conocimientos || 0);
-        if (!codigo) return;
+        // Ignorar filas de config y filas sin código válido
+        if (!codigo || codigo === '_CONFIG_' || modo === 'config') return;
         if (modo === 'post') {
           datosPost[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
         } else {
@@ -735,9 +736,20 @@ async function cargarDesdeSheets(){
 
   } catch(e) {
     console.error('Error al cargar desde Sheet.best:', e);
+    // Mostrar diagnóstico detallado
+    const esCors = e.message && (e.message.includes('CORS') || e.message.includes('fetch') || e.message.includes('Failed'));
     btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
     btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 4000);
+
+    // Toast de diagnóstico
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #ef4444;color:#fca5a5;padding:14px 20px;border-radius:12px;font-size:0.82rem;z-index:9999;max-width:420px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.4);';
+    toast.innerHTML = '<strong style="color:#f87171;display:block;margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Error de conexión</strong>'
+      + (esCors ? 'Posible error CORS. Verifica que tu conexión Sheet.best esté activa y que el endpoint sea correcto.' : 'Error: ' + e.message)
+      + '<br><span style="color:#64748b;font-size:0.75rem;margin-top:6px;display:block;">Revisa la consola del navegador (F12) para más detalles.</span>';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 7000);
   }
 }
 function verificarClave(){
