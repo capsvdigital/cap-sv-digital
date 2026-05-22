@@ -549,7 +549,7 @@ body{font-family:var(--font-b);background:linear-gradient(135deg,#00b894 0%,#098
 </div>
 
 <script>
-const API_URL = 'https://api.sheetbest.com/sheets/966e7004-81ba-454a-97fe-773822062d56';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwpGRuUx8SGgchWwIICWTtBWKMG53qOukTsB3hCNSbhbjC5rM307CY0Apk81ATt5DpN/exec';
 const TOTAL = 33; // 2 perfil + 10 VF + 8 actitudes + 8 prácticas + 5 digital
 
 const correctas = {c1:'V',c2:'V',c3:'F',c4:'F',c5:'V',c6:'V',c7:'V',c8:'V',c9:'F',c10:'F'};
@@ -761,21 +761,29 @@ function bloquearFormulario() {
 // ── SENT STATE ──
 function claveSent() { return 'cap_sent_' + (document.getElementById('codigoParticipante').value||'x').toUpperCase() + '_post'; }
 function yaEnviado() { try { return localStorage.getItem(claveSent()) === '1'; } catch(e) { return false; } }
-async function verificarEnviadoEnSheets(callback) {
+function verificarEnviadoEnSheets(callback) {
+  if (yaEnviado()) { callback(true); return; }
   const codigo = document.getElementById('codigoParticipante').value || '';
   if (!codigo) { callback(false); return; }
-  if (yaEnviado()) { callback(true); return; }
-  try {
-    const res = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()) + '&modo=post');
-    const data = await res.json();
-    const encontrado = Array.isArray(data) && data.length > 0 && data.some(r => r.completado === 'SI');
-    if (encontrado) { try{localStorage.setItem(claveSent(),'1');}catch(e){} }
+  const cb = '_cb_chk_' + Date.now();
+  const to = setTimeout(function() { try { delete window[cb]; } catch(e) {} callback(yaEnviado()); }, 6000);
+  window[cb] = function(data) {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {}
+    const lista = data.post || [];
+    const encontrado = lista.some(r =>
+      (r.codigo||'').toUpperCase() === codigo.toUpperCase() && String(r.completado).toUpperCase() === 'SI'
+    );
+    if (encontrado) { try { localStorage.setItem(claveSent(), '1'); } catch(e) {} }
     callback(encontrado);
-  } catch(e) { callback(yaEnviado()); }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() { clearTimeout(to); try { delete window[cb]; } catch(e) {} s.remove(); callback(yaEnviado()); };
+  document.head.appendChild(s);
 }
 
 // ── ENVÍO A SHEETS ──
-async function enviarAGoogleSheets(scoreC) {
+function enviarAGoogleSheets(scoreC) {
   const codigo = (document.getElementById('codigoParticipante').value || '---').toUpperCase();
   const fecha  = new Date().toISOString().slice(0,10);
   const hora   = new Date().toLocaleTimeString('es-VE');
@@ -785,38 +793,28 @@ async function enviarAGoogleSheets(scoreC) {
   datos.score_conocimientos = scoreC;
   datos.nivel_conocimientos = scoreC>=9?'Excelente':scoreC>=7?'Bueno':scoreC>=5?'Regular':'Bajo';
   datos.completado = 'SI';
-  try {
-    const checkRes = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo) + '&modo=post');
-    const existentes = await checkRes.json();
-    const existe = Array.isArray(existentes) && existentes.length > 0;
-    if (existe) {
-      await fetch(API_URL + '/codigo/' + encodeURIComponent(codigo), {
-        method: 'PATCH', headers: {'Content-Type':'application/json'}, body: JSON.stringify(datos)
-      });
-    } else {
-      await fetch(API_URL, {
-        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(datos)
-      });
-    }
-    mostrarSync('✅ Enviado');
-    try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
-  } catch(e) { mostrarSync('💾 Guardado local'); }
+  const cb = '_cb_env_' + Date.now();
+  window[cb] = function(r) {
+    try { delete window[cb]; } catch(e) {}
+    if (r && r.ok) { mostrarSync('✅ Enviado'); try { localStorage.setItem(claveSent(), '1'); } catch(e) {} }
+    else { mostrarSync('💾 Guardado local'); }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(codigo)
+        + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(datos))
+        + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('💾 Guardado local'); };
+  document.head.appendChild(s);
 }
 
-async function registrarInicio(codigo) {
-  try {
-    const checkRes = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()) + '&modo=post');
-    const existentes = await checkRes.json();
-    const existe = Array.isArray(existentes) && existentes.length > 0;
-    if (!existe) {
-      await fetch(API_URL, {
-        method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ codigo: codigo.toUpperCase(), modo: 'post',
-          fecha: new Date().toISOString().slice(0,10),
-          hora: new Date().toLocaleTimeString('es-VE'), completado: 'NO' })
-      });
-    }
-  } catch(e) {}
+function registrarInicio(codigo) {
+  const cb = '_cb_reg_' + Date.now();
+  window[cb] = function() { try { delete window[cb]; } catch(e) {} };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo.toUpperCase())
+        + '&modo=post&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); };
+  document.head.appendChild(s);
 }
 
 // ── GUARDAR PROGRESO ──
@@ -837,24 +835,20 @@ let _syncT = null;
 function guardarProgreso() {
   const datos = recopilarRespuestas(); guardarEnLocal(datos);
   clearTimeout(_syncT);
-  _syncT = setTimeout(async function() {
+  _syncT = setTimeout(function() {
     mostrarSync('⏳ Guardando...');
-    try {
-      const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
-      const checkRes = await fetch(API_URL + '?codigo=' + encodeURIComponent(payload.codigo) + '&modo=post');
-      const existentes = await checkRes.json();
-      const existe = Array.isArray(existentes) && existentes.length > 0;
-      if (existe) {
-        await fetch(API_URL + '/codigo/' + encodeURIComponent(payload.codigo), {
-          method: 'PATCH', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
-        });
-      } else {
-        await fetch(API_URL, {
-          method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
-        });
-      }
-      mostrarSync('✓ Guardado');
-    } catch(e) { mostrarSync('💾 Local'); }
+    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
+    const cb = '_cb_save_' + Date.now();
+    window[cb] = function(r) {
+      try { delete window[cb]; } catch(e) {}
+      mostrarSync(r && r.ok ? '✓ Guardado' : '💾 Local');
+    };
+    const s = document.createElement('script');
+    s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
+          + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(payload))
+          + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('💾 Local'); };
+    document.head.appendChild(s);
   }, 1500);
 }
 let _syncEl = null;
@@ -866,18 +860,29 @@ function mostrarSync(txt) {
   document.body.appendChild(el); _syncEl = el;
   setTimeout(()=>{el.style.opacity='0';},2500); setTimeout(()=>{el.remove();},3200);
 }
-async function cargarProgresoInicial(codigo) {
-  try {
-    const res = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()) + '&modo=post');
-    const data = await res.json();
-    if (Array.isArray(data) && data.length > 0) {
-      const registro = data[0];
-      if (Object.keys(registro).filter(k => registro[k] !== '').length > 3) {
-        guardarEnLocal(registro); restaurar(registro); return;
-      }
+function cargarProgresoInicial(codigo) {
+  const cb = '_cb_load_' + Date.now();
+  const to = setTimeout(function() {
+    try { delete window[cb]; } catch(e) {}
+    const l = leerDeLocal(codigo); if(l) restaurar(l);
+  }, 6000);
+  window[cb] = function(data) {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {}
+    const lista = data.post || [];
+    const registro = lista.find(r => (r.codigo||'').toUpperCase() === codigo.toUpperCase());
+    if (registro && Object.keys(registro).filter(k => registro[k] !== '').length > 3) {
+      guardarEnLocal(registro); restaurar(registro);
+    } else {
+      const l = leerDeLocal(codigo); if(l) restaurar(l);
     }
-  } catch(e) {}
-  const l = leerDeLocal(codigo); if(l) restaurar(l);
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {} s.remove();
+    const l = leerDeLocal(codigo); if(l) restaurar(l);
+  };
+  document.head.appendChild(s);
 }
 function restaurar(datos) {
   if (!datos) return;
