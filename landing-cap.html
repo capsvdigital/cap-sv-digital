@@ -1120,7 +1120,7 @@ body{
 </div>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbwpGRuUx8SGgchWwIICWTtBWKMG53qOukTsB3hCNSbhbjC5rM307CY0Apk81ATt5DpN/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzdNYEUXg2NpVHILf7yk2JEtJq02yT34tmy7KglPdkga4g2H4RtermHDIW5VwpBjY5w/exec';
 
 function validateCode(){
   const val = document.getElementById('codigoInput').value;
@@ -1484,39 +1484,6 @@ function abrirVentanaImpresion(codigo, r){
     +'<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt></body></html>');
   w.document.close();
 }
-</script>
-<!-- Al final del body, antes de </body> -->
-<script src="database.js"></script>
-<script>
-    // Tu código existente del landing-cap.html
-    // Pero REEMPLAZA las funciones de verificación con estas:
-    
-    async function iniciarVerificacion() {
-        const codigo = document.getElementById('codigoInput').value;
-        if (!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
-        
-        document.getElementById('codigoInput').disabled = true;
-        document.getElementById('btnStart').style.display = 'none';
-        document.getElementById('spinnerCheck').style.display = 'block';
-        
-        try {
-            const existe = await verificarCodigo(codigo);
-            
-            document.getElementById('spinnerCheck').style.display = 'none';
-            
-            if (existe) {
-                mostrarWizardPanel('wPregunta');
-            } else {
-                irAlInstrumento('pre');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('spinnerCheck').style.display = 'none';
-            irAlInstrumento('pre');
-        }
-    }
-    
-    // El resto de tu código del landing-cap.html sigue igual...
 </script>
 </body>
 </html>
