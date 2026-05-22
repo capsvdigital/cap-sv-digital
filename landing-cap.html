@@ -1145,24 +1145,38 @@ function iniciarVerificacion(){
   document.getElementById('spinnerCheck').style.display = 'block';
   ocultarWizard();
 
-  // Verificar con Apps Script
+  // Revisar caché primero para respuesta instantánea
+  var cacheKey = 'cap_check_' + codigo.toUpperCase();
+  var cached = null;
+  try { var r = localStorage.getItem(cacheKey); if(r) cached = JSON.parse(r); } catch(e){}
+
+  if(cached && cached.ts && (Date.now() - cached.ts) < 3600000) {
+    // Usar caché si tiene menos de 1 hora
+    document.getElementById('spinnerCheck').style.display = 'none';
+    if(!cached.existe){ irAlInstrumento('pre'); }
+    else if(cached.completadoPre){ verificarYMostrarPost(); }
+    else { mostrarWizardPanel('wColision'); }
+    // Actualizar caché en segundo plano silenciosamente
+    _actualizarCacheCode(codigo);
+    return;
+  }
+
+  // Sin caché → consultar Apps Script con timeout corto
   const cbName = '_cb_ver_' + Date.now();
   const timeout = setTimeout(function(){
-    limpiarCb(cbName); desbloquearInput(); irAlInstrumento('pre');
-  }, 8000);
+    limpiarCb(cbName);
+    document.getElementById('spinnerCheck').style.display = 'none';
+    // Si timeout → asumir código nuevo y dejar pasar al pre-test
+    irAlInstrumento('pre');
+  }, 3000);
   window[cbName] = function(data){
     clearTimeout(timeout); limpiarCb(cbName);
     document.getElementById('spinnerCheck').style.display = 'none';
-    if(!data.existe){
-      // Código nuevo → directo al pre-test
-      irAlInstrumento('pre');
-    } else if(data.completadoPre){
-      // Ya hizo el pre-test → verificar si post está habilitado
-      verificarYMostrarPost();
-    } else {
-      // Existe pero no completó → colisión de código
-      mostrarWizardPanel('wColision');
-    }
+    // Guardar en caché
+    try { localStorage.setItem(cacheKey, JSON.stringify({...data, ts: Date.now()})); } catch(e){}
+    if(!data.existe){ irAlInstrumento('pre'); }
+    else if(data.completadoPre){ verificarYMostrarPost(); }
+    else { mostrarWizardPanel('wColision'); }
   };
   const s = document.createElement('script');
   s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbName + '&t=' + Date.now();
@@ -1170,10 +1184,23 @@ function iniciarVerificacion(){
   document.head.appendChild(s);
 }
 
+function _actualizarCacheCode(codigo){
+  var cacheKey = 'cap_check_' + codigo.toUpperCase();
+  var cb = '_cb_bg_' + Date.now();
+  window[cb] = function(data){
+    try { delete window[cb]; } catch(e){}
+    try { localStorage.setItem(cacheKey, JSON.stringify({...data, ts: Date.now()})); } catch(e){}
+  };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function(){ try { delete window[cb]; } catch(e){} s.remove(); };
+  document.head.appendChild(s);
+}
+
 function verificarYMostrarPost(){
   mostrarWizardPanel('wSpinnerPost');
   const cbName = '_cb_cfg_' + Date.now();
-  const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 8000);
+  const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 3000);
   window[cbName] = function(data){
     clearTimeout(timeout); limpiarCb(cbName);
     const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
@@ -1190,7 +1217,7 @@ function respuestaPretest(yaHizo){
     mostrarWizardPanel('wSpinnerPost');
     // Verificar config desde Apps Script
     const cbName = '_cb_cfg_' + Date.now();
-    const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 8000);
+    const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 3000);
     window[cbName] = function(data){
       clearTimeout(timeout); limpiarCb(cbName);
       const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
