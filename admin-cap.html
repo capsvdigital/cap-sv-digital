@@ -12,487 +12,162 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --purple: #5b6ceb;
-  --violet: #6a3fa8;
-  --green:  #00b894;
-  --coral:  #e17055;
-  --dark:   #1a1d2e;
-  --darker: #12141f;
-  --card:   #1e2235;
-  --border: rgba(255,255,255,0.08);
-  --text:   #e2e8f0;
-  --muted:  #8892a4;
-  --font-h: 'Montserrat', sans-serif;
-  --font-b: 'Inter', sans-serif;
-  --grad:   linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
+  --purple:#5b6ceb; --violet:#6a3fa8; --green:#00b894; --coral:#e17055;
+  --dark:#1a1d2e; --darker:#12141f; --card:#1e2235;
+  --border:rgba(255,255,255,0.08); --text:#e2e8f0; --muted:#8892a4;
+  --font-h:'Montserrat',sans-serif; --font-b:'Inter',sans-serif;
+  --grad:linear-gradient(135deg,#5b6ceb 0%,#7c5cbf 50%,#6a3fa8 100%);
 }
 html{scroll-behavior:smooth;}
-body{
-  font-family: var(--font-b);
-  background: var(--darker);
-  color: var(--text);
-  min-height: 100vh;
-}
+body{font-family:var(--font-b);background:var(--darker);color:var(--text);min-height:100vh;}
 
-/* ── LOGIN SCREEN ── */
-#loginScreen{
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--darker);
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-}
-#loginScreen::before{
-  content:'';
-  position:absolute;
-  width:600px; height:600px;
-  border-radius:50%;
-  background: radial-gradient(circle, rgba(91,108,235,0.12), transparent 70%);
-  top:-100px; left:-100px;
-  pointer-events:none;
-}
-#loginScreen::after{
-  content:'';
-  position:absolute;
-  width:500px; height:500px;
-  border-radius:50%;
-  background: radial-gradient(circle, rgba(106,63,168,0.1), transparent 70%);
-  bottom:-100px; right:-100px;
-  pointer-events:none;
-}
-.login-card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 48px 40px;
-  max-width: 420px;
-  width: 100%;
-  text-align: center;
-  position: relative;
-  z-index:1;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-}
-.login-card::before{
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:3px;
-  background: var(--grad);
-  border-radius: 3px 3px 0 0;
-}
-.login-icon{
-  width:72px; height:72px;
-  border-radius:50%;
-  background: rgba(91,108,235,0.15);
-  border: 2px solid rgba(91,108,235,0.3);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.8rem;
-  margin:0 auto 24px;
-  color: var(--purple);
-}
-.login-card h1{
-  font-family: var(--font-h);
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: white;
-  margin-bottom: 6px;
-}
-.login-card p{
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 32px;
-}
-.login-input-wrap{ position:relative; margin-bottom:14px; }
-.login-input-wrap i{
-  position:absolute; left:14px; top:50%;
-  transform:translateY(-50%);
-  color: var(--muted); font-size:0.9rem;
-}
-.login-input{
-  width:100%;
-  background: rgba(255,255,255,0.05);
-  border: 1.5px solid var(--border);
-  border-radius:10px;
-  padding: 12px 14px 12px 40px;
-  color: white;
-  font-family: var(--font-b);
-  font-size:0.95rem;
-  transition: border-color 0.2s;
-  letter-spacing: 2px;
-}
-.login-input:focus{ outline:none; border-color: var(--purple); }
-.login-input::placeholder{ letter-spacing:0; opacity:0.4; }
-.login-btn{
-  width:100%;
-  padding:13px;
-  background: var(--grad);
-  color:white;
-  border:none;
-  border-radius:10px;
-  font-family: var(--font-h);
-  font-size:0.95rem;
-  font-weight:700;
-  cursor:pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 16px rgba(91,108,235,0.4);
-  margin-bottom:12px;
-}
-.login-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(91,108,235,0.5); }
-.login-error{
-  display:none;
-  padding:8px 12px;
-  background: rgba(225,112,85,0.15);
-  border:1px solid rgba(225,112,85,0.3);
-  border-radius:8px;
-  font-size:0.8rem;
-  color: #fc8c72;
-  margin-top:10px;
-}
-.login-back{
-  font-size:0.78rem;
-  color:var(--muted);
-  text-decoration:none;
-  display:inline-flex; align-items:center; gap:5px;
-  transition: color 0.2s;
-}
-.login-back:hover{ color:white; }
+/* LOGIN */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--darker);padding:20px;position:relative;overflow:hidden;}
+#loginScreen::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(91,108,235,0.12),transparent 70%);top:-100px;left:-100px;pointer-events:none;}
+#loginScreen::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(106,63,168,0.1),transparent 70%);bottom:-100px;right:-100px;pointer-events:none;}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:48px 40px;max-width:420px;width:100%;text-align:center;position:relative;z-index:1;box-shadow:0 24px 80px rgba(0,0,0,0.5);}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);border-radius:3px 3px 0 0;}
+.login-icon{width:72px;height:72px;border-radius:50%;background:rgba(91,108,235,0.15);border:2px solid rgba(91,108,235,0.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 24px;color:var(--purple);}
+.login-card h1{font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:white;margin-bottom:6px;}
+.login-card p{font-size:0.85rem;color:var(--muted);margin-bottom:32px;}
+.login-input-wrap{position:relative;margin-bottom:14px;}
+.login-input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.9rem;}
+.login-input{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px 12px 40px;color:white;font-family:var(--font-b);font-size:0.95rem;transition:border-color 0.2s;letter-spacing:2px;}
+.login-input:focus{outline:none;border-color:var(--purple);}
+.login-input::placeholder{letter-spacing:0;opacity:0.4;}
+.login-btn{width:100%;padding:13px;background:var(--grad);color:white;border:none;border-radius:10px;font-family:var(--font-h);font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(91,108,235,0.4);margin-bottom:12px;}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,108,235,0.5);}
+.login-error{display:none;padding:8px 12px;background:rgba(225,112,85,0.15);border:1px solid rgba(225,112,85,0.3);border-radius:8px;font-size:0.8rem;color:#fc8c72;margin-top:10px;}
+.login-back{font-size:0.78rem;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color 0.2s;}
+.login-back:hover{color:white;}
 
-/* ── PANEL PRINCIPAL ── */
-#adminPanel{ display:none; }
+/* PANEL */
+#adminPanel{display:none;}
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:0;z-index:50;}
+.topbar-brand{display:flex;align-items:center;gap:12px;}
+.topbar-logo{width:36px;height:36px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1rem;color:white;}
+.topbar-name{font-family:var(--font-h);font-weight:900;font-size:1rem;color:white;}
+.topbar-name span{font-size:0.72rem;font-weight:500;color:var(--muted);display:block;}
+.topbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tb-btn{padding:7px 16px;border-radius:20px;font-family:var(--font-h);font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1.5px solid;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.tb-btn-ghost{background:transparent;border-color:var(--border);color:var(--muted);}
+.tb-btn-ghost:hover{border-color:var(--purple);color:white;}
+.tb-btn-primary{background:var(--grad);border-color:transparent;color:white;box-shadow:0 2px 10px rgba(91,108,235,0.3);}
+.tb-btn-green{background:rgba(0,184,148,0.15);border-color:var(--green);color:var(--green);}
+.tb-btn-green:hover{background:rgba(0,184,148,0.25);}
+.tb-btn-sheets{background:rgba(52,168,83,0.15);border-color:#34a853;color:#34a853;}
+.tb-btn-sheets:hover{background:rgba(52,168,83,0.25);}
+.main{max-width:1100px;margin:0 auto;padding:28px;}
 
-.topbar{
-  background: var(--card);
-  border-bottom:1px solid var(--border);
-  padding:14px 28px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap; gap:12px;
-  position:sticky; top:0; z-index:50;
-}
-.topbar-brand{
-  display:flex; align-items:center; gap:12px;
-}
-.topbar-logo{
-  width:36px; height:36px;
-  border-radius:50%;
-  background: var(--grad);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1rem; color:white;
-}
-.topbar-name{
-  font-family: var(--font-h);
-  font-weight:900; font-size:1rem; color:white;
-}
-.topbar-name span{
-  font-size:0.72rem; font-weight:500;
-  color:var(--muted); display:block;
-}
-.topbar-actions{ display:flex; gap:8px; flex-wrap:wrap; }
-.tb-btn{
-  padding:7px 16px;
-  border-radius:20px;
-  font-family:var(--font-h);
-  font-size:0.78rem; font-weight:700;
-  cursor:pointer; transition:all 0.2s;
-  border:1.5px solid;
-  text-decoration:none;
-  display:inline-flex; align-items:center; gap:6px;
-}
-.tb-btn-ghost{ background:transparent; border-color:var(--border); color:var(--muted); }
-.tb-btn-ghost:hover{ border-color:var(--purple); color:white; }
-.tb-btn-primary{ background:var(--grad); border-color:transparent; color:white; box-shadow:0 2px 10px rgba(91,108,235,0.3); }
-.tb-btn-green{ background:rgba(0,184,148,0.15); border-color:var(--green); color:var(--green); }
-.tb-btn-sheets{ background:rgba(52,168,83,0.15); border-color:#34a853; color:#34a853; }
-.tb-btn-sheets:hover{ background:rgba(52,168,83,0.25); }
-.tb-btn-green:hover{ background:rgba(0,184,148,0.25); }
+/* TOP ROW */
+.top-row{display:grid;grid-template-columns:340px 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:900px){.top-row{grid-template-columns:1fr;}}
+.control-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.control-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.control-label{font-family:var(--font-h);font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.control-label i{color:var(--purple);}
+.control-sub{font-size:0.75rem;color:var(--muted);margin-top:3px;}
+.estado-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.75rem;font-weight:700;white-space:nowrap;}
+.estado-badge.bloqueado{background:rgba(225,112,85,0.15);color:#e17055;border:1px solid rgba(225,112,85,0.3);}
+.estado-badge.habilitado{background:rgba(0,184,148,0.15);color:#00b894;border:1px solid rgba(0,184,148,0.3);}
+.control-btns{display:flex;gap:8px;margin-bottom:16px;}
+.ctrl-btn{flex:1;padding:9px 0;border-radius:8px;border:none;font-family:var(--font-h);font-size:0.8rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;}
+.ctrl-btn.habilitar{background:linear-gradient(135deg,#00b894,#00cec9);color:white;box-shadow:0 3px 10px rgba(0,184,148,0.3);}
+.ctrl-btn.habilitar:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(0,184,148,0.4);}
+.ctrl-btn.bloquear{background:transparent;border:1.5px solid rgba(225,112,85,0.4);color:#e17055;}
+.ctrl-btn.bloquear:hover{background:rgba(225,112,85,0.1);}
+.control-link-box{background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;}
+.control-link-label{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}
+.link-row{display:flex;align-items:center;gap:6px;}
+.link-text{font-family:monospace;font-size:0.75rem;color:var(--purple);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.copy-mini{background:rgba(91,108,235,0.15);border:1px solid rgba(91,108,235,0.3);color:var(--purple);border-radius:6px;padding:4px 8px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;}
+.copy-mini:hover{background:rgba(91,108,235,0.25);}
 
-.main{ max-width:1100px; margin:0 auto; padding:28px; }
+/* REALTIME STATS */
+.realtime-stats{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:600px){.rt-grid{grid-template-columns:repeat(2,1fr);}}
+.rt-card{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 10px;text-align:center;border-top:3px solid transparent;}
+.rt-card.purple{border-color:var(--purple);}
+.rt-card.green{border-color:var(--green);}
+.rt-card.teal{border-color:#00cec9;}
+.rt-card.gold{border-color:#fdcb6e;}
+.rt-num{font-family:var(--font-h);font-size:1.6rem;font-weight:900;color:var(--text);line-height:1;margin-bottom:4px;}
+.rt-label{font-size:0.68rem;color:var(--muted);line-height:1.3;}
+.rt-progress-wrap{margin-top:4px;}
+.rt-prog-row{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:5px;}
+.rt-bar-bg{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.rt-bar-fill{height:100%;border-radius:3px;transition:width 0.8s ease;}
+.rt-bar-fill.purple{background:var(--purple);}
+.rt-bar-fill.teal{background:#00cec9;}
+.rt-update{font-size:0.68rem;color:rgba(255,255,255,0.2);margin-top:10px;text-align:right;}
 
-/* ── SECCION ACTIVAR POST-TEST ── */
-.activate-card{
-  background: var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:28px;
-  margin-bottom:28px;
-  position:relative;
-  overflow:hidden;
-}
-.activate-card::before{
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:3px;
-  background: linear-gradient(90deg, var(--green), #55efc4);
-}
-.activate-header{
-  display:flex; align-items:center; justify-content:space-between;
-  flex-wrap:wrap; gap:16px; margin-bottom:20px;
-}
-.activate-title{
-  font-family:var(--font-h);
-  font-size:1rem; font-weight:800; color:white;
-}
-.activate-title span{ color:var(--muted); font-weight:500; font-size:0.82rem; display:block; margin-top:2px; }
-.mode-toggle{
-  display:flex; gap:8px;
-}
-.mode-btn{
-  padding:8px 20px;
-  border-radius:20px;
-  font-family:var(--font-h);
-  font-size:0.8rem; font-weight:700;
-  cursor:pointer; transition:all 0.2s;
-  border:1.5px solid;
-}
-.mode-btn.pre{ background:rgba(91,108,235,0.15); border-color:var(--purple); color:var(--purple); }
-.mode-btn.pre.active{ background:var(--purple); color:white; }
-.mode-btn.post{ background:rgba(0,184,148,0.1); border-color:var(--green); color:var(--green); }
-.mode-btn.post.active{ background:var(--green); color:white; box-shadow:0 4px 16px rgba(0,184,148,0.4); }
-.activate-link-box{
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px 18px;
-  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-}
-.activate-link{
-  font-family:monospace;
-  font-size:0.85rem;
-  color:var(--green);
-  flex:1; min-width:200px;
-  word-break:break-all;
-}
-.copy-btn{
-  padding:6px 14px;
-  background:rgba(0,184,148,0.15);
-  border:1px solid var(--green);
-  border-radius:8px;
-  color:var(--green);
-  font-family:var(--font-h);
-  font-size:0.75rem; font-weight:700;
-  cursor:pointer; transition:all 0.2s;
-  white-space:nowrap;
-}
-.copy-btn:hover{ background:rgba(0,184,148,0.3); }
+/* DATA TABLE */
+.data-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;}
+.data-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.table-wrap{overflow-x:auto;border-radius:10px;}
+.data-table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.data-table th{background:rgba(255,255,255,0.05);color:var(--muted);font-family:var(--font-h);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);}
+.data-table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text);}
+.data-table tr:hover td{background:rgba(255,255,255,0.03);}
+.badge-comp{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:0.68rem;font-weight:700;font-family:var(--font-h);}
+.badge-si{background:rgba(0,184,148,0.15);color:#00b894;}
+.badge-no{background:rgba(255,255,255,0.06);color:var(--muted);}
 
-/* ── UPLOAD CSV ── */
-.upload-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:28px;
-  margin-bottom:28px;
-}
-.card-title{
-  font-family:var(--font-h);
-  font-size:1rem; font-weight:800; color:white;
-  margin-bottom:18px;
-  display:flex; align-items:center; gap:8px;
-}
-.card-title i{ color:var(--purple); }
-.upload-zone{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-@media(max-width:600px){ .upload-zone{ grid-template-columns:1fr; } }
-.upload-box{
-  background:rgba(255,255,255,0.03);
-  border:2px dashed var(--border);
-  border-radius:14px;
-  padding:24px;
-  text-align:center;
-  cursor:pointer;
-  transition:all 0.2s;
-  position:relative;
-}
-.upload-box:hover{ border-color:var(--purple); background:rgba(91,108,235,0.05); }
-.upload-box.loaded{ border-color:var(--green); border-style:solid; background:rgba(0,184,148,0.05); }
-.upload-box input{ position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-.upload-icon{ font-size:2rem; margin-bottom:10px; }
-.upload-box h3{ font-family:var(--font-h); font-size:0.88rem; font-weight:700; color:white; margin-bottom:4px; }
-.upload-box p{ font-size:0.78rem; color:var(--muted); }
-.upload-box .loaded-info{ font-size:0.8rem; color:var(--green); margin-top:8px; font-weight:600; }
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.sc-purple::before{background:var(--purple);}
+.sc-green::before{background:var(--green);}
+.sc-teal::before{background:#00cec9;}
+.sc-coral::before{background:var(--coral);}
+.stat-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-family:var(--font-h);}
+.stat-val{font-family:var(--font-h);font-size:2rem;font-weight:900;color:white;line-height:1;}
+.stat-sub{font-size:0.75rem;color:var(--muted);margin-top:4px;}
 
-/* ── STATS SUMMARY ── */
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
-  gap:14px;
-  margin-bottom:28px;
-}
-.stat-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
-  position:relative;
-  overflow:hidden;
-}
-.stat-card::before{
-  content:'';
-  position:absolute; top:0; left:0; bottom:0; width:3px;
-}
-.sc-purple::before{ background:var(--purple); }
-.sc-green::before{ background:var(--green); }
-.sc-coral::before{ background:var(--coral); }
-.sc-violet::before{ background:var(--violet); }
-.stat-label{
-  font-size:0.72rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:1px;
-  color:var(--muted); margin-bottom:8px;
-  font-family:var(--font-h);
-}
-.stat-val{
-  font-family:var(--font-h);
-  font-size:2rem; font-weight:900; color:white;
-  line-height:1;
-}
-.stat-sub{ font-size:0.75rem; color:var(--muted); margin-top:4px; }
+/* CHARTS */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:700px){.charts-grid{grid-template-columns:1fr;}}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.chart-title{font-family:var(--font-h);font-size:0.85rem;font-weight:800;color:white;margin-bottom:14px;}
 
-/* ── ANÁLISIS ── */
-.analysis-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-bottom:28px;
-}
-@media(max-width:700px){ .analysis-grid{ grid-template-columns:1fr; } }
-.chart-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:24px;
-}
-.chart-card.wide{ grid-column:1/-1; }
-.chart-title{
-  font-family:var(--font-h);
-  font-size:0.88rem; font-weight:800; color:white;
-  margin-bottom:16px;
-  display:flex; align-items:center; gap:8px;
-}
-.chart-title i{ color:var(--purple); }
+/* ANALYSIS */
+.analysis-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;}
+#analisisTexto{font-size:0.88rem;line-height:1.8;color:var(--text);}
+#analisisTexto .a-section{background:rgba(255,255,255,0.04);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:12px;}
+#analisisTexto .a-section.green{border-left-color:var(--green);}
+#analisisTexto .a-section.coral{border-left-color:var(--coral);}
+#analisisTexto .a-section h4{font-family:var(--font-h);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;color:white;}
+.delta-positive{color:#00b894;font-weight:700;}
+.delta-negative{color:#e17055;font-weight:700;}
+.delta-neutral{color:var(--muted);}
+</style>
+</head>
+<body>
 
-/* ── TABLA DE PARTICIPANTES ── */
-.table-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:24px;
-  margin-bottom:28px;
-  overflow-x:auto;
-}
-table{ width:100%; border-collapse:collapse; }
-thead th{
-  font-family:var(--font-h);
-  font-size:0.72rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.5px;
-  color:var(--muted);
-  padding:10px 14px;
-  text-align:left;
-  border-bottom:1px solid var(--border);
-}
-tbody td{
-  padding:10px 14px;
-  font-size:0.82rem;
-  color:var(--text);
-  border-bottom:1px solid rgba(255,255,255,0.04);
-}
-tbody tr:hover{ background:rgba(255,255,255,0.03); }
-.delta-positive{ color:#00b894; font-weight:700; }
-.delta-negative{ color:#e17055; font-weight:700; }
-.delta-neutral{ color:var(--muted); }
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-icon"><i class="fas fa-shield-alt"></i></div>
+    <h1>Panel Administrador</h1>
+    <p>CAP-SV-DIGITAL · Universidad de Oriente</p>
+    <div class="login-input-wrap">
+      <i class="fas fa-lock"></i>
+      <input type="password" class="login-input" id="claveInput" placeholder="Contraseña de acceso"
+        onkeydown="if(event.key==='Enter') verificarClave()">
+    </div>
+    <button class="login-btn" onclick="verificarClave()">
+      <i class="fas fa-sign-in-alt"></i> Ingresar
+    </button>
+    <div class="login-error" id="loginError"><i class="fas fa-exclamation-circle"></i> Contraseña incorrecta</div>
+    <a href="landing-cap.html" class="login-back"><i class="fas fa-arrow-left"></i> Volver al inicio</a>
+  </div>
+</div>
 
-/* ── ANÁLISIS TEXTO ── */
-.analysis-text-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:28px;
-  margin-bottom:28px;
-}
-.analysis-text-card h3{
-  font-family:var(--font-h);
-  font-size:0.95rem; font-weight:800; color:white;
-  margin-bottom:16px; display:flex; align-items:center; gap:8px;
-}
-.analysis-text-card h3 i{ color:var(--purple); }
-#analisisTexto{
-  font-size:0.88rem; line-height:1.8; color:var(--text);
-}
-#analisisTexto .a-section{
-  background:rgba(255,255,255,0.04);
-  border-left:3px solid var(--purple);
-  border-radius:0 8px 8px 0;
-  padding:12px 16px;
-  margin-bottom:12px;
-}
-#analisisTexto .a-section.green{ border-left-color:var(--green); }
-#analisisTexto .a-section.coral{ border-left-color:var(--coral); }
-#analisisTexto .a-section h4{
-  font-family:var(--font-h);
-  font-size:0.78rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.5px;
-  margin-bottom:6px; color:white;
-}
-
-/* ── EMPTY STATE ── */
-.empty-state{
-  text-align:center;
-  padding:48px 20px;
-  color:var(--muted);
-}
-.empty-state i{ font-size:3rem; margin-bottom:16px; opacity:0.3; display:block; }
-.empty-state p{ font-size:0.88rem; }
-
-/* ── NUEVO DISEÑO ADMIN ── */
-.top-row{
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-@media(max-width:900px){ .top-row{ grid-template-columns:1fr; } }
-
-.control-card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px;
-}
-.control-header{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.control-label{
-  font-family: var(--font-h);
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.control-label i{ color: var(--purple); }
-.control-sub{ font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
-.estado-badge{
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 20px;
-  font-family: var(--font-h); font-size: 0.75rem; font-weight: 700;
-  white-space: nowrap;
-}
-.estado-badge.bloqueado{ backgro<!-- ═══════════════════════════════════════
-     PANEL ADMINISTRADOR - REDISEÑADO
-═══════════════════════════════════════ -->
+<!-- PANEL -->
 <div id="adminPanel">
 
-  <!-- TOPBAR SIMPLIFICADA -->
   <div class="topbar">
     <div class="topbar-brand">
       <div class="topbar-logo"><i class="fas fa-motorcycle"></i></div>
@@ -505,7 +180,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
       <button class="tb-btn tb-btn-green" id="btnActualizar" onclick="cargarDesdeSheets()">
         <i class="fas fa-sync-alt"></i> Actualizar
       </button>
-      <button class="tb-btn tb-btn-sheets" onclick="window.open(SHEETS_LINK,'_blank')" title="Ver Google Sheets">
+      <button class="tb-btn tb-btn-sheets" onclick="window.open(SHEETS_LINK,'_blank')">
         <i class="fas fa-table"></i> Ver Sheets
       </button>
       <button class="tb-btn tb-btn-primary" onclick="exportarReporte()">
@@ -519,7 +194,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
 
   <div class="main">
 
-    <!-- FILA SUPERIOR: CONTROL POST-TEST + STATS EN TIEMPO REAL -->
+    <!-- FILA SUPERIOR -->
     <div class="top-row">
 
       <!-- CONTROL POST-TEST -->
@@ -551,7 +226,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
         </div>
       </div>
 
-      <!-- STATS EN TIEMPO REAL -->
+      <!-- STATS TIEMPO REAL -->
       <div class="realtime-stats">
         <p class="control-label" style="margin-bottom:12px;"><i class="fas fa-chart-line"></i> Progreso en tiempo real</p>
         <div class="rt-grid">
@@ -574,13 +249,11 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
         </div>
         <div class="rt-progress-wrap">
           <div class="rt-prog-row">
-            <span>Pre-test completado</span>
-            <span id="rtPctPre">—</span>
+            <span>Pre-test completado</span><span id="rtPctPre">—</span>
           </div>
           <div class="rt-bar-bg"><div class="rt-bar-fill purple" id="rtBarPre" style="width:0%"></div></div>
           <div class="rt-prog-row" style="margin-top:8px;">
-            <span>Post-test completado</span>
-            <span id="rtPctPost">—</span>
+            <span>Post-test completado</span><span id="rtPctPost">—</span>
           </div>
           <div class="rt-bar-bg"><div class="rt-bar-fill teal" id="rtBarPost" style="width:0%"></div></div>
         </div>
@@ -588,7 +261,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
       </div>
     </div>
 
-    <!-- TABLA DE PARTICIPANTES EN TIEMPO REAL -->
+    <!-- TABLA PARTICIPANTES -->
     <div class="data-card" id="dataCard" style="display:none;">
       <div class="data-header">
         <p class="control-label"><i class="fas fa-users"></i> Participantes registrados</p>
@@ -605,16 +278,11 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
         </div>
       </div>
       <div class="table-wrap">
-        <table class="data-table" id="tablaParticipantes">
+        <table class="data-table">
           <thead>
             <tr>
-              <th>Código</th>
-              <th>Pre-test</th>
-              <th>Post-test</th>
-              <th>Diferencia</th>
-              <th>Nivel Pre</th>
-              <th>Nivel Post</th>
-              <th>Estado</th>
+              <th>Código</th><th>Pre-test</th><th>Post-test</th>
+              <th>Diferencia</th><th>Nivel Pre</th><th>Nivel Post</th><th>Estado</th>
             </tr>
           </thead>
           <tbody id="tablaBody"></tbody>
@@ -622,10 +290,8 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
       </div>
     </div>
 
-    <!-- ANÁLISIS ESTADÍSTICO -->
+    <!-- ANÁLISIS -->
     <div id="resultados" style="display:none;">
-
-      <!-- STATS CARDS -->
       <div class="stats-grid">
         <div class="stat-card sc-purple">
           <div class="stat-label">Participantes</div>
@@ -648,8 +314,6 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
           <div class="stat-sub">puntos de diferencia</div>
         </div>
       </div>
-
-      <!-- CHARTS -->
       <div class="charts-grid">
         <div class="chart-card">
           <h3 class="chart-title">Pre vs Post por participante</h3>
@@ -660,7 +324,7 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
           <canvas id="chartDiferencia" height="220"></canvas>
         </div>
       </div>
-      <div class="charts-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="charts-grid">
         <div class="chart-card">
           <h3 class="chart-title">Tendencia grupal</h3>
           <canvas id="chartTendencia" height="200"></canvas>
@@ -670,310 +334,28 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
           <canvas id="chartNiveles" height="200"></canvas>
         </div>
       </div>
-
-      <!-- ANÁLISIS TEXTUAL -->
       <div class="analysis-card">
         <p class="control-label" style="margin-bottom:16px;"><i class="fas fa-microscope"></i> Análisis estadístico descriptivo</p>
         <div id="analisisTexto"></div>
       </div>
-
-    </div>
-
-  </div><!-- /main -->
-</div><!-- /adminPanel -->
-
-     </button>
-          <button onclick="togglePostTest(false)"
-            style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:2px solid rgba(225,112,85,0.4);background:transparent;color:#e17055;font-family:var(--font-h);font-size:0.85rem;font-weight:700;cursor:pointer;">
-            <i class="fas fa-lock"></i> Bloquear Post-test
-          </button>
-          <button onclick="verificarEstadoPost()"
-            style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-h);font-size:0.85rem;font-weight:700;cursor:pointer;">
-            <i class="fas fa-sync-alt"></i> Verificar
-          </button>
-        </div>
-      </div>
-      <p style="font-size:0.75rem;color:var(--muted);margin-top:12px;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>Al habilitar, los participantes que confirmen haber completado el pre-test serán redirigidos al post-test automaticamente.</p>
-      <div id="toggleMsg" style="display:none;margin-top:12px;padding:10px 14px;border-radius:8px;font-size:0.83rem;"></div>
-    </div>
-
-    <!-- CARGAR CSV -->
-    <div class="upload-card">
-      <p class="card-title"><i class="fas fa-upload"></i> Cargar archivos de respuestas</p>
-      <div class="upload-zone">
-        <div class="upload-box" id="boxPre">
-          <input type="file" accept=".csv" multiple onchange="cargarCSV(event,'pre')">
-          <div class="upload-icon">📋</div>
-          <h3>Archivos Pre-test</h3>
-          <p>Arrastra o selecciona los CSV del pre-test</p>
-          <p class="loaded-info" id="infoPre" style="display:none"></p>
-        </div>
-        <div class="upload-box" id="boxPost">
-          <input type="file" accept=".csv" multiple onchange="cargarCSV(event,'post')">
-          <div class="upload-icon">🏁</div>
-          <h3>Archivos Post-test</h3>
-          <p>Arrastra o selecciona los CSV del post-test</p>
-          <p class="loaded-info" id="infoPost" style="display:none"></p>
-        </div>
-      </div>
-      <div style="margin-top:16px;text-align:center;">
-        <button class="tb-btn tb-btn-green" onclick="analizarDatos()" id="btnAnalizar" style="display:none;">
-          <i class="fas fa-chart-bar"></i> Generar análisis comparativo
-        </button>
-      </div>
-    </div>
-
-    <!-- RESULTADOS (oculto hasta cargar) -->
-    <div id="resultados" style="display:none;">
-
-      <!-- STATS -->
-      <div class="stats-grid">
-        <div class="stat-card sc-purple">
-          <div class="stat-label">Participantes</div>
-          <div class="stat-val" id="statN">0</div>
-          <div class="stat-sub">con pre y post-test</div>
-        </div>
-        <div class="stat-card sc-green">
-          <div class="stat-label">Promedio Pre-test</div>
-          <div class="stat-val" id="statPre">—</div>
-          <div class="stat-sub">puntos / 12</div>
-        </div>
-        <div class="stat-card sc-violet">
-          <div class="stat-label">Promedio Post-test</div>
-          <div class="stat-val" id="statPost">—</div>
-          <div class="stat-sub">puntos / 12</div>
-        </div>
-        <div class="stat-card sc-coral">
-          <div class="stat-label">Mejora promedio</div>
-          <div class="stat-val" id="statDelta">—</div>
-          <div class="stat-sub">puntos de diferencia</div>
-        </div>
-      </div>
-
-      <!-- GRÁFICOS -->
-      <div class="analysis-grid">
-        <div class="chart-card">
-          <div class="chart-title"><i class="fas fa-chart-bar"></i> Puntajes Pre vs Post por participante</div>
-          <canvas id="_charts.barras" height="260"></canvas>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title"><i class="fas fa-percentage"></i> Distribución de mejora</div>
-          <canvas id="_charts.mejora" height="260"></canvas>
-        </div>
-        <div class="chart-card wide">
-          <div class="chart-title"><i class="fas fa-chart-line"></i> Tendencia general Pre → Post</div>
-          <canvas id="_charts.linea" height="160"></canvas>
-        </div>
-      </div>
-
-      <!-- TABLA -->
-      <div class="table-card">
-        <p class="card-title"><i class="fas fa-table"></i> Resumen por participante</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Pre-test</th>
-              <th>Post-test</th>
-              <th>Diferencia</th>
-              <th>% Mejora</th>
-              <th>Nivel pre</th>
-              <th>Nivel post</th>
-            </tr>
-          </thead>
-          <tbody id="tablaBody"></tbody>
-        </table>
-      </div>
-
-      <!-- ANÁLISIS TEXTUAL -->
-      <div class="analysis-text-card">
-        <h3><i class="fas fa-brain"></i> Análisis interpretativo automatizado</h3>
-        <div id="analisisTexto"></div>
-      </div>
-
-    </div>
-
-    <!-- EMPTY STATE -->
-    <div class="empty-state" id="emptyState">
-      <i class="fas fa-folder-open"></i>
-      <p>Cargue los archivos CSV del pre-test y post-test para generar el análisis comparativo.</p>
     </div>
 
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════════
 const CLAVE_ADMIN = 'UDO2025';
-const API_URL = 'https://script.google.com/macros/s/AKfycbwpGRuUx8SGgchWwIICWTtBWKMG53qOukTsB3hCNSbhbjC5rM307CY0Apk81ATt5DpN/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzdNYEUXg2NpVHILf7yk2JEtJq02yT34tmy7KglPdkga4g2H4RtermHDIW5VwpBjY5w/exec';
 const SHEETS_LINK = 'https://docs.google.com/spreadsheets/d/1zPgr9Y3KnJL6HFB9__au6WHzAx2AsTZp6rztQs0Q5SU/edit';
-let modoActual = 'pre';
-let datosPre  = {};
-let datosPost = {};
+let datosPre = {}, datosPost = {};
 window._charts = {};
 
-// ══════════════════════════════════════════
-// CARGAR DATOS DESDE GOOGLE SHEETS (JSONP)
-// ══════════════════════════════════════════
-function cargarDesdeSheets(){
-  const btn = document.querySelector('.tb-btn-green');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
-  btn.disabled = true;
-
-  const timeout = setTimeout(()=>{
-    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
-  }, 12000);
-
-  window._adminDataCallback = function(data){
-    clearTimeout(timeout);
-    datosPre  = {};
-    datosPost = {};
-
-    if(data.pre && data.pre.length){
-      data.pre.forEach(row => {
-        const codigo = (row.codigo || '').toString().trim().toUpperCase();
-        const score  = parseInt(row.score_conocimientos || 0);
-        if(!codigo) return;
-        datosPre[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
-      });
-    }
-    if(data.post && data.post.length){
-      data.post.forEach(row => {
-        const codigo = (row.codigo || '').toString().trim().toUpperCase();
-        const score  = parseInt(row.score_conocimientos || 0);
-        if(!codigo) return;
-        datosPost[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
-      });
-    }
-
-    const nPre      = Object.keys(datosPre).length;
-    const nPost     = Object.keys(datosPost).length;
-    const nPreComp  = Object.values(datosPre).filter(r => r.completado === 'SI').length;
-    const nPostComp = Object.values(datosPost).filter(r => r.completado === 'SI').length;
-
-    btn.innerHTML = `<i class="fas fa-check"></i> ${nPre} pre · ${nPost} post`;
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
-
-    actualizarUI();
-    verificarSiAnalizarDisponible();
-    if(nPreComp > 0 && nPostComp > 0) analizarDatos();
-
-    const old = document.getElementById('_adminScript');
-    if(old) old.remove();
-  };
-
-  const old = document.getElementById('_adminScript');
-  if(old) old.remove();
-  const script = document.createElement('script');
-  script.id  = '_adminScript';
-  script.src = API_URL + '?action=getData&callback=_adminDataCallback&t=' + Date.now();
-  script.onerror = function(){
-    clearTimeout(timeout);
-    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
-  };
-  document.head.appendChild(script);
-}
-// ── ACTUALIZAR UI TIEMPO REAL ──
-function actualizarUI(){
-  const nPreTotal  = Object.keys(datosPre).length;
-  const nPostTotal = Object.keys(datosPost).length;
-  const nPreComp   = Object.values(datosPre).filter(r => r.completado === 'SI').length;
-  const nPostComp  = Object.values(datosPost).filter(r => r.completado === 'SI').length;
-  const pctPre     = nPreTotal  ? Math.round((nPreComp  / nPreTotal)  * 100) : 0;
-  const pctPost    = nPostTotal ? Math.round((nPostComp / nPostTotal) * 100) : 0;
-
-  // Stats tiempo real
-  document.getElementById('rtPreTotal').textContent  = nPreTotal  || '—';
-  document.getElementById('rtPreComp').textContent   = nPreComp   || '—';
-  document.getElementById('rtPostTotal').textContent = nPostTotal || '—';
-  document.getElementById('rtPostComp').textContent  = nPostComp  || '—';
-  document.getElementById('rtPctPre').textContent    = nPreTotal  ? pctPre  + '%' : '—';
-  document.getElementById('rtPctPost').textContent   = nPostTotal ? pctPost + '%' : '—';
-  document.getElementById('rtBarPre').style.width    = pctPre  + '%';
-  document.getElementById('rtBarPost').style.width   = pctPost + '%';
-
-  const now = new Date();
-  document.getElementById('rtUpdateTime').textContent =
-    'Última actualización: ' + now.toLocaleTimeString('es-VE');
-
-  // Poblar tabla
-  poblarTabla();
-
-  // Mostrar data card si hay datos
-  if(nPreTotal > 0 || nPostTotal > 0){
-    document.getElementById('dataCard').style.display = 'block';
-  }
-
-  // Info boxes legacy (para compatibilidad)
-  const infoPre = document.getElementById('infoPre');
-  const infoPost = document.getElementById('infoPost');
-  if(infoPre){ infoPre.textContent = `✓ ${nPreTotal} registros · ${nPreComp} completados`; infoPre.style.display='block'; }
-  if(infoPost){ infoPost.textContent = `✓ ${nPostTotal} registros · ${nPostComp} completados`; infoPost.style.display='block'; }
-}
-
-function poblarTabla(){
-  const tbody = document.getElementById('tablaBody');
-  if(!tbody) return;
-  const search = (document.getElementById('searchInput')?.value || '').toUpperCase();
-  const filtro = document.getElementById('filterModo')?.value || 'todos';
-
-  const todosCodigos = [...new Set([...Object.keys(datosPre), ...Object.keys(datosPost)])];
-  tbody.innerHTML = '';
-
-  todosCodigos.forEach(cod => {
-    const pre  = datosPre[cod];
-    const post = datosPost[cod];
-
-    if(search && !cod.includes(search)) return;
-    if(filtro === 'pre'   && !pre)          return;
-    if(filtro === 'post'  && !post)         return;
-    if(filtro === 'ambos' && (!pre||!post)) return;
-
-    const preScore  = pre  ? pre.score  : null;
-    const postScore = post ? post.score : null;
-    const diff = (preScore !== null && postScore !== null) ? postScore - preScore : null;
-    const preComp  = pre  && pre.completado  === 'SI';
-    const postComp = post && post.completado === 'SI';
-
-    const diffColor = diff === null ? '' : diff > 0 ? 'color:#00b894' : diff < 0 ? 'color:#e17055' : 'color:var(--muted)';
-    const diffTxt   = diff === null ? '—' : (diff > 0 ? '+' : '') + diff;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="font-family:monospace;font-weight:700;color:var(--purple)">${cod}</td>
-      <td>${preScore  !== null ? preScore  + '/10' : '—'}</td>
-      <td>${postScore !== null ? postScore + '/10' : '—'}</td>
-      <td style="${diffColor};font-weight:700">${diffTxt}</td>
-      <td>${preScore  !== null ? nivelTexto(preScore)  : '—'}</td>
-      <td>${postScore !== null ? nivelTexto(postScore) : '—'}</td>
-      <td>
-        ${preComp  ? '<span class="badge-comp badge-si"><i class="fas fa-check"></i> Pre ✓</span> ' : ''}
-        ${postComp ? '<span class="badge-comp badge-si"><i class="fas fa-check"></i> Post ✓</span>' : ''}
-        ${!preComp && !postComp ? '<span class="badge-comp badge-no">En progreso</span>' : ''}
-      </td>`;
-    tbody.appendChild(tr);
-  });
-
-  if(!tbody.children.length){
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px;">Sin resultados</td></tr>';
-  }
-}
-
-function filtrarTabla(){ poblarTabla(); }
-
+// LOGIN
 function verificarClave(){
-  const clave = document.getElementById('claveInput').value;
-  if(clave === CLAVE_ADMIN){
+  if(document.getElementById('claveInput').value === CLAVE_ADMIN){
     document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    sessionStorage.setItem('cap_admin', '1');
+    document.getElementById('adminPanel').style.display  = 'block';
+    sessionStorage.setItem('cap_admin','1');
     setTimeout(verificarEstadoPost, 600);
   } else {
     const err = document.getElementById('loginError');
@@ -982,405 +364,244 @@ function verificarClave(){
     setTimeout(()=>{ err.style.display='none'; }, 3000);
   }
 }
-
 function cerrarSesion(){
   sessionStorage.removeItem('cap_admin');
   window.location.href = 'landing-cap.html';
 }
-
-// ══════════════════════════════════════════
-// TOGGLE POST-TEST
-// ══════════════════════════════════════════
-function togglePostTest(habilitar){
-  const msg = document.getElementById('toggleMsg');
-  msg.style.display = 'block';
-  msg.style.cssText = 'display:block;margin-top:12px;padding:10px 14px;border-radius:8px;font-size:0.83rem;background:rgba(255,255,255,0.05);color:var(--muted);';
-  msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Aplicando cambio...';
-  const valor = habilitar ? 'true' : 'false';
-  const cbName = '_cb_cfg_' + Date.now();
-  const timeout = setTimeout(()=>{
-    limpiarCb(cbName);
-    msg.style.color = '#e17055';
-    msg.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Error de conexión.';
-  }, 8000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    actualizarBadgePost(habilitar);
-    if(data && data.ok){
-      msg.style.background = habilitar ? 'rgba(0,184,148,0.1)' : 'rgba(225,112,85,0.1)';
-      msg.style.color = habilitar ? '#00b894' : '#e17055';
-      msg.innerHTML = habilitar
-        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>. Los participantes ya pueden acceder.'
-        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>. Los participantes verán mensaje de espera.';
-      setTimeout(() => { msg.style.display = 'none'; }, 5000);
-    } else {
-      msg.style.color = '#e17055';
-      msg.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i> Error al guardar.';
-    }
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=setConfig&clave=post_habilitado&valor=' + valor + '&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName);
-    msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Sin conexión.'; };
-  document.head.appendChild(s);
-}
-
-function verificarEstadoPost(){
-  const cbName = '_cb_vcfg_' + Date.now();
-  const timeout = setTimeout(()=>{ limpiarCb(cbName); }, 8000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-    actualizarBadgePost(hab);
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-  document.head.appendChild(s);
-}
-
-function actualizarBadgePost(habilitado){
-  const badge = document.getElementById('estadoPostBadge');
-  const texto = document.getElementById('estadoPostTexto');
-  if(habilitado){
-    badge.style.background = 'rgba(0,184,148,0.15)';
-    badge.style.color = '#00b894';
-    badge.style.border = '1px solid rgba(0,184,148,0.3)';
-    badge.querySelector('i').className = 'fas fa-unlock';
-    texto.textContent = 'Habilitado';
-  } else {
-    badge.style.background = 'rgba(225,112,85,0.15)';
-    badge.style.color = '#e17055';
-    badge.style.border = '1px solid rgba(225,112,85,0.3)';
-    badge.querySelector('i').className = 'fas fa-lock';
-    texto.textContent = 'Bloqueado';
-  }
-}
-
-function limpiarCb(name){
-  try { delete window[name]; } catch(e){}
-  document.querySelectorAll('script[src*="' + name + '"]').forEach(s => s.remove());
-}
-
-// Auto-login si ya autenticado en esta sesión
-if(sessionStorage.getItem('cap_admin') === '1'){
+if(sessionStorage.getItem('cap_admin')==='1'){
   document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminPanel').style.display = 'block';
+  document.getElementById('adminPanel').style.display  = 'block';
   setTimeout(verificarEstadoPost, 600);
 }
 
-// ══════════════════════════════════════════
-// MODO PRE / POST
-// ══════════════════════════════════════════
-function setModo(modo){
-  modoActual = modo;
-  document.getElementById('btnPre').classList.toggle('active', modo==='pre');
-  document.getElementById('btnPost').classList.toggle('active', modo==='post');
-  const link = `instrumento-cap-final.html?modo=${modo}`;
-  document.getElementById('linkGenerado').textContent = link;
+// CARGAR DATOS
+function cargarDesdeSheets(){
+  const btn = document.getElementById('btnActualizar');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+  btn.disabled = true;
+  const timeout = setTimeout(()=>{
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+  }, 12000);
+  window._adminDataCallback = function(data){
+    clearTimeout(timeout);
+    datosPre = {}; datosPost = {};
+    if(data.pre)  data.pre.forEach(row=>{
+      const c = (row.codigo||'').toString().trim().toUpperCase();
+      const s = parseInt(row.score_conocimientos||0);
+      if(c) datosPre[c]  = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
+    });
+    if(data.post) data.post.forEach(row=>{
+      const c = (row.codigo||'').toString().trim().toUpperCase();
+      const s = parseInt(row.score_conocimientos||0);
+      if(c) datosPost[c] = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
+    });
+    const nPre = Object.keys(datosPre).length, nPost = Object.keys(datosPost).length;
+    btn.innerHTML = '<i class="fas fa-check"></i> ' + nPre + ' pre · ' + nPost + ' post';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+    actualizarUI();
+    const nPreComp  = Object.values(datosPre).filter(r=>r.completado==='SI').length;
+    const nPostComp = Object.values(datosPost).filter(r=>r.completado==='SI').length;
+    if(nPreComp > 0 && nPostComp > 0) analizarDatos();
+    const old = document.getElementById('_adminScript'); if(old) old.remove();
+  };
+  const old = document.getElementById('_adminScript'); if(old) old.remove();
+  const s = document.createElement('script');
+  s.id  = '_adminScript';
+  s.src = API_URL + '?action=getData&callback=_adminDataCallback&t=' + Date.now();
+  s.onerror = function(){
+    clearTimeout(timeout);
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+  };
+  document.head.appendChild(s);
 }
 
+// UI TIEMPO REAL
+function actualizarUI(){
+  const nPT = Object.keys(datosPre).length,  nPoT = Object.keys(datosPost).length;
+  const nPC = Object.values(datosPre).filter(r=>r.completado==='SI').length;
+  const nPoC= Object.values(datosPost).filter(r=>r.completado==='SI').length;
+  const pPre = nPT  ? Math.round((nPC /nPT )*100) : 0;
+  const pPost= nPoT ? Math.round((nPoC/nPoT)*100) : 0;
+  document.getElementById('rtPreTotal').textContent  = nPT  || '—';
+  document.getElementById('rtPreComp').textContent   = nPC  || '—';
+  document.getElementById('rtPostTotal').textContent = nPoT || '—';
+  document.getElementById('rtPostComp').textContent  = nPoC || '—';
+  document.getElementById('rtPctPre').textContent    = nPT  ? pPre  + '%' : '—';
+  document.getElementById('rtPctPost').textContent   = nPoT ? pPost + '%' : '—';
+  document.getElementById('rtBarPre').style.width    = pPre  + '%';
+  document.getElementById('rtBarPost').style.width   = pPost + '%';
+  document.getElementById('rtUpdateTime').textContent = 'Última actualización: ' + new Date().toLocaleTimeString('es-VE');
+  poblarTabla();
+  if(nPT > 0 || nPoT > 0) document.getElementById('dataCard').style.display = 'block';
+}
+
+function poblarTabla(){
+  const tbody = document.getElementById('tablaBody');
+  if(!tbody) return;
+  const search = (document.getElementById('searchInput')?.value||'').toUpperCase();
+  const filtro = document.getElementById('filterModo')?.value||'todos';
+  const todos  = [...new Set([...Object.keys(datosPre),...Object.keys(datosPost)])];
+  tbody.innerHTML = '';
+  todos.forEach(cod=>{
+    const pre = datosPre[cod], post = datosPost[cod];
+    if(search && !cod.includes(search)) return;
+    if(filtro==='pre'   && !pre)           return;
+    if(filtro==='post'  && !post)          return;
+    if(filtro==='ambos' && (!pre||!post))  return;
+    const ps = pre  ? pre.score  : null;
+    const qs = post ? post.score : null;
+    const d  = (ps!==null && qs!==null) ? qs-ps : null;
+    const dc = d===null?'':d>0?'color:#00b894':d<0?'color:#e17055':'color:var(--muted)';
+    const dt = d===null?'—':(d>0?'+':'')+d;
+    const pc = pre  && pre.completado==='SI';
+    const qc = post && post.completado==='SI';
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="font-family:monospace;font-weight:700;color:var(--purple)">'+cod+'</td>'+
+      '<td>'+(ps!==null?ps+'/10':'—')+'</td>'+
+      '<td>'+(qs!==null?qs+'/10':'—')+'</td>'+
+      '<td style="'+dc+';font-weight:700">'+dt+'</td>'+
+      '<td>'+(ps!==null?nivelTexto(ps):'—')+'</td>'+
+      '<td>'+(qs!==null?nivelTexto(qs):'—')+'</td>'+
+      '<td>'+(pc?'<span class="badge-comp badge-si"><i class="fas fa-check"></i> Pre</span> ':'')+
+            (qc?'<span class="badge-comp badge-si"><i class="fas fa-check"></i> Post</span>':'')+
+            (!pc&&!qc?'<span class="badge-comp badge-no">En progreso</span>':'')+'</td>';
+    tbody.appendChild(tr);
+  });
+  if(!tbody.children.length)
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px;">Sin resultados</td></tr>';
+}
+function filtrarTabla(){ poblarTabla(); }
+
+// POST-TEST TOGGLE
+function togglePostTest(habilitar){
+  const msg = document.getElementById('toggleMsg');
+  msg.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:8px;font-size:0.8rem;background:rgba(255,255,255,0.05);color:var(--muted);';
+  msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Aplicando...';
+  const cb = '_cb_cfg_'+Date.now();
+  const to = setTimeout(()=>{ limpiarCb(cb); msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-triangle"></i> Error de conexión.'; }, 8000);
+  window[cb] = function(data){
+    clearTimeout(to); limpiarCb(cb);
+    actualizarBadgePost(habilitar);
+    if(data && data.ok){
+      msg.style.background = habilitar?'rgba(0,184,148,0.1)':'rgba(225,112,85,0.1)';
+      msg.style.color = habilitar?'#00b894':'#e17055';
+      msg.innerHTML = habilitar
+        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>.'
+        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>.';
+      setTimeout(()=>{ msg.style.display='none'; }, 5000);
+    } else {
+      msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-circle"></i> Error al guardar.';
+    }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL+'?action=setConfig&clave=post_habilitado&valor='+(habilitar?'true':'false')+'&callback='+cb+'&t='+Date.now();
+  s.onerror = function(){ clearTimeout(to); limpiarCb(cb); msg.style.color='#e17055'; msg.innerHTML='Sin conexión.'; };
+  document.head.appendChild(s);
+}
+function verificarEstadoPost(){
+  const cb = '_cb_vcfg_'+Date.now();
+  const to = setTimeout(()=>{ limpiarCb(cb); }, 8000);
+  window[cb] = function(data){ clearTimeout(to); limpiarCb(cb); actualizarBadgePost(String(data.post_habilitado).toLowerCase()==='true'); };
+  const s = document.createElement('script');
+  s.src = API_URL+'?action=getConfig&callback='+cb+'&t='+Date.now();
+  document.head.appendChild(s);
+}
+function actualizarBadgePost(hab){
+  const badge = document.getElementById('estadoPostBadge');
+  const texto = document.getElementById('estadoPostTexto');
+  badge.className = 'estado-badge '+(hab?'habilitado':'bloqueado');
+  badge.querySelector('i').className = 'fas fa-'+(hab?'unlock':'lock');
+  texto.textContent = hab?'Habilitado':'Bloqueado';
+}
 function copiarEnlace(){
   const txt = document.getElementById('linkGenerado').textContent;
   navigator.clipboard.writeText(txt).then(()=>{
-    const btn = document.querySelector('.copy-btn');
-    btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-copy"></i> Copiar enlace'; }, 2000);
+    const btn = document.querySelector('.copy-mini');
+    btn.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
   });
 }
+function limpiarCb(n){ try{delete window[n];}catch(e){} document.querySelectorAll('script[src*="'+n+'"]').forEach(s=>s.remove()); }
 
-// ══════════════════════════════════════════
-// CARGAR CSV
-// ══════════════════════════════════════════
-function cargarCSV(event, tipo){
-  const files = event.target.files;
-  if(!files.length) return;
-
-  let cargados = 0;
-  const datos = tipo === 'pre' ? datosPre : datosPost;
-
-  Array.from(files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = function(e){
-      const lines = e.target.result.split('\n').filter(l=>l.trim());
-      lines.forEach(line => {
-        const cols = line.split(',');
-        if(cols[4] === 'SCORE' && cols[5] === 'conocimientos'){
-          const codigo = cols[0].trim().replace(/"/g,'');
-          const score  = parseInt(cols[6]);
-          if(codigo && !isNaN(score)){
-            datos[codigo] = score;
-          }
-        }
-      });
-      cargados++;
-      if(cargados === files.length){
-        const infoEl = document.getElementById('info' + (tipo==='pre'?'Pre':'Post'));
-        infoEl.textContent = `✓ ${Object.keys(datos).length} participantes cargados`;
-        infoEl.style.display = 'block';
-        document.getElementById('box'+tipo.charAt(0).toUpperCase()+tipo.slice(1)).classList.add('loaded');
-        verificarSiAnalizarDisponible();
-      }
-    };
-    reader.readAsText(file, 'UTF-8');
-  });
-}
-
-function verificarSiAnalizarDisponible(){
-  const btn = document.getElementById('btnAnalizar');
-  if(Object.keys(datosPre).length > 0 && Object.keys(datosPost).length > 0){
-    btn.style.display = 'inline-flex';
-  }
-}
-
-// ══════════════════════════════════════════
 // ANALIZAR
-// ══════════════════════════════════════════
-let _charts.barras = null, _charts.mejora = null, _charts.linea = null;
+function nivelTexto(s){ return s>=9?'Excelente':s>=7?'Bueno':s>=5?'Regular':'Bajo'; }
 
 function analizarDatos(){
-  // Participantes con ambos tests
-  const codigos = Object.keys(datosPre).filter(c => datosPost[c] !== undefined);
-
-  if(codigos.length === 0){
-    document.getElementById('emptyState').style.display = 'block';
-    document.getElementById('emptyState').innerHTML = `
-      <i class="fas fa-info-circle"></i>
-      <p>Aún no hay participantes con pre-test <strong>y</strong> post-test completados.<br>
-      Pre-test: <strong>${Object.keys(datosPre).length}</strong> participantes · 
-      Post-test: <strong>${Object.keys(datosPost).length}</strong> participantes</p>`;
-    return;
-  }
-
-  document.getElementById('emptyState').style.display = 'none';
+  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined&&datosPre[c].completado==='SI'&&datosPost[c].completado==='SI');
+  if(!codigos.length){ document.getElementById('resultados').style.display='none'; return; }
   document.getElementById('resultados').style.display = 'block';
-
-  const pres  = codigos.map(c => datosPre[c]);
-  const posts = codigos.map(c => datosPost[c]);
-  const deltas = codigos.map(c => datosPost[c] - datosPre[c]);
-  const pcts   = codigos.map(c => Math.round(((datosPost[c] - datosPre[c]) / 12) * 100));
-
-  const avgPre  = (pres.reduce((a,b)=>a+b,0) / pres.length).toFixed(1);
-  const avgPost = (posts.reduce((a,b)=>a+b,0) / posts.length).toFixed(1);
-  const avgDelta= (deltas.reduce((a,b)=>a+b,0) / deltas.length).toFixed(1);
-
-  // Stats
+  const pres   = codigos.map(c=>datosPre[c].score);
+  const posts  = codigos.map(c=>datosPost[c].score);
+  const deltas = codigos.map((_,i)=>posts[i]-pres[i]);
+  const avgPre  = (pres.reduce((a,b)=>a+b,0)/pres.length).toFixed(1);
+  const avgPost = (posts.reduce((a,b)=>a+b,0)/posts.length).toFixed(1);
+  const avgDelta= (deltas.reduce((a,b)=>a+b,0)/deltas.length).toFixed(1);
   document.getElementById('statN').textContent     = codigos.length;
   document.getElementById('statPre').textContent   = avgPre;
   document.getElementById('statPost').textContent  = avgPost;
-  document.getElementById('statDelta').textContent = (avgDelta > 0 ? '+' : '') + avgDelta;
-
-  // Tabla
-  const tbody = document.getElementById('tablaBody');
-  tbody.innerHTML = '';
-  codigos.forEach(c => {
-    const pre  = datosPre[c];
-    const post = datosPost[c];
-    const d    = post - pre;
-    const pct  = Math.round((d / 12) * 100);
-    tbody.innerHTML += `
-      <tr>
-        <td><strong>${c}</strong></td>
-        <td>${pre} / 12</td>
-        <td>${post} / 12</td>
-        <td class="${d>0?'delta-positive':d<0?'delta-negative':'delta-neutral'}">${d>0?'+':''}${d}</td>
-        <td class="${pct>0?'delta-positive':pct<0?'delta-negative':'delta-neutral'}">${pct>0?'+':''}${pct}%</td>
-        <td>${nivelTexto(pre)}</td>
-        <td>${nivelTexto(post)}</td>
-      </tr>`;
-  });
-
-  // Gráficos
-  renderGraficos(codigos, pres, posts, deltas, pcts);
-
-  // Análisis textual
-  generarAnalisis(codigos, pres, posts, deltas, avgPre, avgPost, avgDelta);
+  document.getElementById('statDelta').textContent = (parseFloat(avgDelta)>=0?'+':'')+avgDelta;
+  renderGraficos(codigos,pres,posts,deltas);
+  generarAnalisis(codigos,pres,posts,deltas,avgPre,avgPost,avgDelta);
 }
 
-function nivelTexto(score){
-  if(score >= 11) return '🏆 Excelente';
-  if(score >= 9)  return '✅ Bueno';
-  if(score >= 6)  return '⚠️ Regular';
-  return '🔴 Bajo';
-}
-
-// ══════════════════════════════════════════
-// GRÁFICOS
-// ══════════════════════════════════════════
 Chart.defaults.color = '#8892a4';
-Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.family = "'Inter',sans-serif";
 
-function renderGraficos(codigos, pres, posts, deltas, pcts){
-  const colPre  = 'rgba(91,108,235,0.8)';
-  const colPost = 'rgba(0,184,148,0.8)';
-  const colDelta= deltas.map(d => d >= 0 ? 'rgba(0,184,148,0.8)' : 'rgba(225,112,85,0.8)');
-
-  // Destruir si existen
-  if(window._charts){ Object.values(window._charts).forEach(c => { try{ c.destroy(); }catch(e){} }); }
+function renderGraficos(codigos,pres,posts,deltas){
+  if(window._charts){ Object.values(window._charts).forEach(c=>{ try{c.destroy();}catch(e){} }); }
   window._charts = {};
-
-  // Barras agrupadas
-  _charts.barras = new Chart(document.getElementById('chartComparacion'), {
-    type: 'bar',
-    data: {
-      labels: codigos,
-      datasets: [
-        { label: 'Pre-test', data: pres,  backgroundColor: colPre,  borderRadius: 6 },
-        { label: 'Post-test', data: posts, backgroundColor: colPost, borderRadius: 6 }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { labels: { color: '#8892a4' } } },
-      scales: {
-        y: { min:0, max:12, grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#8892a4' } },
-        x: { grid:{ display:false }, ticks:{ color:'#8892a4' } }
-      }
-    }
+  const colPre='rgba(91,108,235,0.8)', colPost='rgba(0,184,148,0.8)';
+  const colD = deltas.map(d=>d>=0?'rgba(0,184,148,0.8)':'rgba(225,112,85,0.8)');
+  window._charts.a = new Chart(document.getElementById('chartComparacion'),{
+    type:'bar', data:{labels:codigos,datasets:[{label:'Pre-test',data:pres,backgroundColor:colPre,borderRadius:6},{label:'Post-test',data:posts,backgroundColor:colPost,borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},scales:{y:{min:0,max:10,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4'}},x:{grid:{display:false},ticks:{color:'#8892a4'}}}}
   });
-
-  // Barras de diferencia
-  _charts.mejora = new Chart(document.getElementById('chartDiferencia'), {
-    type: 'bar',
-    data: {
-      labels: codigos,
-      datasets:[{
-        label: 'Diferencia (post - pre)',
-        data: deltas,
-        backgroundColor: colDelta,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend:{ display:false } },
-      scales: {
-        y: { grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#8892a4' } },
-        x: { grid:{ display:false }, ticks:{ color:'#8892a4' } }
-      }
-    }
+  window._charts.b = new Chart(document.getElementById('chartDiferencia'),{
+    type:'bar', data:{labels:codigos,datasets:[{label:'Diferencia',data:deltas,backgroundColor:colD,borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4'}},x:{grid:{display:false},ticks:{color:'#8892a4'}}}}
   });
-
-  // Gráfica de distribución de niveles
-  const nivelesLabels = ['Excelente (9-10)','Bueno (7-8)','Regular (5-6)','Bajo (0-4)'];
-  const preNiveles  = [
-    pres.filter(s=>s>=9).length, pres.filter(s=>s>=7&&s<9).length,
-    pres.filter(s=>s>=5&&s<7).length, pres.filter(s=>s<5).length
-  ];
-  const postNiveles = [
-    posts.filter(s=>s>=9).length, posts.filter(s=>s>=7&&s<9).length,
-    posts.filter(s=>s>=5&&s<7).length, posts.filter(s=>s<5).length
-  ];
-  _charts.niveles = new Chart(document.getElementById('chartNiveles'), {
-    type: 'bar',
-    data: {
-      labels: nivelesLabels,
-      datasets: [
-        { label:'Pre-test',  data:preNiveles,  backgroundColor:'rgba(91,108,235,0.75)', borderRadius:6 },
-        { label:'Post-test', data:postNiveles, backgroundColor:'rgba(0,184,148,0.75)',  borderRadius:6 }
-      ]
-    },
-    options: {
-      responsive:true,
-      plugins:{ legend:{ labels:{ color:'#8892a4' } } },
-      scales:{
-        y:{ beginAtZero:true, grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#8892a4', stepSize:1 } },
-        x:{ grid:{ display:false }, ticks:{ color:'#8892a4', font:{ size:10 } } }
-      }
-    }
+  const avgP=pres.reduce((a,b)=>a+b,0)/pres.length, avgQ=posts.reduce((a,b)=>a+b,0)/posts.length;
+  window._charts.c = new Chart(document.getElementById('chartTendencia'),{
+    type:'line', data:{labels:['Pre-test','Post-test'],datasets:[{label:'Promedio grupal',data:[avgP,avgQ],borderColor:'rgba(0,184,148,1)',backgroundColor:'rgba(0,184,148,0.1)',borderWidth:3,pointRadius:8,pointBackgroundColor:'rgba(0,184,148,1)',fill:true,tension:0.3}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},scales:{y:{min:0,max:10,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4'}},x:{grid:{display:false},ticks:{color:'#8892a4',font:{size:13,weight:'bold'}}}}}
   });
-
-  // Línea de tendencia
-  const avgPre  = pres.reduce((a,b)=>a+b,0)/pres.length;
-  const avgPost = posts.reduce((a,b)=>a+b,0)/posts.length;
-  _charts.linea = new Chart(document.getElementById('chartTendencia'), {
-    type: 'line',
-    data: {
-      labels: ['Pre-test', 'Post-test'],
-      datasets:[{
-        label: 'Promedio grupal',
-        data: [avgPre, avgPost],
-        borderColor: 'rgba(0,184,148,1)',
-        backgroundColor: 'rgba(0,184,148,0.1)',
-        borderWidth: 3,
-        pointRadius: 8,
-        pointBackgroundColor: 'rgba(0,184,148,1)',
-        fill: true,
-        tension: 0.3
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend:{ labels:{ color:'#8892a4' } } },
-      scales: {
-        y: { min:0, max:12, grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#8892a4' } },
-        x: { grid:{ display:false }, ticks:{ color:'#8892a4', font:{ size:13, weight:'bold' } } }
-      }
-    }
+  const nL=['Excelente (9-10)','Bueno (7-8)','Regular (5-6)','Bajo (0-4)'];
+  const pN=[pres.filter(s=>s>=9).length,pres.filter(s=>s>=7&&s<9).length,pres.filter(s=>s>=5&&s<7).length,pres.filter(s=>s<5).length];
+  const qN=[posts.filter(s=>s>=9).length,posts.filter(s=>s>=7&&s<9).length,posts.filter(s=>s>=5&&s<7).length,posts.filter(s=>s<5).length];
+  window._charts.d = new Chart(document.getElementById('chartNiveles'),{
+    type:'bar', data:{labels:nL,datasets:[{label:'Pre-test',data:pN,backgroundColor:'rgba(91,108,235,0.75)',borderRadius:6},{label:'Post-test',data:qN,backgroundColor:'rgba(0,184,148,0.75)',borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4',stepSize:1}},x:{grid:{display:false},ticks:{color:'#8892a4',font:{size:10}}}}}
   });
 }
 
-// ══════════════════════════════════════════
-// ANÁLISIS INTERPRETATIVO
-// ══════════════════════════════════════════
-function generarAnalisis(codigos, pres, posts, deltas, avgPre, avgPost, avgDelta){
-  const n = codigos.length;
-  const mejoraron = deltas.filter(d=>d>0).length;
-  const mantuvieron = deltas.filter(d=>d===0).length;
-  const disminuyeron = deltas.filter(d=>d<0).length;
-  const pctMejora = Math.round((mejoraron/n)*100);
-  const maxMejora = Math.max(...deltas);
-  const codigoMax = codigos[deltas.indexOf(maxMejora)];
-  const avgDeltaNum = parseFloat(avgDelta);
-
-  const contenido = `
-    <div class="a-section">
-      <h4>📊 Resumen general</h4>
-      <p>Se analizaron <strong>${n} participantes</strong> con datos completos de pre-test y post-test. El promedio de conocimientos pasó de <strong>${avgPre}/12</strong> en el pre-test a <strong>${avgPost}/12</strong> en el post-test, lo que representa una variación promedio de <strong>${avgDeltaNum >= 0 ? '+' : ''}${avgDelta} puntos</strong>.</p>
-    </div>
-    <div class="a-section ${avgDeltaNum >= 0 ? 'green' : 'coral'}">
-      <h4>${avgDeltaNum >= 0 ? '✅ Efecto de la intervención' : '⚠️ Resultado de la intervención'}</h4>
-      <p>${avgDeltaNum > 1
-        ? `La intervención educativa digital mostró un <strong>efecto positivo claro</strong>: ${mejoraron} de ${n} participantes (${pctMejora}%) mejoraron su puntaje. El participante con mayor mejora fue <strong>${codigoMax}</strong> con un incremento de +${maxMejora} puntos.`
-        : avgDeltaNum >= 0
-        ? `La intervención mostró un <strong>efecto leve o nulo</strong>. Si bien el ${pctMejora}% de participantes mejoró, la magnitud del cambio es pequeña. Se recomienda analizar la calidad de la exposición al contenido digital.`
-        : `Se observó una <strong>disminución promedio</strong> en los puntajes post-test. Esto puede deberse a sesgos de aplicación, diferencias en condiciones de aplicación, o tamaño muestral reducido.`
-      }</p>
-    </div>
-    <div class="a-section">
-      <h4>📈 Distribución del cambio</h4>
-      <p>De los ${n} participantes: <strong style="color:#00b894">${mejoraron} mejoraron</strong>, <strong style="color:#8892a4">${mantuvieron} mantuvieron</strong> su puntaje y <strong style="color:#e17055">${disminuyeron} disminuyeron</strong>. Un porcentaje de mejora superior al 60% es considerado indicativo de efectividad de la intervención.</p>
-    </div>
-    <div class="a-section">
-      <h4>🎯 Recomendaciones metodológicas</h4>
-      <p>Para el análisis estadístico inferencial se recomienda aplicar la <strong>prueba de Wilcoxon</strong> (datos no paramétricos) o <strong>prueba t de Student para muestras relacionadas</strong> si los datos cumplen normalidad (prueba de Shapiro-Wilk). El tamaño del efecto puede calcularse mediante <strong>d de Cohen</strong>. Estos análisis pueden realizarse en SPSS o R con los CSV descargados.</p>
-    </div>`;
-
-  document.getElementById('analisisTexto').innerHTML = contenido;
+function generarAnalisis(codigos,pres,posts,deltas,avgPre,avgPost,avgDelta){
+  const n=codigos.length, mej=deltas.filter(d=>d>0).length, man=deltas.filter(d=>d===0).length, dis=deltas.filter(d=>d<0).length;
+  const pct=Math.round((mej/n)*100), maxD=Math.max(...deltas), codMax=codigos[deltas.indexOf(maxD)], avg=parseFloat(avgDelta);
+  document.getElementById('analisisTexto').innerHTML =
+    '<div class="a-section"><h4>Resumen general</h4><p>Se analizaron <strong>'+n+' participantes</strong>. Promedio pre: <strong>'+avgPre+'/10</strong> → post: <strong>'+avgPost+'/10</strong>. Variación promedio: <strong>'+(avg>=0?'+':'')+avgDelta+' puntos</strong>.</p></div>'+
+    '<div class="a-section '+(avg>=0?'green':'coral')+'"><h4>'+(avg>=0?'Efecto de la intervención':'Resultado de la intervención')+'</h4><p>'+(avg>1?'Efecto positivo claro: '+mej+'/'+n+' participantes ('+pct+'%) mejoraron. Mayor mejora: <strong>'+codMax+'</strong> con +'+maxD+' puntos.':avg>=0?'Efecto leve o nulo. '+pct+'% mejoró pero la magnitud es pequeña.':'Disminución promedio observada. Revisar condiciones de aplicación.')+'</p></div>'+
+    '<div class="a-section"><h4>Distribución del cambio</h4><p><strong style="color:#00b894">'+mej+' mejoraron</strong> · <strong style="color:var(--muted)">'+man+' igual</strong> · <strong style="color:#e17055">'+dis+' disminuyeron</strong>. Mejora >60% indica efectividad de la intervención.</p></div>'+
+    '<div class="a-section"><h4>Recomendaciones metodológicas</h4><p>Aplicar <strong>prueba de Wilcoxon</strong> (no paramétrica) o <strong>t de Student para muestras relacionadas</strong> si hay normalidad (Shapiro-Wilk). Calcular <strong>d de Cohen</strong> para tamaño del efecto. Exportar CSV para análisis en SPSS o R.</p></div>';
 }
 
-// ══════════════════════════════════════════
-// EXPORTAR REPORTE CONSOLIDADO
-// ══════════════════════════════════════════
 function exportarReporte(){
-  const codigos = Object.keys(datosPre).filter(c => datosPost[c] !== undefined);
-  if(!codigos.length){ alert('No hay datos para exportar. Cargue primero los CSV.'); return; }
-
+  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined);
+  if(!codigos.length){ alert('No hay datos para exportar.'); return; }
   let csv = 'codigo,pre_score,post_score,diferencia,pct_mejora,nivel_pre,nivel_post\n';
-  codigos.forEach(c => {
-    const pre  = datosPre[c];
-    const post = datosPost[c];
-    const d    = post - pre;
-    const pct  = Math.round((d/12)*100);
-    csv += `${c},${pre},${post},${d},${pct}%,${nivelTexto(pre).replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]/g,'').trim()},${nivelTexto(post).replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]/g,'').trim()}\n`;
+  codigos.forEach(c=>{
+    const pre=datosPre[c].score, post=datosPost[c].score, d=post-pre, pct=Math.round((d/10)*100);
+    csv += c+','+pre+','+post+','+d+','+pct+'%,'+nivelTexto(pre)+','+nivelTexto(post)+'\n';
   });
-
-  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `CAP-SV-DIGITAL_reporte_${new Date().toISOString().slice(0,10)}.csv`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download = 'CAP-SV-DIGITAL_reporte_'+new Date().toISOString().slice(0,10)+'.csv';
   a.click();
-  URL.revokeObjectURL(url);
 }
 </script>
 </body>
