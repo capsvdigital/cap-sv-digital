@@ -204,6 +204,8 @@ body{
 .tb-btn-ghost:hover{ border-color:var(--purple); color:white; }
 .tb-btn-primary{ background:var(--grad); border-color:transparent; color:white; box-shadow:0 2px 10px rgba(91,108,235,0.3); }
 .tb-btn-green{ background:rgba(0,184,148,0.15); border-color:var(--green); color:var(--green); }
+.tb-btn-sheets{ background:rgba(52,168,83,0.15); border-color:#34a853; color:#34a853; }
+.tb-btn-sheets:hover{ background:rgba(52,168,83,0.25); }
 .tb-btn-green:hover{ background:rgba(0,184,148,0.25); }
 
 .main{ max-width:1100px; margin:0 auto; padding:28px; }
@@ -443,44 +445,54 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
 }
 .empty-state i{ font-size:3rem; margin-bottom:16px; opacity:0.3; display:block; }
 .empty-state p{ font-size:0.88rem; }
-</style>
-</head>
-<body>
 
-<!-- ═══════════════════════════════════════
-     PANTALLA DE LOGIN
-═══════════════════════════════════════ -->
-<div id="loginScreen">
-  <div class="login-card">
-    <div class="login-icon"><i class="fas fa-user-shield"></i></div>
-    <h1>Acceso Administrador</h1>
-    <p>Ingrese la clave de administración para continuar</p>
+/* ── NUEVO DISEÑO ADMIN ── */
+.top-row{
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+@media(max-width:900px){ .top-row{ grid-template-columns:1fr; } }
 
-    <div class="login-input-wrap">
-      <i class="fas fa-lock"></i>
-      <input type="password" class="login-input" id="claveInput"
-             placeholder="Clave de acceso"
-             onkeydown="if(event.key==='Enter') verificarClave()">
-    </div>
-    <button class="login-btn" onclick="verificarClave()">
-      <i class="fas fa-unlock-alt"></i> Ingresar al Panel
-    </button>
-    <div class="login-error" id="loginError">
-      <i class="fas fa-exclamation-circle"></i> Clave incorrecta. Intente nuevamente.
-    </div>
-    <br>
-    <a href="landing-cap.html" class="login-back">
-      <i class="fas fa-arrow-left"></i> Volver al inicio
-    </a>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     PANEL ADMINISTRADOR
+.control-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+}
+.control-header{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.control-label{
+  font-family: var(--font-h);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.control-label i{ color: var(--purple); }
+.control-sub{ font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+.estado-badge{
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px;
+  font-family: var(--font-h); font-size: 0.75rem; font-weight: 700;
+  white-space: nowrap;
+}
+.estado-badge.bloqueado{ backgro<!-- ═══════════════════════════════════════
+     PANEL ADMINISTRADOR - REDISEÑADO
 ═══════════════════════════════════════ -->
 <div id="adminPanel">
 
-  <!-- TOPBAR -->
+  <!-- TOPBAR SIMPLIFICADA -->
   <div class="topbar">
     <div class="topbar-brand">
       <div class="topbar-logo"><i class="fas fa-motorcycle"></i></div>
@@ -490,14 +502,14 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
       </div>
     </div>
     <div class="topbar-actions">
-      <a href="landing-cap.html" class="tb-btn tb-btn-ghost">
-        <i class="fas fa-home"></i> Inicio
-      </a>
-      <button class="tb-btn tb-btn-green" onclick="cargarDesdeSheets()">
-        <i class="fas fa-sync-alt"></i> Actualizar datos
+      <button class="tb-btn tb-btn-green" id="btnActualizar" onclick="cargarDesdeSheets()">
+        <i class="fas fa-sync-alt"></i> Actualizar
+      </button>
+      <button class="tb-btn tb-btn-sheets" onclick="window.open(SHEETS_LINK,'_blank')" title="Ver Google Sheets">
+        <i class="fas fa-table"></i> Ver Sheets
       </button>
       <button class="tb-btn tb-btn-primary" onclick="exportarReporte()">
-        <i class="fas fa-file-csv"></i> Exportar reporte
+        <i class="fas fa-download"></i> Exportar CSV
       </button>
       <button class="tb-btn tb-btn-ghost" onclick="cerrarSesion()">
         <i class="fas fa-sign-out-alt"></i> Salir
@@ -507,53 +519,170 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
 
   <div class="main">
 
-    <!-- ACTIVAR MODO POST-TEST -->
-    <div class="activate-card">
-      <div class="activate-header">
-        <div class="activate-title">
-          Activar modo de instrumento
-          <span>Genera el enlace correcto para cada fase del estudio</span>
-        </div>
-        <div class="mode-toggle">
-          <button class="mode-btn pre active" id="btnPre" onclick="setModo('pre')">
-            <i class="fas fa-play"></i> Pre-test
-          </button>
-          <button class="mode-btn post" id="btnPost" onclick="setModo('post')">
-            <i class="fas fa-flag-checkered"></i> Post-test
-          </button>
-        </div>
-      </div>
-      <p style="font-size:0.83rem;color:var(--muted);margin-bottom:14px;">
-        Comparte este enlace con los participantes. El instrumento se abrirá automáticamente en el modo seleccionado.
-      </p>
-      <div class="activate-link-box">
-        <span class="activate-link" id="linkGenerado">instrumento-cap-final.html?modo=pre</span>
-        <button class="copy-btn" onclick="copiarEnlace()">
-          <i class="fas fa-copy"></i> Copiar enlace
-        </button>
-      </div>
-    </div>
+    <!-- FILA SUPERIOR: CONTROL POST-TEST + STATS EN TIEMPO REAL -->
+    <div class="top-row">
 
-    <!-- CONTROL DE ACCESO AL POST-TEST -->
-    <div class="activate-card" style="border:1px solid rgba(0,184,148,0.25);background:rgba(0,184,148,0.04);">
-      <div class="activate-header" style="border-bottom:1px solid rgba(0,184,148,0.15);padding-bottom:16px;margin-bottom:16px;">
-        <div class="activate-title" style="color:var(--green);">
-          <i class="fas fa-unlock-alt" style="margin-right:8px;"></i>Control de acceso al Post-test
-          <span style="color:var(--muted);">Habilita o bloquea el post-test para todos los participantes</span>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-        <div>
-          <p style="font-size:0.83rem;color:var(--muted);margin-bottom:6px;">Estado actual del post-test:</p>
-          <div id="estadoPostBadge" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;font-family:var(--font-h);font-size:0.82rem;font-weight:700;background:rgba(225,112,85,0.15);color:#e17055;border:1px solid rgba(225,112,85,0.3);">
+      <!-- CONTROL POST-TEST -->
+      <div class="control-card">
+        <div class="control-header">
+          <div>
+            <p class="control-label"><i class="fas fa-unlock-alt"></i> Control Post-test</p>
+            <p class="control-sub">Acceso de participantes a la fase 2</p>
+          </div>
+          <div id="estadoPostBadge" class="estado-badge bloqueado">
             <i class="fas fa-lock"></i> <span id="estadoPostTexto">Bloqueado</span>
           </div>
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <button onclick="togglePostTest(true)"
-            style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,#00b894,#00cec9);color:white;font-family:var(--font-h);font-size:0.85rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.3);">
-            <i class="fas fa-unlock"></i> Habilitar Post-test
+        <div class="control-btns">
+          <button class="ctrl-btn habilitar" onclick="togglePostTest(true)">
+            <i class="fas fa-unlock"></i> Habilitar
           </button>
+          <button class="ctrl-btn bloquear" onclick="togglePostTest(false)">
+            <i class="fas fa-lock"></i> Bloquear
+          </button>
+        </div>
+        <div id="toggleMsg" style="display:none;margin-top:10px;padding:8px 12px;border-radius:8px;font-size:0.8rem;"></div>
+        <div class="control-link-box">
+          <p class="control-link-label">Enlace para participantes:</p>
+          <div class="link-row">
+            <span class="link-text" id="linkGenerado">landing-cap.html</span>
+            <button class="copy-mini" onclick="copiarEnlace()"><i class="fas fa-copy"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS EN TIEMPO REAL -->
+      <div class="realtime-stats">
+        <p class="control-label" style="margin-bottom:12px;"><i class="fas fa-chart-line"></i> Progreso en tiempo real</p>
+        <div class="rt-grid">
+          <div class="rt-card purple">
+            <div class="rt-num" id="rtPreTotal">—</div>
+            <div class="rt-label">Iniciaron Pre-test</div>
+          </div>
+          <div class="rt-card green">
+            <div class="rt-num" id="rtPreComp">—</div>
+            <div class="rt-label">Completaron Pre-test</div>
+          </div>
+          <div class="rt-card teal">
+            <div class="rt-num" id="rtPostTotal">—</div>
+            <div class="rt-label">Iniciaron Post-test</div>
+          </div>
+          <div class="rt-card gold">
+            <div class="rt-num" id="rtPostComp">—</div>
+            <div class="rt-label">Completaron Post-test</div>
+          </div>
+        </div>
+        <div class="rt-progress-wrap">
+          <div class="rt-prog-row">
+            <span>Pre-test completado</span>
+            <span id="rtPctPre">—</span>
+          </div>
+          <div class="rt-bar-bg"><div class="rt-bar-fill purple" id="rtBarPre" style="width:0%"></div></div>
+          <div class="rt-prog-row" style="margin-top:8px;">
+            <span>Post-test completado</span>
+            <span id="rtPctPost">—</span>
+          </div>
+          <div class="rt-bar-bg"><div class="rt-bar-fill teal" id="rtBarPost" style="width:0%"></div></div>
+        </div>
+        <p class="rt-update" id="rtUpdateTime">No actualizado aún</p>
+      </div>
+    </div>
+
+    <!-- TABLA DE PARTICIPANTES EN TIEMPO REAL -->
+    <div class="data-card" id="dataCard" style="display:none;">
+      <div class="data-header">
+        <p class="control-label"><i class="fas fa-users"></i> Participantes registrados</p>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="searchInput" placeholder="Buscar código..." oninput="filtrarTabla()"
+            style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:0.8rem;width:160px;">
+          <select id="filterModo" onchange="filtrarTabla()"
+            style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:0.8rem;">
+            <option value="todos">Todos</option>
+            <option value="pre">Solo Pre-test</option>
+            <option value="post">Solo Post-test</option>
+            <option value="ambos">Tienen ambos</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="tablaParticipantes">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Pre-test</th>
+              <th>Post-test</th>
+              <th>Diferencia</th>
+              <th>Nivel Pre</th>
+              <th>Nivel Post</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ANÁLISIS ESTADÍSTICO -->
+    <div id="resultados" style="display:none;">
+
+      <!-- STATS CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card sc-purple">
+          <div class="stat-label">Participantes</div>
+          <div class="stat-val" id="statN">0</div>
+          <div class="stat-sub">con pre y post-test</div>
+        </div>
+        <div class="stat-card sc-green">
+          <div class="stat-label">Promedio Pre-test</div>
+          <div class="stat-val" id="statPre">—</div>
+          <div class="stat-sub">puntos / 10</div>
+        </div>
+        <div class="stat-card sc-teal">
+          <div class="stat-label">Promedio Post-test</div>
+          <div class="stat-val" id="statPost">—</div>
+          <div class="stat-sub">puntos / 10</div>
+        </div>
+        <div class="stat-card sc-coral">
+          <div class="stat-label">Variación promedio</div>
+          <div class="stat-val" id="statDelta">—</div>
+          <div class="stat-sub">puntos de diferencia</div>
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3 class="chart-title">Pre vs Post por participante</h3>
+          <canvas id="chartComparacion" height="220"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Diferencia individual (Post − Pre)</h3>
+          <canvas id="chartDiferencia" height="220"></canvas>
+        </div>
+      </div>
+      <div class="charts-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="chart-card">
+          <h3 class="chart-title">Tendencia grupal</h3>
+          <canvas id="chartTendencia" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Distribución de niveles</h3>
+          <canvas id="chartNiveles" height="200"></canvas>
+        </div>
+      </div>
+
+      <!-- ANÁLISIS TEXTUAL -->
+      <div class="analysis-card">
+        <p class="control-label" style="margin-bottom:16px;"><i class="fas fa-microscope"></i> Análisis estadístico descriptivo</p>
+        <div id="analisisTexto"></div>
+      </div>
+
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /adminPanel -->
+
+     </button>
           <button onclick="togglePostTest(false)"
             style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:2px solid rgba(225,112,85,0.4);background:transparent;color:#e17055;font-family:var(--font-h);font-size:0.85rem;font-weight:700;cursor:pointer;">
             <i class="fas fa-lock"></i> Bloquear Post-test
@@ -625,15 +754,15 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
       <div class="analysis-grid">
         <div class="chart-card">
           <div class="chart-title"><i class="fas fa-chart-bar"></i> Puntajes Pre vs Post por participante</div>
-          <canvas id="chartBarras" height="260"></canvas>
+          <canvas id="_charts.barras" height="260"></canvas>
         </div>
         <div class="chart-card">
           <div class="chart-title"><i class="fas fa-percentage"></i> Distribución de mejora</div>
-          <canvas id="chartMejora" height="260"></canvas>
+          <canvas id="_charts.mejora" height="260"></canvas>
         </div>
         <div class="chart-card wide">
           <div class="chart-title"><i class="fas fa-chart-line"></i> Tendencia general Pre → Post</div>
-          <canvas id="chartLinea" height="160"></canvas>
+          <canvas id="_charts.linea" height="160"></canvas>
         </div>
       </div>
 
@@ -678,80 +807,167 @@ tbody tr:hover{ background:rgba(255,255,255,0.03); }
 // CONFIG
 // ══════════════════════════════════════════
 const CLAVE_ADMIN = 'UDO2025';
-const API_URL = 'https://api.sheetbest.com/sheets/966e7004-81ba-454a-97fe-773822062d56';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwpGRuUx8SGgchWwIICWTtBWKMG53qOukTsB3hCNSbhbjC5rM307CY0Apk81ATt5DpN/exec';
+const SHEETS_LINK = 'https://docs.google.com/spreadsheets/d/1zPgr9Y3KnJL6HFB9__au6WHzAx2AsTZp6rztQs0Q5SU/edit';
 let modoActual = 'pre';
 let datosPre  = {};
 let datosPost = {};
+window._charts = {};
 
 // ══════════════════════════════════════════
 // CARGAR DATOS DESDE GOOGLE SHEETS (JSONP)
 // ══════════════════════════════════════════
-async function cargarDesdeSheets(){
+function cargarDesdeSheets(){
   const btn = document.querySelector('.tb-btn-green');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
   btn.disabled = true;
 
-  try {
-    // Cargar todos los registros de la hoja
-    const res = await fetch(API_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const todos = await res.json();
+  const timeout = setTimeout(()=>{
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
+  }, 12000);
 
+  window._adminDataCallback = function(data){
+    clearTimeout(timeout);
     datosPre  = {};
     datosPost = {};
 
-    if (Array.isArray(todos)) {
-      todos.forEach(row => {
+    if(data.pre && data.pre.length){
+      data.pre.forEach(row => {
         const codigo = (row.codigo || '').toString().trim().toUpperCase();
-        const modo   = (row.modo   || '').toString().trim().toLowerCase();
         const score  = parseInt(row.score_conocimientos || 0);
-        // Ignorar filas de config y filas sin código válido
-        if (!codigo || codigo === '_CONFIG_' || modo === 'config') return;
-        if (modo === 'post') {
-          datosPost[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
-        } else {
-          datosPre[codigo]  = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
-        }
+        if(!codigo) return;
+        datosPre[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
+      });
+    }
+    if(data.post && data.post.length){
+      data.post.forEach(row => {
+        const codigo = (row.codigo || '').toString().trim().toUpperCase();
+        const score  = parseInt(row.score_conocimientos || 0);
+        if(!codigo) return;
+        datosPost[codigo] = { score: isNaN(score) ? 0 : score, completado: row.completado || 'NO', ...row };
       });
     }
 
-    const nPre  = Object.keys(datosPre).length;
-    const nPost = Object.keys(datosPost).length;
+    const nPre      = Object.keys(datosPre).length;
+    const nPost     = Object.keys(datosPost).length;
     const nPreComp  = Object.values(datosPre).filter(r => r.completado === 'SI').length;
     const nPostComp = Object.values(datosPost).filter(r => r.completado === 'SI').length;
-
-    document.getElementById('infoPre').textContent  = `✓ ${nPre} registros · ${nPreComp} completados`;
-    document.getElementById('infoPre').style.display = 'block';
-    document.getElementById('infoPost').textContent = `✓ ${nPost} registros · ${nPostComp} completados`;
-    document.getElementById('infoPost').style.display = 'block';
-    document.getElementById('boxPre').classList.add('loaded');
-    document.getElementById('boxPost').classList.add('loaded');
 
     btn.innerHTML = `<i class="fas fa-check"></i> ${nPre} pre · ${nPost} post`;
     btn.disabled = false;
     setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
 
+    actualizarUI();
     verificarSiAnalizarDisponible();
-    if(nPre > 0 && nPost > 0) analizarDatos();
+    if(nPreComp > 0 && nPostComp > 0) analizarDatos();
 
-  } catch(e) {
-    console.error('Error al cargar desde Sheet.best:', e);
-    // Mostrar diagnóstico detallado
-    const esCors = e.message && (e.message.includes('CORS') || e.message.includes('fetch') || e.message.includes('Failed'));
+    const old = document.getElementById('_adminScript');
+    if(old) old.remove();
+  };
+
+  const old = document.getElementById('_adminScript');
+  if(old) old.remove();
+  const script = document.createElement('script');
+  script.id  = '_adminScript';
+  script.src = API_URL + '?action=getData&callback=_adminDataCallback&t=' + Date.now();
+  script.onerror = function(){
+    clearTimeout(timeout);
     btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al conectar';
     btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 4000);
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar datos'; }, 3000);
+  };
+  document.head.appendChild(script);
+}
+// ── ACTUALIZAR UI TIEMPO REAL ──
+function actualizarUI(){
+  const nPreTotal  = Object.keys(datosPre).length;
+  const nPostTotal = Object.keys(datosPost).length;
+  const nPreComp   = Object.values(datosPre).filter(r => r.completado === 'SI').length;
+  const nPostComp  = Object.values(datosPost).filter(r => r.completado === 'SI').length;
+  const pctPre     = nPreTotal  ? Math.round((nPreComp  / nPreTotal)  * 100) : 0;
+  const pctPost    = nPostTotal ? Math.round((nPostComp / nPostTotal) * 100) : 0;
 
-    // Toast de diagnóstico
-    const toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #ef4444;color:#fca5a5;padding:14px 20px;border-radius:12px;font-size:0.82rem;z-index:9999;max-width:420px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.4);';
-    toast.innerHTML = '<strong style="color:#f87171;display:block;margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Error de conexión</strong>'
-      + (esCors ? 'Posible error CORS. Verifica que tu conexión Sheet.best esté activa y que el endpoint sea correcto.' : 'Error: ' + e.message)
-      + '<br><span style="color:#64748b;font-size:0.75rem;margin-top:6px;display:block;">Revisa la consola del navegador (F12) para más detalles.</span>';
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 7000);
+  // Stats tiempo real
+  document.getElementById('rtPreTotal').textContent  = nPreTotal  || '—';
+  document.getElementById('rtPreComp').textContent   = nPreComp   || '—';
+  document.getElementById('rtPostTotal').textContent = nPostTotal || '—';
+  document.getElementById('rtPostComp').textContent  = nPostComp  || '—';
+  document.getElementById('rtPctPre').textContent    = nPreTotal  ? pctPre  + '%' : '—';
+  document.getElementById('rtPctPost').textContent   = nPostTotal ? pctPost + '%' : '—';
+  document.getElementById('rtBarPre').style.width    = pctPre  + '%';
+  document.getElementById('rtBarPost').style.width   = pctPost + '%';
+
+  const now = new Date();
+  document.getElementById('rtUpdateTime').textContent =
+    'Última actualización: ' + now.toLocaleTimeString('es-VE');
+
+  // Poblar tabla
+  poblarTabla();
+
+  // Mostrar data card si hay datos
+  if(nPreTotal > 0 || nPostTotal > 0){
+    document.getElementById('dataCard').style.display = 'block';
+  }
+
+  // Info boxes legacy (para compatibilidad)
+  const infoPre = document.getElementById('infoPre');
+  const infoPost = document.getElementById('infoPost');
+  if(infoPre){ infoPre.textContent = `✓ ${nPreTotal} registros · ${nPreComp} completados`; infoPre.style.display='block'; }
+  if(infoPost){ infoPost.textContent = `✓ ${nPostTotal} registros · ${nPostComp} completados`; infoPost.style.display='block'; }
+}
+
+function poblarTabla(){
+  const tbody = document.getElementById('tablaBody');
+  if(!tbody) return;
+  const search = (document.getElementById('searchInput')?.value || '').toUpperCase();
+  const filtro = document.getElementById('filterModo')?.value || 'todos';
+
+  const todosCodigos = [...new Set([...Object.keys(datosPre), ...Object.keys(datosPost)])];
+  tbody.innerHTML = '';
+
+  todosCodigos.forEach(cod => {
+    const pre  = datosPre[cod];
+    const post = datosPost[cod];
+
+    if(search && !cod.includes(search)) return;
+    if(filtro === 'pre'   && !pre)          return;
+    if(filtro === 'post'  && !post)         return;
+    if(filtro === 'ambos' && (!pre||!post)) return;
+
+    const preScore  = pre  ? pre.score  : null;
+    const postScore = post ? post.score : null;
+    const diff = (preScore !== null && postScore !== null) ? postScore - preScore : null;
+    const preComp  = pre  && pre.completado  === 'SI';
+    const postComp = post && post.completado === 'SI';
+
+    const diffColor = diff === null ? '' : diff > 0 ? 'color:#00b894' : diff < 0 ? 'color:#e17055' : 'color:var(--muted)';
+    const diffTxt   = diff === null ? '—' : (diff > 0 ? '+' : '') + diff;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-family:monospace;font-weight:700;color:var(--purple)">${cod}</td>
+      <td>${preScore  !== null ? preScore  + '/10' : '—'}</td>
+      <td>${postScore !== null ? postScore + '/10' : '—'}</td>
+      <td style="${diffColor};font-weight:700">${diffTxt}</td>
+      <td>${preScore  !== null ? nivelTexto(preScore)  : '—'}</td>
+      <td>${postScore !== null ? nivelTexto(postScore) : '—'}</td>
+      <td>
+        ${preComp  ? '<span class="badge-comp badge-si"><i class="fas fa-check"></i> Pre ✓</span> ' : ''}
+        ${postComp ? '<span class="badge-comp badge-si"><i class="fas fa-check"></i> Post ✓</span>' : ''}
+        ${!preComp && !postComp ? '<span class="badge-comp badge-no">En progreso</span>' : ''}
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  if(!tbody.children.length){
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px;">Sin resultados</td></tr>';
   }
 }
+
+function filtrarTabla(){ poblarTabla(); }
+
 function verificarClave(){
   const clave = document.getElementById('claveInput').value;
   if(clave === CLAVE_ADMIN){
@@ -775,48 +991,51 @@ function cerrarSesion(){
 // ══════════════════════════════════════════
 // TOGGLE POST-TEST
 // ══════════════════════════════════════════
-async function togglePostTest(habilitar){
+function togglePostTest(habilitar){
   const msg = document.getElementById('toggleMsg');
   msg.style.display = 'block';
   msg.style.cssText = 'display:block;margin-top:12px;padding:10px 14px;border-radius:8px;font-size:0.83rem;background:rgba(255,255,255,0.05);color:var(--muted);';
   msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Aplicando cambio...';
-  try {
-    // Buscar si ya existe la fila de configuración
-    const checkRes = await fetch(API_URL + '?codigo=_CONFIG_');
-    const existentes = await checkRes.json();
-    const existe = Array.isArray(existentes) && existentes.length > 0;
-    const payload = { codigo: '_CONFIG_', post_habilitado: habilitar ? 'true' : 'false', modo: 'config' };
-    if (existe) {
-      await fetch(API_URL + '/codigo/_CONFIG_', {
-        method: 'PATCH', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
-      });
-    } else {
-      await fetch(API_URL, {
-        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
-      });
-    }
-    actualizarBadgePost(habilitar);
-    msg.style.background = habilitar ? 'rgba(0,184,148,0.1)' : 'rgba(225,112,85,0.1)';
-    msg.style.color = habilitar ? '#00b894' : '#e17055';
-    msg.innerHTML = habilitar
-      ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>. Los participantes ya pueden acceder.'
-      : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>. Los participantes verán mensaje de espera.';
-    setTimeout(() => { msg.style.display = 'none'; }, 5000);
-  } catch(e) {
+  const valor = habilitar ? 'true' : 'false';
+  const cbName = '_cb_cfg_' + Date.now();
+  const timeout = setTimeout(()=>{
+    limpiarCb(cbName);
     msg.style.color = '#e17055';
-    msg.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Error de conexión. Intente nuevamente.';
-  }
+    msg.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Error de conexión.';
+  }, 8000);
+  window[cbName] = function(data){
+    clearTimeout(timeout); limpiarCb(cbName);
+    actualizarBadgePost(habilitar);
+    if(data && data.ok){
+      msg.style.background = habilitar ? 'rgba(0,184,148,0.1)' : 'rgba(225,112,85,0.1)';
+      msg.style.color = habilitar ? '#00b894' : '#e17055';
+      msg.innerHTML = habilitar
+        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>. Los participantes ya pueden acceder.'
+        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>. Los participantes verán mensaje de espera.';
+      setTimeout(() => { msg.style.display = 'none'; }, 5000);
+    } else {
+      msg.style.color = '#e17055';
+      msg.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i> Error al guardar.';
+    }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=setConfig&clave=post_habilitado&valor=' + valor + '&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName);
+    msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Sin conexión.'; };
+  document.head.appendChild(s);
 }
 
-async function verificarEstadoPost(){
-  try {
-    const res = await fetch(API_URL + '?codigo=_CONFIG_');
-    const data = await res.json();
-    if (Array.isArray(data) && data.length > 0) {
-      const hab = String(data[0].post_habilitado).toLowerCase().trim() === 'true';
-      actualizarBadgePost(hab);
-    }
-  } catch(e) { /* silencioso */ }
+function verificarEstadoPost(){
+  const cbName = '_cb_vcfg_' + Date.now();
+  const timeout = setTimeout(()=>{ limpiarCb(cbName); }, 8000);
+  window[cbName] = function(data){
+    clearTimeout(timeout); limpiarCb(cbName);
+    const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
+    actualizarBadgePost(hab);
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
+  document.head.appendChild(s);
 }
 
 function actualizarBadgePost(habilitado){
@@ -916,7 +1135,7 @@ function verificarSiAnalizarDisponible(){
 // ══════════════════════════════════════════
 // ANALIZAR
 // ══════════════════════════════════════════
-let chartBarras = null, chartMejora = null, chartLinea = null;
+let _charts.barras = null, _charts.mejora = null, _charts.linea = null;
 
 function analizarDatos(){
   // Participantes con ambos tests
@@ -996,12 +1215,11 @@ function renderGraficos(codigos, pres, posts, deltas, pcts){
   const colDelta= deltas.map(d => d >= 0 ? 'rgba(0,184,148,0.8)' : 'rgba(225,112,85,0.8)');
 
   // Destruir si existen
-  if(chartBarras) chartBarras.destroy();
-  if(chartMejora) chartMejora.destroy();
-  if(chartLinea)  chartLinea.destroy();
+  if(window._charts){ Object.values(window._charts).forEach(c => { try{ c.destroy(); }catch(e){} }); }
+  window._charts = {};
 
   // Barras agrupadas
-  chartBarras = new Chart(document.getElementById('chartBarras'), {
+  _charts.barras = new Chart(document.getElementById('chartComparacion'), {
     type: 'bar',
     data: {
       labels: codigos,
@@ -1021,7 +1239,7 @@ function renderGraficos(codigos, pres, posts, deltas, pcts){
   });
 
   // Barras de diferencia
-  chartMejora = new Chart(document.getElementById('chartMejora'), {
+  _charts.mejora = new Chart(document.getElementById('chartDiferencia'), {
     type: 'bar',
     data: {
       labels: codigos,
@@ -1042,10 +1260,39 @@ function renderGraficos(codigos, pres, posts, deltas, pcts){
     }
   });
 
+  // Gráfica de distribución de niveles
+  const nivelesLabels = ['Excelente (9-10)','Bueno (7-8)','Regular (5-6)','Bajo (0-4)'];
+  const preNiveles  = [
+    pres.filter(s=>s>=9).length, pres.filter(s=>s>=7&&s<9).length,
+    pres.filter(s=>s>=5&&s<7).length, pres.filter(s=>s<5).length
+  ];
+  const postNiveles = [
+    posts.filter(s=>s>=9).length, posts.filter(s=>s>=7&&s<9).length,
+    posts.filter(s=>s>=5&&s<7).length, posts.filter(s=>s<5).length
+  ];
+  _charts.niveles = new Chart(document.getElementById('chartNiveles'), {
+    type: 'bar',
+    data: {
+      labels: nivelesLabels,
+      datasets: [
+        { label:'Pre-test',  data:preNiveles,  backgroundColor:'rgba(91,108,235,0.75)', borderRadius:6 },
+        { label:'Post-test', data:postNiveles, backgroundColor:'rgba(0,184,148,0.75)',  borderRadius:6 }
+      ]
+    },
+    options: {
+      responsive:true,
+      plugins:{ legend:{ labels:{ color:'#8892a4' } } },
+      scales:{
+        y:{ beginAtZero:true, grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#8892a4', stepSize:1 } },
+        x:{ grid:{ display:false }, ticks:{ color:'#8892a4', font:{ size:10 } } }
+      }
+    }
+  });
+
   // Línea de tendencia
   const avgPre  = pres.reduce((a,b)=>a+b,0)/pres.length;
   const avgPost = posts.reduce((a,b)=>a+b,0)/posts.length;
-  chartLinea = new Chart(document.getElementById('chartLinea'), {
+  _charts.linea = new Chart(document.getElementById('chartTendencia'), {
     type: 'line',
     data: {
       labels: ['Pre-test', 'Post-test'],
