@@ -1120,7 +1120,7 @@ body{
 </div>
 
 <script>
-const API_URL = 'https://api.sheetbest.com/sheets/966e7004-81ba-454a-97fe-773822062d56';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwpGRuUx8SGgchWwIICWTtBWKMG53qOukTsB3hCNSbhbjC5rM307CY0Apk81ATt5DpN/exec';
 
 function validateCode(){
   const val = document.getElementById('codigoInput').value;
@@ -1145,37 +1145,61 @@ function iniciarVerificacion(){
   document.getElementById('spinnerCheck').style.display = 'block';
   ocultarWizard();
 
-  // Verificar con Sheet.best
-  fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()))
-    .then(r => r.json())
-    .then(data => {
-      document.getElementById('spinnerCheck').style.display = 'none';
-      // Existe si hay registros que no sean la fila de config
-      const existe = Array.isArray(data) && data.some(r => r.modo !== 'config');
-      if(existe){
-        mostrarWizardPanel('wPregunta');
-      } else {
-        irAlInstrumento('pre');
-      }
-    })
-    .catch(() => {
-      desbloquearInput();
+  // Verificar con Apps Script
+  const cbName = '_cb_ver_' + Date.now();
+  const timeout = setTimeout(function(){
+    limpiarCb(cbName); desbloquearInput(); irAlInstrumento('pre');
+  }, 8000);
+  window[cbName] = function(data){
+    clearTimeout(timeout); limpiarCb(cbName);
+    document.getElementById('spinnerCheck').style.display = 'none';
+    if(!data.existe){
+      // Código nuevo → directo al pre-test
       irAlInstrumento('pre');
-    });
+    } else if(data.completadoPre){
+      // Ya hizo el pre-test → verificar si post está habilitado
+      verificarYMostrarPost();
+    } else {
+      // Existe pero no completó → colisión de código
+      mostrarWizardPanel('wColision');
+    }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); desbloquearInput(); irAlInstrumento('pre'); };
+  document.head.appendChild(s);
+}
+
+function verificarYMostrarPost(){
+  mostrarWizardPanel('wSpinnerPost');
+  const cbName = '_cb_cfg_' + Date.now();
+  const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 8000);
+  window[cbName] = function(data){
+    clearTimeout(timeout); limpiarCb(cbName);
+    const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
+    mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
+  document.head.appendChild(s);
 }
 
 function respuestaPretest(yaHizo){
   if(yaHizo){
     mostrarWizardPanel('wSpinnerPost');
-    // Verificar config desde Sheet.best
-    fetch(API_URL + '?codigo=_CONFIG_')
-      .then(r => r.json())
-      .then(data => {
-        const hab = Array.isArray(data) && data.length > 0 &&
-          String(data[0].post_habilitado).toLowerCase().trim() === 'true';
-        mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-      })
-      .catch(() => mostrarWizardPanel('wPostEspera'));
+    // Verificar config desde Apps Script
+    const cbName = '_cb_cfg_' + Date.now();
+    const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 8000);
+    window[cbName] = function(data){
+      clearTimeout(timeout); limpiarCb(cbName);
+      const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
+      mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
+    };
+    const s = document.createElement('script');
+    s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
+    s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
+    document.head.appendChild(s);
   } else {
     mostrarWizardPanel('wColision');
   }
@@ -1340,25 +1364,31 @@ function imprimirPretest(){
   var btns = document.querySelectorAll('#btnImprimirPreOk, #btnImprimirPreEspera');
   btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...'; b.disabled = true; });
 
-  fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()) + '&modo=pre')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
-      var registro = null;
-      if(Array.isArray(data) && data.length > 0) {
-        // Preferir el que tenga completado=SI
-        registro = data.find(r => r.completado === 'SI') || data[0];
-      }
-      if(!registro){
-        alert('No se encontraron datos del pre-test para este código. Si acaba de enviar, espere unos segundos e intente de nuevo.');
-        return;
-      }
-      abrirVentanaImpresion(codigo, registro);
-    })
-    .catch(function(){
-      btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
-      alert('Error de conexión. Intente nuevamente.');
-    });
+  var cbName = '_cb_print_' + Date.now();
+  var timeout = setTimeout(function(){
+    limpiarCb(cbName);
+    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+    alert('No se pudo conectar. Verifique su conexión e intente nuevamente.');
+  }, 8000);
+  window[cbName] = function(data){
+    clearTimeout(timeout); limpiarCb(cbName);
+    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+    var lista = data.pre || [];
+    var registro = lista.find(function(r){ return (r.codigo||'').toUpperCase() === codigo.toUpperCase(); });
+    if(!registro){
+      alert('No se encontraron datos del pre-test para este código. Si acaba de enviar, espere unos segundos e intente de nuevo.');
+      return;
+    }
+    abrirVentanaImpresion(codigo, registro);
+  };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){
+    clearTimeout(timeout); limpiarCb(cbName);
+    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+    alert('Error de conexión. Intente nuevamente.');
+  };
+  document.head.appendChild(s);
 }
 
 function abrirVentanaImpresion(codigo, r){
