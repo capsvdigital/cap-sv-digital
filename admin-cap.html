@@ -3,1520 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CAP-SV-DIGITAL · Bienvenida · Ciudad Bolívar 2025</title>
+<title>Admin · CAP-SV-DIGITAL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --purple:   #5b6ceb;
-  --violet:   #6a3fa8;
-  --green:    #00b894;
-  --green2:   #55efc4;
-  --coral:    #e8937a;
-  --dark:     #2d3436;
-  --gray:     #636e72;
-  --light:    #f8f9ff;
-  --border:   #e8eaf6;
-  --white:    #ffffff;
-  --grad:     linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
-  --font-h:   'Montserrat', sans-serif;
-  --font-b:   'Inter', sans-serif;
-  --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
-  --shadow-sm: 0 2px 10px rgba(123,143,232,0.1);
-  --shadow-md: 0 6px 24px rgba(123,143,232,0.15);
-  --shadow-lg: 0 16px 48px rgba(0,0,0,0.14);
+  --purple:#5b6ceb; --violet:#6a3fa8; --green:#00b894; --coral:#e17055;
+  --dark:#1a1d2e; --darker:#12141f; --card:#1e2235;
+  --border:rgba(255,255,255,0.08); --text:#e2e8f0; --muted:#8892a4;
+  --font-h:'Montserrat',sans-serif; --font-b:'Inter',sans-serif;
+  --grad:linear-gradient(135deg,#5b6ceb 0%,#7c5cbf 50%,#6a3fa8 100%);
 }
 html{scroll-behavior:smooth;}
-body{
-  font-family: var(--font-b);
-  background: var(--grad);
-  min-height: 100vh;
-  padding: 16px;
-  color: var(--dark);
-  line-height: 1.6;
-}
+body{font-family:var(--font-b);background:var(--darker);color:var(--text);min-height:100vh;}
 
-/* ── WRAPPER ── */
-.wrap{
-  max-width: 960px;
-  margin: 0 auto;
-  background: rgba(255,255,255,0.97);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-}
+/* LOGIN */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--darker);padding:20px;position:relative;overflow:hidden;}
+#loginScreen::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(91,108,235,0.12),transparent 70%);top:-100px;left:-100px;pointer-events:none;}
+#loginScreen::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(106,63,168,0.1),transparent 70%);bottom:-100px;right:-100px;pointer-events:none;}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:48px 40px;max-width:420px;width:100%;text-align:center;position:relative;z-index:1;box-shadow:0 24px 80px rgba(0,0,0,0.5);}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);border-radius:3px 3px 0 0;}
+.login-icon{width:72px;height:72px;border-radius:50%;background:rgba(91,108,235,0.15);border:2px solid rgba(91,108,235,0.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 24px;color:var(--purple);}
+.login-card h1{font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:white;margin-bottom:6px;}
+.login-card p{font-size:0.85rem;color:var(--muted);margin-bottom:32px;}
+.login-input-wrap{position:relative;margin-bottom:14px;}
+.login-input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.9rem;}
+.login-input{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px 12px 40px;color:white;font-family:var(--font-b);font-size:0.95rem;transition:border-color 0.2s;letter-spacing:2px;}
+.login-input:focus{outline:none;border-color:var(--purple);}
+.login-input::placeholder{letter-spacing:0;opacity:0.4;}
+.login-btn{width:100%;padding:13px;background:var(--grad);color:white;border:none;border-radius:10px;font-family:var(--font-h);font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(91,108,235,0.4);margin-bottom:12px;}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,108,235,0.5);}
+.login-error{display:none;padding:8px 12px;background:rgba(225,112,85,0.15);border:1px solid rgba(225,112,85,0.3);border-radius:8px;font-size:0.8rem;color:#fc8c72;margin-top:10px;}
+.login-back{font-size:0.78rem;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color 0.2s;}
+.login-back:hover{color:white;}
 
-/* ── NAVBAR ── */
-.navbar{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 28px;
-  background: var(--grad);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.nav-brand{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-.nav-logo{
-  width: 36px; height: 36px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  border: 2px solid rgba(255,255,255,0.35);
-}
-.nav-name{
-  font-family: var(--font-h);
-  font-weight: 900;
-  font-size: 1.05rem;
-  color: white;
-  letter-spacing: -0.3px;
-}
-.nav-links{
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.nav-link{
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  text-decoration: none;
-  transition: background 0.2s;
-  font-family: var(--font-h);
-}
-.nav-link:hover{ background: rgba(255,255,255,0.15); color: white; }
-.nav-link.active{ background: rgba(255,255,255,0.2); color: white; }
+/* PANEL */
+#adminPanel{display:none;}
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:0;z-index:50;}
+.topbar-brand{display:flex;align-items:center;gap:12px;}
+.topbar-logo{width:36px;height:36px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1rem;color:white;}
+.topbar-name{font-family:var(--font-h);font-weight:900;font-size:1rem;color:white;}
+.topbar-name span{font-size:0.72rem;font-weight:500;color:var(--muted);display:block;}
+.topbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tb-btn{padding:7px 16px;border-radius:20px;font-family:var(--font-h);font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1.5px solid;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.tb-btn-ghost{background:transparent;border-color:var(--border);color:var(--muted);}
+.tb-btn-ghost:hover{border-color:var(--purple);color:white;}
+.tb-btn-primary{background:var(--grad);border-color:transparent;color:white;box-shadow:0 2px 10px rgba(91,108,235,0.3);}
+.tb-btn-green{background:rgba(0,184,148,0.15);border-color:var(--green);color:var(--green);}
+.tb-btn-green:hover{background:rgba(0,184,148,0.25);}
+.tb-btn-sheets{background:rgba(52,168,83,0.15);border-color:#34a853;color:#34a853;}
+.tb-btn-sheets:hover{background:rgba(52,168,83,0.25);}
+.main{max-width:1100px;margin:0 auto;padding:28px;}
 
-/* ── HERO HEADER ── */
-.hero{
-  position: relative;
-  background: var(--grad);
-  padding: 56px 32px 48px;
-  text-align: center;
-  overflow: hidden;
-}
-.hero::before{
-  content:'';
-  position:absolute; inset:0;
-  background: repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.02) 20px,rgba(255,255,255,0.02) 40px);
-}
-.hero::after{
-  content:'';
-  position:absolute;
-  top:-60px; right:-60px;
-  width:300px; height:300px;
-  background: radial-gradient(circle, rgba(255,150,100,0.25), transparent 70%);
-  pointer-events:none;
-}
-.hero-icon-wrap{
-  display: inline-flex;
-  align-items: center; justify-content: center;
-  width: 80px; height: 80px;
-  background: white;
-  border-radius: 50%;
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-  position: relative; z-index:1;
-  animation: pulse 3s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%,100%{box-shadow:0 6px 24px rgba(0,0,0,0.2);}
-  50%{box-shadow:0 6px 32px rgba(255,255,255,0.4),0 0 0 8px rgba(255,255,255,0.08);}
-}
-.hero h1{
-  font-family: var(--font-h);
-  font-size: clamp(2.6rem,7vw,4rem);
-  font-weight: 900;
-  color: white;
-  letter-spacing: -1.5px;
-  line-height: 1;
-  margin-bottom: 14px;
-  position: relative; z-index:1;
-  text-shadow: 0 3px 16px rgba(0,0,0,0.2);
-}
-.hero-tagline{
-  font-family: var(--font-h);
-  font-size: clamp(1rem,2.5vw,1.2rem);
-  font-weight: 700;
-  color: white;
-  margin-bottom: 6px;
-  position: relative; z-index:1;
-}
-.hero-sub{
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.7);
-  position: relative; z-index:1;
-}
-.hero-divider{
-  width: 48px; height: 3px;
-  background: var(--green);
-  border-radius: 2px;
-  margin: 20px auto 0;
-  position: relative; z-index:1;
-}
+/* TOP ROW */
+.top-row{display:grid;grid-template-columns:340px 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:900px){.top-row{grid-template-columns:1fr;}}
+.control-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.control-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.control-label{font-family:var(--font-h);font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.control-label i{color:var(--purple);}
+.control-sub{font-size:0.75rem;color:var(--muted);margin-top:3px;}
+.estado-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.75rem;font-weight:700;white-space:nowrap;}
+.estado-badge.bloqueado{background:rgba(225,112,85,0.15);color:#e17055;border:1px solid rgba(225,112,85,0.3);}
+.estado-badge.habilitado{background:rgba(0,184,148,0.15);color:#00b894;border:1px solid rgba(0,184,148,0.3);}
+.control-btns{display:flex;gap:8px;margin-bottom:16px;}
+.ctrl-btn{flex:1;padding:9px 0;border-radius:8px;border:none;font-family:var(--font-h);font-size:0.8rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;}
+.ctrl-btn.habilitar{background:linear-gradient(135deg,#00b894,#00cec9);color:white;box-shadow:0 3px 10px rgba(0,184,148,0.3);}
+.ctrl-btn.habilitar:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(0,184,148,0.4);}
+.ctrl-btn.bloquear{background:transparent;border:1.5px solid rgba(225,112,85,0.4);color:#e17055;}
+.ctrl-btn.bloquear:hover{background:rgba(225,112,85,0.1);}
+.control-link-box{background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;}
+.control-link-label{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}
+.link-row{display:flex;align-items:center;gap:6px;}
+.link-text{font-family:monospace;font-size:0.75rem;color:var(--purple);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.copy-mini{background:rgba(91,108,235,0.15);border:1px solid rgba(91,108,235,0.3);color:var(--purple);border-radius:6px;padding:4px 8px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;}
+.copy-mini:hover{background:rgba(91,108,235,0.25);}
 
-/* ── MAIN CONTENT ── */
-.main{ padding: 28px 28px 0; }
+/* REALTIME STATS */
+.realtime-stats{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:600px){.rt-grid{grid-template-columns:repeat(2,1fr);}}
+.rt-card{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 10px;text-align:center;border-top:3px solid transparent;}
+.rt-card.purple{border-color:var(--purple);}
+.rt-card.green{border-color:var(--green);}
+.rt-card.teal{border-color:#00cec9;}
+.rt-card.gold{border-color:#fdcb6e;}
+.rt-num{font-family:var(--font-h);font-size:1.6rem;font-weight:900;color:var(--text);line-height:1;margin-bottom:4px;}
+.rt-label{font-size:0.68rem;color:var(--muted);line-height:1.3;}
+.rt-progress-wrap{margin-top:4px;}
+.rt-prog-row{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:5px;}
+.rt-bar-bg{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.rt-bar-fill{height:100%;border-radius:3px;transition:width 0.8s ease;}
+.rt-bar-fill.purple{background:var(--purple);}
+.rt-bar-fill.teal{background:#00cec9;}
+.rt-update{font-size:0.68rem;color:rgba(255,255,255,0.2);margin-top:10px;text-align:right;}
 
-/* ── LOGIN BOX ── */
-.login-section{
-  background: linear-gradient(135deg, #f8f9ff, #f0f2ff);
-  border: 2px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 36px 40px;
-  max-width: 780px;
-  margin: 0 auto 32px;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-}
-.login-section::before{
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:3px;
-  background: var(--grad);
-}
-.login-title{
-  font-family: var(--font-h);
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--purple);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.login-title i{ color: var(--green); }
-.login-desc{
-  font-size: 0.88rem;
-  color: var(--gray);
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-.code-example-pill{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: white;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 8px 14px;
-  font-family: monospace;
-  font-size: 0.85rem;
-  color: var(--purple);
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-}
-.code-example-pill span{ color: var(--gray); font-family: var(--font-b); font-size:0.78rem; letter-spacing:0; }
-.input-wrap{
-  position: relative;
-  margin-bottom: 12px;
-}
-.input-wrap i{
-  position: absolute;
-  left: 14px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--purple);
-  font-size: 0.9rem;
-}
-.code-input{
-  width: 100%;
-  background: white;
-  border: 2px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 12px 14px 12px 40px;
-  color: var(--dark);
-  font-family: monospace;
-  font-size: 1.1rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.code-input:focus{
-  outline:none;
-  border-color: var(--purple);
-  box-shadow: 0 0 0 3px rgba(91,108,235,0.15);
-}
-.code-input::placeholder{
-  letter-spacing: 0;
-  font-size: 0.85rem;
-  opacity: 0.4;
-  font-family: var(--font-b);
-  text-transform: none;
-}
-.code-hint{
-  font-size: 0.78rem;
-  color: var(--gray);
-  margin-bottom: 20px;
-}
-.btn-start{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 14px;
-  background: var(--grad);
-  color: white;
-  border: none;
-  border-radius: var(--r-md);
-  font-family: var(--font-h);
-  font-size: 1rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.25s;
-  box-shadow: 0 4px 16px rgba(91,108,235,0.35);
-  text-decoration: none;
-}
-.btn-start:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(91,108,235,0.45);
-}
-.btn-start:disabled{
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-#loginError{
-  display: none;
-  margin-top: 10px;
-  padding: 8px 12px;
-  background: #fff0f0;
-  border: 1px solid #fecaca;
-  border-radius: var(--r-sm);
-  font-size: 0.82rem;
-  color: #dc2626;
-}
+/* DATA TABLE */
+.data-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;}
+.data-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.table-wrap{overflow-x:auto;border-radius:10px;}
+.data-table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.data-table th{background:rgba(255,255,255,0.05);color:var(--muted);font-family:var(--font-h);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);}
+.data-table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text);}
+.data-table tr:hover td{background:rgba(255,255,255,0.03);}
+.badge-comp{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:0.68rem;font-weight:700;font-family:var(--font-h);}
+.badge-si{background:rgba(0,184,148,0.15);color:#00b894;}
+.badge-no{background:rgba(255,255,255,0.06);color:var(--muted);}
 
-/* ── SECCIÓN INFORMATIVA ── */
-.info-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  margin-bottom: 28px;
-}
-.info-card{
-  background: white;
-  border: 2px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 22px;
-  transition: all 0.2s;
-  box-shadow: var(--shadow-sm);
-  position: relative;
-  overflow: hidden;
-}
-.info-card::before{
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:3px;
-  border-radius: 3px 3px 0 0;
-}
-.info-card.c1::before{ background: var(--purple); }
-.info-card.c2::before{ background: var(--green); }
-.info-card.c3::before{ background: var(--violet); }
-.info-card.c4::before{ background: var(--coral); }
-.info-card:hover{
-  border-color: var(--purple);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-.info-card-icon{
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  margin-bottom: 14px;
-}
-.ic1{ background: rgba(91,108,235,0.1); color: var(--purple); }
-.ic2{ background: rgba(0,184,148,0.1); color: var(--green); }
-.ic3{ background: rgba(142,68,173,0.1); color: var(--violet); }
-.ic4{ background: rgba(225,112,85,0.1); color: var(--coral); }
-.info-card h3{
-  font-family: var(--font-h);
-  font-size: 0.88rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--dark);
-  margin-bottom: 8px;
-}
-.info-card p{
-  font-size: 0.84rem;
-  color: var(--gray);
-  line-height: 1.55;
-  text-align: justify;
-}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.sc-purple::before{background:var(--purple);}
+.sc-green::before{background:var(--green);}
+.sc-teal::before{background:#00cec9;}
+.sc-coral::before{background:var(--coral);}
+.stat-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-family:var(--font-h);}
+.stat-val{font-family:var(--font-h);font-size:2rem;font-weight:900;color:white;line-height:1;}
+.stat-sub{font-size:0.75rem;color:var(--muted);margin-top:4px;}
 
-/* ── PLATAFORMAS ── */
-.platforms-section{
-  background: linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
-  border-radius: var(--r-lg);
-  padding: 32px 28px;
-  margin-bottom: 28px;
-}
-.platforms-header{
-  text-align: center;
-  margin-bottom: 28px;
-}
-.platforms-title{
-  font-family: var(--font-h);
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
-  font-weight: 800;
-  color: white;
-  margin-bottom: 8px;
-}
-.platforms-title i{
-  margin-right: 10px;
-  font-size: 1.3rem;
-}
-.platforms-sub{
-  font-size: 0.88rem;
-  color: rgba(255,255,255,0.72);
-}
-.platforms-grid{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-}
-.platform-card{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 20px 10px;
-  background: rgba(255,255,255,0.12);
-  border: 1.5px solid rgba(255,255,255,0.22);
-  border-radius: var(--r-md);
-  cursor: pointer;
-  transition: all 0.2s;
-  backdrop-filter: blur(6px);
-  text-align: center;
-  text-decoration: none;
-  color: white;
-}
-.platform-card:hover{
-  background: rgba(255,255,255,0.27);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-.platform-icon{
-  width: 52px; height: 52px;
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.6rem;
-  transition: transform 0.2s;
-}
-.platform-card:hover .platform-icon{ transform: scale(1.1); }
-.p-ig{ background: rgba(225,48,108,0.25); color: #ff6b9d; }
-.p-tt{ background: rgba(255,255,255,0.2); color: white; }
-.p-wp{ background: rgba(37,211,102,0.25); color: #55efc4; }
-.p-yt{ background: rgba(255,0,0,0.25); color: #ff7675; }
-.p-qr{ background: rgba(255,255,255,0.15); color: white; }
-.platform-name{
-  font-family: var(--font-h);
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: white;
-  line-height: 1.2;
-}
-.platform-desc{
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.62);
-  line-height: 1.3;
-}
-@media(max-width:700px){
-  .platforms-grid{ grid-template-columns: repeat(3,1fr); }
-}
-@media(max-width:420px){
-  .platforms-grid{ grid-template-columns: repeat(2,1fr); }
-}
+/* CHARTS */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:700px){.charts-grid{grid-template-columns:1fr;}}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.chart-title{font-family:var(--font-h);font-size:0.85rem;font-weight:800;color:white;margin-bottom:14px;}
 
-/* ── NOTICIAS/NOVEDADES ── */
-.news-section{ margin-bottom: 28px; }
-.news-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-}
-.news-card{
-  background: white;
-  border: 2px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 18px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.news-card:hover{
-  border-color: var(--purple);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.news-dot{
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  margin-top: 5px;
-  flex-shrink: 0;
-}
-.nd1{ background: var(--green); }
-.nd2{ background: var(--purple); }
-.nd3{ background: var(--coral); }
-.news-card h4{
-  font-family: var(--font-h);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--dark);
-  margin-bottom: 4px;
-}
-.news-card p{
-  font-size: 0.8rem;
-  color: var(--gray);
-  line-height: 1.5;
-}
-.news-tag{
-  display: inline-block;
-  margin-top: 8px;
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  font-family: var(--font-h);
-}
-.nt-green{ background:#dcfce7; color:#16a34a; }
-.nt-blue{ background:#ede9fe; color:#5b6ceb; }
-.nt-orange{ background:#ffedd5; color:#ea580c; }
-
-/* ── FOOTER INSTITUCIONAL ── */
-.inst-footer{
-  background: #2d3436;
-  color: #dfe6e9;
-  padding: 40px 28px 24px;
-  border-radius: 0 0 var(--r-xl) var(--r-xl);
-  position: relative;
-  overflow: hidden;
-  margin-top: 0;
-}
-.inst-footer::before{
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:4px;
-  background: var(--grad);
-}
-.inst-footer-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
-  text-align: left;
-}
-.inst-footer-sec h4{
-  font-family: var(--font-h);
-  color: var(--green);
-  margin-bottom: 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  position: relative;
-  padding-bottom: 8px;
-}
-.inst-footer-sec h4::after{
-  content:'';
-  position:absolute; bottom:0; left:0;
-  width:28px; height:2px;
-  background: var(--green);
-  border-radius:1px;
-}
-.inst-footer-sec p{
-  margin-bottom: 6px;
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: #b2bec3;
-}
-.inst-footer-sec p i{ margin-right:6px; color:var(--green); width:14px; }
-.inst-footer-sep{
-  border:none;
-  border-top:1px solid rgba(255,255,255,0.07);
-  margin: 20px 0;
-}
-.inst-authors-box{
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  padding: 20px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.08);
-  max-width: 700px;
-  margin: 0 auto;
-}
-.inst-udo-logo{
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  border: 3px solid var(--green);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  background: white;
-  padding: 5px;
-  object-fit: contain;
-  transition: transform 0.3s;
-  flex-shrink: 0;
-}
-.inst-udo-logo:hover{ transform:scale(1.05); }
-.inst-authors-info{ flex:1; min-width:200px; }
-.inst-authors-label{
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--green);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-  font-family: var(--font-h);
-}
-.inst-authors-names{
-  font-family: var(--font-h);
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: white;
-  margin-bottom: 4px;
-}
-.inst-authors-dept{
-  font-size: 0.8rem;
-  color: #b2bec3;
-  margin-bottom: 3px;
-  line-height: 1.4;
-}
-.inst-authors-tutor{
-  font-size: 0.8rem;
-  color: #b2bec3;
-}
-.inst-authors-tutor i{ color:var(--green); margin-right:5px; }
-.inst-copyright{
-  margin-top: 20px;
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.3);
-  text-align: center;
-}
-
-/* ── CARRUSEL NOVEDADES ── */
-.novelties-carousel-wrap{
-  position: relative;
-  padding: 0 44px;
-  margin-bottom: 8px;
-}
-.novelties-viewport{
-  overflow: hidden;
-  border-radius: var(--r-lg);
-}
-.novelties-track{
-  display: flex;
-  gap: 16px;
-  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
-}
-.novelty-card{
-  flex: 0 0 calc(33.333% - 11px);
-  background: white;
-  border: 2px solid var(--border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.novelty-card:hover{
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-.nov-card-top{
-  position: relative;
-  padding: 28px 20px 20px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-.nov-emoji{
-  font-size: 2.4rem;
-  line-height: 1;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
-}
-.nov-chip{
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.35);
-  color: white;
-  font-family: var(--font-h);
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-}
-.nov-card-body{
-  padding: 18px 20px 22px;
-}
-.nov-cat{
-  font-family: var(--font-h);
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--purple);
-  margin-bottom: 6px;
-}
-.nov-title{
-  font-family: var(--font-h);
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--dark);
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-.nov-desc{
-  font-size: 0.8rem;
-  color: var(--gray);
-  line-height: 1.55;
-  text-align: justify;
-}
-.nov-arrow{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-60%);
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: white;
-  color: var(--purple);
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s;
-  z-index: 2;
-}
-.nov-arrow:hover{
-  background: var(--purple);
-  color: white;
-  border-color: var(--purple);
-  box-shadow: var(--shadow-md);
-}
-.nov-prev{ left: 0; }
-.nov-next{ right: 0; }
-.nov-dots{
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 16px;
-}
-.nov-dot{
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--border);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.nov-dot.active{
-  background: var(--purple);
-  width: 22px;
-  border-radius: 4px;
-}
-@media(max-width:700px){
-  .novelty-card{ flex: 0 0 calc(100% - 0px); }
-  .novelties-carousel-wrap{ padding: 0 36px; }
-}
-@media(min-width:701px) and (max-width:900px){
-  .novelty-card{ flex: 0 0 calc(50% - 8px); }
-}
-
-@keyframes qrPop{
-  0%{ transform:scale(0.7); opacity:0; }
-  100%{ transform:scale(1); opacity:1; }
-}
-
-/* ── RESPONSIVE ── */
-@media(max-width:600px){
-  .navbar{ padding:12px 16px; }
-  .hero{ padding:40px 16px 36px; }
-  .main{ padding:16px 16px 0; }
-  .platforms-grid{ grid-template-columns:repeat(2,1fr); }
-  .inst-authors-box{ flex-direction:column; text-align:center; }
-  .inst-footer-sec h4::after{ left:50%; transform:translateX(-50%); }
-  .inst-footer{ padding:32px 16px 20px; }
-}
+/* ANALYSIS */
+.analysis-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;}
+#analisisTexto{font-size:0.88rem;line-height:1.8;color:var(--text);}
+#analisisTexto .a-section{background:rgba(255,255,255,0.04);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:12px;}
+#analisisTexto .a-section.green{border-left-color:var(--green);}
+#analisisTexto .a-section.coral{border-left-color:var(--coral);}
+#analisisTexto .a-section h4{font-family:var(--font-h);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;color:white;}
+.delta-positive{color:#00b894;font-weight:700;}
+.delta-negative{color:#e17055;font-weight:700;}
+.delta-neutral{color:var(--muted);}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a class="nav-brand" href="#">
-      <div class="nav-logo">🏍️</div>
-      <span class="nav-name">CAP-SV-DIGITAL</span>
-    </a>
-    <div class="nav-links">
-      <a href="#instrumento" class="nav-link active">Instrumento</a>
-      <a href="#plataformas" class="nav-link">Plataformas</a>
-      <a href="#noticias" class="nav-link">Novedades</a>
-      <a href="#equipo" class="nav-link">Equipo</a>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-icon"><i class="fas fa-shield-alt"></i></div>
+    <h1>Panel Administrador</h1>
+    <p>CAP-SV-DIGITAL · Universidad de Oriente</p>
+    <div class="login-input-wrap">
+      <i class="fas fa-lock"></i>
+      <input type="password" class="login-input" id="claveInput" placeholder="Contraseña de acceso"
+        onkeydown="if(event.key==='Enter') verificarClave()">
     </div>
-  </nav>
+    <button class="login-btn" onclick="verificarClave()">
+      <i class="fas fa-sign-in-alt"></i> Ingresar
+    </button>
+    <div class="login-error" id="loginError"><i class="fas fa-exclamation-circle"></i> Contraseña incorrecta</div>
+    <a href="landing-cap.html" class="login-back"><i class="fas fa-arrow-left"></i> Volver al inicio</a>
+  </div>
+</div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-icon-wrap">🏍️</div>
-    <h1>CAP-SV-DIGITAL</h1>
-    <p class="hero-tagline">Instrumento de Seguridad Vial para Motociclistas</p>
-    <p class="hero-sub">Intervención Educativa Digital · Ciudad Bolívar, Venezuela 2025</p>
-    <div class="hero-divider"></div>
+<!-- PANEL -->
+<div id="adminPanel">
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-logo"><i class="fas fa-motorcycle"></i></div>
+      <div class="topbar-name">
+        Panel Admin · CAP-SV-DIGITAL
+        <span>Universidad de Oriente · Departamento de Enfermería</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="tb-btn tb-btn-green" id="btnActualizar" onclick="cargarDesdeSheets()">
+        <i class="fas fa-sync-alt"></i> Actualizar
+      </button>
+      <button class="tb-btn tb-btn-sheets" onclick="window.open(SHEETS_LINK,'_blank')">
+        <i class="fas fa-table"></i> Ver Sheets
+      </button>
+      <button class="tb-btn tb-btn-primary" onclick="exportarReporte()">
+        <i class="fas fa-download"></i> Exportar CSV
+      </button>
+      <button class="tb-btn tb-btn-ghost" onclick="cerrarSesion()">
+        <i class="fas fa-sign-out-alt"></i> Salir
+      </button>
+    </div>
   </div>
 
-  <!-- MAIN -->
-  <main class="main">
+  <div class="main">
 
-    <!-- LOGIN / CÓDIGO -->
-    <div id="instrumento" class="login-section" style="margin-top:28px;">
-      <p class="login-title"><i class="fas fa-key"></i> Ingreso del Participante</p>
-      <p class="login-desc">Para iniciar el instrumento ingrese su <strong>código personal de participante</strong>. Este código garantiza el emparejamiento anónimo de sus respuestas en el pre-test y post-test.</p>
-      <div class="code-example-pill">
-        <i class="fas fa-info-circle" style="color:var(--purple)"></i>
-        <strong>CAPE2311</strong>
-        <span>= Carlos Pérez · nacido 23 nov</span>
-      </div>
-      <p class="login-desc" style="margin-bottom:8px;">Fórmula: <strong>2 letras nombre</strong> + <strong>2 letras apellido</strong> + <strong>día</strong> (2 dígitos) + <strong>mes</strong> (2 dígitos)</p>
-      <div class="input-wrap">
-        <i class="fas fa-fingerprint"></i>
-        <input type="text" class="code-input" id="codigoInput" maxlength="8"
-               placeholder="Ej: MALA0315"
-               oninput="this.value=this.value.toUpperCase(); validateCode()">
-      </div>
-      <p class="code-hint"><i class="fas fa-lock" style="color:var(--green);margin-right:4px"></i> Sus respuestas son completamente anónimas y se usan únicamente con fines académicos.</p>
+    <!-- FILA SUPERIOR -->
+    <div class="top-row">
 
-      <div id="spinnerCheck" style="display:none;text-align:center;padding:14px 0;color:var(--gray);font-size:0.88rem;">
-        <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando código...
-      </div>
-
-      <button class="btn-start" id="btnStart" onclick="iniciarVerificacion()" disabled>
-        <i class="fas fa-play-circle"></i> Comenzar Instrumento
-      </button>
-      <div id="loginError"><i class="fas fa-exclamation-circle"></i> Por favor ingrese un código válido de 8 caracteres (ej: CAPE1123)</div>
-
-      <!-- WIZARD -->
-      <div id="wizardBox" style="display:none;margin-top:20px;border-top:2px solid var(--border);padding-top:20px;">
-
-        <div id="wPregunta" style="display:none;">
-          <div style="background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
-            <div style="font-size:1.6rem;margin-bottom:8px;">🔍</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:var(--dark);margin-bottom:6px;">Este código ya está registrado</p>
-            <p style="font-size:0.83rem;color:var(--gray);margin-bottom:18px;">¿Ya completaste el <strong>pre-test</strong> anteriormente con este código?</p>
-            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-              <button onclick="respuestaPretest(true)"
-                style="padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(135deg,#00b894,#00cec9);color:white;font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.25);">
-                <i class="fas fa-check"></i> Sí, ya lo hice
-              </button>
-              <button onclick="respuestaPretest(false)"
-                style="padding:10px 24px;border-radius:8px;border:2px solid var(--border);background:white;color:var(--gray);font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;">
-                <i class="fas fa-times"></i> No, es mi primera vez
-              </button>
-            </div>
+      <!-- CONTROL POST-TEST -->
+      <div class="control-card">
+        <div class="control-header">
+          <div>
+            <p class="control-label"><i class="fas fa-unlock-alt"></i> Control Post-test</p>
+            <p class="control-sub">Acceso de participantes a la fase 2</p>
+          </div>
+          <div id="estadoPostBadge" class="estado-badge bloqueado">
+            <i class="fas fa-lock"></i> <span id="estadoPostTexto">Bloqueado</span>
           </div>
         </div>
-
-        <div id="wPostOk" style="display:none;">
-          <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.6rem;margin-bottom:8px;">🏁</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#065f46;margin-bottom:4px;">¡El post-test está disponible!</p>
-            <p style="font-size:0.83rem;color:#047857;">Tu código fue verificado. Puedes iniciar la segunda fase del estudio.</p>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <button class="btn-start" onclick="irAlInstrumento('post')">
-              <i class="fas fa-flag-checkered"></i> Iniciar Post-test
-            </button>
-            <button class="btn-start" id="btnImprimirPreOk"
-              style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
-              onclick="imprimirPretest()">
-              <i class="fas fa-print"></i> Imprimir Pre-test
-            </button>
-          </div>
-        </div>
-
-        <div id="wPostEspera" style="display:none;">
-          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.6rem;margin-bottom:8px;">⏳</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#92400e;margin-bottom:4px;">Post-test aún no disponible</p>
-            <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">La segunda fase será habilitada por el investigador al finalizar la intervención educativa. Espera la indicación del equipo.</p>
-          </div>
-          <button class="btn-start" id="btnImprimirPreEspera"
-            style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
-            onclick="imprimirPretest()">
-            <i class="fas fa-print"></i> Imprimir Pre-test
+        <div class="control-btns">
+          <button class="ctrl-btn habilitar" onclick="togglePostTest(true)">
+            <i class="fas fa-unlock"></i> Habilitar
+          </button>
+          <button class="ctrl-btn bloquear" onclick="togglePostTest(false)">
+            <i class="fas fa-lock"></i> Bloquear
           </button>
         </div>
-
-        <div id="wColision" style="display:none;">
-          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;margin-bottom:14px;">
-            <p style="font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#92400e;margin-bottom:6px;"><i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>Código posiblemente duplicado</p>
-            <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">Otra persona podría tener el mismo código. Intenta con una variación — por ejemplo, usando la <strong>inicial de tu segundo nombre</strong> como la 2da letra, o tu <strong>segundo apellido</strong>.</p>
-          </div>
-          <button class="btn-start" onclick="resetWizard()">
-            <i class="fas fa-redo"></i> Intentar con otro código
-          </button>
-        </div>
-
-        <div id="wSpinnerPost" style="display:none;text-align:center;padding:16px 0;color:var(--gray);font-size:0.88rem;">
-          <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando disponibilidad del post-test...
-        </div>
-
-      </div><!-- /wizardBox -->
-    </div>
-
-    <!-- INFO CARDS -->
-    <div id="sobre" style="margin-bottom:10px;">
-      <p class="section-label"><i class="fas fa-info-circle"></i> Sobre el instrumento</p>
-    </div>
-    <div class="info-grid">
-      <div class="info-card c1">
-        <div class="info-card-icon ic1"><i class="fas fa-clipboard-list"></i></div>
-        <h3>¿Qué te vamos a evaluar?</h3>
-        <p>Tus <strong>Conocimientos</strong> sobre normas viales, tus <strong>Actitudes</strong> frente al riesgo y tus <strong>Prácticas</strong> reales al conducir — los tres pilares de la seguridad vial.</p>
-      </div>
-      <div class="info-card c2">
-        <div class="info-card-icon ic2"><i class="fas fa-sync-alt"></i></div>
-        <h3>¿Hay que responderlo más de una vez?</h3>
-        <p>Sí, en <strong>dos momentos</strong>: antes y después de la intervención de 8 semanas. Así medimos si el programa generó cambios reales en ti.</p>
-      </div>
-      <div class="info-card c3">
-        <div class="info-card-icon ic3"><i class="fas fa-list-ol"></i></div>
-        <h3>Estructura</h3>
-        <p><strong>39 ítems</strong> en el pre-test y <strong>33 ítems</strong> en el post-test, distribuidos en 5 secciones: perfil sociodemográfico, conocimientos (V/F), actitudes (Likert 4 puntos), prácticas y evaluación digital.</p>
-      </div>
-      <div class="info-card c4">
-        <div class="info-card-icon ic4"><i class="fas fa-clock"></i></div>
-        <h3>Duración</h3>
-        <p><strong>Pre-test:</strong> 5 – 7 minutos &nbsp;|&nbsp; <strong>Post-test:</strong> 4 – 6 minutos. Puede completarse desde cualquier dispositivo móvil con internet.</p>
-      </div>
-    </div>
-
-    <!-- PLATAFORMAS - Se han eliminado Google Forms y añadido enlaces reales -->
-    <div id="plataformas" class="platforms-section">
-      <div class="platforms-header">
-        <h2 class="platforms-title"><i class="fas fa-rocket"></i> Tecnologías y Plataformas de Intervención</h2>
-        <p class="platforms-sub">Herramientas digitales integradas en la investigación</p>
-      </div>
-      <div class="platforms-grid">
-        <a href="https://www.instagram.com/caps.codigobiker" target="_blank" class="platform-card" rel="noopener noreferrer">
-          <div class="platform-icon p-ig"><i class="fab fa-instagram"></i></div>
-          <div class="platform-name">Instagram</div>
-          <div class="platform-desc">@caps.codigobiker</div>
-        </a>
-        <a href="https://www.tiktok.com/@caps.codigobiker" target="_blank" class="platform-card" rel="noopener noreferrer">
-          <div class="platform-icon p-tt"><i class="fab fa-tiktok"></i></div>
-          <div class="platform-name">TikTok</div>
-          <div class="platform-desc">@caps.codigobiker</div>
-        </a>
-        <a href="https://whatsapp.com/channel/0029VbD3t4IBPzjPO7nX5u1Z" target="_blank" class="platform-card" rel="noopener noreferrer">
-          <div class="platform-icon p-wp"><i class="fab fa-whatsapp"></i></div>
-          <div class="platform-name">WhatsApp</div>
-          <div class="platform-desc">Comunidad oficial</div>
-        </a>
-        <a href="https://www.youtube.com/@CodigoBiker" target="_blank" class="platform-card" rel="noopener noreferrer">
-          <div class="platform-icon p-yt"><i class="fab fa-youtube"></i></div>
-          <div class="platform-name">YouTube</div>
-          <div class="platform-desc">@CodigoBiker</div>
-        </a>
-        <div class="platform-card" onclick="abrirModalQR()" style="cursor:pointer;" title="Ver código QR">
-          <div class="platform-icon p-qr"><i class="fas fa-qrcode"></i></div>
-          <div class="platform-name">QR Codes</div>
-          <div class="platform-desc">Acceso rápido en campo</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MODAL QR -->
-    <div id="modalQR" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(20,20,40,0.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;">
-      <div style="background:white;border-radius:28px;padding:36px 32px;max-width:360px;width:90%;box-shadow:0 32px 80px rgba(0,0,0,0.35);position:relative;text-align:center;animation:qrPop 0.35s cubic-bezier(0.34,1.56,0.64,1);">
-        <button onclick="cerrarModalQR()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.2rem;color:#b2bec3;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#636e72'" onmouseout="this.style.color='#b2bec3'"><i class="fas fa-times"></i></button>
-
-        <!-- Header -->
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 6px 20px rgba(91,108,235,0.35);">
-          <i class="fas fa-qrcode" style="color:white;font-size:1.5rem;"></i>
-        </div>
-        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;color:#2d3436;margin-bottom:4px;">Código QR</h3>
-        <p style="font-size:0.78rem;color:#636e72;margin-bottom:20px;">Escanea para acceder al instrumento</p>
-
-        <!-- QR canvas -->
-        <div style="background:linear-gradient(135deg,#f8f9ff,#f0f2ff);border:2px solid #e8eaf6;border-radius:20px;padding:20px;display:inline-block;margin-bottom:18px;">
-          <canvas id="qrCanvas" style="display:block;border-radius:8px;"></canvas>
-        </div>
-
-        <!-- URL -->
-        <div style="background:#f8f9ff;border:1.5px solid #e8eaf6;border-radius:10px;padding:10px 14px;margin-bottom:20px;display:flex;align-items:center;gap:8px;">
-          <i class="fas fa-link" style="color:#5b6ceb;font-size:0.75rem;flex-shrink:0;"></i>
-          <span style="font-size:0.7rem;color:#636e72;word-break:break-all;text-align:left;line-height:1.4;">capsvdigital.github.io/cap-sv-digital/landing-cap.html</span>
-        </div>
-
-        <!-- Botones -->
-        <div style="display:flex;gap:10px;">
-          <button onclick="descargarQR()" style="flex:1;padding:11px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(91,108,235,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
-            <i class="fas fa-download"></i> Descargar
-          </button>
-          <a href="https://capsvdigital.github.io/cap-sv-digital/landing-cap.html" target="_blank" style="flex:1;padding:11px;background:white;color:#5b6ceb;border:2px solid #e8eaf6;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='#5b6ceb'" onmouseout="this.style.borderColor='#e8eaf6'">
-            <i class="fas fa-external-link-alt"></i> Abrir enlace
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- NOTICIAS -->
-    <div id="noticias" class="news-section">
-      <p class="section-label"><i class="fas fa-bell"></i> Novedades</p>
-
-      <div class="novelties-carousel-wrap">
-        <button class="nov-arrow nov-prev" onclick="noveltyPrev()"><i class="fas fa-chevron-left"></i></button>
-        <div class="novelties-viewport" id="novViewport">
-          <div class="novelties-track" id="novTrack">
-
-            <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#5b6ceb,#7c5cbf)">
-                <span class="nov-emoji">📰</span>
-                <span class="nov-chip">Próximamente</span>
-              </div>
-              <div class="nov-card-body">
-                <p class="nov-cat">Estadísticas</p>
-                <h4 class="nov-title">Accidentalidad vial en Venezuela</h4>
-                <p class="nov-desc">Datos y cifras sobre siniestros viales con motocicletas en el país, con enfoque en el estado Bolívar.</p>
-              </div>
-            </div>
-
-            <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#e17055,#d63031)">
-                <span class="nov-emoji">🎥</span>
-                <span class="nov-chip">Próximamente</span>
-              </div>
-              <div class="nov-card-body">
-                <p class="nov-cat">Campañas</p>
-                <h4 class="nov-title">Videos educativos para motociclistas</h4>
-                <p class="nov-desc">Materiales audiovisuales sobre uso del casco, distancias de seguridad y conducción defensiva.</p>
-              </div>
-            </div>
-
-            <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#00b894,#00cec9)">
-                <span class="nov-emoji">📊</span>
-                <span class="nov-chip">Próximamente</span>
-              </div>
-              <div class="nov-card-body">
-                <p class="nov-cat">Informes oficiales</p>
-                <h4 class="nov-title">Reportes del INTT y tránsito nacional</h4>
-                <p class="nov-desc">Informes de los organismos de tránsito venezolanos sobre seguridad y normativa vial vigente.</p>
-              </div>
-            </div>
-
-            <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#fdcb6e,#e17055)">
-                <span class="nov-emoji">🌎</span>
-                <span class="nov-chip">Próximamente</span>
-              </div>
-              <div class="nov-card-body">
-                <p class="nov-cat">Internacional</p>
-                <h4 class="nov-title">Buenas prácticas en seguridad vial</h4>
-                <p class="nov-desc">Experiencias exitosas de otros países en la reducción de accidentes y educación vial para motociclistas.</p>
-              </div>
-            </div>
-
-            <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)">
-                <span class="nov-emoji">⚖️</span>
-                <span class="nov-chip">Próximamente</span>
-              </div>
-              <div class="nov-card-body">
-                <p class="nov-cat">Legislación</p>
-                <h4 class="nov-title">Ley de Transporte Terrestre</h4>
-                <p class="nov-desc">Artículos clave de la ley venezolana que todo conductor de motocicleta debe conocer para circular legalmente.</p>
-              </div>
-            </div>
-
+        <div id="toggleMsg" style="display:none;margin-top:10px;padding:8px 12px;border-radius:8px;font-size:0.8rem;"></div>
+        <div class="control-link-box">
+          <p class="control-link-label">Enlace para participantes:</p>
+          <div class="link-row">
+            <span class="link-text" id="linkGenerado">landing-cap.html</span>
+            <button class="copy-mini" onclick="copiarEnlace()"><i class="fas fa-copy"></i></button>
           </div>
         </div>
-        <button class="nov-arrow nov-next" onclick="noveltyNext()"><i class="fas fa-chevron-right"></i></button>
+      </div>
 
-        <!-- DOTS -->
-        <div class="nov-dots" id="novDots">
-          <span class="nov-dot active" onclick="noveltyGo(0)"></span>
-          <span class="nov-dot" onclick="noveltyGo(1)"></span>
-          <span class="nov-dot" onclick="noveltyGo(2)"></span>
-          <span class="nov-dot" onclick="noveltyGo(3)"></span>
-          <span class="nov-dot" onclick="noveltyGo(4)"></span>
+      <!-- STATS TIEMPO REAL -->
+      <div class="realtime-stats">
+        <p class="control-label" style="margin-bottom:12px;"><i class="fas fa-chart-line"></i> Progreso en tiempo real</p>
+        <div class="rt-grid">
+          <div class="rt-card purple">
+            <div class="rt-num" id="rtPreTotal">—</div>
+            <div class="rt-label">Iniciaron Pre-test</div>
+          </div>
+          <div class="rt-card green">
+            <div class="rt-num" id="rtPreComp">—</div>
+            <div class="rt-label">Completaron Pre-test</div>
+          </div>
+          <div class="rt-card teal">
+            <div class="rt-num" id="rtPostTotal">—</div>
+            <div class="rt-label">Iniciaron Post-test</div>
+          </div>
+          <div class="rt-card gold">
+            <div class="rt-num" id="rtPostComp">—</div>
+            <div class="rt-label">Completaron Post-test</div>
+          </div>
+        </div>
+        <div class="rt-progress-wrap">
+          <div class="rt-prog-row">
+            <span>Pre-test completado</span><span id="rtPctPre">—</span>
+          </div>
+          <div class="rt-bar-bg"><div class="rt-bar-fill purple" id="rtBarPre" style="width:0%"></div></div>
+          <div class="rt-prog-row" style="margin-top:8px;">
+            <span>Post-test completado</span><span id="rtPctPost">—</span>
+          </div>
+          <div class="rt-bar-bg"><div class="rt-bar-fill teal" id="rtBarPost" style="width:0%"></div></div>
+        </div>
+        <p class="rt-update" id="rtUpdateTime">No actualizado aún</p>
+      </div>
+    </div>
+
+    <!-- TABLA PARTICIPANTES -->
+    <div class="data-card" id="dataCard" style="display:none;">
+      <div class="data-header">
+        <p class="control-label"><i class="fas fa-users"></i> Participantes registrados</p>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="searchInput" placeholder="Buscar código..." oninput="filtrarTabla()"
+            style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:0.8rem;width:160px;">
+          <select id="filterModo" onchange="filtrarTabla()"
+            style="padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:0.8rem;">
+            <option value="todos">Todos</option>
+            <option value="pre">Solo Pre-test</option>
+            <option value="post">Solo Post-test</option>
+            <option value="ambos">Tienen ambos</option>
+          </select>
         </div>
       </div>
-    </div>
-
-  </main>
-
-  <!-- FOOTER INSTITUCIONAL -->
-  <footer id="equipo" class="inst-footer">
-    <div class="inst-footer-grid">
-      <div class="inst-footer-sec">
-        <h4><i class="fas fa-graduation-cap"></i> Contexto Académico</h4>
-        <p><i class="fas fa-book"></i> Investigación de Pregrado</p>
-        <p><i class="fas fa-university"></i> Universidad de Oriente · Núcleo Bolívar</p>
-        <p><i class="fas fa-stethoscope"></i> Departamento de Enfermería</p>
-      </div>
-      <div class="inst-footer-sec">
-        <h4><i class="fas fa-map-marker-alt"></i> Ubicación y Muestra</h4>
-        <p><i class="fas fa-map-pin"></i> Ciudad Bolívar, Estado Bolívar, Venezuela</p>
-        <p><i class="fas fa-motorcycle"></i> Mototaxistas y delivery activos</p>
-        <p><i class="fas fa-calendar-alt"></i> Período: Marzo – Julio 2026</p>
-      </div>
-      <div class="inst-footer-sec">
-        <h4><i class="fas fa-flask"></i> Diseño Metodológico</h4>
-        <p><i class="fas fa-cogs"></i> Enfoque Cuasi-experimental</p>
-        <p><i class="fas fa-chart-line"></i> Diseño Pre / Post test</p>
-        <p><i class="fas fa-calculator"></i> Análisis estadístico inferencial</p>
-      </div>
-      <div class="inst-footer-sec">
-        <h4><i class="fas fa-check-circle"></i> Validación</h4>
-        <p><i class="fas fa-user-check"></i> Juicio de 3 expertos</p>
-        <p><i class="fas fa-vial"></i> Prueba piloto (n=30)</p>
-        <p><i class="fas fa-chart-pie"></i> Alfa de Cronbach > 0.70</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Código</th><th>Pre-test</th><th>Post-test</th>
+              <th>Diferencia</th><th>Nivel Pre</th><th>Nivel Post</th><th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBody"></tbody>
+        </table>
       </div>
     </div>
 
-    <hr class="inst-footer-sep">
-
-    <div class="inst-authors-box">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Logo_UDO.svg"
-           alt="Logo Universidad de Oriente"
-           class="inst-udo-logo" />
-      <div class="inst-authors-info">
-        <div class="inst-authors-label">Investigadoras Principales</div>
-        <div class="inst-authors-names">Meredith La Torraca &amp; Ana Carolina González</div>
-        <div class="inst-authors-dept">Escuela de Ciencias de la Salud "Dr. Francisco Battistini Casalta" · Depto. Enfermería</div>
-        <div class="inst-authors-tutor"><i class="fas fa-chalkboard-teacher"></i> Tutor Académico: Prof. Norsol Mata</div>
+    <!-- ANÁLISIS -->
+    <div id="resultados" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card sc-purple">
+          <div class="stat-label">Participantes</div>
+          <div class="stat-val" id="statN">0</div>
+          <div class="stat-sub">con pre y post-test</div>
+        </div>
+        <div class="stat-card sc-green">
+          <div class="stat-label">Promedio Pre-test</div>
+          <div class="stat-val" id="statPre">—</div>
+          <div class="stat-sub">puntos / 10</div>
+        </div>
+        <div class="stat-card sc-teal">
+          <div class="stat-label">Promedio Post-test</div>
+          <div class="stat-val" id="statPost">—</div>
+          <div class="stat-sub">puntos / 10</div>
+        </div>
+        <div class="stat-card sc-coral">
+          <div class="stat-label">Variación promedio</div>
+          <div class="stat-val" id="statDelta">—</div>
+          <div class="stat-sub">puntos de diferencia</div>
+        </div>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3 class="chart-title">Pre vs Post por participante</h3>
+          <canvas id="chartComparacion" height="220"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Diferencia individual (Post − Pre)</h3>
+          <canvas id="chartDiferencia" height="220"></canvas>
+        </div>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3 class="chart-title">Tendencia grupal</h3>
+          <canvas id="chartTendencia" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Distribución de niveles</h3>
+          <canvas id="chartNiveles" height="200"></canvas>
+        </div>
+      </div>
+      <div class="analysis-card">
+        <p class="control-label" style="margin-bottom:16px;"><i class="fas fa-microscope"></i> Análisis estadístico descriptivo</p>
+        <div id="analisisTexto"></div>
       </div>
     </div>
 
-    <p class="inst-copyright">© 2025 CAP-SV-DIGITAL · Instrumento de Seguridad Vial para Motociclistas · Universidad de Oriente, Venezuela · Todos los derechos reservados para fines académicos.</p>
-    <p style="margin-top:12px;">
-      <a href="admin-cap.html" style="font-size:0.72rem;color:rgba(255,255,255,0.2);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">
-        <i class="fas fa-lock" style="margin-right:4px;font-size:0.65rem;"></i>Acceso Administrador
-      </a>
-    </p>
-  </footer>
-
+  </div>
 </div>
 
 <script>
+const CLAVE_ADMIN = 'UDO2025';
 const API_URL = 'https://script.google.com/macros/s/AKfycbzdNYEUXg2NpVHILf7yk2JEtJq02yT34tmy7KglPdkga4g2H4RtermHDIW5VwpBjY5w/exec';
+const SHEETS_LINK = 'https://docs.google.com/spreadsheets/d/1zPgr9Y3KnJL6HFB9__au6WHzAx2AsTZp6rztQs0Q5SU/edit';
+let datosPre = {}, datosPost = {};
+window._charts = {};
 
-function validateCode(){
-  const val = document.getElementById('codigoInput').value;
-  const btn = document.getElementById('btnStart');
-  const err = document.getElementById('loginError');
-  const valid = /^[A-Z]{4}[0-9]{4}$/.test(val);
-  btn.disabled = !valid;
-  err.style.display = (val.length === 8 && !valid) ? 'block' : 'none';
-  ocultarWizard();
-}
-
-document.getElementById('codigoInput').addEventListener('keydown', function(e){
-  if(e.key === 'Enter') iniciarVerificacion();
-});
-
-function iniciarVerificacion(){
-  const codigo = document.getElementById('codigoInput').value;
-  if(!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
-
-  document.getElementById('codigoInput').disabled = true;
-  document.getElementById('btnStart').style.display = 'none';
-  document.getElementById('spinnerCheck').style.display = 'block';
-  ocultarWizard();
-
-  // Verificar con Apps Script
-  const cbName = '_cb_ver_' + Date.now();
-  const timeout = setTimeout(function(){
-    limpiarCb(cbName); desbloquearInput(); irAlInstrumento('pre');
-  }, 8000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    document.getElementById('spinnerCheck').style.display = 'none';
-    if(!data.existe){
-      // Código nuevo → directo al pre-test
-      irAlInstrumento('pre');
-    } else if(data.completadoPre){
-      // Ya hizo el pre-test → verificar si post está habilitado
-      verificarYMostrarPost();
-    } else {
-      // Existe pero no completó → colisión de código
-      mostrarWizardPanel('wColision');
-    }
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); desbloquearInput(); irAlInstrumento('pre'); };
-  document.head.appendChild(s);
-}
-
-function verificarYMostrarPost(){
-  mostrarWizardPanel('wSpinnerPost');
-  const cbName = '_cb_cfg_' + Date.now();
-  const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 8000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-    mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
-  document.head.appendChild(s);
-}
-
-function respuestaPretest(yaHizo){
-  if(yaHizo){
-    mostrarWizardPanel('wSpinnerPost');
-    // Verificar config desde Apps Script
-    const cbName = '_cb_cfg_' + Date.now();
-    const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 8000);
-    window[cbName] = function(data){
-      clearTimeout(timeout); limpiarCb(cbName);
-      const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-      mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-    };
-    const s = document.createElement('script');
-    s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-    s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
-    document.head.appendChild(s);
+// LOGIN
+function verificarClave(){
+  if(document.getElementById('claveInput').value === CLAVE_ADMIN){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display  = 'block';
+    sessionStorage.setItem('cap_admin','1');
+    const cachedHab2 = sessionStorage.getItem('cap_post_habilitado');
+    if(cachedHab2 !== null) actualizarBadgePost(cachedHab2 === 'true');
+    setTimeout(verificarEstadoPost, 600);
   } else {
-    mostrarWizardPanel('wColision');
+    const err = document.getElementById('loginError');
+    err.style.display = 'block';
+    document.getElementById('claveInput').value = '';
+    setTimeout(()=>{ err.style.display='none'; }, 3000);
   }
 }
-
-function irAlInstrumento(modo){
-  const codigo = document.getElementById('codigoInput').value;
-  sessionStorage.setItem('cap_codigo', codigo);
-  sessionStorage.setItem('cap_modo', modo);
-  const archivo = modo === 'post' ? 'instrumento-cap-post.html' : 'instrumento-cap-nuevo.html';
-  window.location.href = archivo + '?codigo=' + codigo + '&modo=' + modo;
+function cerrarSesion(){
+  sessionStorage.removeItem('cap_admin');
+  window.location.href = 'landing-cap.html';
+}
+if(sessionStorage.getItem('cap_admin')==='1'){
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display  = 'block';
+  // Restaurar badge inmediatamente desde caché antes de consultar el script
+  const cachedHab = sessionStorage.getItem('cap_post_habilitado');
+  if(cachedHab !== null) actualizarBadgePost(cachedHab === 'true');
+  setTimeout(verificarEstadoPost, 600);
 }
 
-function mostrarWizardPanel(id){
-  var box = document.getElementById('wizardBox');
-  box.style.display = 'block';
-  ['wPregunta','wPostOk','wPostEspera','wColision','wSpinnerPost'].forEach(function(p){
-    document.getElementById(p).style.display = 'none';
-  });
-  document.getElementById(id).style.display = 'block';
-  desbloquearInput();
-}
-
-function ocultarWizard(){
-  document.getElementById('wizardBox').style.display = 'none';
-}
-
-function desbloquearInput(){
-  document.getElementById('codigoInput').disabled = false;
-  document.getElementById('btnStart').style.display = 'flex';
-  document.getElementById('spinnerCheck').style.display = 'none';
-}
-
-function resetWizard(){
-  ocultarWizard();
-  desbloquearInput();
-  document.getElementById('codigoInput').value = '';
-  document.getElementById('btnStart').disabled = true;
-  document.getElementById('codigoInput').focus();
-}
-
-// ── MODAL QR ──
-var QR_URL = 'https://capsvdigital.github.io/cap-sv-digital/landing-cap.html';
-var qrGenerado = false;
-
-function abrirModalQR(){
-  var modal = document.getElementById('modalQR');
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  if(!qrGenerado){ generarQR(); qrGenerado = true; }
-}
-
-function cerrarModalQR(){
-  document.getElementById('modalQR').style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-document.getElementById('modalQR').addEventListener('click', function(e){
-  if(e.target === this) cerrarModalQR();
-});
-
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') cerrarModalQR();
-});
-
-function generarQR(){
-  var canvas = document.getElementById('qrCanvas');
-  var size = 200;
-  canvas.width = size; canvas.height = size;
-  var ctx = canvas.getContext('2d');
-
-  // Generador QR mínimo sin dependencias externas
-  // Usamos la API de QR server (imagen) embebida como imagen
-  var img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = function(){
-    ctx.drawImage(img, 0, 0, size, size);
-  };
-  img.onerror = function(){
-    // Fallback: dibujar mensaje
-    ctx.fillStyle = '#f8f9ff';
-    ctx.fillRect(0,0,size,size);
-    ctx.fillStyle = '#5b6ceb';
-    ctx.font = 'bold 13px Montserrat,sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Escanea con tu', size/2, size/2 - 10);
-    ctx.fillText('cámara o app QR', size/2, size/2 + 10);
-  };
-  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(QR_URL) + '&color=2d3436&bgcolor=ffffff&margin=1';
-}
-
-function descargarQR(){
-  var canvas = document.getElementById('qrCanvas');
-  var link = document.createElement('a');
-  link.download = 'QR-CAP-SV-DIGITAL.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-}
-
-// ── CARRUSEL NOVEDADES ──
-(function(){
-  var current = 0;
-  var total = 5;
-  var perView = 3;
-
-  function getPerView(){
-    if(window.innerWidth <= 700) return 1;
-    if(window.innerWidth <= 900) return 2;
-    return 3;
-  }
-
-  function update(){
-    perView = getPerView();
-    var maxIdx = total - perView;
-    if(current > maxIdx) current = maxIdx;
-    if(current < 0) current = 0;
-
-    var cardW = document.querySelector('.novelty-card');
-    if(!cardW) return;
-    var gap = 16;
-    var offset = current * (cardW.offsetWidth + gap);
-    document.getElementById('novTrack').style.transform = 'translateX(-' + offset + 'px)';
-
-    document.querySelectorAll('.nov-dot').forEach(function(d,i){
-      d.classList.toggle('active', i === current);
+// CARGAR DATOS
+function cargarDesdeSheets(){
+  const btn = document.getElementById('btnActualizar');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+  btn.disabled = true;
+  const timeout = setTimeout(()=>{
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+  }, 12000);
+  window._adminDataCallback = function(data){
+    clearTimeout(timeout);
+    datosPre = {}; datosPost = {};
+    if(data.pre)  data.pre.forEach(row=>{
+      const c = (row.codigo||'').toString().trim().toUpperCase();
+      const s = parseInt(row.score_conocimientos||0);
+      if(c) datosPre[c]  = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
     });
-  }
-
-  window.noveltyNext = function(){
-    perView = getPerView();
-    if(current < total - perView) current++;
-    update();
+    if(data.post) data.post.forEach(row=>{
+      const c = (row.codigo||'').toString().trim().toUpperCase();
+      const s = parseInt(row.score_conocimientos||0);
+      if(c) datosPost[c] = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
+    });
+    const nPre = Object.keys(datosPre).length, nPost = Object.keys(datosPost).length;
+    btn.innerHTML = '<i class="fas fa-check"></i> ' + nPre + ' pre · ' + nPost + ' post';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+    actualizarUI();
+    const nPreComp  = Object.values(datosPre).filter(r=>r.completado==='SI').length;
+    const nPostComp = Object.values(datosPost).filter(r=>r.completado==='SI').length;
+    if(nPreComp > 0 && nPostComp > 0) analizarDatos();
+    const old = document.getElementById('_adminScript'); if(old) old.remove();
   };
-  window.noveltyPrev = function(){
-    if(current > 0) current--;
-    update();
-  };
-  window.noveltyGo = function(i){
-    current = i;
-    update();
-  };
-
-  window.addEventListener('resize', update);
-
-  // Auto-avance cada 4s
-  setInterval(function(){
-    perView = getPerView();
-    if(current < total - perView) current++;
-    else current = 0;
-    update();
-  }, 4000);
-})();
-
-  try { delete window[name]; } catch(e){}
-  document.querySelectorAll('script[src*="' + name + '"]').forEach(function(s){ s.remove(); });
-
-
-function imprimirPretest(){
-  var codigo = document.getElementById('codigoInput').value;
-  if(!codigo){ alert('Por favor ingrese su código primero.'); return; }
-
-  var btns = document.querySelectorAll('#btnImprimirPreOk, #btnImprimirPreEspera');
-  btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...'; b.disabled = true; });
-
-  var cbName = '_cb_print_' + Date.now();
-  var timeout = setTimeout(function(){
-    limpiarCb(cbName);
-    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
-    alert('No se pudo conectar. Verifique su conexión e intente nuevamente.');
-  }, 8000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
-    var lista = data.pre || [];
-    var registro = lista.find(function(r){ return (r.codigo||'').toUpperCase() === codigo.toUpperCase(); });
-    if(!registro){
-      alert('No se encontraron datos del pre-test para este código. Si acaba de enviar, espere unos segundos e intente de nuevo.');
-      return;
-    }
-    abrirVentanaImpresion(codigo, registro);
-  };
-  var s = document.createElement('script');
-  s.src = API_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
+  const old = document.getElementById('_adminScript'); if(old) old.remove();
+  const s = document.createElement('script');
+  s.id  = '_adminScript';
+  s.src = API_URL + '?action=getData&callback=_adminDataCallback&t=' + Date.now();
   s.onerror = function(){
-    clearTimeout(timeout); limpiarCb(cbName);
-    btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
-    alert('Error de conexión. Intente nuevamente.');
+    clearTimeout(timeout);
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
   };
   document.head.appendChild(s);
 }
 
-function abrirVentanaImpresion(codigo, r){
-  var score = parseInt(r.score_conocimientos) || 0;
-  var nivel = r.nivel_conocimientos || '—';
-  var fecha = r.fecha || '—';
-  var hora  = r.hora  || '—';
-  var pct   = Math.round((score / 10) * 100);
-  var color = score >= 9 ? '#10b981' : score >= 7 ? '#3b82f6' : score >= 5 ? '#f59e0b' : '#ef4444';
-
-  var perfilItems = [
-    ['Edad', r.p1], ['Sexo', r.p2], ['Nivel educativo', r.p3],
-    ['Años trabajando', r.p4], ['Licencia', r.p5],
-    ['Capacitación previa', r.p6], ['Accidentes (12 meses)', r.p7],
-    ['Plataforma preferida', r.p8]
-  ].filter(function(x){ return x[1]; });
-
-  var perfilHTML = perfilItems.map(function(x){
-    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[0] + '</td>'
-         + '<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[1] + 'NonNullCell</td></tr>';
-  }).join('');
-
-  var vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
-  var correctas = {c1:'V',c2:'V',c3:'F',c4:'F',c5:'V',c6:'V',c7:'V',c8:'V',c9:'F',c10:'F'};
-  var vfHTML = vfKeys.map(function(k, i){
-    var resp = r[k] || '—';
-    var ok   = resp === correctas[k];
-    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+'"><td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+'</td>'
-         + '<td style="padding:6px 10px;font-size:0.78rem;">'+(ok?'✓':'✗')+' '+resp+'</td></tr>';
-  }).join('');
-
-  var actFields = ['a1','a2','a3','a4','a5','a6','a7','a8'];
-  var actLabels = ['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Disposición al cambio','Autoresponsabilidad'];
-  var actHTML = actFields.map(function(k, i){
-    var val = r[k]; if(!val) return '';
-    var bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#5b6ceb':'#e2e5f0')+'"></span>';
-    }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+actLabels[i]+'</td>'
-         + '<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.75rem;color:#5b6ceb;font-weight:700;">'+val+'/4</span></td></tr>';
-  }).join('');
-
-  var prFields = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'];
-  var prLabels = ['Uso de casco','Respeto semáforos','Evita celular','Revisión del vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
-  var prHTML = prFields.map(function(k, i){
-    var val = r[k]; if(!val) return '';
-    var bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#f59e0b':'#e2e5f0')+'"></span>';
-    }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+prLabels[i]+'</td>'
-         + '<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.75rem;color:#f59e0b;font-weight:700;">'+val+'/4</span></td></tr>';
-  }).join('');
-
-  var w = window.open('', '_blank', 'width=760,height=900');
-  w.document.write('<!DOCTYPE html><html lang="es"><head>'
-    +'<meta charset="UTF-8"><title>Pre-test '+codigo+' · CAP-SV-DIGITAL</title>'
-    +'<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
-    +'<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
-    +'.header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
-    +'.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
-    +'.code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}'
-    +'.code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}'
-    +'.code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}'
-    +'.score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}'
-    +'.ring{width:90px;height:90px;border-radius:50%;border:4px solid '+color+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:'+color+'18;}'
-    +'.ring .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:'+color+';line-height:1;}'
-    +'.ring .max{font-size:0.68rem;color:#b2bec3;font-weight:700;}'
-    +'.si h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:'+color+';margin-bottom:4px;}'
-    +'.si p{font-size:0.82rem;color:#636e72;}'
-    +'.pills{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}'
-    +'.pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:4px 10px;font-size:0.72rem;color:#636e72;}'
-    +'.sec{margin-bottom:20px;}'
-    +'.sec-t{font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:6px 12px;border-radius:6px;margin-bottom:8px;display:inline-block;}'
-    +'.c1{background:#5b6ceb;}.c2{background:#6a3fa8;}.c3{background:#00b894;}.c4{background:#f59e0b;}'
-    +'table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}'
-    +'.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}'
-    +'.footer{text-align:center;margin-top:28px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:16px;}'
-    +'@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
-    +'</style></head><body>'
-    +'<div class="header"><div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial · Pre-test</p>'
-    +'<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente · Dpto. Enfermería · Ciudad Bolívar 2025</p></div>'
-    +'<div class="code-badge"><div class="lbl">Código</div><div class="val">'+codigo+'</div></div></div>'
-    +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
-    +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
-    +'<div class="pills"><span class="pill">📅 <strong>'+fecha+'</strong></span><span class="pill">🕐 <strong>'+hora+'</strong></span><span class="pill">📊 <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
-    +'<div class="sec"><span class="sec-t c1">I · Perfil</span><tr>'+perfilHTML+'</table></div>'
-    +'<div class="grid">'
-    +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><td>'+vfHTML+'</table></div>'
-    +'<div><div class="sec"><span class="sec-t c3">III · Actitudes</span></td>'+(actHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
-    +'<div class="sec"><span class="sec-t c4">IV · Prácticas</span><table>'+(prHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div></div>'
-    +'</div>'
-    +'<div class="footer">CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · '+new Date().toLocaleDateString('es-VE')+'</div>'
-    +'<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt></body></html>');
-  w.document.close();
+// UI TIEMPO REAL
+function actualizarUI(){
+  const nPT = Object.keys(datosPre).length,  nPoT = Object.keys(datosPost).length;
+  const nPC = Object.values(datosPre).filter(r=>r.completado==='SI').length;
+  const nPoC= Object.values(datosPost).filter(r=>r.completado==='SI').length;
+  const pPre = nPT  ? Math.round((nPC /nPT )*100) : 0;
+  const pPost= nPoT ? Math.round((nPoC/nPoT)*100) : 0;
+  document.getElementById('rtPreTotal').textContent  = nPT  || '—';
+  document.getElementById('rtPreComp').textContent   = nPC  || '—';
+  document.getElementById('rtPostTotal').textContent = nPoT || '—';
+  document.getElementById('rtPostComp').textContent  = nPoC || '—';
+  document.getElementById('rtPctPre').textContent    = nPT  ? pPre  + '%' : '—';
+  document.getElementById('rtPctPost').textContent   = nPoT ? pPost + '%' : '—';
+  document.getElementById('rtBarPre').style.width    = pPre  + '%';
+  document.getElementById('rtBarPost').style.width   = pPost + '%';
+  document.getElementById('rtUpdateTime').textContent = 'Última actualización: ' + new Date().toLocaleTimeString('es-VE');
+  poblarTabla();
+  if(nPT > 0 || nPoT > 0) document.getElementById('dataCard').style.display = 'block';
 }
-</script>
-<!-- Al final del body, antes de </body> -->
-<script src="database.js"></script>
-<script>
-    // Tu código existente del landing-cap.html
-    // Pero REEMPLAZA las funciones de verificación con estas:
-    
-    async function iniciarVerificacion() {
-        const codigo = document.getElementById('codigoInput').value;
-        if (!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
-        
-        document.getElementById('codigoInput').disabled = true;
-        document.getElementById('btnStart').style.display = 'none';
-        document.getElementById('spinnerCheck').style.display = 'block';
-        
-        try {
-            const existe = await verificarCodigo(codigo);
-            
-            document.getElementById('spinnerCheck').style.display = 'none';
-            
-            if (existe) {
-                mostrarWizardPanel('wPregunta');
-            } else {
-                irAlInstrumento('pre');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('spinnerCheck').style.display = 'none';
-            irAlInstrumento('pre');
-        }
+
+function poblarTabla(){
+  const tbody = document.getElementById('tablaBody');
+  if(!tbody) return;
+  const search = (document.getElementById('searchInput')?.value||'').toUpperCase();
+  const filtro = document.getElementById('filterModo')?.value||'todos';
+  const todos  = [...new Set([...Object.keys(datosPre),...Object.keys(datosPost)])];
+  tbody.innerHTML = '';
+  todos.forEach(cod=>{
+    const pre = datosPre[cod], post = datosPost[cod];
+    if(search && !cod.includes(search)) return;
+    if(filtro==='pre'   && !pre)           return;
+    if(filtro==='post'  && !post)          return;
+    if(filtro==='ambos' && (!pre||!post))  return;
+    const ps = pre  ? pre.score  : null;
+    const qs = post ? post.score : null;
+    const d  = (ps!==null && qs!==null) ? qs-ps : null;
+    const dc = d===null?'':d>0?'color:#00b894':d<0?'color:#e17055':'color:var(--muted)';
+    const dt = d===null?'—':(d>0?'+':'')+d;
+    const pc = pre  && pre.completado==='SI';
+    const qc = post && post.completado==='SI';
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="font-family:monospace;font-weight:700;color:var(--purple)">'+cod+'</td>'+
+      '<td>'+(ps!==null?ps+'/10':'—')+'</td>'+
+      '<td>'+(qs!==null?qs+'/10':'—')+'</td>'+
+      '<td style="'+dc+';font-weight:700">'+dt+'</td>'+
+      '<td>'+(ps!==null?nivelTexto(ps):'—')+'</td>'+
+      '<td>'+(qs!==null?nivelTexto(qs):'—')+'</td>'+
+      '<td>'+(pc?'<span class="badge-comp badge-si"><i class="fas fa-check"></i> Pre</span> ':'')+
+            (qc?'<span class="badge-comp badge-si"><i class="fas fa-check"></i> Post</span>':'')+
+            (!pc&&!qc?'<span class="badge-comp badge-no">En progreso</span>':'')+'</td>';
+    tbody.appendChild(tr);
+  });
+  if(!tbody.children.length)
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px;">Sin resultados</td></tr>';
+}
+function filtrarTabla(){ poblarTabla(); }
+
+// POST-TEST TOGGLE
+function togglePostTest(habilitar){
+  const msg = document.getElementById('toggleMsg');
+  msg.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:8px;font-size:0.8rem;background:rgba(255,255,255,0.05);color:var(--muted);';
+  msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Aplicando...';
+  const cb = '_cb_cfg_'+Date.now();
+  const to = setTimeout(()=>{ limpiarCb(cb); msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-triangle"></i> Error de conexión.'; }, 8000);
+  window[cb] = function(data){
+    clearTimeout(to); limpiarCb(cb);
+    actualizarBadgePost(habilitar);
+    if(data && data.ok){
+      msg.style.background = habilitar?'rgba(0,184,148,0.1)':'rgba(225,112,85,0.1)';
+      msg.style.color = habilitar?'#00b894':'#e17055';
+      msg.innerHTML = habilitar
+        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>.'
+        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>.';
+      setTimeout(()=>{ msg.style.display='none'; }, 5000);
+    } else {
+      msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-circle"></i> Error al guardar.';
     }
-    
-    // El resto de tu código del landing-cap.html sigue igual...
+  };
+  const s = document.createElement('script');
+  s.src = API_URL+'?action=setConfig&clave=post_habilitado&valor='+(habilitar?'true':'false')+'&callback='+cb+'&t='+Date.now();
+  s.onerror = function(){ clearTimeout(to); limpiarCb(cb); msg.style.color='#e17055'; msg.innerHTML='Sin conexión.'; };
+  document.head.appendChild(s);
+}
+function verificarEstadoPost(){
+  const cb = '_cb_vcfg_'+Date.now();
+  const to = setTimeout(()=>{ limpiarCb(cb); }, 8000);
+  window[cb] = function(data){ clearTimeout(to); limpiarCb(cb); actualizarBadgePost(String(data.post_habilitado).toLowerCase()==='true'); };
+  const s = document.createElement('script');
+  s.src = API_URL+'?action=getConfig&callback='+cb+'&t='+Date.now();
+  document.head.appendChild(s);
+}
+function actualizarBadgePost(hab){
+  const badge = document.getElementById('estadoPostBadge');
+  const texto = document.getElementById('estadoPostTexto');
+  badge.className = 'estado-badge '+(hab?'habilitado':'bloqueado');
+  badge.querySelector('i').className = 'fas fa-'+(hab?'unlock':'lock');
+  texto.textContent = hab?'Habilitado':'Bloqueado';
+  // Persistir estado entre recargas
+  sessionStorage.setItem('cap_post_habilitado', hab ? 'true' : 'false');
+}
+function copiarEnlace(){
+  const txt = document.getElementById('linkGenerado').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn = document.querySelector('.copy-mini');
+    btn.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
+  });
+}
+function limpiarCb(n){ try{delete window[n];}catch(e){} document.querySelectorAll('script[src*="'+n+'"]').forEach(s=>s.remove()); }
+
+// ANALIZAR
+function nivelTexto(s){ return s>=9?'Excelente':s>=7?'Bueno':s>=5?'Regular':'Bajo'; }
+
+function analizarDatos(){
+  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined&&datosPre[c].completado==='SI'&&datosPost[c].completado==='SI');
+  if(!codigos.length){ document.getElementById('resultados').style.display='none'; return; }
+  document.getElementById('resultados').style.display = 'block';
+  const pres   = codigos.map(c=>datosPre[c].score);
+  const posts  = codigos.map(c=>datosPost[c].score);
+  const deltas = codigos.map((_,i)=>posts[i]-pres[i]);
+  const avgPre  = (pres.reduce((a,b)=>a+b,0)/pres.length).toFixed(1);
+  const avgPost = (posts.reduce((a,b)=>a+b,0)/posts.length).toFixed(1);
+  const avgDelta= (deltas.reduce((a,b)=>a+b,0)/deltas.length).toFixed(1);
+  document.getElementById('statN').textContent     = codigos.length;
+  document.getElementById('statPre').textContent   = avgPre;
+  document.getElementById('statPost').textContent  = avgPost;
+  document.getElementById('statDelta').textContent = (parseFloat(avgDelta)>=0?'+':'')+avgDelta;
+  renderGraficos(codigos,pres,posts,deltas);
+  generarAnalisis(codigos,pres,posts,deltas,avgPre,avgPost,avgDelta);
+}
+
+Chart.defaults.color = '#8892a4';
+Chart.defaults.font.family = "'Inter',sans-serif";
+
+function renderGraficos(codigos,pres,posts,deltas){
+  if(window._charts){ Object.values(window._charts).forEach(c=>{ try{c.destroy();}catch(e){} }); }
+  window._charts = {};
+  const colPre='rgba(91,108,235,0.8)', colPost='rgba(0,184,148,0.8)';
+  const colD = deltas.map(d=>d>=0?'rgba(0,184,148,0.8)':'rgba(225,112,85,0.8)');
+  window._charts.a = new Chart(document.getElementById('chartComparacion'),{
+    type:'bar', data:{labels:codigos,datasets:[{label:'Pre-test',data:pres,backgroundColor:colPre,borderRadius:6},{label:'Post-test',data:posts,backgroundColor:colPost,borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},scales:{y:{min:0,max:10,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4'}},x:{grid:{display:false},ticks:{color:'#8892a4'}}}}
+  });
+  window._charts.b = new Chart(document.getElementById('chartDiferencia'),{
+    type:'bar', data:{labels:codigos,datasets:[{label:'Diferencia',data:deltas,backgroundColor:colD,borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4'}},x:{grid:{display:false},ticks:{color:'#8892a4'}}}}
+  });
+  const avgP=pres.reduce((a,b)=>a+b,0)/pres.length, avgQ=posts.reduce((a,b)=>a+b,0)/posts.length;
+  window._charts.c = new Chart(document.getElementById('chartTendencia'),{
+    type:'line', data:{labels:['Pre-test','Post-test'],datasets:[{label:'Promedio grupal',data:[avgP,avgQ],borderColor:'rgba(0,184,148,1)',backgroundColor:'rgba(0,184,148,0.1)',borderWidth:3,pointRadius:8,pointBackgroundColor:'rgba(0,184,148,1)',fill:true,tension:0.3}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},scales:{y:{min:0,max:10,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4'}},x:{grid:{display:false},ticks:{color:'#8892a4',font:{size:13,weight:'bold'}}}}}
+  });
+  const nL=['Excelente (9-10)','Bueno (7-8)','Regular (5-6)','Bajo (0-4)'];
+  const pN=[pres.filter(s=>s>=9).length,pres.filter(s=>s>=7&&s<9).length,pres.filter(s=>s>=5&&s<7).length,pres.filter(s=>s<5).length];
+  const qN=[posts.filter(s=>s>=9).length,posts.filter(s=>s>=7&&s<9).length,posts.filter(s=>s>=5&&s<7).length,posts.filter(s=>s<5).length];
+  window._charts.d = new Chart(document.getElementById('chartNiveles'),{
+    type:'bar', data:{labels:nL,datasets:[{label:'Pre-test',data:pN,backgroundColor:'rgba(91,108,235,0.75)',borderRadius:6},{label:'Post-test',data:qN,backgroundColor:'rgba(0,184,148,0.75)',borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4',stepSize:1}},x:{grid:{display:false},ticks:{color:'#8892a4',font:{size:10}}}}}
+  });
+}
+
+function generarAnalisis(codigos,pres,posts,deltas,avgPre,avgPost,avgDelta){
+  const n=codigos.length, mej=deltas.filter(d=>d>0).length, man=deltas.filter(d=>d===0).length, dis=deltas.filter(d=>d<0).length;
+  const pct=Math.round((mej/n)*100), maxD=Math.max(...deltas), codMax=codigos[deltas.indexOf(maxD)], avg=parseFloat(avgDelta);
+  document.getElementById('analisisTexto').innerHTML =
+    '<div class="a-section"><h4>Resumen general</h4><p>Se analizaron <strong>'+n+' participantes</strong>. Promedio pre: <strong>'+avgPre+'/10</strong> → post: <strong>'+avgPost+'/10</strong>. Variación promedio: <strong>'+(avg>=0?'+':'')+avgDelta+' puntos</strong>.</p></div>'+
+    '<div class="a-section '+(avg>=0?'green':'coral')+'"><h4>'+(avg>=0?'Efecto de la intervención':'Resultado de la intervención')+'</h4><p>'+(avg>1?'Efecto positivo claro: '+mej+'/'+n+' participantes ('+pct+'%) mejoraron. Mayor mejora: <strong>'+codMax+'</strong> con +'+maxD+' puntos.':avg>=0?'Efecto leve o nulo. '+pct+'% mejoró pero la magnitud es pequeña.':'Disminución promedio observada. Revisar condiciones de aplicación.')+'</p></div>'+
+    '<div class="a-section"><h4>Distribución del cambio</h4><p><strong style="color:#00b894">'+mej+' mejoraron</strong> · <strong style="color:var(--muted)">'+man+' igual</strong> · <strong style="color:#e17055">'+dis+' disminuyeron</strong>. Mejora >60% indica efectividad de la intervención.</p></div>'+
+    '<div class="a-section"><h4>Recomendaciones metodológicas</h4><p>Aplicar <strong>prueba de Wilcoxon</strong> (no paramétrica) o <strong>t de Student para muestras relacionadas</strong> si hay normalidad (Shapiro-Wilk). Calcular <strong>d de Cohen</strong> para tamaño del efecto. Exportar CSV para análisis en SPSS o R.</p></div>';
+}
+
+function exportarReporte(){
+  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined);
+  if(!codigos.length){ alert('No hay datos para exportar.'); return; }
+  let csv = 'codigo,pre_score,post_score,diferencia,pct_mejora,nivel_pre,nivel_post\n';
+  codigos.forEach(c=>{
+    const pre=datosPre[c].score, post=datosPost[c].score, d=post-pre, pct=Math.round((d/10)*100);
+    csv += c+','+pre+','+post+','+d+','+pct+'%,'+nivelTexto(pre)+','+nivelTexto(post)+'\n';
+  });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download = 'CAP-SV-DIGITAL_reporte_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
 </script>
 </body>
 </html>
