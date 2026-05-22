@@ -1009,7 +1009,7 @@ body{
 // ══════════════════════════════════════════
 // CONFIG
 // ══════════════════════════════════════════
-const API_URL = 'https://api.sheetbest.com/sheets/966e7004-81ba-454a-97fe-773822062d56';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwpGRuUx8SGgchWwIICWTtBWKMG53qOukTsB3hCNSbhbjC5rM307CY0Apk81ATt5DpN/exec';
 const TOTAL = 39; // 8 perfil + 10 VF + 8 actitudes + 8 prácticas + 5 digital
 
 // Respuestas correctas sección II (V/F)
@@ -1437,22 +1437,25 @@ function enviarYExportar() {
   mostrarSync('✅ Enviado correctamente');
 }
 
-// Verificar en Sheet.best si el código ya tiene registro final
-async function verificarEnviadoEnSheets(callback) {
+function verificarEnviadoEnSheets(callback) {
+  if (yaEnviado()) { callback(true); return; }
   const codigo = document.getElementById('codigoParticipante').value || '';
   if (!codigo) { callback(false); return; }
-  // Primero chequeamos localStorage como caché
-  if (yaEnviado()) { callback(true); return; }
-  try {
-    const res = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()));
-    const data = await res.json();
-    const encontrado = Array.isArray(data) && data.length > 0 &&
-      data.some(r => r.score_conocimientos !== undefined && r.score_conocimientos !== '');
+  const cb = '_cb_chk_' + Date.now();
+  const to = setTimeout(function() { try { delete window[cb]; } catch(e) {} callback(yaEnviado()); }, 6000);
+  window[cb] = function(data) {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {}
+    const lista = (data.pre || []);
+    const encontrado = lista.some(r =>
+      (r.codigo||'').toUpperCase() === codigo.toUpperCase() && String(r.completado).toUpperCase() === 'SI'
+    );
     if (encontrado) { try { localStorage.setItem(claveSent(), '1'); } catch(e) {} }
     callback(encontrado);
-  } catch(e) {
-    callback(yaEnviado());
-  }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() { clearTimeout(to); try { delete window[cb]; } catch(e) {} s.remove(); callback(yaEnviado()); };
+  document.head.appendChild(s);
 }
 
 function claveSent() {
@@ -1512,33 +1515,21 @@ function guardarProgreso() {
   const datos = recopilarRespuestas();
   guardarEnLocal(datos);
   clearTimeout(_syncT);
-  _syncT = setTimeout(async function() {
+  _syncT = setTimeout(function() {
     mostrarSync('⏳ Guardando...');
-    try {
-      // Buscar si ya existe un registro para este código
-      const res = await fetch(API_URL + '?codigo=' + encodeURIComponent((datos.codigo||'').toUpperCase()));
-      const existentes = await res.json();
-      const existe = Array.isArray(existentes) && existentes.length > 0;
-      const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
-      if (existe) {
-        // PATCH - actualizar registro existente
-        await fetch(API_URL + '/codigo/' + encodeURIComponent((datos.codigo||'').toUpperCase()), {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      } else {
-        // POST - crear nuevo registro
-        await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      }
-      mostrarSync('✓ Guardado');
-    } catch(e) {
-      mostrarSync('💾 Local');
-    }
+    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
+    const cb = '_cb_save_' + Date.now();
+    window[cb] = function(r) {
+      try { delete window[cb]; } catch(e) {}
+      mostrarSync(r && r.ok ? '✓ Guardado' : '💾 Local');
+    };
+    const s = document.createElement('script');
+    s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
+          + '&modo=' + encodeURIComponent(payload.modo || 'pre')
+          + '&datos=' + encodeURIComponent(JSON.stringify(payload))
+          + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('💾 Local'); };
+    document.head.appendChild(s);
   }, 1500);
 }
 
@@ -1554,24 +1545,36 @@ function mostrarSync(txt) {
   setTimeout(() => { el.remove(); }, 3200);
 }
 
-async function cargarProgresoInicial(codigo, modo) {
-  // Intentar cargar desde Sheet.best primero
-  try {
-    const res = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()));
-    const data = await res.json();
-    if (Array.isArray(data) && data.length > 0) {
-      const registro = data[0];
-      // Solo restaurar si tiene respuestas (no es solo registro de inicio)
-      if (Object.keys(registro).filter(k => registro[k] !== '').length > 3) {
-        guardarEnLocal(registro);
-        restaurar(registro);
-        return;
-      }
+function cargarProgresoInicial(codigo, modo) {
+  // Intentar cargar desde Sheets primero
+  const cb = '_cb_load_' + Date.now();
+  const to = setTimeout(function() {
+    try { delete window[cb]; } catch(e) {}
+    const local = leerDeLocal(codigo, modo);
+    if (local) restaurar(local);
+  }, 6000);
+  window[cb] = function(data) {
+    clearTimeout(to);
+    try { delete window[cb]; } catch(e) {}
+    // getData devuelve {pre:[...], post:[...]}
+    const lista = modo === 'post' ? (data.post || []) : (data.pre || []);
+    const registro = lista.find(r => (r.codigo||'').toUpperCase() === codigo.toUpperCase());
+    if (registro && Object.keys(registro).filter(k => registro[k] !== '').length > 3) {
+      guardarEnLocal(registro);
+      restaurar(registro);
+    } else {
+      const local = leerDeLocal(codigo, modo);
+      if (local) restaurar(local);
     }
-  } catch(e) {}
-  // Fallback a localStorage
-  const local = leerDeLocal(codigo, modo);
-  if (local) restaurar(local);
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {} s.remove();
+    const local = leerDeLocal(codigo, modo);
+    if (local) restaurar(local);
+  };
+  document.head.appendChild(s);
 }
 
 function restaurar(datos) {
@@ -1624,69 +1627,38 @@ function restaurar(datos) {
 // ══════════════════════════════════════════
 // ENVIAR A SHEETS
 // ══════════════════════════════════════════
-async function enviarAGoogleSheets(scoreC) {
+function enviarAGoogleSheets(scoreC) {
   const codigo = (document.getElementById('codigoParticipante').value || '---').toUpperCase();
   const modo   = sessionStorage.getItem('cap_modo') || 'pre';
   const fecha  = new Date().toISOString().slice(0,10);
   const hora   = new Date().toLocaleTimeString('es-VE');
-
   const datos  = recopilarRespuestas();
-  datos.codigo = codigo;
-  datos.modo   = modo;
-  datos.fecha  = fecha;
-  datos.hora   = hora;
+  datos.codigo = codigo; datos.modo = modo;
+  datos.fecha  = fecha;  datos.hora = hora;
   datos.score_conocimientos = scoreC;
   datos.nivel_conocimientos = scoreC >= 9 ? 'Excelente' : scoreC >= 7 ? 'Bueno' : scoreC >= 5 ? 'Regular' : 'Bajo';
   datos.completado = 'SI';
 
-  try {
-    // Verificar si ya existe registro para este código
-    const checkRes = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo));
-    const existentes = await checkRes.json();
-    const existe = Array.isArray(existentes) && existentes.length > 0;
-
-    if (existe) {
-      await fetch(API_URL + '/codigo/' + encodeURIComponent(codigo), {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
+  const cb = '_cb_env_' + Date.now();
+  window[cb] = function(r) {
+    try { delete window[cb]; } catch(e) {}
+    if (r && r.ok) {
+      mostrarSync('✅ Enviado');
+      try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
     } else {
-      await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
+      mostrarSync('💾 Guardado local');
     }
-    mostrarSync('✅ Enviado');
-    try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
-  } catch(e) {
-    mostrarSync('💾 Guardado local');
-    console.error('Error al enviar a Sheet.best:', e);
-  }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(codigo)
+        + '&modo=' + encodeURIComponent(modo)
+        + '&datos=' + encodeURIComponent(JSON.stringify(datos))
+        + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('💾 Guardado local'); };
+  document.head.appendChild(s);
 }
 
-// Registro inmediato al iniciar el instrumento
-async function registrarInicio(codigo, modo) {
-  try {
-    const checkRes = await fetch(API_URL + '?codigo=' + encodeURIComponent(codigo.toUpperCase()));
-    const existentes = await checkRes.json();
-    const existe = Array.isArray(existentes) && existentes.length > 0;
-    if (!existe) {
-      await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          codigo: codigo.toUpperCase(),
-          modo: modo,
-          fecha: new Date().toISOString().slice(0,10),
-          hora: new Date().toLocaleTimeString('es-VE'),
-          completado: 'NO'
-        })
-      });
-    }
-  } catch(e) { /* silencioso, no bloquea al usuario */ }
-}
+// registrarInicio definida arriba
 
 // ══════════════════════════════════════════
 // EXPORTAR CSV
