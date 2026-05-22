@@ -1145,71 +1145,60 @@ function iniciarVerificacion(){
   document.getElementById('spinnerCheck').style.display = 'block';
   ocultarWizard();
 
-  // Revisar caché primero para respuesta instantánea
+  // Usar fetch con caché para respuesta rápida
   var cacheKey = 'cap_check_' + codigo.toUpperCase();
   var cached = null;
   try { var r = localStorage.getItem(cacheKey); if(r) cached = JSON.parse(r); } catch(e){}
 
   if(cached && cached.ts && (Date.now() - cached.ts) < 3600000) {
-    // Usar caché si tiene menos de 1 hora
     document.getElementById('spinnerCheck').style.display = 'none';
     if(!cached.existe){ irAlInstrumento('pre'); }
     else if(cached.completadoPre){ verificarYMostrarPost(); }
     else { mostrarWizardPanel('wColision'); }
-    // Actualizar caché en segundo plano silenciosamente
-    _actualizarCacheCode(codigo);
+    // Actualizar caché en segundo plano
+    fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
+      .then(function(r){ return r.json(); })
+      .then(function(data){ try { localStorage.setItem(cacheKey, JSON.stringify(Object.assign({}, data, {ts: Date.now()}))); } catch(e){} })
+      .catch(function(){});
     return;
   }
 
-  // Sin caché → consultar Apps Script con timeout corto
-  const cbName = '_cb_ver_' + Date.now();
-  const timeout = setTimeout(function(){
-    limpiarCb(cbName);
+  // Sin caché → fetch directo
+  var fetchTimeout = setTimeout(function(){
     document.getElementById('spinnerCheck').style.display = 'none';
-    // Si timeout → asumir código nuevo y dejar pasar al pre-test
+    desbloquearInput();
     irAlInstrumento('pre');
-  }, 3000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    document.getElementById('spinnerCheck').style.display = 'none';
-    // Guardar en caché
-    try { localStorage.setItem(cacheKey, JSON.stringify({...data, ts: Date.now()})); } catch(e){}
-    if(!data.existe){ irAlInstrumento('pre'); }
-    else if(data.completadoPre){ verificarYMostrarPost(); }
-    else { mostrarWizardPanel('wColision'); }
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); desbloquearInput(); irAlInstrumento('pre'); };
-  document.head.appendChild(s);
-}
+  }, 6000);
 
-function _actualizarCacheCode(codigo){
-  var cacheKey = 'cap_check_' + codigo.toUpperCase();
-  var cb = '_cb_bg_' + Date.now();
-  window[cb] = function(data){
-    try { delete window[cb]; } catch(e){}
-    try { localStorage.setItem(cacheKey, JSON.stringify({...data, ts: Date.now()})); } catch(e){}
-  };
-  var s = document.createElement('script');
-  s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cb + '&t=' + Date.now();
-  s.onerror = function(){ try { delete window[cb]; } catch(e){} s.remove(); };
-  document.head.appendChild(s);
+  fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      clearTimeout(fetchTimeout);
+      document.getElementById('spinnerCheck').style.display = 'none';
+      try { localStorage.setItem(cacheKey, JSON.stringify(Object.assign({}, data, {ts: Date.now()}))); } catch(e){}
+      if(!data.existe){ irAlInstrumento('pre'); }
+      else if(data.completadoPre){ verificarYMostrarPost(); }
+      else { mostrarWizardPanel('wColision'); }
+    })
+    .catch(function(){
+      clearTimeout(fetchTimeout);
+      document.getElementById('spinnerCheck').style.display = 'none';
+      desbloquearInput();
+      irAlInstrumento('pre');
+    });
 }
 
 function verificarYMostrarPost(){
   mostrarWizardPanel('wSpinnerPost');
-  const cbName = '_cb_cfg_' + Date.now();
-  const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 3000);
-  window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
-    const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-    mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
-  document.head.appendChild(s);
+  var t = setTimeout(function(){ mostrarWizardPanel('wPostEspera'); }, 6000);
+  fetch(API_URL + '?action=getConfig')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      clearTimeout(t);
+      var hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
+      mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
+    })
+    .catch(function(){ clearTimeout(t); mostrarWizardPanel('wPostEspera'); });
 }
 
 function respuestaPretest(yaHizo){
