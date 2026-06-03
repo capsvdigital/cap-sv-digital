@@ -1149,11 +1149,9 @@ function iniciarVerificacion(){
   var cacheKey = 'cap_chk_' + codigo;
   try {
     var cached = JSON.parse(localStorage.getItem(cacheKey)||'null');
-    if(cached && cached.ts && (Date.now()-cached.ts) < 3600000){
+    if(cached && cached.ts && (Date.now()-cached.ts) < 1800000){ // 30 min caché
       document.getElementById('spinnerCheck').style.display = 'none';
-      if(!cached.existe){ irAlInstrumento('pre'); }
-      else if(cached.completadoPre){ verificarYMostrarPost(); }
-      else { mostrarWizardPanel('wColision'); }
+      procesarRespuestaCodigo(cached);
       // Actualizar caché en background
       fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
         .then(function(r){return r.json();})
@@ -1163,24 +1161,35 @@ function iniciarVerificacion(){
     }
   } catch(e){}
 
-  // Retry con backoff exponencial (1s, 2s, 4s) — protege contra señal inestable
   fetchConRetry(
     API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo),
-    3,  // máximo 3 intentos
+    3,
     function(data){
       document.getElementById('spinnerCheck').style.display = 'none';
       try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
-      if(!data.existe){ irAlInstrumento('pre'); }
-      else if(data.completadoPre){ verificarYMostrarPost(); }
-      else { mostrarWizardPanel('wColision'); }
+      procesarRespuestaCodigo(data);
     },
     function(){
-      // Todos los intentos fallaron → pre-test como fallback seguro
       document.getElementById('spinnerCheck').style.display = 'none';
       desbloquearInput();
+      // Si falla la verificación → ir al pre-test directamente
       irAlInstrumento('pre');
     }
   );
+}
+
+// Lógica central del wizard — separada para claridad
+function procesarRespuestaCodigo(data){
+  if(!data.existe){
+    // Código nuevo → pre-test directo, sin preguntas
+    irAlInstrumento('pre');
+  } else if(data.completadoPre){
+    // Ya completó pre-test → verificar si post está habilitado
+    verificarYMostrarPost();
+  } else {
+    // Existe pero no completó pre-test → posible colisión de código
+    mostrarWizardPanel('wColision');
+  }
 }
 
 function verificarYMostrarPost(){
@@ -1199,6 +1208,7 @@ function verificarYMostrarPost(){
 }
 
 function respuestaPretest(yaHizo){
+  // Mantenida por compatibilidad con wPregunta
   if(yaHizo){ verificarYMostrarPost(); }
   else { mostrarWizardPanel('wColision'); }
 }
