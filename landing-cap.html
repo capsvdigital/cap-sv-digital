@@ -1163,46 +1163,39 @@ function iniciarVerificacion(){
     }
   } catch(e){}
 
-  // Sin caché: fetch con timeout 15s (Apps Script tarda 8-12s en cold start)
-  var t0 = Date.now();
-  var tid = setTimeout(function(){
-    console.warn('[CAP] timeout tras', Date.now()-t0, 'ms');
-    document.getElementById('spinnerCheck').style.display = 'none';
-    desbloquearInput();
-    irAlInstrumento('pre');
-  }, 15000);
-
-  fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      clearTimeout(tid);
-      console.log('[CAP] checkCodigo OK en', Date.now()-t0, 'ms', data);
+  // Retry con backoff exponencial (1s, 2s, 4s) — protege contra señal inestable
+  fetchConRetry(
+    API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo),
+    3,  // máximo 3 intentos
+    function(data){
       document.getElementById('spinnerCheck').style.display = 'none';
       try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
       if(!data.existe){ irAlInstrumento('pre'); }
       else if(data.completadoPre){ verificarYMostrarPost(); }
       else { mostrarWizardPanel('wColision'); }
-    })
-    .catch(function(err){
-      clearTimeout(tid);
-      console.error('[CAP] error:', err);
+    },
+    function(){
+      // Todos los intentos fallaron → pre-test como fallback seguro
       document.getElementById('spinnerCheck').style.display = 'none';
       desbloquearInput();
       irAlInstrumento('pre');
-    });
+    }
+  );
 }
 
 function verificarYMostrarPost(){
   mostrarWizardPanel('wSpinnerPost');
-  var t = setTimeout(function(){ mostrarWizardPanel('wPostEspera'); }, 12000);
-  fetch(API_URL + '?action=getConfig')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      clearTimeout(t);
+  fetchConRetry(
+    API_URL + '?action=getConfig',
+    3,
+    function(data){
       var hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
       mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-    })
-    .catch(function(){ clearTimeout(t); mostrarWizardPanel('wPostEspera'); });
+    },
+    function(){
+      mostrarWizardPanel('wPostEspera');
+    }
+  );
 }
 
 function respuestaPretest(yaHizo){
@@ -1357,6 +1350,59 @@ function descargarQR(){
     update();
   }, 4000);
 })();
+
+
+// ── FETCH CON RETRY Y BACKOFF EXPONENCIAL ──────────────────
+// Intenta la petición hasta maxIntentos veces.
+// Entre cada intento espera: 1s, 2s, 4s (backoff exponencial).
+// onSuccess(data) se llama con los datos parseados.
+// onFail() se llama si todos los intentos fallaron.
+function fetchConRetry(url, maxIntentos, onSuccess, onFail){
+  var intento = 0;
+
+  function intentar(){
+    intento++;
+    console.log('[CAP] fetch intento', intento, 'de', maxIntentos);
+
+    var tid = setTimeout(function(){
+      // Timeout individual por intento: 12 segundos
+      console.warn('[CAP] intento', intento, 'timeout');
+      if(intento < maxIntentos){
+        var espera = Math.pow(2, intento - 1) * 1000; // 1s, 2s, 4s
+        console.log('[CAP] reintentando en', espera, 'ms');
+        setTimeout(intentar, espera);
+      } else {
+        console.error('[CAP] todos los intentos fallaron');
+        onFail();
+      }
+    }, 12000);
+
+    fetch(url)
+      .then(function(r){
+        if(!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(data){
+        clearTimeout(tid);
+        console.log('[CAP] fetch OK en intento', intento);
+        onSuccess(data);
+      })
+      .catch(function(err){
+        clearTimeout(tid);
+        console.warn('[CAP] intento', intento, 'falló:', err.message);
+        if(intento < maxIntentos){
+          var espera = Math.pow(2, intento - 1) * 1000;
+          console.log('[CAP] reintentando en', espera, 'ms');
+          setTimeout(intentar, espera);
+        } else {
+          console.error('[CAP] todos los intentos fallaron');
+          onFail();
+        }
+      });
+  }
+
+  intentar();
+}
 
 function limpiarCb(name){
   try { delete window[name]; } catch(e){}
