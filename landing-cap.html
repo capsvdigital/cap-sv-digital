@@ -1120,7 +1120,7 @@ body{
 </div>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbws-sxtqJ2bLGHn9UNggJdHPCYKUfjGwyKU5oeq-RUCacUlwv53LWQ2MZTwi40JlQVo/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzI5Ultiybzol3RiytllbSJCd6m2eSX51xe-BFq6d9lp9yPq8aDZ1dwVQLiXT1wTwR5/exec';
 
 function validateCode(){
   const val = document.getElementById('codigoInput').value;
@@ -1145,43 +1145,47 @@ function iniciarVerificacion(){
   document.getElementById('spinnerCheck').style.display = 'block';
   ocultarWizard();
 
-  // Usar fetch con caché para respuesta rápida
-  var cacheKey = 'cap_check_' + codigo.toUpperCase();
-  var cached = null;
-  try { var r = localStorage.getItem(cacheKey); if(r) cached = JSON.parse(r); } catch(e){}
+  // Caché para respuesta instantánea en visitas repetidas
+  var cacheKey = 'cap_chk_' + codigo;
+  try {
+    var cached = JSON.parse(localStorage.getItem(cacheKey)||'null');
+    if(cached && cached.ts && (Date.now()-cached.ts) < 3600000){
+      document.getElementById('spinnerCheck').style.display = 'none';
+      if(!cached.existe){ irAlInstrumento('pre'); }
+      else if(cached.completadoPre){ verificarYMostrarPost(); }
+      else { mostrarWizardPanel('wColision'); }
+      // Actualizar caché en background
+      fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
+        .then(function(r){return r.json();})
+        .then(function(d){localStorage.setItem(cacheKey,JSON.stringify(Object.assign({},d,{ts:Date.now()})));})
+        .catch(function(){});
+      return;
+    }
+  } catch(e){}
 
-  if(cached && cached.ts && (Date.now() - cached.ts) < 3600000) {
-    document.getElementById('spinnerCheck').style.display = 'none';
-    if(!cached.existe){ irAlInstrumento('pre'); }
-    else if(cached.completadoPre){ verificarYMostrarPost(); }
-    else { mostrarWizardPanel('wColision'); }
-    // Actualizar caché en segundo plano
-    fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
-      .then(function(r){ return r.json(); })
-      .then(function(data){ try { localStorage.setItem(cacheKey, JSON.stringify(Object.assign({}, data, {ts: Date.now()}))); } catch(e){} })
-      .catch(function(){});
-    return;
-  }
-
-  // Sin caché → fetch directo
-  var fetchTimeout = setTimeout(function(){
+  // Sin caché: fetch con timeout 15s (Apps Script tarda 8-12s en cold start)
+  var t0 = Date.now();
+  var tid = setTimeout(function(){
+    console.warn('[CAP] timeout tras', Date.now()-t0, 'ms');
     document.getElementById('spinnerCheck').style.display = 'none';
     desbloquearInput();
     irAlInstrumento('pre');
-  }, 6000);
+  }, 15000);
 
   fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
     .then(function(r){ return r.json(); })
     .then(function(data){
-      clearTimeout(fetchTimeout);
+      clearTimeout(tid);
+      console.log('[CAP] checkCodigo OK en', Date.now()-t0, 'ms', data);
       document.getElementById('spinnerCheck').style.display = 'none';
-      try { localStorage.setItem(cacheKey, JSON.stringify(Object.assign({}, data, {ts: Date.now()}))); } catch(e){}
+      try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
       if(!data.existe){ irAlInstrumento('pre'); }
       else if(data.completadoPre){ verificarYMostrarPost(); }
       else { mostrarWizardPanel('wColision'); }
     })
-    .catch(function(){
-      clearTimeout(fetchTimeout);
+    .catch(function(err){
+      clearTimeout(tid);
+      console.error('[CAP] error:', err);
       document.getElementById('spinnerCheck').style.display = 'none';
       desbloquearInput();
       irAlInstrumento('pre');
@@ -1190,7 +1194,7 @@ function iniciarVerificacion(){
 
 function verificarYMostrarPost(){
   mostrarWizardPanel('wSpinnerPost');
-  var t = setTimeout(function(){ mostrarWizardPanel('wPostEspera'); }, 6000);
+  var t = setTimeout(function(){ mostrarWizardPanel('wPostEspera'); }, 12000);
   fetch(API_URL + '?action=getConfig')
     .then(function(r){ return r.json(); })
     .then(function(data){
@@ -1202,23 +1206,8 @@ function verificarYMostrarPost(){
 }
 
 function respuestaPretest(yaHizo){
-  if(yaHizo){
-    mostrarWizardPanel('wSpinnerPost');
-    // Verificar config desde Apps Script
-    const cbName = '_cb_cfg_' + Date.now();
-    const timeout = setTimeout(function(){ limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); }, 3000);
-    window[cbName] = function(data){
-      clearTimeout(timeout); limpiarCb(cbName);
-      const hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-      mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-    };
-    const s = document.createElement('script');
-    s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-    s.onerror = function(){ clearTimeout(timeout); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
-    document.head.appendChild(s);
-  } else {
-    mostrarWizardPanel('wColision');
-  }
+  if(yaHizo){ verificarYMostrarPost(); }
+  else { mostrarWizardPanel('wColision'); }
 }
 
 function irAlInstrumento(modo){
@@ -1369,8 +1358,10 @@ function descargarQR(){
   }, 4000);
 })();
 
+function limpiarCb(name){
   try { delete window[name]; } catch(e){}
   document.querySelectorAll('script[src*="' + name + '"]').forEach(function(s){ s.remove(); });
+}
 
 
 function imprimirPretest(){
@@ -1384,23 +1375,34 @@ function imprimirPretest(){
   var timeout = setTimeout(function(){
     limpiarCb(cbName);
     btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
-    alert('No se pudo conectar. Verifique su conexión e intente nuevamente.');
+    alert('No se pudo conectar a la base de datos. Verifique su conexión e intente nuevamente.');
   }, 8000);
+
   window[cbName] = function(data){
-    clearTimeout(timeout); limpiarCb(cbName);
+    clearTimeout(timeout);
+    limpiarCb(cbName);
     btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
+
     var lista = data.pre || [];
-    var registro = lista.find(function(r){ return (r.codigo||'').toUpperCase() === codigo.toUpperCase(); });
+    var registro = null;
+    lista.forEach(function(r){
+      var cod = ((r.codigo || r['c_digo'] || r['código'] || '') + '').trim().toUpperCase();
+      if(cod === codigo.toUpperCase()) registro = r;
+    });
+
     if(!registro){
       alert('No se encontraron datos del pre-test para este código. Si acaba de enviar, espere unos segundos e intente de nuevo.');
       return;
     }
+
     abrirVentanaImpresion(codigo, registro);
   };
+
   var s = document.createElement('script');
-  s.src = API_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
+  s.src = SHEETS_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
   s.onerror = function(){
-    clearTimeout(timeout); limpiarCb(cbName);
+    clearTimeout(timeout);
+    limpiarCb(cbName);
     btns.forEach(function(b){ b.innerHTML = '<i class="fas fa-print"></i> Imprimir Pre-test'; b.disabled = false; });
     alert('Error de conexión. Intente nuevamente.');
   };
@@ -1500,6 +1502,39 @@ function abrirVentanaImpresion(codigo, r){
     +'<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt></body></html>');
   w.document.close();
 }
+</script>
+<!-- Al final del body, antes de </body> -->
+<script src="database.js"></script>
+<script>
+    // Tu código existente del landing-cap.html
+    // Pero REEMPLAZA las funciones de verificación con estas:
+    
+    async function iniciarVerificacion() {
+        const codigo = document.getElementById('codigoInput').value;
+        if (!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
+        
+        document.getElementById('codigoInput').disabled = true;
+        document.getElementById('btnStart').style.display = 'none';
+        document.getElementById('spinnerCheck').style.display = 'block';
+        
+        try {
+            const existe = await verificarCodigo(codigo);
+            
+            document.getElementById('spinnerCheck').style.display = 'none';
+            
+            if (existe) {
+                mostrarWizardPanel('wPregunta');
+            } else {
+                irAlInstrumento('pre');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('spinnerCheck').style.display = 'none';
+            irAlInstrumento('pre');
+        }
+    }
+    
+    // El resto de tu código del landing-cap.html sigue igual...
 </script>
 </body>
 </html>
