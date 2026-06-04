@@ -1145,37 +1145,75 @@ function iniciarVerificacion(){
   document.getElementById('spinnerCheck').style.display = 'block';
   ocultarWizard();
 
-  // Caché para respuesta instantánea en visitas repetidas
+  // Revisar caché local primero (30 min)
   var cacheKey = 'cap_chk_' + codigo;
   try {
     var cached = JSON.parse(localStorage.getItem(cacheKey)||'null');
-    if(cached && cached.ts && (Date.now()-cached.ts) < 1800000){ // 30 min caché
+    if(cached && cached.ts && (Date.now()-cached.ts) < 1800000){
       document.getElementById('spinnerCheck').style.display = 'none';
       procesarRespuestaCodigo(cached);
-      // Actualizar caché en background
-      fetch(API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo))
-        .then(function(r){return r.json();})
-        .then(function(d){localStorage.setItem(cacheKey,JSON.stringify(Object.assign({},d,{ts:Date.now()})));})
-        .catch(function(){});
+      // Actualizar caché en background con JSONP
+      var cbBg = '_cb_bg_' + Date.now();
+      window[cbBg] = function(d){
+        limpiarCb(cbBg);
+        try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},d,{ts:Date.now()}))); }catch(e){}
+      };
+      var sBg = document.createElement('script');
+      sBg.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbBg + '&t=' + Date.now();
+      sBg.onerror = function(){ limpiarCb(cbBg); sBg.remove(); };
+      document.head.appendChild(sBg);
       return;
     }
   } catch(e){}
 
-  fetchConRetry(
-    API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo),
-    3,
-    function(data){
+  // Sin caché — JSONP con timeout 15s
+  var cbName = '_cb_ver_' + Date.now();
+  var tid = setTimeout(function(){
+    console.warn('[CAP] timeout — reintentando...');
+    limpiarCb(cbName);
+    // Reintento 1
+    var cbR = '_cb_retry_' + Date.now();
+    var tid2 = setTimeout(function(){
+      console.warn('[CAP] reintento también falló — fallback pre-test');
+      limpiarCb(cbR);
+      document.getElementById('spinnerCheck').style.display = 'none';
+      desbloquearInput();
+      irAlInstrumento('pre');
+    }, 12000);
+    window[cbR] = function(data){
+      clearTimeout(tid2);
+      limpiarCb(cbR);
+      console.log('[CAP] reintento OK', data);
       document.getElementById('spinnerCheck').style.display = 'none';
       try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
       procesarRespuestaCodigo(data);
-    },
-    function(){
-      document.getElementById('spinnerCheck').style.display = 'none';
-      desbloquearInput();
-      // Si falla la verificación → ir al pre-test directamente
-      irAlInstrumento('pre');
-    }
-  );
+    };
+    var sR = document.createElement('script');
+    sR.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbR + '&t=' + Date.now();
+    sR.onerror = function(){ clearTimeout(tid2); limpiarCb(cbR); document.getElementById('spinnerCheck').style.display='none'; desbloquearInput(); irAlInstrumento('pre'); };
+    document.head.appendChild(sR);
+  }, 15000);
+
+  window[cbName] = function(data){
+    clearTimeout(tid);
+    limpiarCb(cbName);
+    console.log('[CAP] checkCodigo OK', data);
+    document.getElementById('spinnerCheck').style.display = 'none';
+    try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
+    procesarRespuestaCodigo(data);
+  };
+
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){
+    clearTimeout(tid);
+    limpiarCb(cbName);
+    console.error('[CAP] script error');
+    document.getElementById('spinnerCheck').style.display = 'none';
+    desbloquearInput();
+    irAlInstrumento('pre');
+  };
+  document.head.appendChild(s);
 }
 
 // Lógica central del wizard — separada para claridad
@@ -1194,17 +1232,21 @@ function procesarRespuestaCodigo(data){
 
 function verificarYMostrarPost(){
   mostrarWizardPanel('wSpinnerPost');
-  fetchConRetry(
-    API_URL + '?action=getConfig',
-    3,
-    function(data){
-      var hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-      mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
-    },
-    function(){
-      mostrarWizardPanel('wPostEspera');
-    }
-  );
+  var cbName = '_cb_cfg_' + Date.now();
+  var tid = setTimeout(function(){
+    limpiarCb(cbName);
+    mostrarWizardPanel('wPostEspera');
+  }, 12000);
+  window[cbName] = function(data){
+    clearTimeout(tid);
+    limpiarCb(cbName);
+    var hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
+    mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
+  };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(tid); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
+  document.head.appendChild(s);
 }
 
 function respuestaPretest(yaHizo){
