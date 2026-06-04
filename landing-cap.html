@@ -1120,7 +1120,7 @@ body{
 </div>
 
 <script>
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzI5Ultiybzol3RiytllbSJCd6m2eSX51xe-BFq6d9lp9yPq8aDZ1dwVQLiXT1wTwR5/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbws-sxtqJ2bLGHn9UNggJdHPCYKUfjGwyKU5oeq-RUCacUlwv53LWQ2MZTwi40JlQVo/exec';
 
 function validateCode(){
   const val = document.getElementById('codigoInput').value;
@@ -1455,7 +1455,7 @@ function imprimirPretest(){
   };
 
   var s = document.createElement('script');
-  s.src = SHEETS_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
+  s.src = API_URL + '?action=getData&callback=' + cbName + '&t=' + Date.now();
   s.onerror = function(){
     clearTimeout(timeout);
     limpiarCb(cbName);
@@ -1560,37 +1560,5 @@ function abrirVentanaImpresion(codigo, r){
 }
 </script>
 <!-- Al final del body, antes de </body> -->
-<script src="database.js"></script>
-<script>
-    // Tu código existente del landing-cap.html
-    // Pero REEMPLAZA las funciones de verificación con estas:
-    
-    async function iniciarVerificacion() {
-        const codigo = document.getElementById('codigoInput').value;
-        if (!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
-        
-        document.getElementById('codigoInput').disabled = true;
-        document.getElementById('btnStart').style.display = 'none';
-        document.getElementById('spinnerCheck').style.display = 'block';
-        
-        try {
-            const existe = await verificarCodigo(codigo);
-            
-            document.getElementById('spinnerCheck').style.display = 'none';
-            
-            if (existe) {
-                mostrarWizardPanel('wPregunta');
-            } else {
-                irAlInstrumento('pre');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('spinnerCheck').style.display = 'none';
-            irAlInstrumento('pre');
-        }
-    }
-    
-    // El resto de tu código del landing-cap.html sigue igual...
-</script>
 </body>
 </html>
