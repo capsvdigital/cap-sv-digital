@@ -794,23 +794,58 @@ function enviarAGoogleSheets(scoreC) {
   datos.nivel_conocimientos = scoreC>=9?'Excelente':scoreC>=7?'Bueno':scoreC>=5?'Regular':'Bajo';
   datos.completado = 'SI';
 
-  fetch(API_URL + '?action=guardar&codigo=' + encodeURIComponent(codigo)
-      + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(datos)))
-    .then(function(r){ return r.json(); })
-    .then(function(r){
+  // Enviar con hasta 3 reintentos para garantizar que completado=SI llegue a Sheets
+  var intentos = 0;
+  var maxIntentos = 3;
+
+  function intentarEnvio(){
+    intentos++;
+    console.log('[CAP] post enviando intento', intentos);
+    var cb = '_cb_env_' + Date.now();
+    var tid = setTimeout(function(){
+      limpiarCb(cb);
+      if(intentos < maxIntentos){
+        setTimeout(intentarEnvio, 2000);
+      } else {
+        mostrarSync('💾 Guardado local');
+      }
+    }, 12000);
+
+    window[cb] = function(r){
+      clearTimeout(tid);
+      limpiarCb(cb);
       if(r && r.ok){
         mostrarSync('✅ Enviado');
         try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
       } else {
-        mostrarSync('💾 Guardado local');
+        if(intentos < maxIntentos){ setTimeout(intentarEnvio, 2000); }
+        else { mostrarSync('💾 Guardado local'); }
       }
-    })
-    .catch(function(){ mostrarSync('💾 Guardado local'); });
+    };
+
+    var s = document.createElement('script');
+    s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(codigo)
+          + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(datos))
+          + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function(){
+      clearTimeout(tid); limpiarCb(cb); s.remove();
+      if(intentos < maxIntentos){ setTimeout(intentarEnvio, 2000); }
+      else { mostrarSync('💾 Guardado local'); }
+    };
+    document.head.appendChild(s);
+  }
+
+  intentarEnvio();
 }
 
 function registrarInicio(codigo) {
-  fetch(API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo.toUpperCase()) + '&modo=post')
-    .catch(function(){});
+  var cb = '_cb_reg_' + Date.now();
+  window[cb] = function(){ try{ delete window[cb]; }catch(e){} };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo.toUpperCase())
+        + '&modo=post&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function(){ try{ delete window[cb]; }catch(e){} s.remove(); };
+  document.head.appendChild(s);
 }
 
 // ── GUARDAR PROGRESO ──
@@ -839,11 +874,18 @@ function guardarProgreso() {
       try { delete window[cb]; } catch(e) {}
       mostrarSync(r && r.ok ? '✓ Guardado' : '💾 Local');
     };
-    fetch(API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
-          + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(payload)))
-      .then(function(r){ return r.json(); })
-      .then(function(r){ mostrarSync(r && r.ok ? '✓ Guardado' : '💾 Local'); })
-      .catch(function(){ mostrarSync('💾 Local'); });
+    var cb2 = '_cb_save_' + Date.now();
+    var tid2 = setTimeout(function(){ limpiarCb(cb2); mostrarSync('💾 Local'); }, 12000);
+    window[cb2] = function(r){
+      clearTimeout(tid2); limpiarCb(cb2);
+      mostrarSync(r && r.ok ? '✓ Guardado' : '💾 Local');
+    };
+    var s2 = document.createElement('script');
+    s2.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
+          + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(payload))
+          + '&callback=' + cb2 + '&t=' + Date.now();
+    s2.onerror = function(){ clearTimeout(tid2); limpiarCb(cb2); s2.remove(); mostrarSync('💾 Local'); };
+    document.head.appendChild(s2);
   }, 1500);
 }
 let _syncEl = null;
