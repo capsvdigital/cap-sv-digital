@@ -806,7 +806,7 @@ body{
       <p class="code-hint"><i class="fas fa-lock" style="color:var(--green);margin-right:4px"></i> Sus respuestas son completamente anónimas y se usan únicamente con fines académicos.</p>
 
       <div id="spinnerCheck" style="display:none;text-align:center;padding:14px 0;color:var(--gray);font-size:0.88rem;">
-        <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando código...
+        <i class="fas fa-spinner fa-spin" style="color:var(--purple);margin-right:8px;"></i> Verificando código... <span style="font-size:0.78rem;color:var(--gray);display:block;margin-top:4px;">Esto puede tomar hasta 15 segundos</span>
       </div>
 
       <button class="btn-start" id="btnStart" onclick="iniciarVerificacion()" disabled>
@@ -859,17 +859,21 @@ body{
             <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#92400e;margin-bottom:4px;">Post-test aún no disponible</p>
             <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">La segunda fase será habilitada por el investigador al finalizar la intervención educativa. Espera la indicación del equipo.</p>
           </div>
-          <button class="btn-start" id="btnImprimirPreEspera"
-            style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
-            onclick="imprimirPretest()">
-            <i class="fas fa-print"></i> Imprimir Pre-test
-          </button>
+
         </div>
 
         <div id="wColision" style="display:none;">
           <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;margin-bottom:14px;">
-            <p style="font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#92400e;margin-bottom:6px;"><i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>Código posiblemente duplicado</p>
-            <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">Otra persona podría tener el mismo código. Intenta con una variación — por ejemplo, usando la <strong>inicial de tu segundo nombre</strong> como la 2da letra, o tu <strong>segundo apellido</strong>.</p>
+            <div style="font-size:1.4rem;margin-bottom:8px;">🔍</div>
+            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#92400e;margin-bottom:10px;">Este código ya está en uso</p>
+            <p style="font-size:0.84rem;color:#b45309;line-height:1.6;margin-bottom:10px;">
+              <strong>¿Ya completaste el pre-test?</strong><br>
+              Si es así, tus datos ya están registrados. Espera a que se active el post-test.
+            </p>
+            <p style="font-size:0.84rem;color:#b45309;line-height:1.6;">
+              <strong>¿Es tu primera vez?</strong><br>
+              Este código ya está siendo usado por otra persona. Intenta con una variación — usa la <strong>inicial de tu segundo nombre</strong> o tu <strong>segundo apellido</strong>.
+            </p>
           </div>
           <button class="btn-start" onclick="resetWizard()">
             <i class="fas fa-redo"></i> Intentar con otro código
@@ -1109,7 +1113,7 @@ body{
       </div>
     </div>
 
-    <p class="inst-copyright">© 2025 CAP-SV-DIGITAL · Instrumento de Seguridad Vial para Motociclistas · Universidad de Oriente, Venezuela · Todos los derechos reservados para fines académicos.</p>
+    <p class="inst-copyright">© 2026 CAP-SV-DIGITAL · Instrumento de Seguridad Vial para Motociclistas · Universidad de Oriente, Venezuela · Todos los derechos reservados para fines académicos.</p>
     <p style="margin-top:12px;">
       <a href="admin-cap.html" style="font-size:0.72rem;color:rgba(255,255,255,0.2);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">
         <i class="fas fa-lock" style="margin-right:4px;font-size:0.65rem;"></i>Acceso Administrador
@@ -1524,7 +1528,7 @@ function abrirVentanaImpresion(codigo, r){
 
   var perfilHTML = perfilItems.map(function(x){
     return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[0] + '</td>'
-         + '<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[1] + 'NonNullCell</td></tr>';
+         + '<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">' + x[1] + '</td></tr>';
   }).join('');
 
   var vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
