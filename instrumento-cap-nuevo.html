@@ -1093,9 +1093,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
   updateProgress();
 
-  // Registrar inicio en Sheet.best inmediatamente
-  if (codigo) registrarInicio(codigo, modo);
-
   // Cargar progreso guardado si existe
   if (codigo) cargarProgresoInicial(codigo, modo);
 });
@@ -1386,13 +1383,8 @@ function submitForm() {
       <i class="fas fa-home"></i> Volver al menú
     </button>`;
 
-  // Enviar automáticamente si no fue enviado aún
-  verificarEnviadoEnSheets(function(yaEnv) {
-    if (!yaEnv) {
-      enviarAGoogleSheets(scoreC);
-      try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
-    }
-  });
+  // 🔥 GUARDAR EN LOCAL STORAGE (SIEMPRE) Y ENVIAR A SHEETS CON REINTENTOS
+  enviarConReintentos(scoreC);
 
   // Bloquear formulario completo — no se pueden cambiar respuestas
   bloquearFormulario();
@@ -1428,13 +1420,108 @@ function bloquearFormulario() {
 
 function enviarYExportar() {
   const scoreC = Object.keys(correctas).filter(k => vfAnswers[k] === correctas[k]).length;
-  enviarAGoogleSheets(scoreC);
-  // Marcar como enviado en localStorage
-  const skey = claveSent();
-  try { localStorage.setItem(skey, '1'); } catch(e) {}
+  enviarConReintentos(scoreC);
   // Cerrar modal automáticamente
   document.getElementById('resultModal').classList.remove('show');
   mostrarSync('✅ Enviado correctamente');
+}
+
+// 🔥 NUEVA FUNCIÓN: Guardar local + enviar con reintentos
+function enviarConReintentos(scoreC) {
+  var codigo = document.getElementById('codigoParticipante').value || '---';
+  var modo = sessionStorage.getItem('cap_modo') || 'pre';
+  var fecha = new Date().toISOString().slice(0,10);
+  var hora = new Date().toLocaleTimeString('es-VE');
+  var datos = recopilarRespuestas();
+  datos.codigo = codigo.toUpperCase();
+  datos.modo = modo;
+  datos.fecha = fecha;
+  datos.hora = hora;
+  datos.score_conocimientos = scoreC;
+  datos.nivel_conocimientos = scoreC >= 9 ? 'Excelente' : scoreC >= 7 ? 'Bueno' : scoreC >= 5 ? 'Regular' : 'Bajo';
+  datos.completado = 'SI';
+
+  // 🔥 PASO 1: GUARDAR EN LOCAL STORAGE (SIEMPRE)
+  try {
+    var respuestasGuardadas = JSON.parse(localStorage.getItem('cap_respuestas') || '[]');
+    // Buscar si ya existe este código para no duplicar
+    var existe = respuestasGuardadas.some(function(r) { 
+      return r.codigo === datos.codigo && r.modo === modo; 
+    });
+    if (!existe) {
+      respuestasGuardadas.push(datos);
+      localStorage.setItem('cap_respuestas', JSON.stringify(respuestasGuardadas));
+      console.log('✅ Datos guardados localmente');
+      mostrarSync('💾 Datos guardados');
+    } else {
+      // Actualizar registro existente
+      respuestasGuardadas = respuestasGuardadas.map(function(r) {
+        if (r.codigo === datos.codigo && r.modo === modo) {
+          return datos;
+        }
+        return r;
+      });
+      localStorage.setItem('cap_respuestas', JSON.stringify(respuestasGuardadas));
+      console.log('✅ Datos actualizados localmente');
+    }
+  } catch(e) {
+    console.warn('Error guardando local:', e);
+  }
+
+  // 🔥 PASO 2: INTENTAR ENVIAR A SHEETS (con reintentos)
+  enviarASheetsConReintentos(datos, 3);
+}
+
+function enviarASheetsConReintentos(datos, intentosRestantes) {
+  var codigo = datos.codigo;
+  var modo = datos.modo;
+  
+  var cb = '_cb_env_' + Date.now();
+  var timeout = setTimeout(function() {
+    limpiarCb(cb);
+    if (intentosRestantes > 0) {
+      console.log('⏳ Reintentando envío a Sheets... (' + (intentosRestantes-1) + ' intentos restantes)');
+      setTimeout(function() { enviarASheetsConReintentos(datos, intentosRestantes - 1); }, 3000);
+    } else {
+      console.warn('⚠️ No se pudo enviar a Sheets, pero los datos están guardados localmente.');
+      mostrarSync('💾 Guardado local (sin conexión)');
+    }
+  }, 15000);
+
+  window[cb] = function(respuesta) {
+    clearTimeout(timeout);
+    limpiarCb(cb);
+    if (respuesta && respuesta.ok) {
+      console.log('✅ Datos enviados a Sheets correctamente');
+      mostrarSync('✅ Enviado a Sheets');
+    } else {
+      if (intentosRestantes > 0) {
+        console.log('⏳ Reintentando envío a Sheets... (' + (intentosRestantes-1) + ' intentos restantes)');
+        setTimeout(function() { enviarASheetsConReintentos(datos, intentosRestantes - 1); }, 3000);
+      } else {
+        console.warn('⚠️ No se pudo enviar a Sheets');
+        mostrarSync('💾 Guardado local');
+      }
+    }
+  };
+
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(codigo)
+        + '&modo=' + encodeURIComponent(modo)
+        + '&datos=' + encodeURIComponent(JSON.stringify(datos))
+        + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() {
+    clearTimeout(timeout);
+    limpiarCb(cb);
+    s.remove();
+    if (intentosRestantes > 0) {
+      console.log('⏳ Error de conexión, reintentando...');
+      setTimeout(function() { enviarASheetsConReintentos(datos, intentosRestantes - 1); }, 3000);
+    } else {
+      mostrarSync('💾 Guardado local');
+    }
+  };
+  document.head.appendChild(s);
 }
 
 function verificarEnviadoEnSheets(callback) {
@@ -1623,80 +1710,6 @@ function restaurar(datos) {
   if (fw) fw.insertAdjacentElement('afterbegin', banner);
   setTimeout(() => { if (banner.parentNode) banner.remove(); }, 6000);
 }
-
-// ══════════════════════════════════════════
-// ENVIAR A SHEETS
-// ══════════════════════════════════════════
-function enviarAGoogleSheets(scoreC) {
-  const codigo = (document.getElementById('codigoParticipante').value || '---').toUpperCase();
-  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
-  const fecha  = new Date().toISOString().slice(0,10);
-  const hora   = new Date().toLocaleTimeString('es-VE');
-  const datos  = recopilarRespuestas();
-  datos.codigo = codigo; datos.modo = modo;
-  datos.fecha  = fecha;  datos.hora = hora;
-  datos.score_conocimientos = scoreC;
-  datos.nivel_conocimientos = scoreC >= 9 ? 'Excelente' : scoreC >= 7 ? 'Bueno' : scoreC >= 5 ? 'Regular' : 'Bajo';
-  datos.completado = 'SI';
-
-  // Enviar con hasta 3 reintentos para garantizar que completado=SI llegue a Sheets
-  var intentos = 0;
-  var maxIntentos = 3;
-
-  function intentarEnvio(){
-    intentos++;
-    console.log('[CAP] enviando intento', intentos);
-    var cb = '_cb_env_' + Date.now();
-    var tid = setTimeout(function(){
-      limpiarCb(cb);
-      if(intentos < maxIntentos){
-        console.warn('[CAP] timeout envío, reintentando...');
-        setTimeout(intentarEnvio, 2000);
-      } else {
-        console.error('[CAP] envío fallido después de', maxIntentos, 'intentos');
-        mostrarSync('💾 Guardado local');
-      }
-    }, 12000);
-
-    window[cb] = function(r){
-      clearTimeout(tid);
-      limpiarCb(cb);
-      if(r && r.ok){
-        console.log('[CAP] enviado correctamente en intento', intentos);
-        mostrarSync('✅ Enviado');
-        try { localStorage.setItem(claveSent(), '1'); } catch(e) {}
-      } else {
-        if(intentos < maxIntentos){
-          console.warn('[CAP] respuesta no ok, reintentando...');
-          setTimeout(intentarEnvio, 2000);
-        } else {
-          mostrarSync('💾 Guardado local');
-        }
-      }
-    };
-
-    var s = document.createElement('script');
-    s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(codigo)
-          + '&modo=' + encodeURIComponent(modo)
-          + '&datos=' + encodeURIComponent(JSON.stringify(datos))
-          + '&callback=' + cb + '&t=' + Date.now();
-    s.onerror = function(){
-      clearTimeout(tid);
-      limpiarCb(cb);
-      s.remove();
-      if(intentos < maxIntentos){
-        setTimeout(intentarEnvio, 2000);
-      } else {
-        mostrarSync('💾 Guardado local');
-      }
-    };
-    document.head.appendChild(s);
-  }
-
-  intentarEnvio();
-}
-
-// registrarInicio definida arriba
 
 // ══════════════════════════════════════════
 // EXPORTAR CSV
