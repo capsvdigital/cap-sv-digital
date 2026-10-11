@@ -2,7 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5b6ceb">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="app-version" content="2026-10-10-m2">
 <title>Admin · CAP-SV-DIGITAL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,6 +150,25 @@ body{font-family:var(--font-b);background:var(--darker);color:var(--text);min-he
 .delta-negative{color:#e17055;font-weight:700;}
 .delta-neutral{color:var(--muted);}
 </style>
+<style id="mobile-opt">
+/* ── Optimización móvil CAP-SV-DIGITAL ── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{min-height:100vh;min-height:100dvh;-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+a,button,label,select,input,textarea,.opt-label,.likert-opt{touch-action:manipulation;}
+img,canvas,svg,video,iframe{max-width:100%;}
+table{max-width:100%;}
+@media(max-width:600px){
+  /* 16px evita el zoom automático de iOS al tocar un campo */
+  input[type="text"],input[type="number"],input[type="tel"],input[type="email"],
+  input[type="password"],input[type="search"],input:not([type]),select,textarea{font-size:16px!important;}
+  input[type="radio"],input[type="checkbox"]{min-width:22px;min-height:22px;}
+  .opt-label{min-height:48px;}
+  .likert-opt{min-height:56px;}
+  button,.btn-action,.btn-primary,.btn-ghost{min-height:46px;}
+  body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom));}
+}
+@media(max-width:380px){ body{font-size:14px;} }
+</style>
 </head>
 <body>
 
@@ -179,6 +205,9 @@ body{font-family:var(--font-b);background:var(--darker);color:var(--text);min-he
     <div class="topbar-actions">
       <button class="tb-btn tb-btn-green" id="btnActualizar" onclick="cargarDesdeSheets()">
         <i class="fas fa-sync-alt"></i> Actualizar
+      </button>
+      <button class="tb-btn tb-btn-ghost" id="btnSyncLocales" onclick="sincronizarPendientesSheets()" title="Subir respuestas guardadas localmente hacia Google Sheets">
+        <i class="fas fa-cloud-upload-alt"></i> Sincronizar
       </button>
       <button class="tb-btn tb-btn-sheets" onclick="window.open(SHEETS_LINK,'_blank')">
         <i class="fas fa-table"></i> Ver Sheets
@@ -356,8 +385,9 @@ function verificarClave(){
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminPanel').style.display  = 'block';
     sessionStorage.setItem('cap_admin','1');
-    const cachedHab2 = sessionStorage.getItem('cap_post_habilitado');
+    const cachedHab2 = sessionStorage.getItem('cap_post_habilitado') || localStorage.getItem('cap_post_habilitado');
     if(cachedHab2 !== null) actualizarBadgePost(cachedHab2 === 'true');
+    cargarDesdeSheets();
     setTimeout(verificarEstadoPost, 600);
   } else {
     const err = document.getElementById('loginError');
@@ -374,21 +404,24 @@ if(sessionStorage.getItem('cap_admin')==='1'){
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('adminPanel').style.display  = 'block';
   // Restaurar badge inmediatamente desde caché antes de consultar el script
-  const cachedHab = sessionStorage.getItem('cap_post_habilitado');
+  const cachedHab = sessionStorage.getItem('cap_post_habilitado') || localStorage.getItem('cap_post_habilitado');
   if(cachedHab !== null) actualizarBadgePost(cachedHab === 'true');
+  cargarDesdeSheets();
   setTimeout(verificarEstadoPost, 600);
 }
 
-// CARGAR DATOS
+// CARGAR DATOS (SHEETS + CONTINGENCIA LOCAL)
 function cargarDesdeSheets(){
   const btn = document.getElementById('btnActualizar');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
-  btn.disabled = true;
+  if (btn) {
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+    btn.disabled = true;
+  }
   const timeout = setTimeout(()=>{
-    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
-  }, 12000);
+    // Si falla o tarda más de 8s, recurrir a los datos locales
+    cargarDesdeLocal(true);
+  }, 8000);
+
   window._adminDataCallback = function(data){
     clearTimeout(timeout);
     datosPre = {}; datosPost = {};
@@ -402,27 +435,115 @@ function cargarDesdeSheets(){
       const s = parseInt(row.score_conocimientos||0);
       if(c) datosPost[c] = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
     });
+
+    // Combinar con respuestas guardadas localmente
+    fusionarConDatosLocales();
+
     const nPre = Object.keys(datosPre).length, nPost = Object.keys(datosPost).length;
-    btn.innerHTML = '<i class="fas fa-check"></i> ' + nPre + ' pre · ' + nPost + ' post';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+    if (btn) {
+      btn.innerHTML = '<i class="fas fa-check"></i> ' + nPre + ' pre · ' + nPost + ' post';
+      btn.disabled = false;
+      setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+    }
     actualizarUI();
     const nPreComp  = Object.values(datosPre).filter(r=>r.completado==='SI').length;
     const nPostComp = Object.values(datosPost).filter(r=>r.completado==='SI').length;
     if(nPreComp > 0 && nPostComp > 0) analizarDatos();
     const old = document.getElementById('_adminScript'); if(old) old.remove();
   };
+
   const old = document.getElementById('_adminScript'); if(old) old.remove();
   const s = document.createElement('script');
   s.id  = '_adminScript';
   s.src = API_URL + '?action=getData&callback=_adminDataCallback&t=' + Date.now();
   s.onerror = function(){
     clearTimeout(timeout);
-    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 3000);
+    cargarDesdeLocal(true);
   };
   document.head.appendChild(s);
+}
+
+function fusionarConDatosLocales(){
+  try {
+    var cods = JSON.parse(localStorage.getItem('cap_codigos_registrados') || '[]');
+    cods.forEach(function(c){
+      c = (c||'').trim().toUpperCase();
+      if(c && !datosPre[c]) {
+        datosPre[c] = { codigo: c, score: 0, completado: 'NO' };
+      }
+    });
+
+    var respuestas = JSON.parse(localStorage.getItem('cap_respuestas') || '[]');
+    respuestas.forEach(function(r){
+      var c = (r.codigo||'').trim().toUpperCase();
+      if(!c) return;
+      var s = parseInt(r.score_conocimientos||0);
+      var obj = { score: isNaN(s)?0:s, completado: r.completado||'NO', ...r };
+      if(r.modo === 'post') {
+        if(!datosPost[c] || (datosPost[c].completado !== 'SI' && r.completado === 'SI')) {
+          datosPost[c] = obj;
+        }
+      } else {
+        if(!datosPre[c] || (datosPre[c].completado !== 'SI' && r.completado === 'SI')) {
+          datosPre[c] = obj;
+        }
+      }
+    });
+  } catch(e){}
+}
+
+function cargarDesdeLocal(esFallback){
+  datosPre = {}; datosPost = {};
+  fusionarConDatosLocales();
+  const nPre = Object.keys(datosPre).length, nPost = Object.keys(datosPost).length;
+  const btn = document.getElementById('btnActualizar');
+  if (btn) {
+    btn.innerHTML = (nPre > 0 || nPost > 0)
+      ? '<i class="fas fa-database"></i> ' + nPre + ' pre · ' + nPost + ' post (local)'
+      : '<i class="fas fa-exclamation-triangle"></i> Sin datos';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.innerHTML = '<i class="fas fa-sync-alt"></i> Actualizar'; }, 4000);
+  }
+  actualizarUI();
+  const nPreComp  = Object.values(datosPre).filter(r=>r.completado==='SI').length;
+  const nPostComp = Object.values(datosPost).filter(r=>r.completado==='SI').length;
+  if(nPreComp > 0 && nPostComp > 0) analizarDatos();
+}
+
+function sincronizarPendientesSheets(){
+  var respuestas = [];
+  try {
+    respuestas = JSON.parse(localStorage.getItem('cap_respuestas') || '[]');
+  } catch(e){}
+  if(!respuestas.length){
+    alert('No hay respuestas locales para sincronizar.');
+    return;
+  }
+  var btn = document.getElementById('btnSyncLocales');
+  if(btn) btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sincronizando...';
+
+  var enviados = 0;
+  respuestas.forEach(function(r, idx){
+    setTimeout(function(){
+      var cb = '_cb_sync_' + Date.now() + '_' + idx;
+      window[cb] = function(){ try{delete window[cb];}catch(e){} };
+      var s = document.createElement('script');
+      s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(r.codigo)
+            + '&modo=' + encodeURIComponent(r.modo || 'pre')
+            + '&datos=' + encodeURIComponent(JSON.stringify(r))
+            + '&callback=' + cb + '&t=' + Date.now();
+      s.onerror = function(){ try{delete window[cb];}catch(e){} s.remove(); };
+      document.head.appendChild(s);
+      enviados++;
+      if(enviados === respuestas.length && btn){
+        setTimeout(function(){
+          btn.innerHTML = '<i class="fas fa-check"></i> Sincronizados';
+          setTimeout(function(){ btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Sincronizar'; }, 3000);
+          cargarDesdeSheets();
+        }, 1500);
+      }
+    }, idx * 400);
+  });
 }
 
 // UI TIEMPO REAL
@@ -485,11 +606,19 @@ function filtrarTabla(){ poblarTabla(); }
 
 // POST-TEST TOGGLE
 function togglePostTest(habilitar){
+  actualizarBadgePost(habilitar);
   const msg = document.getElementById('toggleMsg');
   msg.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:8px;font-size:0.8rem;background:rgba(255,255,255,0.05);color:var(--muted);';
-  msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Aplicando...';
+  msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i> Guardando en Sheets...';
   const cb = '_cb_cfg_'+Date.now();
-  const to = setTimeout(()=>{ limpiarCb(cb); msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-triangle"></i> Error de conexión.'; }, 8000);
+  const to = setTimeout(()=>{
+    limpiarCb(cb);
+    msg.style.background = habilitar?'rgba(0,184,148,0.1)':'rgba(225,112,85,0.1)';
+    msg.style.color = habilitar?'#00b894':'#e17055';
+    msg.innerHTML = (habilitar ? '<i class="fas fa-check"></i> Post-test <strong>habilitado localmente</strong> (sin conexión a Sheets).' : '<i class="fas fa-lock"></i> Post-test <strong>bloqueado localmente</strong> (sin conexión a Sheets).');
+    setTimeout(()=>{ msg.style.display='none'; }, 4000);
+  }, 7000);
+
   window[cb] = function(data){
     clearTimeout(to); limpiarCb(cb);
     actualizarBadgePost(habilitar);
@@ -497,34 +626,52 @@ function togglePostTest(habilitar){
       msg.style.background = habilitar?'rgba(0,184,148,0.1)':'rgba(225,112,85,0.1)';
       msg.style.color = habilitar?'#00b894':'#e17055';
       msg.innerHTML = habilitar
-        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong>.'
-        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong>.';
-      setTimeout(()=>{ msg.style.display='none'; }, 5000);
+        ? '<i class="fas fa-check" style="margin-right:6px;"></i> Post-test <strong>habilitado</strong> en Sheets.'
+        : '<i class="fas fa-lock" style="margin-right:6px;"></i> Post-test <strong>bloqueado</strong> en Sheets.';
+      setTimeout(()=>{ msg.style.display='none'; }, 4000);
     } else {
-      msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-circle"></i> Error al guardar.';
+      msg.style.color='#e17055'; msg.innerHTML='<i class="fas fa-exclamation-circle"></i> Guardado solo local.';
     }
   };
   const s = document.createElement('script');
   s.src = API_URL+'?action=setConfig&clave=post_habilitado&valor='+(habilitar?'true':'false')+'&callback='+cb+'&t='+Date.now();
-  s.onerror = function(){ clearTimeout(to); limpiarCb(cb); msg.style.color='#e17055'; msg.innerHTML='Sin conexión.'; };
+  s.onerror = function(){
+    clearTimeout(to); limpiarCb(cb);
+    msg.style.color=habilitar?'#00b894':'#e17055';
+    msg.innerHTML = (habilitar ? 'Post-test habilitado localmente.' : 'Post-test bloqueado localmente.');
+  };
   document.head.appendChild(s);
 }
 function verificarEstadoPost(){
   const cb = '_cb_vcfg_'+Date.now();
-  const to = setTimeout(()=>{ limpiarCb(cb); }, 8000);
-  window[cb] = function(data){ clearTimeout(to); limpiarCb(cb); actualizarBadgePost(String(data.post_habilitado).toLowerCase()==='true'); };
+  const to = setTimeout(()=>{
+    limpiarCb(cb);
+    const cached = localStorage.getItem('cap_post_habilitado');
+    if(cached !== null) actualizarBadgePost(cached === 'true');
+  }, 6000);
+  window[cb] = function(data){
+    clearTimeout(to); limpiarCb(cb);
+    actualizarBadgePost(String(data.post_habilitado).toLowerCase()==='true');
+  };
   const s = document.createElement('script');
   s.src = API_URL+'?action=getConfig&callback='+cb+'&t='+Date.now();
+  s.onerror = function(){
+    clearTimeout(to); limpiarCb(cb);
+    const cached = localStorage.getItem('cap_post_habilitado');
+    if(cached !== null) actualizarBadgePost(cached === 'true');
+  };
   document.head.appendChild(s);
 }
 function actualizarBadgePost(hab){
   const badge = document.getElementById('estadoPostBadge');
   const texto = document.getElementById('estadoPostTexto');
+  if(!badge || !texto) return;
   badge.className = 'estado-badge '+(hab?'habilitado':'bloqueado');
   badge.querySelector('i').className = 'fas fa-'+(hab?'unlock':'lock');
   texto.textContent = hab?'Habilitado':'Bloqueado';
-  // Persistir estado entre recargas
+  // Persistir estado entre recargas y pestañas
   sessionStorage.setItem('cap_post_habilitado', hab ? 'true' : 'false');
+  localStorage.setItem('cap_post_habilitado', hab ? 'true' : 'false');
 }
 function copiarEnlace(){
   const txt = document.getElementById('linkGenerado').textContent;
