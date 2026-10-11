@@ -224,6 +224,9 @@ table{max-width:100%;}
       <button class="tb-btn tb-btn-ghost" onclick="irInicio()" title="Ir al inicio sin cerrar la sesión">
         <i class="fas fa-home"></i> Inicio
       </button>
+      <button class="tb-btn tb-btn-ghost" onclick="window.location.href='landing-cap.html#comunidad'" title="Abrir el muro con los botones de borrar">
+        <i class="fas fa-comments"></i> Moderar muro
+      </button>
       <button class="tb-btn tb-btn-primary" onclick="cerrarSesion()" title="Cerrar sesión y pedir la contraseña la próxima vez">
         <i class="fas fa-sign-out-alt"></i> Cerrar sesión
       </button>
@@ -404,8 +407,11 @@ function verificarClave(){
     document.getElementById('adminPanel').style.display  = 'block';
     sessionStorage.setItem('cap_admin','1');
     try{
-      if(document.getElementById('mantenerSesion').checked) localStorage.setItem('cap_admin_persist', String(Date.now()+30*24*3600*1000)); // 30 días
-      else localStorage.removeItem('cap_admin_persist');
+      sessionStorage.setItem('cap_admin_key', CLAVE_ADMIN);   // permite borrar mensajes del muro desde el landing
+      if(document.getElementById('mantenerSesion').checked){
+        localStorage.setItem('cap_admin_persist', String(Date.now()+30*24*3600*1000)); // 30 días
+        localStorage.setItem('cap_admin_key', CLAVE_ADMIN);
+      } else { localStorage.removeItem('cap_admin_persist'); localStorage.removeItem('cap_admin_key'); }
     }catch(e){}
     const cachedHab2 = sessionStorage.getItem('cap_post_habilitado') || localStorage.getItem('cap_post_habilitado');
     if(cachedHab2 !== null) actualizarBadgePost(cachedHab2 === 'true');
@@ -419,16 +425,16 @@ function verificarClave(){
   }
 }
 function cerrarSesion(){
-  sessionStorage.removeItem('cap_admin');
-  try{ localStorage.removeItem('cap_admin_persist'); }catch(e){}
+  sessionStorage.removeItem('cap_admin'); sessionStorage.removeItem('cap_admin_key');
+  try{ localStorage.removeItem('cap_admin_persist'); localStorage.removeItem('cap_admin_key'); }catch(e){}
   window.location.reload();   // vuelve a la pantalla de ingreso
 }
 function irInicio(){ window.location.href = 'landing-cap.html'; }   // no cierra la sesión
 function sesionActiva(){
-  if(sessionStorage.getItem('cap_admin')==='1') return true;
+  if(sessionStorage.getItem('cap_admin')==='1'){ sessionStorage.setItem('cap_admin_key', CLAVE_ADMIN); return true; }
   try{
     var t = Number(localStorage.getItem('cap_admin_persist')||0);
-    if(t > Date.now()){ sessionStorage.setItem('cap_admin','1'); return true; }
+    if(t > Date.now()){ sessionStorage.setItem('cap_admin','1'); sessionStorage.setItem('cap_admin_key', CLAVE_ADMIN); localStorage.setItem('cap_admin_key', CLAVE_ADMIN); return true; }
     localStorage.removeItem('cap_admin_persist');
   }catch(e){}
   return false;
