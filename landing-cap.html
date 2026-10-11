@@ -9,7 +9,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-10-10-m2">
+<meta name="app-version" content="2026-10-10-muro1">
 <title>CAP-SV-DIGITAL · Bienvenida · Ciudad Bolívar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -857,240 +857,81 @@ body{
     font-size: 0.85rem;
     color: var(--gray);
   }
-  .community-grid{
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 22px;
-  }
-  @media(max-width:820px){
-    .community-grid{ grid-template-columns: 1fr; }
-  }
 
-  /* Formulario de comentario */
-  .comm-form-card{
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: var(--r-lg);
-    padding: 20px;
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  /* ── MURO v2 ── */
+  .community-section .section-label{margin-bottom:6px;}
+  .mu-mod{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#fff8e1;border:1.5px solid #ffe08a;color:#7a5b00;border-radius:12px;padding:10px 14px;font-size:0.82rem;font-weight:600;margin-bottom:14px;}
+  .mu-mod button{background:none;border:none;color:#7a5b00;font-weight:800;cursor:pointer;text-decoration:underline;font-size:0.8rem;}
+  .mu-composer{background:white;border:2px solid var(--border);border-radius:var(--r-lg);padding:14px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+  .mu-comp-head{display:flex;gap:10px;align-items:flex-start;}
+  .mu-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#eef0ff,#e0e4ff);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+  .mu-avatar.sm{width:30px;height:30px;font-size:0.95rem;}
+  .mu-textarea{flex:1;width:100%;min-height:76px;resize:vertical;border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;font-family:var(--font-b);font-size:0.9rem;color:var(--dark);background:#fbfbff;line-height:1.5;}
+  .mu-textarea:focus,.mu-input:focus,.mu-select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(91,108,235,0.12);background:white;}
+  .mu-chips{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:10px 0 2px 50px;}
+  .mu-chips::-webkit-scrollbar{display:none;}
+  .mu-chip{flex:0 0 auto;background:#f1f3fd;border:1px solid var(--border);color:var(--purple);border-radius:20px;padding:7px 12px;font-size:0.76rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .mu-comp-foot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;}
+  .mu-input,.mu-select{border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-family:var(--font-b);font-size:0.85rem;color:var(--dark);background:#fbfbff;min-width:0;}
+  .mu-input{flex:1 1 150px;}
+  .mu-select{flex:0 1 auto;}
+  .mu-count{font-size:0.72rem;color:var(--gray);margin-left:auto;}
+  .mu-btn-primary{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-h);font-weight:800;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(91,108,235,0.28);}
+  .mu-btn-primary:disabled{opacity:0.6;cursor:default;}
+  .mu-btn-ghost{background:white;color:var(--gray);border:1.5px solid var(--border);border-radius:12px;padding:9px 14px;font-weight:700;font-size:0.8rem;cursor:pointer;}
+  .mu-btn-sm{padding:8px 14px;font-size:0.78rem;}
+  .mu-priv{font-size:0.7rem;color:var(--gray);margin:8px 0 0 2px;}
+  .mu-feedback{display:none;margin-top:10px;padding:9px 12px;border-radius:10px;font-size:0.8rem;font-weight:600;}
+  .mu-feedback.ok{display:block;background:#e9faf4;color:#067a5f;border:1px solid #b6ecd9;}
+  .mu-feedback.err{display:block;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+  .mu-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:6px 0 12px;}
+  .mu-bar-left{display:flex;flex-direction:column;gap:2px;}
+  .mu-total{font-family:var(--font-h);font-size:0.78rem;font-weight:800;color:var(--dark);}
+  .mu-estado{font-size:0.7rem;color:var(--gray);}
+  .mu-bar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .mu-tabs{display:inline-flex;background:#f1f3fd;border-radius:10px;padding:3px;gap:2px;}
+  .mu-tabs button{border:none;background:transparent;border-radius:8px;padding:7px 12px;font-family:var(--font-h);font-size:0.74rem;font-weight:700;color:var(--gray);cursor:pointer;min-height:36px;}
+  .mu-tabs button.on{background:white;color:var(--purple);box-shadow:0 1px 5px rgba(0,0,0,0.08);}
+  .mu-feed{display:flex;flex-direction:column;gap:12px;}
+  .mu-card{background:white;border:1.5px solid var(--border);border-radius:var(--r-md);padding:14px 16px;box-shadow:var(--shadow-sm);}
+  .mu-card.pending{opacity:0.75;border-style:dashed;}
+  .mu-head{display:flex;align-items:center;gap:10px;}
+  .mu-who{display:flex;flex-direction:column;min-width:0;flex:1;}
+  .mu-author{font-family:var(--font-h);font-weight:800;font-size:0.86rem;color:var(--dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .mu-time{font-size:0.7rem;color:var(--gray);}
+  .mu-badge{font-size:0.66rem;font-weight:800;padding:3px 9px;border-radius:20px;white-space:nowrap;font-family:var(--font-h);}
+  .mu-badge.r-moto{background:rgba(91,108,235,0.12);color:var(--purple);}
+  .mu-badge.r-delivery{background:rgba(225,112,85,0.14);color:#c4553b;}
+  .mu-badge.r-part{background:rgba(0,184,148,0.14);color:#067a5f;}
+  .mu-text{margin:10px 0 8px;font-size:0.9rem;line-height:1.55;color:#3b4146;white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;}
+  .mu-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .mu-act{background:white;border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:0.76rem;font-weight:700;color:var(--gray);cursor:pointer;display:inline-flex;align-items:center;gap:5px;min-height:38px;}
+  .mu-act:hover{border-color:var(--purple);color:var(--purple);background:#f8f9ff;}
+  .mu-act.on-like{border-color:#00b894;background:rgba(0,184,148,0.12);color:#067a5f;}
+  .mu-act.on-dislike{border-color:#e17055;background:rgba(225,112,85,0.12);color:#c4553b;}
+  .mu-act-link{border-color:transparent;background:transparent;color:var(--purple);}
+  .mu-act-del{margin-left:auto;border-color:#fecaca;color:#b91c1c;background:#fff5f5;}
+  .mu-hilo{margin:12px 0 0 12px;padding-left:12px;border-left:3px solid #e8eaf6;display:flex;flex-direction:column;gap:10px;}
+  .mu-reply{background:#fafbff;border:1px solid var(--border);border-radius:12px;padding:10px 12px;}
+  .mu-reply .mu-text{font-size:0.86rem;margin:6px 0 6px;}
+  .mu-reply .mu-act{min-height:34px;padding:4px 10px;}
+  .mu-reply-form{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+  .mu-reply-form .mu-textarea{min-height:60px;}
+  .mu-reply-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .mu-ej{font-size:0.7rem;color:#8a6d00;background:#fff8e1;border-radius:8px;padding:5px 9px;display:inline-block;margin-top:2px;}
+  .mu-vacio{text-align:center;padding:18px;color:var(--gray);font-size:0.85rem;background:#f8f9ff;border:1.5px dashed var(--border);border-radius:var(--r-md);}
+  .mu-more{text-align:center;margin-top:14px;}
+  @media(max-width:600px){
+    .community-section{padding:22px 14px;}
+    .mu-composer{padding:12px;}
+    .mu-comp-foot .mu-btn-primary{width:100%;justify-content:center;min-height:46px;}
+    .mu-chips{padding-left:0;}
+    .mu-card{padding:12px;}
+    .mu-hilo{margin-left:4px;padding-left:10px;}
+    .mu-bar-right{width:100%;}
+    .mu-bar-right .mu-select{flex:1;}
   }
-  .comm-form-card h4{
-    font-family: var(--font-h);
-    font-size: 0.88rem;
-    font-weight: 800;
-    color: var(--dark);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .comm-input-group{
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .comm-input-label{
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--gray);
-    font-family: var(--font-h);
-  }
-  .comm-input, .comm-select, .comm-textarea{
-    width: 100%;
-    background: var(--light);
-    border: 1.5px solid var(--border);
-    border-radius: var(--r-sm);
-    padding: 9px 12px;
-    font-family: var(--font-b);
-    font-size: 0.84rem;
-    color: var(--dark);
-    transition: all 0.2s;
-  }
-  .comm-input:focus, .comm-select:focus, .comm-textarea:focus{
-    outline: none;
-    border-color: var(--purple);
-    background: white;
-    box-shadow: 0 0 0 3px rgba(91,108,235,0.12);
-  }
-  .comm-textarea{
-    resize: vertical;
-    min-height: 80px;
-    max-height: 180px;
-    line-height: 1.4;
-  }
-  .comm-pills{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  .comm-pill-btn{
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 3px 8px;
-    font-size: 0.7rem;
-    color: var(--gray);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .comm-pill-btn:hover{
-    border-color: var(--green);
-    color: var(--green);
-    background: #f0fdf4;
-  }
-  .comm-btn-submit{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px 16px;
-    background: linear-gradient(135deg, #00b894, #0984e3);
-    color: white;
-    border: none;
-    border-radius: var(--r-sm);
-    font-family: var(--font-h);
-    font-size: 0.85rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 3px 12px rgba(0,184,148,0.3);
-  }
-  .comm-btn-submit:hover{
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(0,184,148,0.4);
-  }
-  .comm-feedback{
-    display: none;
-    padding: 8px 12px;
-    border-radius: var(--r-sm);
-    font-size: 0.78rem;
-    text-align: center;
-  }
-  .comm-feedback.success{
-    display: block;
-    background: #ecfdf5;
-    color: #065f46;
-    border: 1px solid #a7f3d0;
-  }
-
-  /* Feed de comentarios */
-  .comm-feed-wrap{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 480px;
-    overflow-y: auto;
-    padding-right: 6px;
-  }
-  .comm-card{
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: var(--r-md);
-    padding: 14px 16px;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.2s;
-    animation: fadeInDown 0.3s ease-out;
-  }
-  @keyframes fadeInDown{
-    from{ opacity:0; transform: translateY(-8px); }
-    to{ opacity:1; transform: translateY(0); }
-  }
-  .comm-card:hover{
-    border-color: rgba(91,108,235,0.4);
-    box-shadow: var(--shadow-md);
-  }
-  .comm-card-top{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .comm-user-info{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .comm-avatar{
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    background: var(--light);
-    border: 1.5px solid var(--border);
-    flex-shrink: 0;
-  }
-  .comm-author{
-    font-family: var(--font-h);
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--dark);
-  }
-  .comm-role-badge{
-    font-size: 0.65rem;
-    font-weight: 700;
-    font-family: var(--font-h);
-    padding: 2px 8px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .role-moto{ background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-  .role-delivery{ background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-  .role-particular{ background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-  .comm-time{
-    font-size: 0.7rem;
-    color: var(--gray);
-  }
-  .comm-text{
-    font-size: 0.84rem;
-    color: var(--dark);
-    line-height: 1.5;
-    margin-bottom: 10px;
-    background: var(--light);
-    padding: 9px 12px;
-    border-radius: var(--r-sm);
-    border-left: 3px solid var(--purple);
-  }
-  .comm-actions{
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .comm-react-btn{
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--gray);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.15s;
-  }
-  .comm-react-btn:hover{
-    border-color: var(--purple);
-    color: var(--purple);
-    background: #f8f9ff;
-    transform: scale(1.04);
-  }
-  .comm-react-btn.reacted{
-    border-color: var(--purple);
-    background: rgba(91,108,235,0.12);
-    color: var(--purple);
-  }
-}
+  @keyframes fadeInDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 </style>
 <style id="mobile-opt">
 /* ── Optimización móvil CAP-SV-DIGITAL ── */
@@ -1138,8 +979,8 @@ img,canvas,svg,video,iframe{max-width:100%;}
   .nov-btn{min-height:42px;padding:10px 14px;font-size:0.8rem;}
   .nov-chip{font-size:0.7rem;}
   .nov-cat,.nov-source-badge{font-size:0.74rem;}
-  .comm-input,.comm-select{min-height:48px;}
-  .comm-input-label{font-size:0.8rem;}
+  .mu-input,.mu-select{min-height:46px;}
+  .mu-textarea{font-size:16px!important;}
   .nov-chip,.nov-cat,.nov-source-badge{font-size:0.75rem;}
   a[href*="admin-cap"]{display:inline-block;padding:14px 12px;font-size:0.8rem;}
 }
@@ -1588,60 +1429,61 @@ img,canvas,svg,video,iframe{max-width:100%;}
       <div class="community-header">
         <p class="section-label"><i class="fas fa-comments"></i> Comunidad Biker</p>
         <h2 class="community-title">🏍️ La Voz de la Ruta · Muro de Consejos y Experiencias</h2>
-        <p class="community-subtitle">Espacio interactivo donde mototaxistas y delivery de Ciudad Bolívar comparten tips de seguridad y experiencias de la vía.</p>
+        <p class="community-subtitle">Comparte un consejo, responde a otros y vota los mensajes que te parezcan útiles.</p>
       </div>
 
-      <div class="community-grid">
-        <!-- Formulario para publicar -->
-        <div class="comm-form-card">
-          <h4><i class="fas fa-pen-nib" style="color:var(--purple);"></i> Deja tu consejo o mensaje</h4>
-          
-          <div class="comm-input-group">
-            <label class="comm-input-label">Tu apodo o código</label>
-            <input type="text" id="commAutor" class="comm-input" placeholder="Ej: BikerBolívar o tu código" maxlength="24">
-          </div>
+      <div id="muModBanner" class="mu-mod" style="display:none;">
+        <span>🛡️ <strong>Modo moderador:</strong> puedes borrar mensajes con el botón rojo.</span>
+        <button type="button" onclick="document.getElementById('muModBanner').style.display='none'">Ocultar aviso</button>
+      </div>
 
-          <div class="comm-input-group">
-            <label class="comm-input-label">¿Qué manejas?</label>
-            <select id="commRol" class="comm-select">
-              <option value="mototaxista">🏍️ Mototaxista</option>
-              <option value="delivery">🛵 Delivery</option>
-              <option value="particular">🛡️ Conductor particular</option>
-            </select>
-          </div>
-
-          <div class="comm-input-group">
-            <label class="comm-input-label">Consejo o mensaje de la ruta</label>
-            <textarea id="commTexto" class="comm-textarea" placeholder="Ej: En lluvia por la Av. Germania bajen la velocidad y no toquen el freno delantero de golpe..." maxlength="220"></textarea>
-          </div>
-
-          <!-- Sugerencias rápidas -->
-          <div class="comm-input-group">
-            <label class="comm-input-label" style="font-size:0.68rem;">Sugerencias rápidas:</label>
-            <div class="comm-pills">
-              <button type="button" class="comm-pill-btn" onclick="insertarSugerencia('¡El casco abrochado salva vidas, no lo lleven de adorno en el codo!')">🪖 Casco abrochado</button>
-              <button type="button" class="comm-pill-btn" onclick="insertarSugerencia('En lluvia reduzcan velocidad y mantengan el doble de distancia.')">🌧️ Lluvia y frenos</button>
-              <button type="button" class="comm-pill-btn" onclick="insertarSugerencia('El celular guardado mientras ruedan, un segundo de descuido cuesta caro.')">📵 Cero celular</button>
-            </div>
-          </div>
-
-          <button type="button" class="comm-btn-submit" onclick="publicarComentario()">
-            <i class="fas fa-paper-plane"></i> Publicar en el Muro
-          </button>
-          <div id="commFeedback" class="comm-feedback"></div>
+      <!-- Publicar -->
+      <div class="mu-composer">
+        <div class="mu-comp-head">
+          <div class="mu-avatar" id="muMiAvatar">🏍️</div>
+          <textarea id="muTexto" class="mu-textarea" rows="3" maxlength="500" placeholder="Comparte un consejo o una experiencia de la ruta…"></textarea>
         </div>
+        <div class="mu-chips" id="muChips">
+          <button type="button" class="mu-chip" data-txt="¡El casco abrochado salva vidas, no lo lleven de adorno en el codo!">🪖 Casco abrochado</button>
+          <button type="button" class="mu-chip" data-txt="En lluvia reduzcan velocidad y mantengan el doble de distancia.">🌧️ Lluvia y frenos</button>
+          <button type="button" class="mu-chip" data-txt="El celular guardado mientras ruedan, un segundo de descuido cuesta caro.">📵 Cero celular</button>
+        </div>
+        <div class="mu-comp-foot">
+          <input type="text" id="muAutor" class="mu-input" maxlength="24" placeholder="Tu apodo" autocomplete="off">
+          <select id="muRol" class="mu-select">
+            <option value="mototaxista">🏍️ Mototaxista</option>
+            <option value="delivery">🛵 Delivery</option>
+            <option value="particular">🛡️ Particular</option>
+          </select>
+          <span class="mu-count" id="muContador">0/500</span>
+          <button type="button" class="mu-btn-primary" id="muPublicar"><i class="fas fa-paper-plane"></i> Publicar</button>
+        </div>
+        <p class="mu-priv">🔒 Usa un apodo. No escribas tu código de participante ni datos personales.</p>
+        <div id="muFeedback" class="mu-feedback" role="status"></div>
+      </div>
 
-        <!-- Feed de comentarios -->
-        <div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <span style="font-family:var(--font-h);font-size:0.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;">Mensajes recientes de la comunidad</span>
-            <span id="commTotalBadge" style="font-size:0.72rem;background:var(--purple-dim);color:var(--purple);font-weight:800;padding:2px 8px;border-radius:10px;font-family:var(--font-h);">0 mensajes</span>
+      <!-- Barra: contador, orden y filtro -->
+      <div class="mu-bar">
+        <div class="mu-bar-left">
+          <span class="mu-total" id="muTotal">0 mensajes</span>
+          <span class="mu-estado" id="muEstado"></span>
+        </div>
+        <div class="mu-bar-right">
+          <div class="mu-tabs" id="muTabs">
+            <button type="button" data-orden="recientes" class="on">Recientes</button>
+            <button type="button" data-orden="populares">Populares</button>
           </div>
-          <div class="comm-feed-wrap" id="commFeed">
-            <!-- Renderizado dinámico vía JavaScript -->
-          </div>
+          <select id="muFiltro" class="mu-select" aria-label="Filtrar por tipo de conductor">
+            <option value="todos">Todos</option>
+            <option value="mototaxista">🏍️ Mototaxistas</option>
+            <option value="delivery">🛵 Delivery</option>
+            <option value="particular">🛡️ Particulares</option>
+          </select>
         </div>
       </div>
+
+      <div class="mu-feed" id="muFeed"></div>
+      <div class="mu-more"><button type="button" class="mu-btn-ghost" id="muMas" style="display:none;">Ver más mensajes</button></div>
     </div>
 
   </main>
@@ -2200,182 +2042,416 @@ var COMENTARIOS_DEFAULT = [
   }
 ];
 
-var listaComentarios = [];
+// ═══════════════════════════════════════════════════════════
+//  MURO BIKER v2 — mensajes, respuestas, votos y moderación
+//  · El servidor (Google Sheets) guarda TODO; el celular solo hace de caché.
+//  · Lo que no se pudo enviar queda en cola y se reintenta solo (sin duplicar).
+// ═══════════════════════════════════════════════════════════
+var MU = {
+  srv: { items: [], borrados: {}, misVotos: {} },
+  cnt: {},                 // conteos de votos por mensaje {id:{likes,dislikes}}
+  legacy: [], legacyOk: false,
+  pend: { posts: [], votes: {} },
+  voter: '', orden: 'recientes', filtro: 'todos', visibles: 8,
+  abiertos: {}, borradores: {}, borrandoLocal: {},
+  flushing: false, syncing: false, online: null, pendRender: false
+};
+var MU_ROLES = { mototaxista: ['🏍️', 'Mototaxista', 'r-moto'], delivery: ['🛵', 'Delivery', 'r-delivery'], particular: ['🛡️', 'Particular', 'r-part'] };
 
-function cargarComentariosLocales(){
+function muEsc(s){ return escaparHTML(s == null ? '' : s); }
+function muRol(r){ return MU_ROLES[r] || MU_ROLES.mototaxista; }
+function muId(prefijo){ return prefijo + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+// ── Moderador: la sesión del panel admin guarda la clave en este navegador ──
+function muAdminKey(){
   try {
-    var guardados = JSON.parse(localStorage.getItem('cap_muro_comentarios') || 'null');
-    if (guardados && Array.isArray(guardados) && guardados.length > 0) {
-      listaComentarios = guardados;
-    } else {
-      listaComentarios = COMENTARIOS_DEFAULT.slice();
-      localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
-    }
-  } catch(e){
-    listaComentarios = COMENTARIOS_DEFAULT.slice();
-  }
-  renderizarFeedComentarios();
-  sincronizarComentariosConSheets();
+    var k = sessionStorage.getItem('cap_admin_key');
+    if(k) return k;
+    var t = Number(localStorage.getItem('cap_admin_persist') || 0);
+    if(t > Date.now()) return localStorage.getItem('cap_admin_key') || '';
+  } catch(e){}
+  return '';
 }
 
-function sincronizarComentariosConSheets(){
-  var cb = '_cb_get_comms_' + Date.now();
-  var tid = setTimeout(function(){ limpiarCb(cb); }, 6000);
+// ── Almacenamiento local (caché + cola de envíos pendientes) ──
+function muCargarLocal(){
+  try {
+    var c = JSON.parse(localStorage.getItem('cap_muro_v2') || 'null');
+    if(c){ MU.srv = c.srv || MU.srv; MU.cnt = c.cnt || {}; MU.legacy = c.legacy || []; }
+    var p = JSON.parse(localStorage.getItem('cap_muro_pend') || 'null');
+    if(p){ MU.pend.posts = p.posts || []; MU.pend.votes = p.votes || {}; }
+  } catch(e){}
+  try { MU.voter = localStorage.getItem('cap_voter_id') || ''; } catch(e){}
+  if(!MU.voter){
+    MU.voter = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    try { localStorage.setItem('cap_voter_id', MU.voter); } catch(e){}
+  }
+}
+function muGuardarLocal(){ try { localStorage.setItem('cap_muro_v2', JSON.stringify({ srv: MU.srv, cnt: MU.cnt, legacy: MU.legacy })); } catch(e){} }
+function muGuardarPend(){ try { localStorage.setItem('cap_muro_pend', JSON.stringify(MU.pend)); } catch(e){} }
+function muPerfil(){ try { return JSON.parse(localStorage.getItem('cap_muro_perfil') || '{}') || {}; } catch(e){ return {}; } }
+function muGuardarPerfil(autor, rol){ try { localStorage.setItem('cap_muro_perfil', JSON.stringify({ autor: autor, rol: rol })); } catch(e){} }
+
+// ── Red: JSONP con tiempo límite ──
+function muJsonp(params, ok, fail){
+  var cb = '_mu_' + Date.now().toString(36) + Math.floor(Math.random() * 1e6), done = false;
+  var s = document.createElement('script');
+  var tid = setTimeout(function(){ if(done) return; done = true; window[cb] = function(){}; s.remove(); if(fail) fail('timeout'); }, 9000);
   window[cb] = function(res){
-    clearTimeout(tid);
-    limpiarCb(cb);
-    if(res && res.comentarios && Array.isArray(res.comentarios) && res.comentarios.length > 0){
-      var map = {};
-      listaComentarios.forEach(function(c){ map[c.id] = c; });
-      res.comentarios.forEach(function(c){ map[c.id] = c; });
-      listaComentarios = Object.values(map);
-      listaComentarios.sort(function(a,b){ return (b.id > a.id ? 1 : -1); });
-      localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
-      renderizarFeedComentarios();
-    }
+    if(done) return; done = true; clearTimeout(tid); try { delete window[cb]; } catch(e){ window[cb] = undefined; } s.remove();
+    if(res && res.ok !== false){ if(ok) ok(res); } else if(fail){ fail((res && res.error) || 'error'); }
   };
-  var s = document.createElement('script');
-  s.src = API_URL + '?action=getComentarios&callback=' + cb + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(tid); limpiarCb(cb); s.remove(); };
+  params.callback = cb; params.t = Date.now();
+  s.src = API_URL + '?' + Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
+  s.onerror = function(){ if(done) return; done = true; clearTimeout(tid); window[cb] = function(){}; s.remove(); if(fail) fail('red'); };
   document.head.appendChild(s);
 }
+function muEsRed(why){ return why === 'timeout' || why === 'red'; }
 
-function renderizarFeedComentarios(){
-  var feed = document.getElementById('commFeed');
-  var badge = document.getElementById('commTotalBadge');
-  if(!feed) return;
-  if(badge) badge.textContent = listaComentarios.length + (listaComentarios.length === 1 ? ' mensaje' : ' mensajes');
-
-  if(listaComentarios.length === 0){
-    feed.innerHTML = '<div style="text-align:center;padding:24px;color:var(--gray);font-size:0.85rem;">Sé el primero en dejar un consejo para la comunidad biker.</div>';
-    return;
+// ── Enviar lo pendiente (mensajes y votos), uno por uno ──
+function muFlush(done){
+  if(MU.flushing){ if(done) done(false); return; }
+  MU.flushing = true;
+  function fin(ok){ MU.flushing = false; muEstado(); if(done) done(ok); }
+  function paso(){
+    if(MU.pend.posts.length){
+      var p = MU.pend.posts[0];
+      muJsonp({ action: 'muroPost', id: p.id, parent: p.parentId || '', autor: p.autor, rol: p.rol, texto: p.texto },
+        function(){ MU.online = true; MU.pend.posts = MU.pend.posts.filter(function(x){ return x.id !== p.id; }); muGuardarPend(); paso(); },
+        function(why){
+          if(muEsRed(why)){ MU.online = false; return fin(false); }
+          MU.pend.posts = MU.pend.posts.filter(function(x){ return x.id !== p.id; }); muGuardarPend(); paso(); // rechazo del servidor: no reintentar
+        });
+      return;
+    }
+    var ids = Object.keys(MU.pend.votes);
+    if(ids.length){
+      var id = ids[0], v = MU.pend.votes[id];
+      muJsonp({ action: 'muroVote', id: id, voter: MU.voter, voto: v },
+        function(res){
+          MU.online = true;
+          if(MU.pend.votes[id] === v) delete MU.pend.votes[id];
+          if(typeof res.likes === 'number') MU.cnt[id] = { likes: res.likes, dislikes: res.dislikes || 0 };
+          if(res.miVoto) MU.srv.misVotos[id] = res.miVoto; else delete MU.srv.misVotos[id];
+          muGuardarPend(); muGuardarLocal(); muRender(); paso();
+        },
+        function(why){
+          if(muEsRed(why)){ MU.online = false; return fin(false); }
+          delete MU.pend.votes[id]; muGuardarPend(); paso();
+        });
+      return;
+    }
+    fin(true);
   }
+  paso();
+}
 
-  var html = '';
-  listaComentarios.forEach(function(c){
-    var avatarIcon = c.rol === 'delivery' ? '🛵' : (c.rol === 'particular' ? '🛡️' : '🏍️');
-    var rolClass = c.rol === 'delivery' ? 'role-delivery' : (c.rol === 'particular' ? 'role-particular' : 'role-moto');
-    var rolLabel = c.rol === 'delivery' ? 'Delivery' : (c.rol === 'particular' ? 'Particular' : 'Mototaxista');
-
-    var rMoto = (c.reacciones && c.reacciones.moto) || 0;
-    var rIdea = (c.reacciones && c.reacciones.idea) || 0;
-    var rLike = (c.reacciones && c.reacciones.like) || 0;
-
-    var kMoto = 'cap_react_' + c.id + '_moto';
-    var kIdea = 'cap_react_' + c.id + '_idea';
-    var kLike = 'cap_react_' + c.id + '_like';
-
-    var activeMoto = localStorage.getItem(kMoto) === '1' ? 'reacted' : '';
-    var activeIdea = localStorage.getItem(kIdea) === '1' ? 'reacted' : '';
-    var activeLike = localStorage.getItem(kLike) === '1' ? 'reacted' : '';
-
-    html += '<div class="comm-card" id="comm_' + c.id + '">'
-          + '  <div class="comm-card-top">'
-          + '    <div class="comm-user-info">'
-          + '      <div class="comm-avatar">' + avatarIcon + '</div>'
-          + '      <div>'
-          + '        <div class="comm-author">' + escaparHTML(c.autor || 'Biker') + '</div>'
-          + '        <div class="comm-time">' + (c.fecha || '') + (c.hora ? ' · ' + c.hora : '') + '</div>'
-          + '      </div>'
-          + '      <span class="comm-role-badge ' + rolClass + '">' + rolLabel + '</span>'
-          + '    </div>'
-          + '  </div>'
-          + '  <div class="comm-text">' + escaparHTML(c.texto) + '</div>'
-          + '  <div class="comm-actions">'
-          + '    <button type="button" class="comm-react-btn ' + activeMoto + '" onclick="reaccionarComentario(\'' + c.id + '\', \'moto\')">🏍️ <span>' + rMoto + '</span></button>'
-          + '    <button type="button" class="comm-react-btn ' + activeIdea + '" onclick="reaccionarComentario(\'' + c.id + '\', \'idea\')">💡 <span>' + rIdea + '</span></button>'
-          + '    <button type="button" class="comm-react-btn ' + activeLike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'like\')">👍 <span>' + rLike + '</span></button>'
-          + '  </div>'
-          + '</div>';
+// ── Sincronizar con el servidor ──
+function muNormLegacy(c){
+  var m = /^c_(\d{10,})/.exec(String(c.id || ''));
+  return { id: String(c.id), parentId: '', autor: c.autor || 'Biker', rol: c.rol || 'mototaxista', texto: c.texto || '',
+           fecha: c.fecha || '', hora: c.hora || '', ts: m ? Number(m[1]) : 0, likes: 0, dislikes: 0 };
+}
+function muSync(){
+  if(MU.syncing) return;
+  MU.syncing = true;
+  muFlush(function(){
+    muJsonp({ action: 'muroGet', voter: MU.voter }, function(res){
+      MU.syncing = false; MU.online = true;
+      var items = Array.isArray(res.comentarios) ? res.comentarios : [];
+      var borr = {}; (res.borrados || []).forEach(function(i){ borr[i] = 1; });
+      MU.srv = { items: items, borrados: borr, misVotos: res.misVotos || {} };
+      MU.cnt = {}; var enSrv = {};
+      items.forEach(function(c){ enSrv[c.id] = 1; MU.cnt[c.id] = { likes: c.likes || 0, dislikes: c.dislikes || 0 }; });
+      MU.pend.posts = MU.pend.posts.filter(function(p){ return !enSrv[p.id]; }); muGuardarPend();
+      muGuardarLocal(); muEstado(); muRender();
+    }, function(){ MU.syncing = false; MU.online = false; muEstado(); });
+    if(!MU.legacyOk){
+      muJsonp({ action: 'getComentarios' }, function(res){
+        if(res && Array.isArray(res.comentarios)){ MU.legacy = res.comentarios.map(muNormLegacy); MU.legacyOk = true; muGuardarLocal(); muRender(); }
+      }, function(){});
+    }
   });
-  feed.innerHTML = html;
 }
 
-function insertarSugerencia(txt){
-  var textarea = document.getElementById('commTexto');
-  if(textarea){
-    textarea.value = txt;
-    textarea.focus();
-    var fb = document.getElementById('commFeedback');
-    if(fb) fb.style.display = 'none';
-  }
+// ── Combinar fuentes → lista final con votos aplicados ──
+function muCombinar(){
+  var map = {}, orden = [];
+  function poner(c){ if(!map[c.id]) orden.push(c.id); map[c.id] = c; }
+  MU.legacy.forEach(poner);
+  MU.srv.items.forEach(poner);
+  MU.pend.posts.forEach(function(p){
+    if(!map[p.id]) poner({ id: p.id, parentId: p.parentId || '', autor: p.autor, rol: p.rol, texto: p.texto, fecha: p.fecha, hora: p.hora, ts: p.ts, likes: 0, dislikes: 0, pendiente: true });
+  });
+  var borr = MU.srv.borrados || {}, res = [];
+  orden.forEach(function(id){
+    var c = map[id];
+    if(borr[id] || MU.borrandoLocal[id]) return;
+    if(c.parentId && (borr[c.parentId] || MU.borrandoLocal[c.parentId] || !map[c.parentId])) return;
+    res.push(c);
+  });
+  return res.map(function(c){
+    var o = {}; for(var k in c) o[k] = c[k];
+    var base = MU.cnt[c.id] || { likes: c.likes || 0, dislikes: c.dislikes || 0 };
+    var srvMi = (MU.srv.misVotos || {})[c.id] || '';
+    var pv = MU.pend.votes[c.id];
+    var mi = pv !== undefined ? (pv === 'none' ? '' : pv) : srvMi;
+    o.likes = Math.max(0, base.likes - (srvMi === 'like' ? 1 : 0) + (mi === 'like' ? 1 : 0));
+    o.dislikes = Math.max(0, base.dislikes - (srvMi === 'dislike' ? 1 : 0) + (mi === 'dislike' ? 1 : 0));
+    o.miVoto = mi;
+    return o;
+  });
 }
 
-function publicarComentario(){
-  var inpAutor = document.getElementById('commAutor');
-  var selRol   = document.getElementById('commRol');
-  var txtTexto = document.getElementById('commTexto');
-  var feedback = document.getElementById('commFeedback');
-
-  var autor = (inpAutor.value || '').trim();
-  var rol   = selRol.value || 'mototaxista';
-  var texto = (txtTexto.value || '').trim();
-
-  if(!autor){
-    var codSesion = sessionStorage.getItem('cap_codigo');
-    autor = codSesion ? ('Biker (' + codSesion + ')') : 'Biker Anónimo';
-  }
-
-  if(texto.length < 5){
-    if(feedback){
-      feedback.className = 'comm-feedback';
-      feedback.style.display = 'block';
-      feedback.style.background = '#fef2f2';
-      feedback.style.color = '#991b1b';
-      feedback.style.border = '1px solid #fecaca';
-      feedback.textContent = 'Por favor escribe un mensaje o consejo de al menos 5 letras.';
-    }
-    return;
-  }
-
-  var nuevo = {
-    id: 'c_' + Date.now(),
-    autor: autor,
-    rol: rol,
-    texto: texto,
-    fecha: new Date().toLocaleDateString('es-VE'),
-    hora: new Date().toLocaleTimeString('es-VE', {hour: '2-digit', minute:'2-digit'}),
-    reacciones: { moto: 1, idea: 1, like: 1 }
-  };
-
-  listaComentarios.unshift(nuevo);
-  localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
-  renderizarFeedComentarios();
-
-  txtTexto.value = '';
-
-  if(feedback){
-    feedback.className = 'comm-feedback success';
-    feedback.textContent = '✅ ¡Tu consejo se ha publicado en el Muro Biker!';
-    setTimeout(function(){ feedback.style.display = 'none'; }, 4000);
-  }
-
-  var cb = '_cb_send_comm_' + Date.now();
-  window[cb] = function(){ try{ delete window[cb]; }catch(e){} };
-  var s = document.createElement('script');
-  s.src = API_URL + '?action=guardarComentario&datos=' + encodeURIComponent(JSON.stringify(nuevo)) + '&callback=' + cb + '&t=' + Date.now();
-  s.onerror = function(){ try{ delete window[cb]; }catch(e){} s.remove(); };
-  document.head.appendChild(s);
+// ── Presentación ──
+function muHace(c){
+  if(!c.ts) return (c.fecha || '') + (c.hora ? ' · ' + c.hora : '');
+  var s = (Date.now() - c.ts) / 1000;
+  if(s < 60) return 'justo ahora';
+  if(s < 3600) return 'hace ' + Math.floor(s / 60) + ' min';
+  if(s < 86400) return 'hace ' + Math.floor(s / 3600) + ' h';
+  if(s < 7 * 86400) return 'hace ' + Math.floor(s / 86400) + (Math.floor(s / 86400) === 1 ? ' día' : ' días');
+  return c.fecha || new Date(c.ts).toLocaleDateString('es-VE');
 }
-
-function reaccionarComentario(id, tipo){
-  var kReact = 'cap_react_' + id + '_' + tipo;
-  var yaReacciono = localStorage.getItem(kReact) === '1';
-
-  var c = listaComentarios.find(function(item){ return item.id === id; });
-  if(!c) return;
-  if(!c.reacciones) c.reacciones = { moto:0, idea:0, like:0 };
-
-  if(yaReacciono){
-    c.reacciones[tipo] = Math.max(0, (c.reacciones[tipo] || 1) - 1);
-    localStorage.removeItem(kReact);
+function muVotos(c){
+  var id = muEsc(c.id);
+  return '<button type="button" class="mu-act' + (c.miVoto === 'like' ? ' on-like' : '') + '" data-a="like" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'like') + '" aria-label="Me gusta">👍 <span>' + c.likes + '</span></button>'
+       + '<button type="button" class="mu-act' + (c.miVoto === 'dislike' ? ' on-dislike' : '') + '" data-a="dislike" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'dislike') + '" aria-label="No me gusta">👎 <span>' + c.dislikes + '</span></button>';
+}
+function muBtnBorrar(id, admin){
+  return admin ? '<button type="button" class="mu-act mu-act-del" data-a="del" data-id="' + muEsc(id) + '">🗑 Borrar</button>' : '';
+}
+function muRespuestaHTML(r, padreId, admin){
+  var ro = muRol(r.rol);
+  return '<div class="mu-reply' + (r.pendiente ? ' pending' : '') + '" id="mu_' + muEsc(r.id) + '">'
+    + '<div class="mu-head"><div class="mu-avatar sm">' + ro[0] + '</div><div class="mu-who"><span class="mu-author">' + muEsc(r.autor || 'Biker') + '</span>'
+    + '<span class="mu-time">' + muEsc(muHace(r)) + (r.pendiente ? ' · enviando…' : '') + '</span></div><span class="mu-badge ' + ro[2] + '">' + ro[1] + '</span></div>'
+    + '<p class="mu-text">' + muEsc(r.texto) + '</p>'
+    + '<div class="mu-actions">' + muVotos(r)
+    + '<button type="button" class="mu-act" data-a="reply-to" data-id="' + muEsc(padreId) + '" data-who="' + muEsc(r.autor || '') + '">↩ Responder</button>'
+    + muBtnBorrar(r.id, admin) + '</div></div>';
+}
+function muFormHTML(padreId){
+  var b = MU.borradores[padreId] || {};
+  var autor = b.autor !== undefined ? b.autor : (muPerfil().autor || '');
+  var id = muEsc(padreId);
+  return '<div class="mu-reply-form"><textarea class="mu-textarea mu-ta-reply" data-id="' + id + '" rows="2" maxlength="500" placeholder="Escribe tu respuesta…">' + muEsc(b.texto || '') + '</textarea>'
+    + '<div class="mu-reply-foot"><input type="text" class="mu-input mu-in-reply" data-id="' + id + '" maxlength="24" placeholder="Tu apodo" autocomplete="off" value="' + muEsc(autor) + '">'
+    + '<button type="button" class="mu-btn-primary mu-btn-sm" data-a="send-reply" data-id="' + id + '">Responder</button>'
+    + '<button type="button" class="mu-btn-ghost mu-btn-sm" data-a="cancel-reply" data-id="' + id + '">Cancelar</button></div></div>';
+}
+function muTarjetaHTML(c, rs, esEj, admin){
+  var ro = muRol(c.rol), id = muEsc(c.id), ab = MU.abiertos[c.id] || {};
+  var h = '<article class="mu-card' + (c.pendiente ? ' pending' : '') + '" id="mu_' + id + '">'
+    + '<header class="mu-head"><div class="mu-avatar">' + ro[0] + '</div><div class="mu-who"><span class="mu-author">' + muEsc(c.autor || 'Biker') + '</span>'
+    + '<span class="mu-time">' + muEsc(muHace(c)) + (c.pendiente ? ' · enviando…' : '') + '</span></div><span class="mu-badge ' + ro[2] + '">' + ro[1] + '</span></header>'
+    + '<p class="mu-text">' + muEsc(c.texto) + '</p>';
+  if(esEj){
+    h += '<span class="mu-ej">Mensaje de ejemplo · desaparece cuando la comunidad empiece a publicar</span>';
   } else {
-    c.reacciones[tipo] = (c.reacciones[tipo] || 0) + 1;
-    localStorage.setItem(kReact, '1');
+    h += '<div class="mu-actions">' + muVotos(c)
+      + '<button type="button" class="mu-act" data-a="reply" data-id="' + id + '">💬 Responder</button>';
+    if(rs.length) h += '<button type="button" class="mu-act mu-act-link" data-a="hilo" data-id="' + id + '">' + (ab.hilo ? 'Ocultar' : 'Ver') + ' ' + rs.length + (rs.length === 1 ? ' respuesta' : ' respuestas') + (ab.hilo ? ' ▴' : ' ▾') + '</button>';
+    h += muBtnBorrar(c.id, admin) + '</div>';
+    if(ab.hilo && rs.length) h += '<div class="mu-hilo">' + rs.map(function(r){ return muRespuestaHTML(r, c.id, admin); }).join('') + '</div>';
+    if(ab.form) h += muFormHTML(c.id);
+  }
+  return h + '</article>';
+}
+
+function muRender(forzar){
+  var feed = document.getElementById('muFeed'); if(!feed) return;
+  var ae = document.activeElement;
+  if(!forzar && ae && feed.contains(ae) && /^(TEXTAREA|INPUT)$/.test(ae.tagName)){ MU.pendRender = true; return; } // no interrumpir mientras escribe
+  MU.pendRender = false;
+
+  var todos = muCombinar(), reps = {};
+  var top = todos.filter(function(c){ return !c.parentId; });
+  todos.forEach(function(c){ if(c.parentId){ (reps[c.parentId] = reps[c.parentId] || []).push(c); } });
+  Object.keys(reps).forEach(function(k){ reps[k].sort(function(a, b){ return (a.ts || 0) - (b.ts || 0); }); });
+
+  var nMsg = top.length, nRep = todos.length - top.length;
+  var esEj = nMsg === 0;
+  if(esEj){
+    top = COMENTARIOS_DEFAULT.map(function(c){ return { id: c.id, parentId: '', autor: c.autor, rol: c.rol, texto: c.texto, fecha: c.fecha, hora: c.hora, ts: 0, likes: 0, dislikes: 0, miVoto: '' }; });
+  }
+  if(MU.filtro !== 'todos') top = top.filter(function(c){ return c.rol === MU.filtro; });
+  if(MU.orden === 'populares'){
+    top.sort(function(a, b){ return ((b.likes - b.dislikes) - (a.likes - a.dislikes)) || ((b.ts || 0) - (a.ts || 0)); });
+  } else {
+    top.sort(function(a, b){ return (b.ts || 0) - (a.ts || 0); });
   }
 
-  localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
-  renderizarFeedComentarios();
+  var tot = document.getElementById('muTotal');
+  if(tot) tot.textContent = nMsg + (nMsg === 1 ? ' mensaje' : ' mensajes') + (nRep ? ' · ' + nRep + (nRep === 1 ? ' respuesta' : ' respuestas') : '');
+
+  var admin = !!muAdminKey();
+  var vis = top.slice(0, MU.visibles), h = '';
+  if(esEj) h += '<div class="mu-vacio">Aún no hay mensajes de la comunidad. <strong>¡Sé el primero en compartir un consejo!</strong></div>';
+  else if(!top.length) h += '<div class="mu-vacio">No hay mensajes de este tipo todavía.</div>';
+  vis.forEach(function(c){ h += muTarjetaHTML(c, reps[c.id] || [], esEj, admin); });
+  feed.innerHTML = h;
+
+  var mas = document.getElementById('muMas');
+  if(mas){ mas.style.display = top.length > MU.visibles ? 'inline-block' : 'none'; mas.textContent = 'Ver más mensajes (' + (top.length - MU.visibles) + ')'; }
+  var ban = document.getElementById('muModBanner');
+  if(ban && admin && !MU.banVisto){ ban.style.display = 'flex'; MU.banVisto = true; }
+}
+
+function muEstado(){
+  var el = document.getElementById('muEstado'); if(!el) return;
+  var pend = MU.pend.posts.length + Object.keys(MU.pend.votes).length;
+  if(MU.online === false) el.textContent = pend ? '📴 Sin conexión · tus envíos se mandarán solos' : '📴 Sin conexión · mostrando lo último guardado';
+  else if(pend) el.textContent = '⏳ Enviando…';
+  else if(MU.online) el.textContent = '● En vivo';
+  else el.textContent = '';
+}
+
+// ── Acciones ──
+function muMensaje(txt, tipo){
+  var f = document.getElementById('muFeedback'); if(!f) return;
+  f.className = 'mu-feedback ' + (tipo || 'ok'); f.textContent = txt;
+  clearTimeout(MU._ft); MU._ft = setTimeout(function(){ f.className = 'mu-feedback'; }, 5000);
+}
+function muNombreSeguro(autor){
+  var a = (autor || '').trim();
+  var cod = ''; try { cod = (sessionStorage.getItem('cap_codigo') || '').toUpperCase(); } catch(e){}
+  var pareceCodigo = /^[A-Za-z]{4}\d{4}$/.test(a) || (cod && a.toUpperCase().indexOf(cod) >= 0);
+  if(!a || pareceCodigo) return { nombre: 'Biker Anónimo', cambiado: !!a && pareceCodigo };
+  return { nombre: a, cambiado: false };
+}
+function muFrenado(){
+  var last = 0; try { last = Number(localStorage.getItem('cap_muro_last') || 0); } catch(e){}
+  return Date.now() - last < 15000;
+}
+function muNuevo(texto, autor, rol, parentId){
+  var d = new Date();
+  return { id: muId(parentId ? 'r_' : 'm_'), parentId: parentId || '', autor: autor, rol: rol, texto: texto, ts: d.getTime(),
+           fecha: d.toLocaleDateString('es-VE'), hora: d.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) };
+}
+function muEncolar(item){
+  MU.pend.posts.push(item); muGuardarPend();
+  try { localStorage.setItem('cap_muro_last', String(Date.now())); } catch(e){}
+  muRender(true); muEstado();
+  muFlush(function(){ muSync(); });
+}
+function muPublicar(){
+  var tx = document.getElementById('muTexto'), au = document.getElementById('muAutor'), ro = document.getElementById('muRol');
+  var texto = (tx.value || '').trim();
+  if(texto.length < 5) return muMensaje('Escribe un mensaje de al menos 5 letras.', 'err');
+  if(muFrenado()) return muMensaje('Espera unos segundos antes de publicar otro mensaje.', 'err');
+  var seg = muNombreSeguro(au.value);
+  muGuardarPerfil(seg.nombre === 'Biker Anónimo' ? '' : seg.nombre, ro.value);
+  muEncolar(muNuevo(texto, seg.nombre, ro.value, ''));
+  tx.value = ''; document.getElementById('muContador').textContent = '0/500';
+  if(seg.cambiado){ au.value = ''; muMensaje('Publicado como "Biker Anónimo": por tu privacidad no mostramos códigos de participante. Escribe un apodo si quieres.', 'ok'); }
+  else muMensaje('✅ ¡Tu mensaje se publicó en el muro!', 'ok');
+}
+function muEnviarRespuesta(padreId){
+  var ta = document.querySelector('.mu-ta-reply[data-id="' + padreId + '"]'), inp = document.querySelector('.mu-in-reply[data-id="' + padreId + '"]');
+  if(!ta) return;
+  var texto = (ta.value || '').trim();
+  if(texto.length < 3){ ta.focus(); return; }
+  if(muFrenado()){ ta.placeholder = 'Espera unos segundos…'; return; }
+  var seg = muNombreSeguro(inp ? inp.value : '');
+  var rol = muPerfil().rol || 'mototaxista';
+  muGuardarPerfil(seg.nombre === 'Biker Anónimo' ? '' : seg.nombre, rol);
+  var pa = document.getElementById('muAutor'); if(pa && seg.nombre !== 'Biker Anónimo' && !pa.value) pa.value = seg.nombre;
+  delete MU.borradores[padreId];
+  MU.abiertos[padreId] = { hilo: true, form: false };
+  muEncolar(muNuevo(texto, seg.nombre, rol, padreId));
+}
+function muVotar(id, tipo){
+  var c = muCombinar().filter(function(x){ return x.id === id; })[0];
+  if(!c) return;
+  MU.pend.votes[id] = (c.miVoto === tipo) ? 'none' : tipo;
+  muGuardarPend(); muRender(true); muEstado();
+  muFlush(function(){});
+}
+function muMsgError(why){
+  if(why === 'clave') return 'La clave de moderación no coincide con la configurada en el servidor (MURO_ADMIN_KEY).';
+  if(why === 'no_configurado') return 'Falta configurar MURO_ADMIN_KEY en el Apps Script del muro.';
+  if(why === 'bloqueado') return 'Demasiados intentos fallidos. Espera 10 minutos.';
+  if(muEsRed(why)) return 'No hay conexión con el servidor. Inténtalo de nuevo.';
+  return 'No se pudo borrar (' + why + ').';
+}
+function muBorrar(id){
+  var k = muAdminKey();
+  if(!k){ alert('No hay sesión de moderador. Entra al panel admin y marca "Mantener sesión abierta".'); return; }
+  if(!confirm('¿Borrar este mensaje? Si tiene respuestas, también se ocultarán.')) return;
+  MU.borrandoLocal[id] = 1; muRender(true);
+  muJsonp({ action: 'muroDelete', id: id, clave: k }, function(){
+    delete MU.borrandoLocal[id]; MU.srv.borrados[id] = 1; muGuardarLocal(); muRender(true);
+  }, function(why){
+    delete MU.borrandoLocal[id]; muRender(true); alert(muMsgError(why));
+  });
+}
+function muEnfocar(id){
+  var ta = document.querySelector('.mu-ta-reply[data-id="' + id + '"]');
+  if(ta){ ta.focus(); try { ta.setSelectionRange(ta.value.length, ta.value.length); } catch(e){} }
+}
+
+// ── Arranque ──
+function muInit(){
+  if(!document.getElementById('muFeed')) return;
+  muCargarLocal();
+  var perfil = muPerfil(), au = document.getElementById('muAutor'), ro = document.getElementById('muRol'), av = document.getElementById('muMiAvatar');
+  if(perfil.autor) au.value = perfil.autor;
+  if(perfil.rol && MU_ROLES[perfil.rol]) ro.value = perfil.rol;
+  function pintarAvatar(){ av.textContent = muRol(ro.value)[0]; }
+  pintarAvatar(); ro.addEventListener('change', pintarAvatar);
+
+  var tx = document.getElementById('muTexto');
+  tx.addEventListener('input', function(){ document.getElementById('muContador').textContent = tx.value.length + '/500'; });
+  document.getElementById('muPublicar').addEventListener('click', muPublicar);
+  document.getElementById('muChips').addEventListener('click', function(e){
+    var b = e.target.closest('[data-txt]'); if(!b) return;
+    tx.value = b.getAttribute('data-txt'); tx.dispatchEvent(new Event('input')); tx.focus();
+  });
+  document.getElementById('muTabs').addEventListener('click', function(e){
+    var b = e.target.closest('[data-orden]'); if(!b) return;
+    MU.orden = b.getAttribute('data-orden'); MU.visibles = 8;
+    Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.classList.toggle('on', x === b); });
+    muRender(true);
+  });
+  document.getElementById('muFiltro').addEventListener('change', function(){ MU.filtro = this.value; MU.visibles = 8; muRender(true); });
+  document.getElementById('muMas').addEventListener('click', function(){ MU.visibles += 8; muRender(true); });
+
+  var feed = document.getElementById('muFeed');
+  feed.addEventListener('click', function(e){
+    var b = e.target.closest('[data-a]'); if(!b) return;
+    var a = b.getAttribute('data-a'), id = b.getAttribute('data-id');
+    if(a === 'like' || a === 'dislike') muVotar(id, a);
+    else if(a === 'reply'){
+      var ab = MU.abiertos[id] = MU.abiertos[id] || {};
+      ab.form = !ab.form; if(ab.form) ab.hilo = true;
+      muRender(true); if(ab.form) muEnfocar(id);
+    }
+    else if(a === 'reply-to'){
+      var ab2 = MU.abiertos[id] = MU.abiertos[id] || {};
+      ab2.form = true; ab2.hilo = true;
+      var bor = MU.borradores[id] = MU.borradores[id] || {};
+      var who = b.getAttribute('data-who'); if(who && !bor.texto) bor.texto = '@' + who + ' ';
+      muRender(true); muEnfocar(id);
+    }
+    else if(a === 'hilo'){ var ab3 = MU.abiertos[id] = MU.abiertos[id] || {}; ab3.hilo = !ab3.hilo; muRender(true); }
+    else if(a === 'send-reply') muEnviarRespuesta(id);
+    else if(a === 'cancel-reply'){ (MU.abiertos[id] = MU.abiertos[id] || {}).form = false; delete MU.borradores[id]; muRender(true); }
+    else if(a === 'del') muBorrar(id);
+  });
+  feed.addEventListener('input', function(e){
+    var t = e.target, id = t.getAttribute && t.getAttribute('data-id'); if(!id) return;
+    var bor = MU.borradores[id] = MU.borradores[id] || {};
+    if(t.classList.contains('mu-ta-reply')) bor.texto = t.value;
+    else if(t.classList.contains('mu-in-reply')) bor.autor = t.value;
+  });
+  feed.addEventListener('focusout', function(){ setTimeout(function(){ if(MU.pendRender) muRender(); }, 150); });
+
+  muRender(true); muEstado();
+  muSync();
+  setInterval(function(){ if(!document.hidden) muSync(); }, 45000);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) muSync(); });
+  window.addEventListener('online', muSync);
 }
 
 function escaparHTML(str){
@@ -2446,7 +2522,7 @@ function renderizarNovedadesDinamicas(items){
 }
 
 window.addEventListener('DOMContentLoaded', function(){
-  cargarComentariosLocales();
+  muInit();
   sincronizarNovedadesConSheets();
 });
 
