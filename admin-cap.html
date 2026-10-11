@@ -169,6 +169,23 @@ table{max-width:100%;}
 }
 @media(max-width:380px){ body{font-size:14px;} }
 </style>
+<style>
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#00b894;margin-right:6px;animation:livePulse 1.8s infinite;}
+.live-dot.off{background:#e17055;animation:none;}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+<style>
+.keep-row{display:flex;align-items:center;gap:10px;margin:-8px 0 18px;font-size:0.82rem;color:var(--muted);cursor:pointer;text-align:left;user-select:none;}
+.keep-row input{width:18px;height:18px;accent-color:#5b6ceb;flex-shrink:0;}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 12px;}
+.test-box{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:12px;}
+.test-box b{display:block;font-size:1.1rem;color:#fff;font-family:var(--font-h);margin-bottom:2px;}
+.test-box span{font-size:0.72rem;color:var(--muted);line-height:1.3;display:block;}
+.dom-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:8px;min-width:420px;}
+.dom-table th,.dom-table td{padding:9px 10px;border-bottom:1px solid var(--border);text-align:left;}
+.dom-table th{color:var(--muted);font-weight:600;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;}
+.sig-yes{color:#00b894;}.sig-no{color:#e17055;}
+</style>
 </head>
 <body>
 
@@ -183,6 +200,7 @@ table{max-width:100%;}
       <input type="password" class="login-input" id="claveInput" placeholder="Contraseña de acceso"
         onkeydown="if(event.key==='Enter') verificarClave()">
     </div>
+    <label class="keep-row"><input type="checkbox" id="mantenerSesion"> Mantener sesión abierta en este dispositivo</label>
     <button class="login-btn" onclick="verificarClave()">
       <i class="fas fa-sign-in-alt"></i> Ingresar
     </button>
@@ -203,20 +221,11 @@ table{max-width:100%;}
       </div>
     </div>
     <div class="topbar-actions">
-      <button class="tb-btn tb-btn-green" id="btnActualizar" onclick="cargarDesdeSheets()">
-        <i class="fas fa-sync-alt"></i> Actualizar
+      <button class="tb-btn tb-btn-ghost" onclick="irInicio()" title="Ir al inicio sin cerrar la sesión">
+        <i class="fas fa-home"></i> Inicio
       </button>
-      <button class="tb-btn tb-btn-ghost" id="btnSyncLocales" onclick="sincronizarPendientesSheets()" title="Subir respuestas guardadas localmente hacia Google Sheets">
-        <i class="fas fa-cloud-upload-alt"></i> Sincronizar
-      </button>
-      <button class="tb-btn tb-btn-sheets" onclick="window.open(SHEETS_LINK,'_blank')">
-        <i class="fas fa-table"></i> Ver Sheets
-      </button>
-      <button class="tb-btn tb-btn-primary" onclick="exportarReporte()">
-        <i class="fas fa-download"></i> Exportar CSV
-      </button>
-      <button class="tb-btn tb-btn-ghost" onclick="cerrarSesion()">
-        <i class="fas fa-sign-out-alt"></i> Salir
+      <button class="tb-btn tb-btn-primary" onclick="cerrarSesion()" title="Cerrar sesión y pedir la contraseña la próxima vez">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
       </button>
     </div>
   </div>
@@ -363,8 +372,17 @@ table{max-width:100%;}
           <canvas id="chartNiveles" height="200"></canvas>
         </div>
       </div>
+      <div class="charts-grid" id="itemsGrid" style="display:none;">
+        <div class="chart-card" style="grid-column:1/-1;">
+          <h3 class="chart-title">Aciertos por ítem de conocimiento (% de participantes)</h3>
+          <canvas id="chartItems" height="260"></canvas>
+        </div>
+      </div>
       <div class="analysis-card">
-        <p class="control-label" style="margin-bottom:16px;"><i class="fas fa-microscope"></i> Análisis estadístico descriptivo</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+          <p class="control-label" style="margin:0;"><i class="fas fa-microscope"></i> Análisis estadístico</p>
+          <button class="tb-btn tb-btn-ghost" id="btnCopiarResumen" onclick="copiarResumen()" title="Copiar un resumen de resultados"><i class="fas fa-copy"></i> Copiar resumen</button>
+        </div>
         <div id="analisisTexto"></div>
       </div>
     </div>
@@ -385,6 +403,10 @@ function verificarClave(){
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminPanel').style.display  = 'block';
     sessionStorage.setItem('cap_admin','1');
+    try{
+      if(document.getElementById('mantenerSesion').checked) localStorage.setItem('cap_admin_persist', String(Date.now()+30*24*3600*1000)); // 30 días
+      else localStorage.removeItem('cap_admin_persist');
+    }catch(e){}
     const cachedHab2 = sessionStorage.getItem('cap_post_habilitado') || localStorage.getItem('cap_post_habilitado');
     if(cachedHab2 !== null) actualizarBadgePost(cachedHab2 === 'true');
     cargarDesdeSheets();
@@ -398,9 +420,20 @@ function verificarClave(){
 }
 function cerrarSesion(){
   sessionStorage.removeItem('cap_admin');
-  window.location.href = 'landing-cap.html';
+  try{ localStorage.removeItem('cap_admin_persist'); }catch(e){}
+  window.location.reload();   // vuelve a la pantalla de ingreso
 }
-if(sessionStorage.getItem('cap_admin')==='1'){
+function irInicio(){ window.location.href = 'landing-cap.html'; }   // no cierra la sesión
+function sesionActiva(){
+  if(sessionStorage.getItem('cap_admin')==='1') return true;
+  try{
+    var t = Number(localStorage.getItem('cap_admin_persist')||0);
+    if(t > Date.now()){ sessionStorage.setItem('cap_admin','1'); return true; }
+    localStorage.removeItem('cap_admin_persist');
+  }catch(e){}
+  return false;
+}
+if(sesionActiva()){
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('adminPanel').style.display  = 'block';
   // Restaurar badge inmediatamente desde caché antes de consultar el script
@@ -410,20 +443,49 @@ if(sessionStorage.getItem('cap_admin')==='1'){
   setTimeout(verificarEstadoPost, 600);
 }
 
+// ACTUALIZACIÓN AUTOMÁTICA (cada 30 s mientras el panel está visible)
+var AUTO_REFRESH_MS = 30000;
+function panelVisible(){
+  var p = document.getElementById('adminPanel');
+  return p && p.style.display !== 'none' && !document.hidden;
+}
+function marcarEstadoAuto(ok){
+  window._cargandoSheets = false;
+  if(!ok){
+    var el = document.getElementById('rtUpdateTime');
+    if(el) el.innerHTML = '<span class="live-dot off"></span> Sin conexión · reintentando…';
+  }
+}
+setInterval(function(){ if(panelVisible()) cargarDesdeSheets(true); }, AUTO_REFRESH_MS);
+document.addEventListener('visibilitychange', function(){ if(panelVisible()) cargarDesdeSheets(true); });
+
+// Redibuja gráficos solo si los datos cambiaron (evita parpadeo en la actualización automática)
+function analizarSiCambio(){
+  var firma = JSON.stringify([datosPre,datosPost]);
+  if(firma === window._firmaDatos) return;
+  window._firmaDatos = firma;
+  analizarDatos();
+}
+
 // CARGAR DATOS (SHEETS + CONTINGENCIA LOCAL)
-function cargarDesdeSheets(){
-  const btn = document.getElementById('btnActualizar');
+function cargarDesdeSheets(silencioso){
+  // Actualización automática: no toca los datos que ya se ven si falla la conexión
+  if(window._cargandoSheets) return;
+  window._cargandoSheets = true;
+  const btn = silencioso ? null : document.getElementById('btnActualizar');
   if (btn) {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
     btn.disabled = true;
   }
   const timeout = setTimeout(()=>{
+    if(silencioso){ marcarEstadoAuto(false); return; }
     // Si falla o tarda más de 8s, recurrir a los datos locales
     cargarDesdeLocal(true);
   }, 8000);
 
   window._adminDataCallback = function(data){
     clearTimeout(timeout);
+    window._cargandoSheets = false;
     datosPre = {}; datosPost = {};
     if(data.pre)  data.pre.forEach(row=>{
       const c = (row.codigo||'').toString().trim().toUpperCase();
@@ -448,7 +510,7 @@ function cargarDesdeSheets(){
     actualizarUI();
     const nPreComp  = Object.values(datosPre).filter(r=>r.completado==='SI').length;
     const nPostComp = Object.values(datosPost).filter(r=>r.completado==='SI').length;
-    if(nPreComp > 0 && nPostComp > 0) analizarDatos();
+    if(nPreComp > 0 && nPostComp > 0) analizarSiCambio();
     const old = document.getElementById('_adminScript'); if(old) old.remove();
   };
 
@@ -458,6 +520,7 @@ function cargarDesdeSheets(){
   s.src = API_URL + '?action=getData&callback=_adminDataCallback&t=' + Date.now();
   s.onerror = function(){
     clearTimeout(timeout);
+    if(silencioso){ marcarEstadoAuto(false); return; }
     cargarDesdeLocal(true);
   };
   document.head.appendChild(s);
@@ -493,6 +556,7 @@ function fusionarConDatosLocales(){
 }
 
 function cargarDesdeLocal(esFallback){
+  window._cargandoSheets = false;
   datosPre = {}; datosPost = {};
   fusionarConDatosLocales();
   const nPre = Object.keys(datosPre).length, nPost = Object.keys(datosPost).length;
@@ -507,7 +571,7 @@ function cargarDesdeLocal(esFallback){
   actualizarUI();
   const nPreComp  = Object.values(datosPre).filter(r=>r.completado==='SI').length;
   const nPostComp = Object.values(datosPost).filter(r=>r.completado==='SI').length;
-  if(nPreComp > 0 && nPostComp > 0) analizarDatos();
+  if(nPreComp > 0 && nPostComp > 0) analizarSiCambio();
 }
 
 function sincronizarPendientesSheets(){
@@ -561,7 +625,7 @@ function actualizarUI(){
   document.getElementById('rtPctPost').textContent   = nPoT ? pPost + '%' : '—';
   document.getElementById('rtBarPre').style.width    = pPre  + '%';
   document.getElementById('rtBarPost').style.width   = pPost + '%';
-  document.getElementById('rtUpdateTime').textContent = 'Última actualización: ' + new Date().toLocaleTimeString('es-VE');
+  document.getElementById('rtUpdateTime').innerHTML = '<span class="live-dot"></span> En vivo · actualizado ' + new Date().toLocaleTimeString('es-VE') + ' · se refresca solo';
   poblarTabla();
   if(nPT > 0 || nPoT > 0) document.getElementById('dataCard').style.display = 'block';
 }
@@ -701,6 +765,7 @@ function analizarDatos(){
   document.getElementById('statPost').textContent  = avgPost;
   document.getElementById('statDelta').textContent = (parseFloat(avgDelta)>=0?'+':'')+avgDelta;
   renderGraficos(codigos,pres,posts,deltas);
+  renderGraficoItems(codigos);
   generarAnalisis(codigos,pres,posts,deltas,avgPre,avgPost,avgDelta);
 }
 
@@ -734,14 +799,204 @@ function renderGraficos(codigos,pres,posts,deltas){
   });
 }
 
+// ── ESTADÍSTICA (sin librerías externas) ──
+function _mean(a){ return a.reduce(function(x,y){return x+y;},0)/a.length; }
+function _sd(a){ var m=_mean(a); return Math.sqrt(a.reduce(function(s,x){return s+(x-m)*(x-m);},0)/(a.length-1)); }
+function _lgamma(x){
+  var c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+  var y=x, t=x+5.5; t-=(x+0.5)*Math.log(t); var s=1.000000000190015;
+  for(var j=0;j<6;j++){ y+=1; s+=c[j]/y; }
+  return -t+Math.log(2.5066282746310005*s/x);
+}
+function _betacf(a,b,x){
+  var qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap; if(Math.abs(d)<1e-30)d=1e-30; d=1/d; var h=d;
+  for(var m=1;m<=300;m++){
+    var m2=2*m, aa=m*(b-m)*x/((qam+m2)*(a+m2));
+    d=1+aa*d; if(Math.abs(d)<1e-30)d=1e-30; c=1+aa/c; if(Math.abs(c)<1e-30)c=1e-30; d=1/d; h*=d*c;
+    aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+    d=1+aa*d; if(Math.abs(d)<1e-30)d=1e-30; c=1+aa/c; if(Math.abs(c)<1e-30)c=1e-30; d=1/d;
+    var del=d*c; h*=del; if(Math.abs(del-1)<3e-14) break;
+  }
+  return h;
+}
+function _ibeta(x,a,b){
+  if(x<=0) return 0; if(x>=1) return 1;
+  var bt=Math.exp(_lgamma(a+b)-_lgamma(a)-_lgamma(b)+a*Math.log(x)+b*Math.log(1-x));
+  return x<(a+1)/(a+b+2) ? bt*_betacf(a,b,x)/a : 1-bt*_betacf(b,a,1-x)/b;
+}
+function _tP2(t,df){ return _ibeta(df/(df+t*t),df/2,0.5); }          // p bilateral
+function _tCrit(df){ var lo=0,hi=1000; for(var i=0;i<200;i++){ var m=(lo+hi)/2; if(_tP2(m,df)>0.05) lo=m; else hi=m; } return (lo+hi)/2; }
+
+// t de Student para muestras relacionadas (sobre las diferencias)
+function testTPareado(d){
+  var n=d.length; if(n<2) return null;
+  var m=_mean(d), s=_sd(d);
+  if(s===0) return {n:n,media:m,sd:0,t:null,gl:n-1,p:(m===0?1:0),dz:null,ic:[m,m]};
+  var se=s/Math.sqrt(n), t=m/se, gl=n-1, tc=_tCrit(gl);
+  return {n:n,media:m,sd:s,t:t,gl:gl,p:_tP2(t,gl),dz:m/s,ic:[m-tc*se,m+tc*se]};
+}
+// Wilcoxon de rangos con signo: exacto (permutación de rangos medios) hasta n=200, aproximación normal después
+function testWilcoxon(d){
+  var x=d.filter(function(v){return v!==0;}), n=x.length;
+  if(n<1) return {n:0,W:0,p:1,exacto:true};
+  var ord=x.map(function(v,i){return {a:Math.abs(v),pos:v>0,i:i};}).sort(function(p,q){return p.a-q.a;});
+  var r2=new Array(n), i=0;
+  while(i<n){ var j=i; while(j+1<n && ord[j+1].a===ord[i].a) j++; for(var k=i;k<=j;k++) r2[k]=(i+1)+(j+1); i=j+1; } // rango medio ×2
+  var total=0, obs=0; for(var q=0;q<n;q++){ total+=r2[q]; if(ord[q].pos) obs+=r2[q]; }
+  var mu=total/2;
+  if(n<=200){
+    var pr=new Float64Array(total+1); pr[0]=1;
+    for(var u=0;u<n;u++){ var r=r2[u]; for(var s=total;s>=0;s--){ pr[s]=0.5*pr[s]+(s>=r?0.5*pr[s-r]:0); } }
+    var dev=Math.abs(obs-mu), p=0;
+    for(var z=0;z<=total;z++){ if(Math.abs(z-mu)>=dev-1e-9) p+=pr[z]; }
+    return {n:n,W:obs/2,p:Math.min(1,p),exacto:true};
+  }
+  var zv=(obs-mu)/ (2*Math.sqrt(r2.reduce(function(a,b){return a+(b/2)*(b/2);},0)/4));
+  var pz=2*(1-0.5*(1+_erf(Math.abs(zv)/Math.SQRT2)));
+  return {n:n,W:obs/2,p:pz,exacto:false};
+}
+function _erf(x){ var t=1/(1+0.3275911*x), y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x); return y; }
+
+// ── DATOS DE REFERENCIA DEL INSTRUMENTO ──
+var CORRECTAS = {c1:'C',c2:'B',c3:'C',c4:'A',c5:'B',c6:'A',c7:'C',c8:'B',c9:'B',c10:'B'};
+var ITEM_TXT = {
+  c1:'Edad mínima de acompañante', c2:'Prioridad en redomas', c3:'Adelantar entre canales',
+  c4:'Señal de PARE', c5:'Frenada de emergencia', c6:'Puntos ciegos', c7:'Casco en un accidente',
+  c8:'Casco certificado', c9:'Distancia bajo lluvia', c10:'Documentos obligatorios'
+};
+function valNum(row,k){ var v=row[k]; if(v===undefined) v=row[k.toUpperCase()]; var x=parseInt(v,10); return isNaN(x)?null:x; }
+function mediaDominio(row,pref,cnt){
+  var sum=0; for(var i=1;i<=cnt;i++){ var v=valNum(row,pref+i); if(v===null||v<1||v>4) return null; sum+=v; } return sum/cnt;
+}
+function fmtP(p){ return p<0.001 ? '< 0.001' : p.toFixed(3); }
+function f1(x){ return (Math.round(x*100)/100).toFixed(2); }
+function magDz(dz){ var a=Math.abs(dz); return a>=0.8?'grande':a>=0.5?'moderado':a>=0.2?'pequeño':'muy pequeño'; }
+
+function aciertosItem(rows,ck){
+  var tot=0, ok=0;
+  rows.forEach(function(r){
+    var v=r[ck]; if(v===undefined||v===null||v==='') v=r[ck.toUpperCase()];
+    if(v===undefined||v===null||v==='') return;
+    tot++; if(String(v).trim().toUpperCase()===CORRECTAS[ck]) ok++;
+  });
+  return tot ? Math.round(ok/tot*100) : null;
+}
+
+function renderGraficoItems(codigos){
+  var grid=document.getElementById('itemsGrid'); if(!grid) return;
+  var keys=Object.keys(CORRECTAS);
+  var rowsPre=codigos.map(function(c){return datosPre[c];}), rowsPost=codigos.map(function(c){return datosPost[c];});
+  var pre=keys.map(function(k){return aciertosItem(rowsPre,k);}), post=keys.map(function(k){return aciertosItem(rowsPost,k);});
+  window._itemsAciertos = {keys:keys,pre:pre,post:post};
+  if(pre.every(function(v){return v===null;}) && post.every(function(v){return v===null;})){ grid.style.display='none'; return; }
+  grid.style.display='grid';
+  if(typeof Chart==='undefined') return;
+  var labels=keys.map(function(k){return k.toUpperCase()+' · '+ITEM_TXT[k];});
+  window._charts.e = new Chart(document.getElementById('chartItems'),{
+    type:'bar',
+    data:{labels:labels,datasets:[
+      {label:'Pre-test',data:pre,backgroundColor:'rgba(91,108,235,0.8)',borderRadius:4},
+      {label:'Post-test',data:post,backgroundColor:'rgba(0,184,148,0.8)',borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{labels:{color:'#8892a4'}}},
+      scales:{x:{min:0,max:100,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#8892a4',callback:function(v){return v+'%';}}},
+              y:{grid:{display:false},ticks:{color:'#8892a4',font:{size:11}}}}}
+  });
+}
+
+function filaDominio(nombre,escala,pares){
+  if(!pares.length) return '<tr><td>'+nombre+'</td><td colspan="5" style="color:var(--muted)">Sin datos disponibles</td></tr>';
+  var a=pares.map(function(x){return x[0];}), b=pares.map(function(x){return x[1];}), d=pares.map(function(x,i){return b[i]-a[i];});
+  var w=pares.length>=2?testWilcoxon(d.map(function(v){return Math.round(v*1000)/1000;})):null;
+  var dm=_mean(d), cls=dm>0?'sig-yes':(dm<0?'sig-no':'');
+  return '<tr><td><strong>'+nombre+'</strong> <span style="color:var(--muted)">('+escala+')</span></td><td>'+pares.length+'</td><td>'+f1(_mean(a))+'</td><td>'+f1(_mean(b))+'</td>'+
+         '<td class="'+cls+'"><strong>'+(dm>=0?'+':'')+f1(dm)+'</strong></td><td>'+(w?fmtP(w.p):'—')+'</td></tr>';
+}
+
 function generarAnalisis(codigos,pres,posts,deltas,avgPre,avgPost,avgDelta){
-  const n=codigos.length, mej=deltas.filter(d=>d>0).length, man=deltas.filter(d=>d===0).length, dis=deltas.filter(d=>d<0).length;
-  const pct=Math.round((mej/n)*100), maxD=Math.max(...deltas), codMax=codigos[deltas.indexOf(maxD)], avg=parseFloat(avgDelta);
-  document.getElementById('analisisTexto').innerHTML =
-    '<div class="a-section"><h4>Resumen general</h4><p>Se analizaron <strong>'+n+' participantes</strong>. Promedio pre: <strong>'+avgPre+'/10</strong> → post: <strong>'+avgPost+'/10</strong>. Variación promedio: <strong>'+(avg>=0?'+':'')+avgDelta+' puntos</strong>.</p></div>'+
-    '<div class="a-section '+(avg>=0?'green':'coral')+'"><h4>'+(avg>=0?'Efecto de la intervención':'Resultado de la intervención')+'</h4><p>'+(avg>1?'Efecto positivo claro: '+mej+'/'+n+' participantes ('+pct+'%) mejoraron. Mayor mejora: <strong>'+codMax+'</strong> con +'+maxD+' puntos.':avg>=0?'Efecto leve o nulo. '+pct+'% mejoró pero la magnitud es pequeña.':'Disminución promedio observada. Revisar condiciones de aplicación.')+'</p></div>'+
-    '<div class="a-section"><h4>Distribución del cambio</h4><p><strong style="color:#00b894">'+mej+' mejoraron</strong> · <strong style="color:var(--muted)">'+man+' igual</strong> · <strong style="color:#e17055">'+dis+' disminuyeron</strong>. Mejora >60% indica efectividad de la intervención.</p></div>'+
-    '<div class="a-section"><h4>Recomendaciones metodológicas</h4><p>Aplicar <strong>prueba de Wilcoxon</strong> (no paramétrica) o <strong>t de Student para muestras relacionadas</strong> si hay normalidad (Shapiro-Wilk). Calcular <strong>d de Cohen</strong> para tamaño del efecto. Exportar CSV para análisis en SPSS o R.</p></div>';
+  var n=codigos.length, mej=deltas.filter(function(d){return d>0;}).length, man=deltas.filter(function(d){return d===0;}).length, dis=deltas.filter(function(d){return d<0;}).length;
+  var pct=Math.round((mej/n)*100), maxD=Math.max.apply(null,deltas), codMax=codigos[deltas.indexOf(maxD)], avg=parseFloat(avgDelta);
+  var tt=testTPareado(deltas), ww=n>=2?testWilcoxon(deltas):null;
+  var resumen=[]; // texto plano para copiar
+  var h='';
+
+  // 1) Resumen
+  h+='<div class="a-section"><h4>Resumen general</h4><p>Se analizaron <strong>'+n+' participantes</strong> con pre y post-test completos. Promedio de conocimientos: <strong>'+avgPre+'/10</strong> → <strong>'+avgPost+'/10</strong> (variación <strong>'+(avg>=0?'+':'')+avgDelta+' puntos</strong>).</p></div>';
+  resumen.push('CAP-SV-DIGITAL · Resultados ('+new Date().toLocaleDateString('es-VE')+')');
+  resumen.push('Participantes con pre y post completos: '+n);
+  resumen.push('Conocimientos (0-10): pre '+avgPre+' → post '+avgPost+' ('+(avg>=0?'+':'')+avgDelta+')');
+
+  // 2) Pruebas de hipótesis
+  if(n<2 || !tt){
+    h+='<div class="a-section"><h4>Pruebas estadísticas</h4><p>Se necesitan al menos <strong>2 participantes</strong> con pre y post completos para calcular las pruebas.</p></div>';
+  } else {
+    var sig = ww.p<0.05;
+    var dzTxt = tt.dz===null ? 'no calculable (sin variación entre las diferencias)' : magDz(tt.dz)+' (d = '+f1(tt.dz)+')';
+    h+='<div class="a-section '+(sig&&avg>0?'green':(avg<0?'coral':''))+'"><h4>Pruebas estadísticas · conocimientos (pre vs post)</h4>'+
+       '<div class="test-grid">'+
+         '<div class="test-box"><b>'+fmtP(ww.p)+'</b><span>Wilcoxon (valor p, bilateral'+(ww.exacto?', exacto':'')+')</span></div>'+
+         '<div class="test-box"><b>'+(tt.t===null?'—':fmtP(tt.p))+'</b><span>t de Student pareada'+(tt.t===null?'':' · t('+tt.gl+') = '+f1(tt.t))+'</span></div>'+
+         '<div class="test-box"><b>'+(tt.dz===null?'—':f1(tt.dz))+'</b><span>d de Cohen (tamaño del efecto)</span></div>'+
+         '<div class="test-box"><b>['+f1(tt.ic[0])+' ; '+f1(tt.ic[1])+']</b><span>IC 95% de la mejora media</span></div>'+
+       '</div>'+
+       '<p>'+(sig
+          ? 'La variación de <strong>'+(avg>=0?'+':'')+avgDelta+' puntos</strong> es <strong class="sig-yes">estadísticamente significativa</strong> (Wilcoxon p '+(ww.p<0.001?'':'= ')+fmtP(ww.p)+'), con un tamaño del efecto <strong>'+dzTxt+'</strong>.'
+          : 'La variación de <strong>'+(avg>=0?'+':'')+avgDelta+' puntos</strong> <strong class="sig-no">no alcanza significancia estadística</strong> (Wilcoxon p = '+fmtP(ww.p)+'; α = 0.05). Tamaño del efecto: <strong>'+dzTxt+'</strong>.')+
+       '</p>'+
+       (n<10 ? '<p style="color:#f0b429;margin-top:6px;"><i class="fas fa-exclamation-triangle"></i> Muestra pequeña (n = '+n+'): interprétalo con cautela; los valores p se vuelven más confiables al crecer la muestra.</p>' : '')+
+       '<p style="color:var(--muted);font-size:0.76rem;margin-top:8px;">Se reporta Wilcoxon como prueba principal (puntajes discretos y muestras pequeñas) y la t pareada como complemento. Diseño pre/post sin grupo control: la mejora no puede atribuirse únicamente a la intervención.</p></div>';
+    resumen.push('Wilcoxon: p '+(ww.p<0.001?'':'= ')+fmtP(ww.p)+' · t pareada: '+(tt.t===null?'n/a':'t('+tt.gl+')='+f1(tt.t)+', p '+(tt.p<0.001?'':'= ')+fmtP(tt.p))+' · d de Cohen: '+(tt.dz===null?'n/a':f1(tt.dz)));
+    resumen.push('IC 95% de la mejora media: ['+f1(tt.ic[0])+' ; '+f1(tt.ic[1])+']');
+  }
+
+  // 3) Cambio por participante
+  h+='<div class="a-section"><h4>Cambio por participante</h4><p><strong style="color:#00b894">'+mej+' mejoraron ('+pct+'%)</strong> · <strong style="color:var(--muted)">'+man+(man===1?' se mantuvo':' se mantuvieron')+'</strong> · <strong style="color:#e17055">'+dis+(dis===1?' disminuyó':' disminuyeron')+'</strong>.'+(maxD>0?' Mayor mejora: <strong>'+codMax+'</strong> (+'+maxD+').':'')+'</p></div>';
+  resumen.push('Mejoraron '+mej+' · iguales '+man+' · disminuyeron '+dis);
+
+  // 4) Por dimensión
+  var pa=[], pp=[];
+  codigos.forEach(function(c){
+    var a1=mediaDominio(datosPre[c],'a',8), a2=mediaDominio(datosPost[c],'a',8);
+    var p1=mediaDominio(datosPre[c],'pr',8), p2=mediaDominio(datosPost[c],'pr',8);
+    if(a1!==null&&a2!==null) pa.push([a1,a2]);
+    if(p1!==null&&p2!==null) pp.push([p1,p2]);
+  });
+  var pc=pres.map(function(v,i){return [v,posts[i]];});
+  h+='<div class="a-section"><h4>Resultados por dimensión</h4><div style="overflow-x:auto;"><table class="dom-table"><thead><tr><th>Dimensión</th><th>n</th><th>Pre</th><th>Post</th><th>Cambio</th><th>p (Wilcoxon)</th></tr></thead><tbody>'+
+     filaDominio('Conocimientos','0–10',pc)+filaDominio('Actitudes','1–4',pa)+filaDominio('Prácticas','1–4',pp)+
+     '</tbody></table></div>'+
+     ((pa.length||pp.length)?'':'<p style="color:var(--muted);font-size:0.76rem;margin-top:8px;">Las respuestas de actitudes y prácticas no están llegando al panel desde Google Sheets; solo se muestran los conocimientos.</p>')+
+     '</div>';
+  if(pa.length) resumen.push('Actitudes (1-4): pre '+f1(_mean(pa.map(function(x){return x[0];})))+' → post '+f1(_mean(pa.map(function(x){return x[1];}))));
+  if(pp.length) resumen.push('Prácticas (1-4): pre '+f1(_mean(pp.map(function(x){return x[0];})))+' → post '+f1(_mean(pp.map(function(x){return x[1];}))));
+
+  // 5) Ítems a reforzar
+  var it=window._itemsAciertos;
+  if(it){
+    var base = it.post.some(function(v){return v!==null;}) ? it.post : it.pre;
+    var idx=it.keys.map(function(k,i){return {k:k,v:base[i],pre:it.pre[i],post:it.post[i]};}).filter(function(o){return o.v!==null;}).sort(function(a,b){return a.v-b.v;}).slice(0,3);
+    if(idx.length){
+      h+='<div class="a-section"><h4>Temas a reforzar</h4><p>Ítems con menor porcentaje de acierto en el post-test: '+
+         idx.map(function(o){ return '<strong>'+o.k.toUpperCase()+' · '+ITEM_TXT[o.k]+'</strong> ('+o.v+'%'+(o.pre!==null&&o.post!==null?', antes '+o.pre+'%':'')+')'; }).join(' · ')+'.</p></div>';
+      resumen.push('Temas a reforzar: '+idx.map(function(o){return o.k.toUpperCase()+' '+ITEM_TXT[o.k]+' ('+o.v+'%)';}).join('; '));
+    }
+  }
+
+  // 6) Seguimiento
+  var pend=Object.keys(datosPre).filter(function(c){ return datosPre[c].completado==='SI' && !(datosPost[c]&&datosPost[c].completado==='SI'); });
+  h+='<div class="a-section"><h4>Seguimiento</h4><p>'+(pend.length
+      ? '<strong>'+pend.length+' participante'+(pend.length>1?'s':'')+'</strong> completaron el pre-test y aún no completan el post-test: <span style="color:var(--muted)">'+pend.slice(0,12).join(', ')+(pend.length>12?' …':'')+'</span>.'
+      : 'Todos los participantes con pre-test completo ya terminaron el post-test.')+'</p></div>';
+  resumen.push('Pendientes de post-test: '+pend.length);
+
+  document.getElementById('analisisTexto').innerHTML=h;
+  window._resumenTxt=resumen.join('\n');
+}
+
+function copiarResumen(){
+  var t=window._resumenTxt||''; var btn=document.getElementById('btnCopiarResumen');
+  function ok(){ if(btn){ var o=btn.innerHTML; btn.innerHTML='<i class="fas fa-check"></i> Copiado'; setTimeout(function(){btn.innerHTML=o;},2000);} }
+  if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(t).then(ok).catch(function(){ fb(); }); } else fb();
+  function fb(){ var ta=document.createElement('textarea'); ta.value=t; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');ok();}catch(e){alert(t);} document.body.removeChild(ta); }
 }
 
 function exportarReporte(){
