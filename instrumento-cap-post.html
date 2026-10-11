@@ -2,7 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5b6ceb">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="app-version" content="2026-10-10-m2">
 <title>CAP-SV-DIGITAL · Post-test · Ciudad Bolívar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -226,6 +233,52 @@ body{font-family:var(--font-b);background:linear-gradient(135deg,#00b894 0%,#098
 .inst-copyright{text-align:center;font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:24px;}
 @media(max-width:600px){.hero{padding:24px 16px 20px;}.hero-inner{flex-direction:column;text-align:center;}.hero-text{text-align:center;}.section-body{padding:0 16px 20px;}.section-header{padding:16px 20px;}.q-head{padding:12px 14px;}.q-body{padding:12px 14px;}}
 </style>
+<style id="mobile-opt">
+/* ── Optimización móvil CAP-SV-DIGITAL ── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{min-height:100vh;min-height:100dvh;-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+a,button,label,select,input,textarea,.opt-label,.likert-opt{touch-action:manipulation;}
+img,canvas,svg,video,iframe{max-width:100%;}
+table{max-width:100%;}
+@media(max-width:600px){
+  /* 16px evita el zoom automático de iOS al tocar un campo */
+  input[type="text"],input[type="number"],input[type="tel"],input[type="email"],
+  input[type="password"],input[type="search"],input:not([type]),select,textarea{font-size:16px!important;}
+  input[type="radio"],input[type="checkbox"]{min-width:22px;min-height:22px;}
+  .opt-label{min-height:48px;}
+  .likert-opt{min-height:56px;}
+  button,.btn-action,.btn-primary,.btn-ghost{min-height:46px;}
+  body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom));}
+}
+@media(max-width:380px){ body{font-size:14px;} }
+</style>
+<style id="mobile-opt-2">
+/* ── Móvil v2: instrumento (cabecera compacta, formulario a la vista) ── */
+@media(max-width:600px){
+  body{padding-top:max(8px,env(safe-area-inset-top));}
+  .hero{padding:14px 14px 12px;}
+  .hero-inner{flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;gap:12px;margin-bottom:10px;text-align:left;}
+  .hero-avatar{width:44px;height:44px;font-size:1.2rem;}
+  .hero-text{text-align:left;}
+  .hero-title{font-size:1.3rem;margin-bottom:2px;}
+  .hero-subtitle{font-size:0.8rem;margin-bottom:2px;}
+  .hero-inst{font-size:0.68rem;line-height:1.3;}
+  .hero-info-box{padding:8px 12px;margin-bottom:8px;}
+  .hero-info-box p{font-size:0.76rem;line-height:1.45;}
+  .hero-participant-bar{flex-direction:row;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:8px 12px;}
+  .hpb-back{display:inline-flex;align-items:center;min-height:40px;padding:0 10px;font-size:0.85rem;}
+  .progress-bar-sticky{padding:8px 12px;gap:10px;top:env(safe-area-inset-top,0px);}
+  .section-header{flex-wrap:wrap;gap:10px;padding:14px;}
+  .section-meta{flex:1 1 150px;min-width:0;}
+  .section-badge{margin-left:0;}
+  .likert-lbl{font-size:0.78rem;}
+  .likert-opt{padding:12px 4px;}
+  .sel-field{min-height:48px;}
+  .q-body{padding:12px;}
+  .section-badge,#modoBadge{font-size:0.75rem;}
+  .hero-inst{font-size:0.72rem;}
+}
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -334,34 +387,183 @@ body{font-family:var(--font-b);background:linear-gradient(135deg,#00b894 0%,#098
   </div>
 
   <!-- ══════════════════════════════════════════
-       SECCIÓN II — CONOCIMIENTOS (V/F) — idéntica
+       SECCIÓN II — CONOCIMIENTOS SOBRE SEGURIDAD VIAL
   ══════════════════════════════════════════ -->
   <div class="section-block">
     <div class="section-header sh-violet">
       <div class="section-num sn-violet">II</div>
       <div class="section-meta">
-        <h2>Conocimientos sobre Seguridad Vial</h2>
-        <p>Marque V (Verdadero) o F (Falso) según su criterio</p>
+        <h2>Conocimientos sobre Normativa y Seguridad Vial</h2>
+        <p>Seleccione la opción correcta para cada situación según la ley y la técnica de conducción</p>
       </div>
       <span class="section-badge sb-violet">10 preguntas</span>
     </div>
     <div class="section-notice">
       <i class="fas fa-info-circle" style="margin-right:6px;"></i>
-      Basado en la Ley de Transporte Terrestre de Venezuela, normas INTT y evidencia internacional de seguridad vial.
+      Evaluación técnica basada en la Ley de Transporte Terrestre de Venezuela, normas del INTT y principios de conducción defensiva.
     </div>
-    <div class="section-body" style="padding-top:4px;">
-      <div class="vf-list">
-        <div class="vf-row" id="vf-c1"><span class="vf-num">C1</span><span class="vf-q">Para obtener la licencia tipo "A" en Venezuela, el solicitante debe tener al menos 16 años de edad cumplidos.</span><input type="hidden" id="c1v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c1','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c1','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c2"><span class="vf-num">C2</span><span class="vf-q">Todo conductor de motocicleta está obligado a contar con un seguro de responsabilidad civil vigente.</span><input type="hidden" id="c2v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c2','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c2','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c3"><span class="vf-num">C3</span><span class="vf-q">Ante un accidente con heridos, lo primero que debe hacerse es mover a las víctimas del lugar para evitar más daños.</span><input type="hidden" id="c3v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c3','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c3','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c4"><span class="vf-num">C4</span><span class="vf-q">Consumir alcohol en pequeñas cantidades antes de conducir no afecta significativamente los reflejos ni la capacidad de reacción.</span><input type="hidden" id="c4v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c4','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c4','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c5"><span class="vf-num">C5</span><span class="vf-q">El manejo defensivo consiste en anticipar las acciones de otros conductores para reducir el riesgo de colisión.</span><input type="hidden" id="c5v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c5','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c5','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c6"><span class="vf-num">C6</span><span class="vf-q">Los conductores de motocicleta tienen aproximadamente 8 veces más probabilidad de morir en un accidente que los ocupantes de un automóvil.</span><input type="hidden" id="c6v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c6','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c6','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c7"><span class="vf-num">C7</span><span class="vf-q">Usar el teléfono celular mientras se conduce una motocicleta genera un riesgo equivalente a manejar con una alcoholemia de 0,8 g/L.</span><input type="hidden" id="c7v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c7','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c7','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c8"><span class="vf-num">C8</span><span class="vf-q">El uso del casco homologado reduce el riesgo de muerte en accidentes de motocicleta hasta en un 40%.</span><input type="hidden" id="c8v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c8','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c8','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c9"><span class="vf-num">C9</span><span class="vf-q">En Venezuela, el uso de casco es obligatorio únicamente para el conductor, no para el pasajero de la motocicleta.</span><input type="hidden" id="c9v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c9','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c9','F',this)">F</button></div></div>
-        <div class="vf-row" id="vf-c10"><span class="vf-num">C10</span><span class="vf-q">Conducir bajo lluvia intensa no afecta la distancia de frenado ni la capacidad de maniobra de la motocicleta.</span><input type="hidden" id="c10v"><div class="vf-btns"><button type="button" class="vf-btn" onclick="setVF('c10','V',this)">V</button><button type="button" class="vf-btn" onclick="setVF('c10','F',this)">F</button></div></div>
+    <div class="section-body" style="padding-top:14px;">
+
+      <!-- C1 -->
+      <div class="q-block" id="qb-c1" data-qid="c1">
+        <div class="q-head">
+          <div class="q-num qn-violet">C1</div>
+          <span class="q-text">¿A partir de qué edad mínima permite la Ley de Transporte Terrestre venezolana que un menor de edad viaje como acompañante en una motocicleta?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c1" value="A" onchange="markMC('c1','A')"> <span><strong>A)</strong> A partir de los 5 años, siempre que sus pies alcancen los posapiés.</span></label>
+            <label class="opt-label"><input type="radio" name="c1" value="B" onchange="markMC('c1','B')"> <span><strong>B)</strong> A partir de los 7 años, si viaja en el medio entre dos adultos.</span></label>
+            <label class="opt-label"><input type="radio" name="c1" value="C" onchange="markMC('c1','C')"> <span><strong>C)</strong> A partir de los 10 años cumplidos.</span></label>
+            <label class="opt-label"><input type="radio" name="c1" value="D" onchange="markMC('c1','D')"> <span><strong>D)</strong> La ley no fija edad mínima si el menor lleva casco protector.</span></label>
+          </div>
+        </div>
       </div>
+
+      <!-- C2 -->
+      <div class="q-block" id="qb-c2" data-qid="c2">
+        <div class="q-head">
+          <div class="q-num qn-violet">C2</div>
+          <span class="q-text">Al aproximarse a una redoma o rotonda que no cuenta con semáforos, ¿qué vehículo tiene legalmente la prioridad de paso?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c2" value="A" onchange="markMC('c2','A')"> <span><strong>A)</strong> El vehículo que circula por la avenida con mayor volumen de tráfico o velocidad.</span></label>
+            <label class="opt-label"><input type="radio" name="c2" value="B" onchange="markMC('c2','B')"> <span><strong>B)</strong> El vehículo que ya se encuentra circulando dentro del anillo de la redoma.</span></label>
+            <label class="opt-label"><input type="radio" name="c2" value="C" onchange="markMC('c2','C')"> <span><strong>C)</strong> El vehículo que va a entrar a la redoma por la derecha.</span></label>
+            <label class="opt-label"><input type="radio" name="c2" value="D" onchange="markMC('c2','D')"> <span><strong>D)</strong> El vehículo de mayor tamaño o peso.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C3 -->
+      <div class="q-block" id="qb-c3" data-qid="c3">
+        <div class="q-head">
+          <div class="q-num qn-violet">C3</div>
+          <span class="q-text">De acuerdo con la normativa venezolana, ¿en qué circunstancia le está permitido a un motociclista adelantar transitando entre dos canales de vehículos que están en movimiento?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c3" value="A" onchange="markMC('c3','A')"> <span><strong>A)</strong> En cualquier momento, siempre que mantenga las luces intermitentes encendidas.</span></label>
+            <label class="opt-label"><input type="radio" name="c3" value="B" onchange="markMC('c3','B')"> <span><strong>B)</strong> Únicamente si los vehículos circulan a menos de 30 km/h.</span></label>
+            <label class="opt-label"><input type="radio" name="c3" value="C" onchange="markMC('c3','C')"> <span><strong>C)</strong> Está prohibido circular o cambiar de canal entre vehículos en movimiento en la misma vía.</span></label>
+            <label class="opt-label"><input type="radio" name="c3" value="D" onchange="markMC('c3','D')"> <span><strong>D)</strong> Solo si el conductor toca la corneta para advertir a los lados.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C4 -->
+      <div class="q-block" id="qb-c4" data-qid="c4">
+        <div class="q-head">
+          <div class="q-num qn-violet">C4</div>
+          <span class="q-text">¿Cuál es la obligación legal y reglamentaria de un conductor al llegar a una intersección con señal de "PARE" (R-1)?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c4" value="A" onchange="markMC('c4','A')"> <span><strong>A)</strong> Detener por completo la marcha de la moto (0 km/h) antes de la línea de cruce, venga o no venga nadie.</span></label>
+            <label class="opt-label"><input type="radio" name="c4" value="B" onchange="markMC('c4','B')"> <span><strong>B)</strong> Reducir la velocidad a marcha mínima y avanzar si comprueba que no viene nadie a menos de 50 metros.</span></label>
+            <label class="opt-label"><input type="radio" name="c4" value="C" onchange="markMC('c4','C')"> <span><strong>C)</strong> Tocar corneta dos veces y avanzar con precaución.</span></label>
+            <label class="opt-label"><input type="radio" name="c4" value="D" onchange="markMC('c4','D')"> <span><strong>D)</strong> Detenerse únicamente si el vehículo que cruza por la otra vía es de transporte público o emergencia.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C5 -->
+      <div class="q-block" id="qb-c5" data-qid="c5">
+        <div class="q-head">
+          <div class="q-num qn-violet">C5</div>
+          <span class="q-text">Durante una frenada de emergencia en línea recta sobre asfalto seco, ¿cuál es la técnica correcta de distribución de fuerza en los frenos?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c5" value="A" onchange="markMC('c5','A')"> <span><strong>A)</strong> Frenar 100% con el freno trasero para no correr el riesgo de volcarse hacia adelante.</span></label>
+            <label class="opt-label"><input type="radio" name="c5" value="B" onchange="markMC('c5','B')"> <span><strong>B)</strong> Aplicar aproximadamente el 70% de la fuerza en el freno delantero y 30% en el trasero.</span></label>
+            <label class="opt-label"><input type="radio" name="c5" value="C" onchange="markMC('c5','C')"> <span><strong>C)</strong> Aplicar exactamente 50% y 50% con la misma presión en ambas manos y pies.</span></label>
+            <label class="opt-label"><input type="radio" name="c5" value="D" onchange="markMC('c5','D')"> <span><strong>D)</strong> Apretar el embrague (clutch) a fondo y no tocar los frenos hasta que el motor desacelere.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C6 -->
+      <div class="q-block" id="qb-c6" data-qid="c6">
+        <div class="q-head">
+          <div class="q-num qn-violet">C6</div>
+          <span class="q-text">Al circular detrás o al lado de un camión de carga pesada o autobús, ¿cómo sabe el motociclista si está ubicado en un punto ciego?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c6" value="A" onchange="markMC('c6','A')"> <span><strong>A)</strong> Si el motociclista no puede ver el rostro del chofer reflejado en los retrovisores del camión.</span></label>
+            <label class="opt-label"><input type="radio" name="c6" value="B" onchange="markMC('c6','B')"> <span><strong>B)</strong> Si la motocicleta circula a menos de 5 metros de la parte delantera del camión.</span></label>
+            <label class="opt-label"><input type="radio" name="c6" value="C" onchange="markMC('c6','C')"> <span><strong>C)</strong> Los camiones no tienen puntos ciegos hacia los laterales debido a la altura de su cabina.</span></label>
+            <label class="opt-label"><input type="radio" name="c6" value="D" onchange="markMC('c6','D')"> <span><strong>D)</strong> Solo hay punto ciego si el camión lleva la carga destapada.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C7 -->
+      <div class="q-block" id="qb-c7" data-qid="c7">
+        <div class="q-head">
+          <div class="q-num qn-violet">C7</div>
+          <span class="q-text">Si presencia un accidente donde un motociclista está en el suelo, inconsciente pero respirando con normalidad, ¿cuál es la conducta inicial correcta respecto a su casco?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c7" value="A" onchange="markMC('c7','A')"> <span><strong>A)</strong> Retirarle el casco de inmediato y con cuidado para que reciba más oxígeno.</span></label>
+            <label class="opt-label"><input type="radio" name="c7" value="B" onchange="markMC('c7','B')"> <span><strong>B)</strong> Aflojar el barboquejo y girar su cabeza hacia un lado para evitar que se ahogue.</span></label>
+            <label class="opt-label"><input type="radio" name="c7" value="C" onchange="markMC('c7','C')"> <span><strong>C)</strong> No retirarle el casco bajo ninguna circunstancia y mantener inmovilizado el cuello hasta que llegue el personal de salud.</span></label>
+            <label class="opt-label"><input type="radio" name="c7" value="D" onchange="markMC('c7','D')"> <span><strong>D)</strong> Quitarle el casco únicamente si el accidentado empieza a quejarse de calor.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C8 -->
+      <div class="q-block" id="qb-c8" data-qid="c8">
+        <div class="q-head">
+          <div class="q-num qn-violet">C8</div>
+          <span class="q-text">Para circular legalmente en motocicleta, ¿qué condición técnica debe cumplir el casco según las normas del INTT y COVENIN?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c8" value="A" onchange="markMC('c8','A')"> <span><strong>A)</strong> Puede ser cualquier casco protector rígido, incluidos cascos de ciclista o de seguridad industrial de construcción.</span></label>
+            <label class="opt-label"><input type="radio" name="c8" value="B" onchange="markMC('c8','B')"> <span><strong>B)</strong> Debe ser un casco específico para motociclistas con certificación de impacto (como DOT, ECE o COVENIN) y correa de retención ajustada.</span></label>
+            <label class="opt-label"><input type="radio" name="c8" value="C" onchange="markMC('c8','C')"> <span><strong>C)</strong> Cualquier casco de cualquier material es válido si tiene pintura reflectiva.</span></label>
+            <label class="opt-label"><input type="radio" name="c8" value="D" onchange="markMC('c8','D')"> <span><strong>D)</strong> El casco solo se exige con certificación si se circula en autopistas interestatales.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C9 -->
+      <div class="q-block" id="qb-c9" data-qid="c9">
+        <div class="q-head">
+          <div class="q-num qn-violet">C9</div>
+          <span class="q-text">Al conducir bajo lluvia sobre asfalto mojado, ¿cuál es la recomendación técnica para la distancia de seguimiento respecto al vehículo de adelante?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c9" value="A" onchange="markMC('c9','A')"> <span><strong>A)</strong> Mantener exactamente la misma distancia de 2 segundos que en tiempo seco.</span></label>
+            <label class="opt-label"><input type="radio" name="c9" value="B" onchange="markMC('c9','B')"> <span><strong>B)</strong> Aumentar la distancia al menos al doble (4 segundos o más), ya que el agua duplica o triplica la distancia de frenado.</span></label>
+            <label class="opt-label"><input type="radio" name="c9" value="C" onchange="markMC('c9','C')"> <span><strong>C)</strong> Pegarse lo más posible a la rueda del vehículo delantero para aprovechar su huella seca.</span></label>
+            <label class="opt-label"><input type="radio" name="c9" value="D" onchange="markMC('c9','D')"> <span><strong>D)</strong> La distancia no influye si la motocicleta cuenta con freno de disco delantero.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- C10 -->
+      <div class="q-block" id="qb-c10" data-qid="c10">
+        <div class="q-head">
+          <div class="q-num qn-violet">C10</div>
+          <span class="q-text">Además de la cédula y la licencia de conducir vigente, ¿qué otros documentos son de porte legal obligatorio para circular en motocicleta en Venezuela?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-col">
+            <label class="opt-label"><input type="radio" name="c10" value="A" onchange="markMC('c10','A')"> <span><strong>A)</strong> Únicamente el carnet de circulación del vehículo.</span></label>
+            <label class="opt-label"><input type="radio" name="c10" value="B" onchange="markMC('c10','B')"> <span><strong>B)</strong> Certificado Médico Vial vigente, Certificado de Registro de Vehículo y Póliza de Responsabilidad Civil (RCV) vigente.</span></label>
+            <label class="opt-label"><input type="radio" name="c10" value="C" onchange="markMC('c10','C')"> <span><strong>C)</strong> El RCV solo es obligatorio para mototaxis afiliados a cooperativas, no para particulares.</span></label>
+            <label class="opt-label"><input type="radio" name="c10" value="D" onchange="markMC('c10','D')"> <span><strong>D)</strong> Carnet de circulación y factura original de compra de la moto.</span></label>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -482,7 +684,7 @@ body{font-family:var(--font-b);background:linear-gradient(135deg,#00b894 0%,#098
         <h4><i class="fas fa-map-marker-alt"></i> Muestra</h4>
         <p><i class="fas fa-map-pin"></i> Ciudad Bolívar, Estado Bolívar</p>
         <p><i class="fas fa-motorcycle"></i> Mototaxistas y delivery activos</p>
-        <p><i class="fas fa-calendar-alt"></i> Período: 2025</p>
+        <p><i class="fas fa-calendar-alt"></i> Período: 2026</p>
       </div>
       <div class="inst-footer-sec">
         <h4><i class="fas fa-flask"></i> Diseño Metodológico</h4>
@@ -552,7 +754,10 @@ body{font-family:var(--font-b);background:linear-gradient(135deg,#00b894 0%,#098
 const API_URL = 'https://script.google.com/macros/s/AKfycbws-sxtqJ2bLGHn9UNggJdHPCYKUfjGwyKU5oeq-RUCacUlwv53LWQ2MZTwi40JlQVo/exec';
 const TOTAL = 33; // 2 perfil + 10 VF + 8 actitudes + 8 prácticas + 5 digital
 
-const correctas = {c1:'V',c2:'V',c3:'F',c4:'F',c5:'V',c6:'V',c7:'V',c8:'V',c9:'F',c10:'F'};
+const correctas = {
+  c1:'C', c2:'B', c3:'C', c4:'A', c5:'B',
+  c6:'A', c7:'C', c8:'B', c9:'B', c10:'B'
+};
 const vfAnswers = {};
 const answered  = new Set();
 
@@ -577,6 +782,9 @@ window.addEventListener('DOMContentLoaded', function() {
   let codigo = params.get('codigo') || sessionStorage.getItem('cap_codigo') || '';
   sessionStorage.setItem('cap_modo', 'post');
 
+  // Sin código = no pasó por el portal (QR o enlace viejo): enviar al landing
+  if (!codigo) { window.location.replace('landing-cap.html'); return; }
+
   if (codigo) {
     codigo = codigo.toUpperCase();
     document.getElementById('codigoParticipante').value = codigo;
@@ -598,16 +806,14 @@ window.addEventListener('DOMContentLoaded', function() {
   if (codigo) cargarProgresoInicial(codigo);
 });
 
-// ── V/F ──
-function setVF(field, val, btn) {
-  const row = document.getElementById('vf-' + field);
-  row.querySelectorAll('.vf-btn').forEach(b => b.classList.remove('v-active','f-active'));
-  btn.classList.add(val === 'V' ? 'v-active' : 'f-active');
-  row.className = 'vf-row ' + (val === 'V' ? 'vf-true' : 'vf-false');
-  document.getElementById(field + 'v').value = val;
+// ── OPCIÓN MÚLTIPLE (SECCIÓN II) ──
+function markMC(field, val) {
   vfAnswers[field] = val;
+  const el = document.getElementById('qb-' + field);
+  if (el) el.classList.add('answered');
   updateProgress(); guardarProgreso();
 }
+function setVF(field, val) { markMC(field, val); }
 
 // ── LIKERT ──
 function checkLikert() {
@@ -656,9 +862,9 @@ function updateProgress() {
 // ── VALIDACIÓN INCOMPLETO ──
 const qLabels = {
   p6:'Capacitación adicional', p7:'Accidentes durante intervención',
-  c1:'Licencia tipo A (V/F)', c2:'Seguro obligatorio (V/F)', c3:'Mover heridos (V/F)',
-  c4:'Alcohol y reflejos (V/F)', c5:'Manejo defensivo (V/F)', c6:'Riesgo en motos (V/F)',
-  c7:'Celular al conducir (V/F)', c8:'Casco reduce mortalidad (V/F)', c9:'Casco pasajero (V/F)', c10:'Lluvia y frenado (V/F)',
+  c1:'C1: Menores en moto', c2:'C2: Prioridad en redomas', c3:'C3: Circulación entre canales',
+  c4:'C4: Señal de PARE', c5:'C5: Distribución de frenado', c6:'C6: Puntos ciegos de camiones',
+  c7:'C7: Primeros auxilios (casco)', c8:'C8: Homologación del casco', c9:'C9: Distancia en lluvia', c10:'C10: Documentación obligatoria',
   a1:'Actitud: uso del casco', a2:'Actitud: velocidad', a3:'Actitud: celular',
   a4:'Actitud: alcohol', a5:'Actitud: normas', a6:'Actitud: capacitación',
   a7:'Actitud: cambio de hábitos', a8:'Actitud: autoresponsabilidad',
@@ -794,6 +1000,24 @@ function enviarAGoogleSheets(scoreC) {
   datos.nivel_conocimientos = scoreC>=9?'Excelente':scoreC>=7?'Bueno':scoreC>=5?'Regular':'Bajo';
   datos.completado = 'SI';
 
+  // Guardar en localStorage siempre
+  try {
+    var respuestasGuardadas = JSON.parse(localStorage.getItem('cap_respuestas') || '[]');
+    var existe = respuestasGuardadas.some(function(r) { return r.codigo === datos.codigo && r.modo === 'post'; });
+    if (!existe) {
+      respuestasGuardadas.push(datos);
+    } else {
+      respuestasGuardadas = respuestasGuardadas.map(function(r) {
+        if (r.codigo === datos.codigo && r.modo === 'post') return datos;
+        return r;
+      });
+    }
+    localStorage.setItem('cap_respuestas', JSON.stringify(respuestasGuardadas));
+    localStorage.setItem(claveSent(), '1');
+    localStorage.setItem('cap_chk_' + codigo, JSON.stringify({ existe: true, completadoPre: true, completadoPost: true, ts: Date.now() }));
+    mostrarSync('💾 Guardado local');
+  } catch(e) {}
+
   // Enviar con hasta 3 reintentos para garantizar que completado=SI llegue a Sheets
   var intentos = 0;
   var maxIntentos = 3;
@@ -839,10 +1063,21 @@ function enviarAGoogleSheets(scoreC) {
 }
 
 function registrarInicio(codigo) {
+  if (!codigo) return;
+  codigo = codigo.toUpperCase();
+  try {
+    var cods = JSON.parse(localStorage.getItem('cap_codigos_registrados') || '[]');
+    if(cods.indexOf(codigo) === -1) {
+      cods.push(codigo);
+      localStorage.setItem('cap_codigos_registrados', JSON.stringify(cods));
+    }
+    localStorage.setItem('cap_registrado_' + codigo + '_post', '1');
+  } catch(e){}
+
   var cb = '_cb_reg_' + Date.now();
   window[cb] = function(){ try{ delete window[cb]; }catch(e){} };
   var s = document.createElement('script');
-  s.src = API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo.toUpperCase())
+  s.src = API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo)
         + '&modo=post&callback=' + cb + '&t=' + Date.now();
   s.onerror = function(){ try{ delete window[cb]; }catch(e){} s.remove(); };
   document.head.appendChild(s);
@@ -928,15 +1163,14 @@ function restaurar(datos) {
     const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
     if (r) { r.checked=true; answered.add(k); const el=document.getElementById('qb-'+k); if(el) el.classList.add('answered'); }
   });
+  // Conocimientos
   Object.keys(correctas).forEach(k => {
     if (!datos[k]) return;
     vfAnswers[k] = datos[k];
-    const row = document.getElementById('vf-'+k); if (!row) return;
-    row.querySelectorAll('.vf-btn').forEach(b => b.classList.remove('v-active','f-active'));
-    const target = datos[k]==='V' ? row.querySelector('.vf-btn:first-child') : row.querySelector('.vf-btn:last-child');
-    if (target) target.classList.add(datos[k]==='V'?'v-active':'f-active');
-    row.className = 'vf-row ' + (datos[k]==='V'?'vf-true':'vf-false');
-    const hid = document.getElementById(k+'v'); if(hid) hid.value=datos[k];
+    const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
+    if (r) { r.checked = true; }
+    const el = document.getElementById('qb-' + k);
+    if (el) el.classList.add('answered');
   });
   ['a1','a2','a3','a4','a5','a6','a7','a8','pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8','d1','d2','d3','d4','d5'].forEach(n => {
     if (!datos[n]) return;
@@ -970,9 +1204,17 @@ function imprimirResultados() {
   }).join('');
 
   const vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
+  const vfTitulos = [
+    'Menores en moto', 'Prioridad en redomas', 'Circulación entre canales',
+    'Señal de PARE', 'Frenada de emergencia', 'Puntos ciegos camiones',
+    'Primeros auxilios (casco)', 'Homologación del casco', 'Distancia en lluvia', 'Documentación obligatoria'
+  ];
   const vfHTML = vfKeys.map(function(k,i) {
     const resp = vfAnswers[k]||'—'; const ok = resp===correctas[k];
-    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+'"><td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+'</td><td style="padding:6px 10px;font-size:0.78rem;">'+(ok?'&#10003;':'&#10007;')+' '+resp+'</td></tr>';
+    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+'">'
+      +'<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+' · '+vfTitulos[i]+'</td>'
+      +'<td style="padding:6px 10px;font-size:0.78rem;font-weight:700;color:'+(ok?'#059669':'#dc2626')+';">'+(ok?'✓ Correcta':'✗ Incorrecta')+' (Opción '+resp+')</td>'
+      +'</tr>';
   }).join('');
 
   const actLabels=['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Cambio de hábitos','Autoresponsabilidad'];
@@ -1029,7 +1271,7 @@ function imprimirResultados() {
     +'@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
     +'</style></head><body>'
     +'<div class="header"><div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial \u00b7 POST-TEST</p>'
-    +'<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente \u00b7 Dpto. Enfermer\u00eda \u00b7 Ciudad Bol\u00edvar 2025</p></div>'
+    +'<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente \u00b7 Dpto. Enfermer\u00eda \u00b7 Ciudad Bol\u00edvar 2026</p></div>'
     +'<div class="code-badge"><div class="lbl">C\u00f3digo</div><div class="val">'+codigo+'</div></div></div>'
     +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
     +'<div class="si"><h2>'+nivel+'</h2><p>Secci\u00f3n de Conocimientos \u00b7 POST-TEST completado</p>'
