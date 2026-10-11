@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -746,15 +747,343 @@ body{
   100%{ transform:scale(1); opacity:1; }
 }
 
-/* ── RESPONSIVE ── */
-@media(max-width:600px){
-  .navbar{ padding:12px 16px; }
-  .hero{ padding:40px 16px 36px; }
-  .main{ padding:16px 16px 0; }
-  .platforms-grid{ grid-template-columns:repeat(2,1fr); }
-  .inst-authors-box{ flex-direction:column; text-align:center; }
-  .inst-footer-sec h4::after{ left:50%; transform:translateX(-50%); }
-  .inst-footer{ padding:32px 16px 20px; }
+  /* ── SECTION LABEL UNIFICADO ── */
+  .section-label{
+    font-family: var(--font-h);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--purple);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label i{ color: var(--green); font-size: 0.95rem; }
+
+  /* ── NOVEDADES MODERNAS ── */
+  .novelty-card{
+    display: flex;
+    flex-direction: column;
+  }
+  .nov-card-body{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .nov-desc{
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .nov-action-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+  }
+  .nov-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-family: var(--font-h);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--purple);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nov-btn:hover{
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(91,108,235,0.25);
+  }
+  .nov-source-badge{
+    font-size: 0.68rem;
+    color: var(--gray);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ── MURO DE LA COMUNIDAD BIKER ── */
+  .community-section{
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+    border: 2px solid var(--border);
+    border-radius: var(--r-xl);
+    padding: 32px 28px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .community-section::before{
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00b894, #5b6ceb, #e17055);
+  }
+  .community-header{
+    margin-bottom: 22px;
+  }
+  .community-title{
+    font-family: var(--font-h);
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    font-weight: 900;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .community-subtitle{
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+  .community-grid{
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 22px;
+  }
+  @media(max-width:820px){
+    .community-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* Formulario de comentario */
+  .comm-form-card{
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .comm-form-card h4{
+    font-family: var(--font-h);
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .comm-input-group{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .comm-input-label{
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray);
+    font-family: var(--font-h);
+  }
+  .comm-input, .comm-select, .comm-textarea{
+    width: 100%;
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 9px 12px;
+    font-family: var(--font-b);
+    font-size: 0.84rem;
+    color: var(--dark);
+    transition: all 0.2s;
+  }
+  .comm-input:focus, .comm-select:focus, .comm-textarea:focus{
+    outline: none;
+    border-color: var(--purple);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(91,108,235,0.12);
+  }
+  .comm-textarea{
+    resize: vertical;
+    min-height: 80px;
+    max-height: 180px;
+    line-height: 1.4;
+  }
+  .comm-pills{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .comm-pill-btn{
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3px 8px;
+    font-size: 0.7rem;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .comm-pill-btn:hover{
+    border-color: var(--green);
+    color: var(--green);
+    background: #f0fdf4;
+  }
+  .comm-btn-submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, #00b894, #0984e3);
+    color: white;
+    border: none;
+    border-radius: var(--r-sm);
+    font-family: var(--font-h);
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 12px rgba(0,184,148,0.3);
+  }
+  .comm-btn-submit:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0,184,148,0.4);
+  }
+  .comm-feedback{
+    display: none;
+    padding: 8px 12px;
+    border-radius: var(--r-sm);
+    font-size: 0.78rem;
+    text-align: center;
+  }
+  .comm-feedback.success{
+    display: block;
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+
+  /* Feed de comentarios */
+  .comm-feed-wrap{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+  .comm-card{
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    animation: fadeInDown 0.3s ease-out;
+  }
+  @keyframes fadeInDown{
+    from{ opacity:0; transform: translateY(-8px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  .comm-card:hover{
+    border-color: rgba(91,108,235,0.4);
+    box-shadow: var(--shadow-md);
+  }
+  .comm-card-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .comm-user-info{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .comm-avatar{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .comm-author{
+    font-family: var(--font-h);
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--dark);
+  }
+  .comm-role-badge{
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: var(--font-h);
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .role-moto{ background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .role-delivery{ background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .role-particular{ background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .comm-time{
+    font-size: 0.7rem;
+    color: var(--gray);
+  }
+  .comm-text{
+    font-size: 0.84rem;
+    color: var(--dark);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    background: var(--light);
+    padding: 9px 12px;
+    border-radius: var(--r-sm);
+    border-left: 3px solid var(--purple);
+  }
+  .comm-actions{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .comm-react-btn{
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gray);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.15s;
+  }
+  .comm-react-btn:hover{
+    border-color: var(--purple);
+    color: var(--purple);
+    background: #f8f9ff;
+    transform: scale(1.04);
+  }
+  .comm-react-btn.reacted{
+    border-color: var(--purple);
+    background: rgba(91,108,235,0.12);
+    color: var(--purple);
+  }
 }
 </style>
 </head>
@@ -771,6 +1100,7 @@ body{
       <a href="#instrumento" class="nav-link active">Instrumento</a>
       <a href="#plataformas" class="nav-link">Plataformas</a>
       <a href="#noticias" class="nav-link">Novedades</a>
+      <a href="#comunidad" class="nav-link">Muro Biker</a>
       <a href="#equipo" class="nav-link">Equipo</a>
     </div>
   </nav>
@@ -817,29 +1147,34 @@ body{
       <!-- WIZARD -->
       <div id="wizardBox" style="display:none;margin-top:20px;border-top:2px solid var(--border);padding-top:20px;">
 
+        <!-- PREGUNTA: ¿Es la misma persona? -->
         <div id="wPregunta" style="display:none;">
-          <div style="background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
-            <div style="font-size:1.6rem;margin-bottom:8px;">🔍</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:var(--dark);margin-bottom:6px;">Este código ya está registrado</p>
-            <p style="font-size:0.83rem;color:var(--gray);margin-bottom:18px;">¿Ya completaste el <strong>pre-test</strong> anteriormente con este código?</p>
+          <div style="background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:22px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🔍</div>
+            <p style="font-family:var(--font-h);font-size:0.95rem;font-weight:800;color:var(--dark);margin-bottom:6px;">Este código ya está registrado</p>
+            <p style="font-size:0.85rem;color:var(--gray);margin-bottom:18px;">
+              El código <strong id="wPreguntaCod" style="color:var(--purple);letter-spacing:1px;font-family:monospace;"></strong> ya existe en el sistema.<br>
+              ¿Ya completaste el <strong>pre-test</strong> anteriormente con este código?
+            </p>
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
               <button onclick="respuestaPretest(true)"
-                style="padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(135deg,#00b894,#00cec9);color:white;font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.25);">
-                <i class="fas fa-check"></i> Sí, ya lo hice
+                style="padding:11px 22px;border-radius:8px;border:none;background:linear-gradient(135deg,#00b894,#00cec9);color:white;font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.25);">
+                <i class="fas fa-check"></i> Sí, ya lo hice (soy yo)
               </button>
               <button onclick="respuestaPretest(false)"
-                style="padding:10px 24px;border-radius:8px;border:2px solid var(--border);background:white;color:var(--gray);font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;">
+                style="padding:11px 22px;border-radius:8px;border:2px solid var(--border);background:white;color:var(--gray);font-family:var(--font-h);font-size:0.88rem;font-weight:700;cursor:pointer;">
                 <i class="fas fa-times"></i> No, es mi primera vez
               </button>
             </div>
           </div>
         </div>
 
+        <!-- POST-TEST DISPONIBLE -->
         <div id="wPostOk" style="display:none;">
-          <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.6rem;margin-bottom:8px;">🏁</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#065f46;margin-bottom:4px;">¡El post-test está disponible!</p>
-            <p style="font-size:0.83rem;color:#047857;">Tu código fue verificado. Puedes iniciar la segunda fase del estudio.</p>
+          <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🏁</div>
+            <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#065f46;margin-bottom:6px;">¡El post-test está disponible!</p>
+            <p style="font-size:0.85rem;color:#047857;line-height:1.5;">Tu código <strong id="wOkCod" style="font-family:monospace;"></strong> fue verificado y la segunda fase está habilitada. Puedes iniciar tu evaluación final ahora.</p>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <button class="btn-start" onclick="irAlInstrumento('post')">
@@ -848,35 +1183,100 @@ body{
             <button class="btn-start" id="btnImprimirPreOk"
               style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
               onclick="imprimirPretest()">
-              <i class="fas fa-print"></i> Imprimir Pre-test
+              <i class="fas fa-print"></i> Imprimir comprobante Pre-test
             </button>
           </div>
         </div>
 
+        <!-- POST-TEST EN ESPERA -->
         <div id="wPostEspera" style="display:none;">
-          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.6rem;margin-bottom:8px;">⏳</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#92400e;margin-bottom:4px;">Post-test aún no disponible</p>
-            <p style="font-size:0.83rem;color:#b45309;line-height:1.5;">La segunda fase será habilitada por el investigador al finalizar la intervención educativa. Espera la indicación del equipo.</p>
+          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">⏳</div>
+            <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#92400e;margin-bottom:6px;">Pre-test registrado · Espera el Post-test</p>
+            <p style="font-size:0.85rem;color:#b45309;line-height:1.6;margin-bottom:8px;">
+              Ya has completado el pre-test con el código <strong id="wEsperaCod" style="font-family:monospace;"></strong> y tus respuestas están guardadas exitosamente.
+            </p>
+            <p style="font-size:0.83rem;color:#92400e;line-height:1.5;">
+              La segunda fase (<strong>post-test</strong>) será habilitada por el equipo de investigación una vez finalizada la intervención educativa digital de 8 semanas. Por favor, mantente atento a las indicaciones del equipo.
+            </p>
           </div>
-
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-start" id="btnImprimirPreEspera"
+              style="background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;"
+              onclick="imprimirPretest()">
+              <i class="fas fa-print"></i> Imprimir comprobante Pre-test
+            </button>
+            <button class="btn-start"
+              style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
+              onclick="resetWizard()">
+              <i class="fas fa-arrow-left"></i> Probar con otro código
+            </button>
+          </div>
         </div>
 
-        <div id="wColision" style="display:none;">
-          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:20px;margin-bottom:14px;">
-            <div style="font-size:1.4rem;margin-bottom:8px;">🔍</div>
-            <p style="font-family:var(--font-h);font-size:0.92rem;font-weight:700;color:#92400e;margin-bottom:10px;">Este código ya está en uso</p>
-            <p style="font-size:0.84rem;color:#b45309;line-height:1.6;margin-bottom:10px;">
-              <strong>¿Ya completaste el pre-test?</strong><br>
-              Si es así, tus datos ya están registrados. Espera a que se active el post-test.
-            </p>
-            <p style="font-size:0.84rem;color:#b45309;line-height:1.6;">
-              <strong>¿Es tu primera vez?</strong><br>
-              Este código ya está siendo usado por otra persona. Intenta con una variación — usa la <strong>inicial de tu segundo nombre</strong> o tu <strong>segundo apellido</strong>.
+        <!-- POST-TEST YA COMPLETADO -->
+        <div id="wPostCompletado" style="display:none;">
+          <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🎉</div>
+            <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#065f46;margin-bottom:6px;">¡Estudio completado!</p>
+            <p style="font-size:0.85rem;color:#047857;line-height:1.6;">
+              Ya has completado tanto el <strong>pre-test</strong> como el <strong>post-test</strong> con el código <strong id="wCompCod" style="font-family:monospace;"></strong>.<br>
+              ¡Muchas gracias por tu valiosa participación en esta investigación!
             </p>
           </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-start" onclick="imprimirPretest()">
+              <i class="fas fa-print"></i> Imprimir comprobante Pre-test
+            </button>
+            <button class="btn-start"
+              style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
+              onclick="resetWizard()">
+              <i class="fas fa-home"></i> Volver al inicio
+            </button>
+          </div>
+        </div>
+
+        <!-- PRE-TEST INICIADO PERO PENDIENTE -->
+        <div id="wContinuarPre" style="display:none;">
+          <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">📝</div>
+            <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#1e40af;margin-bottom:6px;">Pre-test iniciado pendiente</p>
+            <p style="font-size:0.85rem;color:#1d4ed8;line-height:1.6;">
+              Tienes un pre-test iniciado con el código <strong id="wContCod" style="font-family:monospace;"></strong> pero aún no lo has enviado.<br>
+              ¿Deseas continuar respondiendo tu cuestionario ahora?
+            </p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-start" onclick="irAlInstrumento('pre')">
+              <i class="fas fa-play-circle"></i> Continuar Pre-test
+            </button>
+            <button class="btn-start"
+              style="background:white;border:2px solid var(--border);color:var(--gray);box-shadow:none;"
+              onclick="resetWizard()">
+              <i class="fas fa-arrow-left"></i> Probar con otro código
+            </button>
+          </div>
+        </div>
+
+        <!-- COLISIÓN: NO ES LA MISMA PERSONA -->
+        <div id="wColision" style="display:none;">
+          <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:22px;margin-bottom:14px;">
+            <div style="font-size:1.8rem;margin-bottom:8px;text-align:center;">⚠️</div>
+            <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#92400e;margin-bottom:10px;text-align:center;">Este código ya está en uso</p>
+            <p style="font-size:0.85rem;color:#b45309;line-height:1.6;margin-bottom:10px;">
+              El código <strong id="wColisionCod" style="font-family:monospace;"></strong> ya está siendo utilizado por otro participante registrado en este estudio.
+            </p>
+            <p style="font-size:0.85rem;color:#b45309;line-height:1.6;margin-bottom:14px;">
+              Para que tus datos sean completamente válidos y no se mezclen ni sobrescriban con los de otra persona, <strong>debes generar un código nuevo</strong>.
+            </p>
+            <div style="background:rgba(255,255,255,0.7);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:12px 14px;font-size:0.82rem;color:#92400e;line-height:1.6;">
+              <strong>💡 ¿Cómo generar tu nuevo código?</strong><br>
+              • Usa la inicial de tu <strong>segundo nombre</strong> o tu <strong>segundo apellido</strong>.<br>
+              • <em>Ejemplo:</em> Si te llamas <strong>Carlos Andrés Pérez</strong> (nacido el 23 de nov), en vez de <strong>CAPE2311</strong> prueba con <strong>ANPE2311</strong> o con tu segundo apellido.
+            </div>
+          </div>
           <button class="btn-start" onclick="resetWizard()">
-            <i class="fas fa-redo"></i> Intentar con otro código
+            <i class="fas fa-redo"></i> Probar con otro código
           </button>
         </div>
 
@@ -950,35 +1350,72 @@ body{
     </div>
 
     <!-- MODAL QR -->
-    <div id="modalQR" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(20,20,40,0.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;">
-      <div style="background:white;border-radius:28px;padding:36px 32px;max-width:360px;width:90%;box-shadow:0 32px 80px rgba(0,0,0,0.35);position:relative;text-align:center;animation:qrPop 0.35s cubic-bezier(0.34,1.56,0.64,1);">
-        <button onclick="cerrarModalQR()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.2rem;color:#b2bec3;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#636e72'" onmouseout="this.style.color='#b2bec3'"><i class="fas fa-times"></i></button>
+    <div id="modalQR" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(20,20,40,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;">
+      <div style="background:white;border-radius:28px;padding:32px 28px;max-width:440px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.35);position:relative;text-align:center;animation:qrPop 0.35s cubic-bezier(0.34,1.56,0.64,1);max-height:92vh;overflow-y:auto;">
+        <button onclick="cerrarModalQR()" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.3rem;color:#b2bec3;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#2d3436'" onmouseout="this.style.color='#b2bec3'"><i class="fas fa-times"></i></button>
 
         <!-- Header -->
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 6px 20px rgba(91,108,235,0.35);">
-          <i class="fas fa-qrcode" style="color:white;font-size:1.5rem;"></i>
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 6px 20px rgba(91,108,235,0.35);">
+          <i class="fas fa-qrcode" style="color:white;font-size:1.4rem;"></i>
         </div>
-        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;color:#2d3436;margin-bottom:4px;">Código QR</h3>
-        <p style="font-size:0.78rem;color:#636e72;margin-bottom:20px;">Escanea para acceder al instrumento</p>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.15rem;font-weight:900;color:#2d3436;margin-bottom:4px;">Códigos QR Oficiales</h3>
+        <p style="font-size:0.75rem;color:#636e72;margin-bottom:14px;">Difusión en campo · UDO Escuela de Enfermería</p>
 
-        <!-- QR canvas -->
-        <div style="background:linear-gradient(135deg,#f8f9ff,#f0f2ff);border:2px solid #e8eaf6;border-radius:20px;padding:20px;display:inline-block;margin-bottom:18px;">
-          <canvas id="qrCanvas" style="display:block;border-radius:8px;"></canvas>
-        </div>
-
-        <!-- URL -->
-        <div style="background:#f8f9ff;border:1.5px solid #e8eaf6;border-radius:10px;padding:10px 14px;margin-bottom:20px;display:flex;align-items:center;gap:8px;">
-          <i class="fas fa-link" style="color:#5b6ceb;font-size:0.75rem;flex-shrink:0;"></i>
-          <span style="font-size:0.7rem;color:#636e72;word-break:break-all;text-align:left;line-height:1.4;">capsvdigital.github.io/cap-sv-digital/landing-cap.html</span>
-        </div>
-
-        <!-- Botones -->
-        <div style="display:flex;gap:10px;">
-          <button onclick="descargarQR()" style="flex:1;padding:11px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(91,108,235,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
-            <i class="fas fa-download"></i> Descargar
+        <!-- Pestañas de destino -->
+        <div style="display:flex;background:#f1f3fd;padding:4px;border-radius:12px;gap:4px;margin-bottom:14px;">
+          <button id="qrTabPortal" onclick="cambiarDestinoQR('portal')" style="flex:1;padding:8px 4px;border:none;border-radius:9px;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:800;cursor:pointer;background:white;color:#5b6ceb;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:all 0.2s;">
+            🌐 Portal
           </button>
-          <a href="https://capsvdigital.github.io/cap-sv-digital/landing-cap.html" target="_blank" style="flex:1;padding:11px;background:white;color:#5b6ceb;border:2px solid #e8eaf6;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='#5b6ceb'" onmouseout="this.style.borderColor='#e8eaf6'">
-            <i class="fas fa-external-link-alt"></i> Abrir enlace
+          <button id="qrTabPre" onclick="cambiarDestinoQR('pre')" style="flex:1;padding:8px 4px;border:none;border-radius:9px;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;background:transparent;color:#636e72;transition:all 0.2s;">
+            📝 Pre-Test
+          </button>
+          <button id="qrTabPost" onclick="cambiarDestinoQR('post')" style="flex:1;padding:8px 4px;border:none;border-radius:9px;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;background:transparent;color:#636e72;transition:all 0.2s;">
+            🎓 Post-Test
+          </button>
+        </div>
+
+        <p id="qrDescDestino" style="font-size:0.75rem;color:#5b6ceb;font-weight:600;margin-bottom:12px;min-height:18px;">
+          Portal completo con videos, Muro Biker y Ley vial
+        </p>
+
+        <!-- QR canvas container -->
+        <div style="background:linear-gradient(135deg,#f8f9ff,#f0f2ff);border:2px solid #e8eaf6;border-radius:20px;padding:16px;display:inline-block;margin-bottom:14px;box-shadow:inset 0 2px 6px rgba(0,0,0,0.03);">
+          <div id="qrCanvasContainer" style="position:relative;width:210px;height:210px;margin:0 auto;display:flex;align-items:center;justify-content:center;">
+            <canvas id="qrCanvas" style="display:block;border-radius:10px;max-width:100%;height:auto;"></canvas>
+          </div>
+          <span style="display:inline-block;margin-top:8px;font-size:0.68rem;font-weight:800;letter-spacing:0.5px;color:#00b894;background:rgba(0,184,148,0.12);padding:2px 10px;border-radius:20px;">
+            <i class="fas fa-check-circle"></i> ALTA RESOLUCIÓN HD
+          </span>
+        </div>
+
+        <!-- URL Box con copiar -->
+        <div style="background:#f8f9ff;border:1.5px solid #e8eaf6;border-radius:12px;padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div style="display:flex;align-items:center;gap:6px;overflow:hidden;text-align:left;">
+            <i class="fas fa-link" style="color:#5b6ceb;font-size:0.75rem;flex-shrink:0;"></i>
+            <span id="qrUrlDisplay" style="font-size:0.68rem;color:#636e72;word-break:break-all;line-height:1.3;font-family:monospace;">capsvdigital.github.io/cap-sv-digital/landing-cap.html</span>
+          </div>
+          <button id="btnCopiarLink" onclick="copiarLinkQR()" style="background:#5b6ceb;color:white;border:none;border-radius:8px;padding:6px 10px;font-size:0.7rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:all 0.2s;" title="Copiar enlace">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
+        </div>
+
+        <!-- Botones de Acción Primaria -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <button onclick="descargarQRHD()" style="padding:10px 8px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 12px rgba(91,108,235,0.3);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <i class="fas fa-download"></i> Descargar HD
+          </button>
+          <a id="btnImprimirVolante" href="volante-qr-imprimible.html" target="_blank" style="padding:10px 8px;background:#00b894;color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;box-shadow:0 4px 12px rgba(0,184,148,0.3);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <i class="fas fa-print"></i> Volante Físico
+          </a>
+        </div>
+
+        <!-- Botones Secundarios -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <button onclick="compartirWhatsAppQR()" style="padding:9px 8px;background:#25d366;color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.76rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 10px rgba(37,211,102,0.25);transition:all 0.2s;">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </button>
+          <a id="qrOpenDirect" href="https://capsvdigital.github.io/cap-sv-digital/landing-cap.html" target="_blank" style="padding:9px 8px;background:white;color:#5b6ceb;border:1.5px solid #e8eaf6;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.76rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:all 0.2s;">
+            <i class="fas fa-external-link-alt"></i> Probar Link
           </a>
         </div>
       </div>
@@ -986,76 +1423,111 @@ body{
 
     <!-- NOTICIAS -->
     <div id="noticias" class="news-section">
-      <p class="section-label"><i class="fas fa-bell"></i> Novedades</p>
+      <p class="section-label"><i class="fas fa-bell"></i> Novedades y Campañas Oficiales</p>
 
       <div class="novelties-carousel-wrap">
-        <button class="nov-arrow nov-prev" onclick="noveltyPrev()"><i class="fas fa-chevron-left"></i></button>
+        <button class="nov-arrow nov-prev" onclick="noveltyPrev()" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
         <div class="novelties-viewport" id="novViewport">
           <div class="novelties-track" id="novTrack">
 
-            <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#5b6ceb,#7c5cbf)">
-                <span class="nov-emoji">📰</span>
-                <span class="nov-chip">Próximamente</span>
-              </div>
-              <div class="nov-card-body">
-                <p class="nov-cat">Estadísticas</p>
-                <h4 class="nov-title">Accidentalidad vial en Venezuela</h4>
-                <p class="nov-desc">Datos y cifras sobre siniestros viales con motocicletas en el país, con enfoque en el estado Bolívar.</p>
-              </div>
-            </div>
-
+            <!-- TARJETA 1: Campañas -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#e17055,#d63031)">
                 <span class="nov-emoji">🎥</span>
-                <span class="nov-chip">Próximamente</span>
+                <span class="nov-chip">Video Oficial</span>
               </div>
               <div class="nov-card-body">
-                <p class="nov-cat">Campañas</p>
-                <h4 class="nov-title">Videos educativos para motociclistas</h4>
-                <p class="nov-desc">Materiales audiovisuales sobre uso del casco, distancias de seguridad y conducción defensiva.</p>
+                <p class="nov-cat" style="color:#d63031;">Campañas Digitales</p>
+                <h4 class="nov-title">@CodigoBiker · Videos de Conducción Defensiva</h4>
+                <p class="nov-desc">Tutoriales audiovisuales sobre uso correcto del casco, puntos ciegos, frenado seguro y anticipación del riesgo en moto.</p>
+                <div class="nov-action-row">
+                  <span class="nov-source-badge"><i class="fab fa-youtube" style="color:#ff0000;"></i> YouTube</span>
+                  <a href="https://www.youtube.com/@CodigoBiker" target="_blank" rel="noopener noreferrer" class="nov-btn">
+                    <i class="fas fa-play"></i> Ver canal
+                  </a>
+                </div>
               </div>
             </div>
 
+            <!-- TARJETA 2: Redes Sociales -->
+            <div class="novelty-card">
+              <div class="nov-card-top" style="background:linear-gradient(135deg,#833ab4,#fd1d1d)">
+                <span class="nov-emoji">📱</span>
+                <span class="nov-chip">Reels & TikTok</span>
+              </div>
+              <div class="nov-card-body">
+                <p class="nov-cat" style="color:#833ab4;">Comunidad Digital</p>
+                <h4 class="nov-title">Tips y Campañas Cortas: @caps.codigobiker</h4>
+                <p class="nov-desc">Cápsulas educativas en Instagram y TikTok para mototaxistas y delivery de Ciudad Bolívar con mensajes directos.</p>
+                <div class="nov-action-row">
+                  <span class="nov-source-badge"><i class="fab fa-instagram" style="color:#e1306c;"></i> Instagram</span>
+                  <a href="https://www.instagram.com/caps.codigobiker" target="_blank" rel="noopener noreferrer" class="nov-btn">
+                    <i class="fas fa-external-link-alt"></i> Ver perfil
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- TARJETA 3: Informes Oficiales -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#00b894,#00cec9)">
-                <span class="nov-emoji">📊</span>
-                <span class="nov-chip">Próximamente</span>
+                <span class="nov-emoji">🏛️</span>
+                <span class="nov-chip">Oficial INTT</span>
               </div>
               <div class="nov-card-body">
-                <p class="nov-cat">Informes oficiales</p>
-                <h4 class="nov-title">Reportes del INTT y tránsito nacional</h4>
-                <p class="nov-desc">Informes de los organismos de tránsito venezolanos sobre seguridad y normativa vial vigente.</p>
+                <p class="nov-cat" style="color:#00b894;">Informes Oficiales</p>
+                <h4 class="nov-title">Normativas y Regulaciones del INTT</h4>
+                <p class="nov-desc">Disposiciones del Instituto Nacional de Transporte Terrestre sobre homologación de cascos y circulación vehicular.</p>
+                <div class="nov-action-row">
+                  <span class="nov-source-badge"><i class="fas fa-shield-alt" style="color:#00b894;"></i> INTT</span>
+                  <a href="http://www.intt.gob.ve/" target="_blank" rel="noopener noreferrer" class="nov-btn">
+                    <i class="fas fa-globe"></i> Portal INTT
+                  </a>
+                </div>
               </div>
             </div>
 
+            <!-- TARJETA 4: Internacional -->
             <div class="novelty-card">
-              <div class="nov-card-top" style="background:linear-gradient(135deg,#fdcb6e,#e17055)">
+              <div class="nov-card-top" style="background:linear-gradient(135deg,#0984e3,#74b9ff)">
                 <span class="nov-emoji">🌎</span>
-                <span class="nov-chip">Próximamente</span>
+                <span class="nov-chip">OMS / OPS</span>
               </div>
               <div class="nov-card-body">
-                <p class="nov-cat">Internacional</p>
-                <h4 class="nov-title">Buenas prácticas en seguridad vial</h4>
-                <p class="nov-desc">Experiencias exitosas de otros países en la reducción de accidentes y educación vial para motociclistas.</p>
+                <p class="nov-cat" style="color:#0984e3;">Internacional</p>
+                <h4 class="nov-title">Seguridad Vial de Motociclistas en las Américas</h4>
+                <p class="nov-desc">Evidencia científica de la Organización Panamericana de la Salud sobre factores protectores y prevención de traumatismos.</p>
+                <div class="nov-action-row">
+                  <span class="nov-source-badge"><i class="fas fa-heartbeat" style="color:#0984e3;"></i> OPS/OMS</span>
+                  <a href="https://www.paho.org/es/temas/seguridad-vial" target="_blank" rel="noopener noreferrer" class="nov-btn">
+                    <i class="fas fa-book-open"></i> Leer informe
+                  </a>
+                </div>
               </div>
             </div>
 
+            <!-- TARJETA 5: Legislación -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)">
                 <span class="nov-emoji">⚖️</span>
-                <span class="nov-chip">Próximamente</span>
+                <span class="nov-chip">Gaceta Oficial</span>
               </div>
               <div class="nov-card-body">
-                <p class="nov-cat">Legislación</p>
-                <h4 class="nov-title">Ley de Transporte Terrestre</h4>
-                <p class="nov-desc">Artículos clave de la ley venezolana que todo conductor de motocicleta debe conocer para circular legalmente.</p>
+                <p class="nov-cat" style="color:#6c5ce7;">Legislación</p>
+                <h4 class="nov-title">Ley de Transporte Terrestre de Venezuela</h4>
+                <p class="nov-desc">Deberes de los conductores de motocicletas: documentación exigible, seguro RCV, casco obligatorio y sanciones.</p>
+                <div class="nov-action-row">
+                  <span class="nov-source-badge"><i class="fas fa-balance-scale" style="color:#6c5ce7;"></i> Ley Vigente</span>
+                  <a href="ley-transporte-terrestre.pdf" target="_blank" rel="noopener noreferrer" class="nov-btn" title="Descargar o consultar la Ley de Transporte Terrestre oficial (Gaceta Oficial)">
+                    <i class="fas fa-file-pdf"></i> Ver / Descargar PDF Ley
+                  </a>
+                </div>
               </div>
             </div>
 
           </div>
         </div>
-        <button class="nov-arrow nov-next" onclick="noveltyNext()"><i class="fas fa-chevron-right"></i></button>
+        <button class="nov-arrow nov-next" onclick="noveltyNext()" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
 
         <!-- DOTS -->
         <div class="nov-dots" id="novDots">
@@ -1064,6 +1536,67 @@ body{
           <span class="nov-dot" onclick="noveltyGo(2)"></span>
           <span class="nov-dot" onclick="noveltyGo(3)"></span>
           <span class="nov-dot" onclick="noveltyGo(4)"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMUNIDAD / MURO BIKER -->
+    <div id="comunidad" class="community-section">
+      <div class="community-header">
+        <p class="section-label"><i class="fas fa-comments"></i> Comunidad Biker</p>
+        <h2 class="community-title">🏍️ La Voz de la Ruta · Muro de Consejos y Experiencias</h2>
+        <p class="community-subtitle">Espacio interactivo donde mototaxistas y delivery de Ciudad Bolívar comparten tips de seguridad y experiencias de la vía.</p>
+      </div>
+
+      <div class="community-grid">
+        <!-- Formulario para publicar -->
+        <div class="comm-form-card">
+          <h4><i class="fas fa-pen-nib" style="color:var(--purple);"></i> Deja tu consejo o mensaje</h4>
+          
+          <div class="comm-input-group">
+            <label class="comm-input-label">Tu apodo o código</label>
+            <input type="text" id="commAutor" class="comm-input" placeholder="Ej: BikerBolívar o tu código" maxlength="24">
+          </div>
+
+          <div class="comm-input-group">
+            <label class="comm-input-label">¿Qué manejas?</label>
+            <select id="commRol" class="comm-select">
+              <option value="mototaxista">🏍️ Mototaxista</option>
+              <option value="delivery">🛵 Delivery</option>
+              <option value="particular">🛡️ Conductor particular</option>
+            </select>
+          </div>
+
+          <div class="comm-input-group">
+            <label class="comm-input-label">Consejo o mensaje de la ruta</label>
+            <textarea id="commTexto" class="comm-textarea" placeholder="Ej: En lluvia por la Av. Germania bajen la velocidad y no toquen el freno delantero de golpe..." maxlength="220"></textarea>
+          </div>
+
+          <!-- Sugerencias rápidas -->
+          <div class="comm-input-group">
+            <label class="comm-input-label" style="font-size:0.68rem;">Sugerencias rápidas:</label>
+            <div class="comm-pills">
+              <button type="button" class="comm-pill-btn" onclick="insertarSugerencia('¡El casco abrochado salva vidas, no lo lleven de adorno en el codo!')">🪖 Casco abrochado</button>
+              <button type="button" class="comm-pill-btn" onclick="insertarSugerencia('En lluvia reduzcan velocidad y mantengan el doble de distancia.')">🌧️ Lluvia y frenos</button>
+              <button type="button" class="comm-pill-btn" onclick="insertarSugerencia('El celular guardado mientras ruedan, un segundo de descuido cuesta caro.')">📵 Cero celular</button>
+            </div>
+          </div>
+
+          <button type="button" class="comm-btn-submit" onclick="publicarComentario()">
+            <i class="fas fa-paper-plane"></i> Publicar en el Muro
+          </button>
+          <div id="commFeedback" class="comm-feedback"></div>
+        </div>
+
+        <!-- Feed de comentarios -->
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <span style="font-family:var(--font-h);font-size:0.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;">Mensajes recientes de la comunidad</span>
+            <span id="commTotalBadge" style="font-size:0.72rem;background:var(--purple-dim);color:var(--purple);font-weight:800;padding:2px 8px;border-radius:10px;font-family:var(--font-h);">0 mensajes</span>
+          </div>
+          <div class="comm-feed-wrap" id="commFeed">
+            <!-- Renderizado dinámico vía JavaScript -->
+          </div>
         </div>
       </div>
     </div>
@@ -1141,7 +1674,7 @@ document.getElementById('codigoInput').addEventListener('keydown', function(e){
 });
 
 function iniciarVerificacion(){
-  const codigo = document.getElementById('codigoInput').value;
+  const codigo = (document.getElementById('codigoInput').value || '').trim().toUpperCase();
   if(!/^[A-Z]{4}[0-9]{4}$/.test(codigo)) return;
 
   document.getElementById('codigoInput').disabled = true;
@@ -1149,14 +1682,17 @@ function iniciarVerificacion(){
   document.getElementById('spinnerCheck').style.display = 'block';
   ocultarWizard();
 
-  // Revisar caché local primero (30 min)
+  // Revisar si existe información local previa del código
+  var localInfo = obtenerInfoLocalCodigo(codigo);
+
+  // Revisar caché local reciente (30 min)
   var cacheKey = 'cap_chk_' + codigo;
   try {
     var cached = JSON.parse(localStorage.getItem(cacheKey)||'null');
     if(cached && cached.ts && (Date.now()-cached.ts) < 1800000){
       document.getElementById('spinnerCheck').style.display = 'none';
       procesarRespuestaCodigo(cached);
-      // Actualizar caché en background con JSONP
+      // Actualizar en background
       var cbBg = '_cb_bg_' + Date.now();
       window[cbBg] = function(d){
         limpiarCb(cbBg);
@@ -1170,39 +1706,31 @@ function iniciarVerificacion(){
     }
   } catch(e){}
 
-  // Sin caché — JSONP con timeout 15s
+  // Consulta por JSONP a Google Apps Script
   var cbName = '_cb_ver_' + Date.now();
   var tid = setTimeout(function(){
-    console.warn('[CAP] timeout — reintentando...');
+    console.warn('[CAP] timeout en checkCodigo — evaluando fallback');
     limpiarCb(cbName);
-    // Reintento 1
-    var cbR = '_cb_retry_' + Date.now();
-    var tid2 = setTimeout(function(){
-      console.warn('[CAP] reintento también falló — fallback pre-test');
-      limpiarCb(cbR);
-      document.getElementById('spinnerCheck').style.display = 'none';
-      desbloquearInput();
-      irAlInstrumento('pre');
-    }, 12000);
-    window[cbR] = function(data){
-      clearTimeout(tid2);
-      limpiarCb(cbR);
-      console.log('[CAP] reintento OK', data);
-      document.getElementById('spinnerCheck').style.display = 'none';
-      try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
-      procesarRespuestaCodigo(data);
-    };
-    var sR = document.createElement('script');
-    sR.src = API_URL + '?action=checkCodigo&codigo=' + encodeURIComponent(codigo) + '&callback=' + cbR + '&t=' + Date.now();
-    sR.onerror = function(){ clearTimeout(tid2); limpiarCb(cbR); document.getElementById('spinnerCheck').style.display='none'; desbloquearInput(); irAlInstrumento('pre'); };
-    document.head.appendChild(sR);
-  }, 15000);
+    document.getElementById('spinnerCheck').style.display = 'none';
+    if(localInfo.existe){
+      procesarRespuestaCodigo(localInfo);
+    } else {
+      // Si no hay datos locales, registrar e ir a pre-test
+      registrarCodigo(codigo, 'pre', function(){ irAlInstrumento('pre'); });
+      setTimeout(function(){ irAlInstrumento('pre'); }, 600);
+    }
+  }, 10000);
 
   window[cbName] = function(data){
     clearTimeout(tid);
     limpiarCb(cbName);
     console.log('[CAP] checkCodigo OK', data);
     document.getElementById('spinnerCheck').style.display = 'none';
+    // Si localmente sabemos que ya completó pre-test, preservar ese estado
+    if(localInfo.completadoPre) data.completadoPre = true;
+    if(localInfo.completadoPost) data.completadoPost = true;
+    if(localInfo.existe) data.existe = true;
+
     try{ localStorage.setItem(cacheKey, JSON.stringify(Object.assign({},data,{ts:Date.now()}))); }catch(e){}
     procesarRespuestaCodigo(data);
   };
@@ -1212,68 +1740,178 @@ function iniciarVerificacion(){
   s.onerror = function(){
     clearTimeout(tid);
     limpiarCb(cbName);
-    console.error('[CAP] script error');
+    console.warn('[CAP] Error conectando a script — usando datos locales o fallback');
     document.getElementById('spinnerCheck').style.display = 'none';
-    desbloquearInput();
-    irAlInstrumento('pre');
+    if(localInfo.existe){
+      procesarRespuestaCodigo(localInfo);
+    } else {
+      registrarCodigo(codigo, 'pre', function(){ irAlInstrumento('pre'); });
+      setTimeout(function(){ irAlInstrumento('pre'); }, 600);
+    }
   };
   document.head.appendChild(s);
 }
 
-// Lógica central del wizard — separada para claridad
+// ── REGISTRO DE CÓDIGO (NUEVO PARTICIPANTE) ──────────────────────────────
+function registrarCodigo(codigo, modo, callback){
+  codigo = (codigo || '').trim().toUpperCase();
+  modo = modo || 'pre';
+
+  try {
+    var cods = JSON.parse(localStorage.getItem('cap_codigos_registrados') || '[]');
+    if(cods.indexOf(codigo) === -1) {
+      cods.push(codigo);
+      localStorage.setItem('cap_codigos_registrados', JSON.stringify(cods));
+    }
+    localStorage.setItem('cap_registrado_' + codigo + '_' + modo, '1');
+  } catch(e){}
+
+  var cb = '_cb_reg_' + Date.now();
+  var tid = setTimeout(function(){ limpiarCb(cb); if(callback) callback({ok:false}); }, 5000);
+  window[cb] = function(d){
+    clearTimeout(tid);
+    limpiarCb(cb);
+    if(callback) callback(d);
+  };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo) + '&modo=' + encodeURIComponent(modo) + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(tid); limpiarCb(cb); s.remove(); if(callback) callback({ok:false}); };
+  document.head.appendChild(s);
+}
+
+// ── VERIFICAR DATOS LOCALES DEL CÓDIGO ───────────────────────────────────
+function obtenerInfoLocalCodigo(codigo){
+  var res = { existe: false, completadoPre: false, completadoPost: false };
+  try {
+    var respuestas = JSON.parse(localStorage.getItem('cap_respuestas') || '[]');
+    respuestas.forEach(function(r){
+      if((r.codigo||'').toUpperCase() === codigo){
+        res.existe = true;
+        if(r.modo === 'pre' && r.completado === 'SI') res.completadoPre = true;
+        if(r.modo === 'post' && r.completado === 'SI') res.completadoPost = true;
+      }
+    });
+    if(localStorage.getItem('cap_sent_' + codigo + '_pre') === '1'){
+      res.existe = true;
+      res.completadoPre = true;
+    }
+    if(localStorage.getItem('cap_sent_' + codigo + '_post') === '1'){
+      res.existe = true;
+      res.completadoPost = true;
+    }
+    if(localStorage.getItem('cap_registrado_' + codigo + '_pre') === '1'){
+      res.existe = true;
+    }
+  } catch(e){}
+  return res;
+}
+
+// ── LÓGICA DEL WIZARD SEGÚN ESTADO DEL CÓDIGO ────────────────────────────
 function procesarRespuestaCodigo(data){
+  const codigo = (document.getElementById('codigoInput').value || '').trim().toUpperCase();
+  window._cachedVerData = data || {};
+  window._cachedCodigo = codigo;
+
+  // Actualizar etiquetas con el código en todos los paneles
+  ['wPreguntaCod','wEsperaCod','wOkCod','wCompCod','wContCod','wColisionCod'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.textContent = codigo;
+  });
+
   if(!data.existe){
-    // Código nuevo → pre-test directo, sin preguntas
-    irAlInstrumento('pre');
-  } else if(data.completadoPre){
-    // Ya completó pre-test → verificar si post está habilitado
-    verificarYMostrarPost();
+    // Código nuevo → registrar en la hoja de cálculo e iniciar pre-test directo
+    registrarCodigo(codigo, 'pre', function(){ irAlInstrumento('pre'); });
+    setTimeout(function(){ irAlInstrumento('pre'); }, 600);
   } else {
-    // Existe pero no completó pre-test → posible colisión de código
+    // Código existente → preguntar si es la misma persona que ya hizo el pre-test
+    mostrarWizardPanel('wPregunta');
+  }
+}
+
+// ── RESPUESTA A LA PREGUNTA: ¿Ya completaste el pre-test con este código? ──
+function respuestaPretest(yaHizo){
+  var data = window._cachedVerData || {};
+
+  if(yaHizo){
+    // El usuario afirma que es él/ella y que ya realizó el pre-test
+    if(data.completadoPre){
+      // Pre-test completado exitosamente → verificar si el post-test está habilitado
+      verificarYMostrarPost();
+    } else {
+      // El código fue registrado pero el pre-test no ha sido finalizado
+      mostrarWizardPanel('wContinuarPre');
+    }
+  } else {
+    // Es su primera vez pero el código ya existe → colisión con otro participante
     mostrarWizardPanel('wColision');
   }
 }
 
+// ── VERIFICAR SI EL POST-TEST ESTÁ HABILITADO POR EL INVESTIGADOR ─────────
 function verificarYMostrarPost(){
   mostrarWizardPanel('wSpinnerPost');
   var cbName = '_cb_cfg_' + Date.now();
   var tid = setTimeout(function(){
     limpiarCb(cbName);
-    mostrarWizardPanel('wPostEspera');
-  }, 12000);
+    // Si hay valor en caché local usarlo, si no, mostrar espera
+    var localHab = sessionStorage.getItem('cap_post_habilitado');
+    if(localHab === 'true'){
+      decidirPanelPost(true);
+    } else {
+      mostrarWizardPanel('wPostEspera');
+    }
+  }, 8000);
+
   window[cbName] = function(data){
     clearTimeout(tid);
     limpiarCb(cbName);
     var hab = String(data.post_habilitado).toLowerCase().trim() === 'true';
-    mostrarWizardPanel(hab ? 'wPostOk' : 'wPostEspera');
+    sessionStorage.setItem('cap_post_habilitado', hab ? 'true' : 'false');
+    decidirPanelPost(hab);
   };
+
   var s = document.createElement('script');
   s.src = API_URL + '?action=getConfig&callback=' + cbName + '&t=' + Date.now();
-  s.onerror = function(){ clearTimeout(tid); limpiarCb(cbName); mostrarWizardPanel('wPostEspera'); };
+  s.onerror = function(){
+    clearTimeout(tid);
+    limpiarCb(cbName);
+    var localHab = sessionStorage.getItem('cap_post_habilitado');
+    decidirPanelPost(localHab === 'true');
+  };
   document.head.appendChild(s);
 }
 
-function respuestaPretest(yaHizo){
-  // Mantenida por compatibilidad con wPregunta
-  if(yaHizo){ verificarYMostrarPost(); }
-  else { mostrarWizardPanel('wColision'); }
+function decidirPanelPost(habilitado){
+  var data = window._cachedVerData || {};
+  if(habilitado){
+    if(data.completadoPost){
+      mostrarWizardPanel('wPostCompletado');
+    } else {
+      mostrarWizardPanel('wPostOk');
+    }
+  } else {
+    mostrarWizardPanel('wPostEspera');
+  }
 }
 
 function irAlInstrumento(modo){
-  const codigo = document.getElementById('codigoInput').value;
+  const codigo = (document.getElementById('codigoInput').value || '').trim().toUpperCase();
   sessionStorage.setItem('cap_codigo', codigo);
   sessionStorage.setItem('cap_modo', modo);
   const archivo = modo === 'post' ? 'instrumento-cap-post.html' : 'instrumento-cap-nuevo.html';
-  window.location.href = archivo + '?codigo=' + codigo + '&modo=' + modo;
+  window.location.href = archivo + '?codigo=' + encodeURIComponent(codigo) + '&modo=' + encodeURIComponent(modo);
 }
 
 function mostrarWizardPanel(id){
   var box = document.getElementById('wizardBox');
   box.style.display = 'block';
-  ['wPregunta','wPostOk','wPostEspera','wColision','wSpinnerPost'].forEach(function(p){
-    document.getElementById(p).style.display = 'none';
+  var paneles = ['wPregunta','wPostOk','wPostEspera','wPostCompletado','wContinuarPre','wColision','wSpinnerPost'];
+  paneles.forEach(function(p){
+    var el = document.getElementById(p);
+    if(el) el.style.display = 'none';
   });
-  document.getElementById(id).style.display = 'block';
+  var target = document.getElementById(id);
+  if(target) target.style.display = 'block';
   desbloquearInput();
 }
 
@@ -1295,19 +1933,44 @@ function resetWizard(){
   document.getElementById('codigoInput').focus();
 }
 
-// ── MODAL QR ──
-var QR_URL = 'https://capsvdigital.github.io/cap-sv-digital/landing-cap.html';
-var qrGenerado = false;
+// ── MODAL QR AVANZADO (MULTI-DESTINO Y ALTA RESOLUCIÓN) ──
+var QR_DESTINOS = {
+  portal: {
+    nombre: 'Portal Web Oficial',
+    url: 'https://capsvdigital.github.io/cap-sv-digital/landing-cap.html',
+    desc: 'Portal completo con videos, Muro Biker y Ley vial',
+    archivo: 'QR-CAP-SV-DIGITAL-PORTAL.png',
+    textoWA: '¡Hola, hermano biker! Te invito a conocer el portal oficial de Seguridad Vial CAP-SV-DIGITAL de la Universidad de Oriente (UDO). Videos, leyes y el Muro Biker: https://capsvdigital.github.io/cap-sv-digital/landing-cap.html'
+  },
+  pre: {
+    nombre: 'Pre-Test (Cuestionario Inicial)',
+    url: 'https://capsvdigital.github.io/cap-sv-digital/instrumento-cap-nuevo.html',
+    desc: 'Cuestionario de entrada: conocimientos viales, actitudes y prácticas',
+    archivo: 'QR-CAP-SV-DIGITAL-PRETEST.png',
+    textoWA: '¡Hola! Te invito a participar en el estudio de Seguridad Vial CAP-SV-DIGITAL (UDO Núcleo Bolívar). Toma solo 6 min y es 100% confidencial. Llena el cuestionario inicial aquí: https://capsvdigital.github.io/cap-sv-digital/instrumento-cap-nuevo.html'
+  },
+  post: {
+    nombre: 'Post-Test (Evaluación de Salida)',
+    url: 'https://capsvdigital.github.io/cap-sv-digital/instrumento-cap-post.html',
+    desc: 'Evaluación final para medir efectividad de las sesiones educativas',
+    archivo: 'QR-CAP-SV-DIGITAL-POSTTEST.png',
+    textoWA: '¡Hola! Si ya viste las sesiones de seguridad vial de CAP-SV-DIGITAL, por favor completa tu evaluación final de salida aquí: https://capsvdigital.github.io/cap-sv-digital/instrumento-cap-post.html'
+  }
+};
+var qrDestinoActual = 'portal';
 
 function abrirModalQR(){
   var modal = document.getElementById('modalQR');
+  if(!modal) return;
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  if(!qrGenerado){ generarQR(); qrGenerado = true; }
+  renderizarQRActual();
 }
 
 function cerrarModalQR(){
-  document.getElementById('modalQR').style.display = 'none';
+  var modal = document.getElementById('modalQR');
+  if(!modal) return;
+  modal.style.display = 'none';
   document.body.style.overflow = '';
 }
 
@@ -1319,38 +1982,183 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') cerrarModalQR();
 });
 
-function generarQR(){
+function cambiarDestinoQR(destino){
+  if(!QR_DESTINOS[destino]) return;
+  qrDestinoActual = destino;
+
+  var tabs = {
+    portal: document.getElementById('qrTabPortal'),
+    pre:    document.getElementById('qrTabPre'),
+    post:   document.getElementById('qrTabPost')
+  };
+
+  for(var k in tabs){
+    if(!tabs[k]) continue;
+    if(k === destino){
+      tabs[k].style.background = 'white';
+      tabs[k].style.color = '#5b6ceb';
+      tabs[k].style.fontWeight = '800';
+      tabs[k].style.boxShadow = '0 2px 6px rgba(0,0,0,0.08)';
+    } else {
+      tabs[k].style.background = 'transparent';
+      tabs[k].style.color = '#636e72';
+      tabs[k].style.fontWeight = '700';
+      tabs[k].style.boxShadow = 'none';
+    }
+  }
+
+  var d = QR_DESTINOS[destino];
+  var descEl = document.getElementById('qrDescDestino');
+  if(descEl) descEl.textContent = d.desc;
+
+  var urlEl = document.getElementById('qrUrlDisplay');
+  if(urlEl) urlEl.textContent = d.url.replace(/^https?:\/\//, '');
+
+  var directLink = document.getElementById('qrOpenDirect');
+  if(directLink) directLink.href = d.url;
+
+  renderizarQRActual();
+}
+
+function renderizarQRActual(){
+  var d = QR_DESTINOS[qrDestinoActual];
+  if(!d) return;
+
   var canvas = document.getElementById('qrCanvas');
-  var size = 200;
-  canvas.width = size; canvas.height = size;
+  if(!canvas) return;
+
+  var size = 800; // Alta definición para descarga nítida
+  canvas.width = size;
+  canvas.height = size;
   var ctx = canvas.getContext('2d');
 
-  // Generador QR mínimo sin dependencias externas
-  // Usamos la API de QR server (imagen) embebida como imagen
+  // Fondo blanco limpio
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, size, size);
+
+  // Si la librería QRCode está cargada en memoria, usarla en canvas local
+  if(typeof QRCode !== 'undefined'){
+    try {
+      var tempDiv = document.createElement('div');
+      tempDiv.style.display = 'none';
+      document.body.appendChild(tempDiv);
+      new QRCode(tempDiv, {
+        text: d.url,
+        width: size,
+        height: size,
+        colorDark: '#1e293b',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      setTimeout(function(){
+        var genCanvas = tempDiv.querySelector('canvas');
+        if(genCanvas){
+          ctx.drawImage(genCanvas, 0, 0, size, size);
+        } else {
+          var genImg = tempDiv.querySelector('img');
+          if(genImg && genImg.src) {
+            var i2 = new Image();
+            i2.onload = function(){ ctx.drawImage(i2, 0, 0, size, size); };
+            i2.src = genImg.src;
+          }
+        }
+        try { document.body.removeChild(tempDiv); } catch(err){}
+      }, 50);
+      return;
+    } catch(e) {
+      console.warn('QRCode JS local render fallback:', e);
+    }
+  }
+
+  // Fallback con API de QR en alta definición
   var img = new Image();
   img.crossOrigin = 'anonymous';
   img.onload = function(){
     ctx.drawImage(img, 0, 0, size, size);
   };
   img.onerror = function(){
-    // Fallback: dibujar mensaje
     ctx.fillStyle = '#f8f9ff';
-    ctx.fillRect(0,0,size,size);
+    ctx.fillRect(0, 0, size, size);
     ctx.fillStyle = '#5b6ceb';
-    ctx.font = 'bold 13px Montserrat,sans-serif';
+    ctx.font = 'bold 32px Montserrat,sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Escanea con tu', size/2, size/2 - 10);
-    ctx.fillText('cámara o app QR', size/2, size/2 + 10);
+    ctx.fillText('CAP-SV-DIGITAL', size/2, size/2 - 30);
+    ctx.font = '24px Inter,sans-serif';
+    ctx.fillStyle = '#636e72';
+    ctx.fillText('Escanea con tu cámara', size/2, size/2 + 20);
+    ctx.font = '20px monospace';
+    ctx.fillText(d.url, size/2, size/2 + 65);
   };
-  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(QR_URL) + '&color=2d3436&bgcolor=ffffff&margin=1';
+  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=800x800&data=' + encodeURIComponent(d.url) + '&color=1e293b&bgcolor=ffffff&margin=2';
 }
 
-function descargarQR(){
+function descargarQRHD(){
+  var d = QR_DESTINOS[qrDestinoActual];
   var canvas = document.getElementById('qrCanvas');
-  var link = document.createElement('a');
-  link.download = 'QR-CAP-SV-DIGITAL.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+  var filename = d ? d.archivo : 'QR-CAP-SV-DIGITAL.png';
+
+  try {
+    var dataUrl = canvas.toDataURL('image/png');
+    var link = document.createElement('a');
+    link.download = filename;
+    link.href = dataUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch(e) {
+    // Si la seguridad del navegador bloquea toDataURL por CORS bajo file://, descargar directamente
+    var remoteUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=' + encodeURIComponent(d.url) + '&color=1e293b&bgcolor=ffffff&margin=2';
+    window.open(remoteUrl, '_blank');
+  }
+}
+
+function copiarLinkQR(){
+  var d = QR_DESTINOS[qrDestinoActual];
+  if(!d) return;
+  var btn = document.getElementById('btnCopiarLink');
+
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(d.url).then(mostrarCopiado).catch(function(){
+      copiarFallback(d.url);
+    });
+  } else {
+    copiarFallback(d.url);
+  }
+
+  function mostrarCopiado(){
+    if(!btn) return;
+    var originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+    btn.style.background = '#00b894';
+    setTimeout(function(){
+      btn.innerHTML = originalHTML;
+      btn.style.background = '#5b6ceb';
+    }, 2000);
+  }
+
+  function copiarFallback(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      document.execCommand('copy');
+      mostrarCopiado();
+    } catch(err){
+      alert('Enlace: ' + text);
+    }
+    document.body.removeChild(ta);
+  }
+}
+
+function compartirWhatsAppQR(){
+  var d = QR_DESTINOS[qrDestinoActual];
+  if(!d) return;
+  var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(d.textoWA);
+  window.open(waUrl, '_blank');
 }
 
 // ── CARRUSEL NOVEDADES ──
@@ -1406,6 +2214,287 @@ function descargarQR(){
     update();
   }, 4000);
 })();
+
+// ── COMUNIDAD BIKER / MURO INTERACTIVO ─────────────────────
+var COMENTARIOS_DEFAULT = [
+  {
+    id: 'c_init_1',
+    autor: 'Carlos M. (Línea Paseo Caroní)',
+    rol: 'mototaxista',
+    texto: 'Colegas, no se confíen en la lluvia. En asfalto mojado la distancia de frenado se triplica y el freno delantero puede bloquearse fácil. Prudencia y buena ruta.',
+    fecha: '15/03/2026',
+    hora: '09:30 a.m.',
+    reacciones: { moto: 18, idea: 12, like: 24 }
+  },
+  {
+    id: 'c_init_2',
+    autor: 'Junior (Delivery Express Bolívar)',
+    rol: 'delivery',
+    texto: 'A todos los compañeros de pedidos: ningún pedido vale más que tu vida o quedar accidentado. Respeten los semáforos aunque el cliente esté apurado.',
+    fecha: '15/03/2026',
+    hora: '02:15 p.m.',
+    reacciones: { moto: 27, idea: 19, like: 35 }
+  },
+  {
+    id: 'c_init_3',
+    autor: 'Manuel R. (San Félix)',
+    rol: 'particular',
+    texto: 'El casco debe ir con la correa abrochada y ajustada siempre. El año pasado tuve un derrape y el casco me salvó. Si va suelto, en el impacto sale volando.',
+    fecha: '14/03/2026',
+    hora: '05:40 p.m.',
+    reacciones: { moto: 31, idea: 15, like: 42 }
+  }
+];
+
+var listaComentarios = [];
+
+function cargarComentariosLocales(){
+  try {
+    var guardados = JSON.parse(localStorage.getItem('cap_muro_comentarios') || 'null');
+    if (guardados && Array.isArray(guardados) && guardados.length > 0) {
+      listaComentarios = guardados;
+    } else {
+      listaComentarios = COMENTARIOS_DEFAULT.slice();
+      localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
+    }
+  } catch(e){
+    listaComentarios = COMENTARIOS_DEFAULT.slice();
+  }
+  renderizarFeedComentarios();
+  sincronizarComentariosConSheets();
+}
+
+function sincronizarComentariosConSheets(){
+  var cb = '_cb_get_comms_' + Date.now();
+  var tid = setTimeout(function(){ limpiarCb(cb); }, 6000);
+  window[cb] = function(res){
+    clearTimeout(tid);
+    limpiarCb(cb);
+    if(res && res.comentarios && Array.isArray(res.comentarios) && res.comentarios.length > 0){
+      var map = {};
+      listaComentarios.forEach(function(c){ map[c.id] = c; });
+      res.comentarios.forEach(function(c){ map[c.id] = c; });
+      listaComentarios = Object.values(map);
+      listaComentarios.sort(function(a,b){ return (b.id > a.id ? 1 : -1); });
+      localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
+      renderizarFeedComentarios();
+    }
+  };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=getComentarios&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(tid); limpiarCb(cb); s.remove(); };
+  document.head.appendChild(s);
+}
+
+function renderizarFeedComentarios(){
+  var feed = document.getElementById('commFeed');
+  var badge = document.getElementById('commTotalBadge');
+  if(!feed) return;
+  if(badge) badge.textContent = listaComentarios.length + (listaComentarios.length === 1 ? ' mensaje' : ' mensajes');
+
+  if(listaComentarios.length === 0){
+    feed.innerHTML = '<div style="text-align:center;padding:24px;color:var(--gray);font-size:0.85rem;">Sé el primero en dejar un consejo para la comunidad biker.</div>';
+    return;
+  }
+
+  var html = '';
+  listaComentarios.forEach(function(c){
+    var avatarIcon = c.rol === 'delivery' ? '🛵' : (c.rol === 'particular' ? '🛡️' : '🏍️');
+    var rolClass = c.rol === 'delivery' ? 'role-delivery' : (c.rol === 'particular' ? 'role-particular' : 'role-moto');
+    var rolLabel = c.rol === 'delivery' ? 'Delivery' : (c.rol === 'particular' ? 'Particular' : 'Mototaxista');
+
+    var rMoto = (c.reacciones && c.reacciones.moto) || 0;
+    var rIdea = (c.reacciones && c.reacciones.idea) || 0;
+    var rLike = (c.reacciones && c.reacciones.like) || 0;
+
+    var kMoto = 'cap_react_' + c.id + '_moto';
+    var kIdea = 'cap_react_' + c.id + '_idea';
+    var kLike = 'cap_react_' + c.id + '_like';
+
+    var activeMoto = localStorage.getItem(kMoto) === '1' ? 'reacted' : '';
+    var activeIdea = localStorage.getItem(kIdea) === '1' ? 'reacted' : '';
+    var activeLike = localStorage.getItem(kLike) === '1' ? 'reacted' : '';
+
+    html += '<div class="comm-card" id="comm_' + c.id + '">'
+          + '  <div class="comm-card-top">'
+          + '    <div class="comm-user-info">'
+          + '      <div class="comm-avatar">' + avatarIcon + '</div>'
+          + '      <div>'
+          + '        <div class="comm-author">' + escaparHTML(c.autor || 'Biker') + '</div>'
+          + '        <div class="comm-time">' + (c.fecha || '') + (c.hora ? ' · ' + c.hora : '') + '</div>'
+          + '      </div>'
+          + '      <span class="comm-role-badge ' + rolClass + '">' + rolLabel + '</span>'
+          + '    </div>'
+          + '  </div>'
+          + '  <div class="comm-text">' + escaparHTML(c.texto) + '</div>'
+          + '  <div class="comm-actions">'
+          + '    <button type="button" class="comm-react-btn ' + activeMoto + '" onclick="reaccionarComentario(\'' + c.id + '\', \'moto\')">🏍️ <span>' + rMoto + '</span></button>'
+          + '    <button type="button" class="comm-react-btn ' + activeIdea + '" onclick="reaccionarComentario(\'' + c.id + '\', \'idea\')">💡 <span>' + rIdea + '</span></button>'
+          + '    <button type="button" class="comm-react-btn ' + activeLike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'like\')">👍 <span>' + rLike + '</span></button>'
+          + '  </div>'
+          + '</div>';
+  });
+  feed.innerHTML = html;
+}
+
+function insertarSugerencia(txt){
+  var textarea = document.getElementById('commTexto');
+  if(textarea){
+    textarea.value = txt;
+    textarea.focus();
+    var fb = document.getElementById('commFeedback');
+    if(fb) fb.style.display = 'none';
+  }
+}
+
+function publicarComentario(){
+  var inpAutor = document.getElementById('commAutor');
+  var selRol   = document.getElementById('commRol');
+  var txtTexto = document.getElementById('commTexto');
+  var feedback = document.getElementById('commFeedback');
+
+  var autor = (inpAutor.value || '').trim();
+  var rol   = selRol.value || 'mototaxista';
+  var texto = (txtTexto.value || '').trim();
+
+  if(!autor){
+    var codSesion = sessionStorage.getItem('cap_codigo');
+    autor = codSesion ? ('Biker (' + codSesion + ')') : 'Biker Anónimo';
+  }
+
+  if(texto.length < 5){
+    if(feedback){
+      feedback.className = 'comm-feedback';
+      feedback.style.display = 'block';
+      feedback.style.background = '#fef2f2';
+      feedback.style.color = '#991b1b';
+      feedback.style.border = '1px solid #fecaca';
+      feedback.textContent = 'Por favor escribe un mensaje o consejo de al menos 5 letras.';
+    }
+    return;
+  }
+
+  var nuevo = {
+    id: 'c_' + Date.now(),
+    autor: autor,
+    rol: rol,
+    texto: texto,
+    fecha: new Date().toLocaleDateString('es-VE'),
+    hora: new Date().toLocaleTimeString('es-VE', {hour: '2-digit', minute:'2-digit'}),
+    reacciones: { moto: 1, idea: 1, like: 1 }
+  };
+
+  listaComentarios.unshift(nuevo);
+  localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
+  renderizarFeedComentarios();
+
+  txtTexto.value = '';
+
+  if(feedback){
+    feedback.className = 'comm-feedback success';
+    feedback.textContent = '✅ ¡Tu consejo se ha publicado en el Muro Biker!';
+    setTimeout(function(){ feedback.style.display = 'none'; }, 4000);
+  }
+
+  var cb = '_cb_send_comm_' + Date.now();
+  window[cb] = function(){ try{ delete window[cb]; }catch(e){} };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=guardarComentario&datos=' + encodeURIComponent(JSON.stringify(nuevo)) + '&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function(){ try{ delete window[cb]; }catch(e){} s.remove(); };
+  document.head.appendChild(s);
+}
+
+function reaccionarComentario(id, tipo){
+  var kReact = 'cap_react_' + id + '_' + tipo;
+  var yaReacciono = localStorage.getItem(kReact) === '1';
+
+  var c = listaComentarios.find(function(item){ return item.id === id; });
+  if(!c) return;
+  if(!c.reacciones) c.reacciones = { moto:0, idea:0, like:0 };
+
+  if(yaReacciono){
+    c.reacciones[tipo] = Math.max(0, (c.reacciones[tipo] || 1) - 1);
+    localStorage.removeItem(kReact);
+  } else {
+    c.reacciones[tipo] = (c.reacciones[tipo] || 0) + 1;
+    localStorage.setItem(kReact, '1');
+  }
+
+  localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
+  renderizarFeedComentarios();
+}
+
+function escaparHTML(str){
+  if(!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── SINCRONIZACIÓN DINÁMICA DE NOVEDADES ──────────────────
+function sincronizarNovedadesConSheets(){
+  var cb = '_cb_get_novs_' + Date.now();
+  var tid = setTimeout(function(){ limpiarCb(cb); }, 6000);
+  window[cb] = function(res){
+    clearTimeout(tid);
+    limpiarCb(cb);
+    if(res && res.novedades && Array.isArray(res.novedades) && res.novedades.length > 0){
+      renderizarNovedadesDinamicas(res.novedades);
+    }
+  };
+  var s = document.createElement('script');
+  s.src = API_URL + '?action=getNovedades&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function(){ clearTimeout(tid); limpiarCb(cb); s.remove(); };
+  document.head.appendChild(s);
+}
+
+function renderizarNovedadesDinamicas(items){
+  var track = document.getElementById('novTrack');
+  var dots = document.getElementById('novDots');
+  if(!track || !dots || !items || !items.length) return;
+
+  var html = '';
+  items.forEach(function(item){
+    var emoji = item.emoji || '📢';
+    var chip = item.chip || 'Nuevo';
+    var cat = item.categoria || 'Actualidad';
+    var titulo = item.titulo || 'Sin título';
+    var desc = item.descripcion || '';
+    var link = item.link || '#';
+    var btnTexto = item.btnTexto || 'Ver más';
+    var fuente = item.fuente || 'Enlace';
+    var iconoFuente = item.iconoFuente || 'fas fa-external-link-alt';
+
+    html += '<div class="novelty-card">'
+          + '  <div class="nov-card-top" style="background:' + (item.gradiente || 'linear-gradient(135deg,#5b6ceb,#7c5cbf)') + '">'
+          + '    <span class="nov-emoji">' + emoji + '</span>'
+          + '    <span class="nov-chip">' + escaparHTML(chip) + '</span>'
+          + '  </div>'
+          + '  <div class="nov-card-body">'
+          + '    <p class="nov-cat">' + escaparHTML(cat) + '</p>'
+          + '    <h4 class="nov-title">' + escaparHTML(titulo) + '</h4>'
+          + '    <p class="nov-desc">' + escaparHTML(desc) + '</p>'
+          + '    <div class="nov-action-row">'
+          + '      <span class="nov-source-badge"><i class="' + iconoFuente + '"></i> ' + escaparHTML(fuente) + '</span>'
+          + '      <a href="' + link + '" target="_blank" rel="noopener noreferrer" class="nov-btn">'
+          + '        <i class="fas fa-arrow-right"></i> ' + escaparHTML(btnTexto)
+          + '      </a>'
+          + '    </div>'
+          + '  </div>'
+          + '</div>';
+  });
+
+  track.innerHTML = html;
+
+  var dotsHtml = '';
+  for(var i=0; i<items.length; i++){
+    dotsHtml += '<span class="nov-dot' + (i === 0 ? ' active' : '') + '" onclick="noveltyGo(' + i + ')"></span>';
+  }
+  dots.innerHTML = dotsHtml;
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  cargarComentariosLocales();
+  sincronizarNovedadesConSheets();
+});
 
 
 // ── FETCH CON RETRY Y BACKOFF EXPONENCIAL ──────────────────
