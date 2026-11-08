@@ -13,44 +13,64 @@
 <title>CAP-SV-DIGITAL · Bienvenida · Ciudad Bolívar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --purple:   #5b6ceb;
-  --violet:   #6a3fa8;
-  --green:    #00b894;
-  --green2:   #55efc4;
-  --coral:    #e8937a;
-  --dark:     #2d3436;
-  --gray:     #636e72;
-  --light:    #f8f9ff;
-  --border:   #e8eaf6;
-  --white:    #ffffff;
-  --grad:     linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
-  --font-h:   'Montserrat', sans-serif;
-  --font-b:   'Inter', sans-serif;
-  --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
-  --shadow-sm: 0 2px 10px rgba(123,143,232,0.1);
-  --shadow-md: 0 6px 24px rgba(123,143,232,0.15);
-  --shadow-lg: 0 16px 48px rgba(0,0,0,0.14);
+  /* ── PALETA DE COLORES SOLICITADA ── */
+  --bg-page:     #F8FAFC; /* Fondo general de la página (gris muy claro) */
+  --bg-card:     #FFFFFF; /* Fondo de las tarjetas (blanco puro) */
+  --text-main:   #1E293B; /* Texto principal / títulos (azul pizarra oscuro) */
+  --text-sub:    #64748B; /* Texto secundario / párrafos (gris medio) */
+  --border-card: #E2E8F0; /* Bordes de las tarjetas */
+
+  /* Colores de acento para tarjetas */
+  --accent-c1:   #3B82F6; /* Tarjeta 1: Azul */
+  --accent-c2:   #14B8A6; /* Tarjeta 2: Verde azulado/Teal */
+  --accent-c3:   #8B5CF6; /* Tarjeta 3: Morado */
+  --accent-c4:   #F59E0B; /* Tarjeta 4: Ámbar */
+
+  /* Variables compatibles existentes */
+  --purple:      #3B82F6;
+  --violet:      #8B5CF6;
+  --green:       #14B8A6;
+  --green2:      #10B981;
+  --coral:       #F59E0B;
+  --dark:        #1E293B;
+  --gray:        #64748B;
+  --light:       #F8FAFC;
+  --border:      #E2E8F0;
+  --white:       #FFFFFF;
+  --grad:        linear-gradient(135deg, #1E293B 0%, #334155 100%);
+
+  /* Tipografías */
+  --font-h:      'Poppins', sans-serif;
+  --font-b:      'Inter', sans-serif;
+
+  /* Bordes y Sombras UI/UX */
+  --r-sm: 8px; --r-md: 14px; --r-lg: 18px; --r-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 4px 8px -2px rgba(15,23,42,0.06), 0 2px 4px -2px rgba(15,23,42,0.04);
+  --shadow-lg: 0 12px 24px -4px rgba(15,23,42,0.08), 0 4px 8px -4px rgba(15,23,42,0.04);
+  --shadow-hover: 0 16px 32px -4px rgba(15,23,42,0.1), 0 6px 12px -4px rgba(15,23,42,0.05);
 }
 html{scroll-behavior:smooth;}
 body{
   font-family: var(--font-b);
-  background: var(--grad);
+  background-color: var(--bg-page);
   min-height: 100vh;
-  padding: 16px;
-  color: var(--dark);
+  padding: 24px 16px;
+  color: var(--text-main);
   line-height: 1.6;
 }
 
 /* ── WRAPPER ── */
 .wrap{
-  max-width: 960px;
+  max-width: 1020px;
   margin: 0 auto;
-  background: rgba(255,255,255,0.97);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
   border-radius: var(--r-xl);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
@@ -61,9 +81,9 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 28px;
-  background: var(--grad);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 16px 28px;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-card);
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -310,61 +330,69 @@ body{
 }
 
 /* ── SECCIÓN INFORMATIVA ── */
+/* ── SECCIÓN INFORMATIVA (TARJETAS EXISTENTES CON ESTILOS UI/UX) ── */
 .info-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
+  gap: 18px;
   margin-bottom: 28px;
 }
 .info-card{
-  background: white;
-  border: 2px solid var(--border);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
   border-radius: var(--r-lg);
-  padding: 22px;
-  transition: all 0.2s;
+  padding: 24px 22px;
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .info-card::before{
   content:'';
-  position:absolute; top:0; left:0; right:0; height:3px;
-  border-radius: 3px 3px 0 0;
+  position:absolute; top:0; left:0; right:0; height:4px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
 }
-.info-card.c1::before{ background: var(--purple); }
-.info-card.c2::before{ background: var(--green); }
-.info-card.c3::before{ background: var(--violet); }
-.info-card.c4::before{ background: var(--coral); }
+/* Colores de acento exactos */
+.info-card.c1::before{ background: #3B82F6; } /* Tarjeta 1: #3B82F6 (Azul) */
+.info-card.c2::before{ background: #14B8A6; } /* Tarjeta 2: #14B8A6 (Teal) */
+.info-card.c3::before{ background: #8B5CF6; } /* Tarjeta 3: #8B5CF6 (Morado) */
+.info-card.c4::before{ background: #F59E0B; } /* Tarjeta 4: #F59E0B (Ámbar) */
+
 .info-card:hover{
-  border-color: var(--purple);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
 }
+
+/* Íconos con fondo circular y 10% opacidad del acento */
 .info-card-icon{
-  width: 44px; height: 44px;
-  border-radius: 12px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  margin-bottom: 14px;
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
 }
-.ic1{ background: rgba(91,108,235,0.1); color: var(--purple); }
-.ic2{ background: rgba(0,184,148,0.1); color: var(--green); }
-.ic3{ background: rgba(142,68,173,0.1); color: var(--violet); }
-.ic4{ background: rgba(225,112,85,0.1); color: var(--coral); }
+.info-card:hover .info-card-icon{
+  transform: scale(1.08);
+}
+.ic1{ background: rgba(59, 130, 246, 0.1); color: #3B82F6; }
+.ic2{ background: rgba(20, 184, 166, 0.1); color: #14B8A6; }
+.ic3{ background: rgba(139, 92, 246, 0.1); color: #8B5CF6; }
+.ic4{ background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+
 .info-card h3{
   font-family: var(--font-h);
-  font-size: 0.88rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--dark);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
   margin-bottom: 8px;
+  line-height: 1.35;
 }
 .info-card p{
-  font-size: 0.84rem;
-  color: var(--gray);
+  font-family: var(--font-b);
+  font-size: 0.85rem;
+  color: var(--text-sub);
   line-height: 1.55;
-  text-align: justify;
 }
 
 /* ── PLATAFORMAS ── */
@@ -645,7 +673,7 @@ body{
 }
 .novelty-card:hover{
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-hover);
 }
 .nov-card-top{
   position: relative;
@@ -932,6 +960,172 @@ body{
     .mu-bar-right .mu-select{flex:1;}
   }
   @keyframes fadeInDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── NUEVA SECCIÓN: QUIÉNES SOMOS ── */
+.about-section {
+  margin-bottom: 28px;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 820px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.about-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.about-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Tarjeta Izquierda (Autoras) */
+.about-card.about-authors::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #3B82F6 0%, #14B8A6 100%);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.about-authors-inner {
+  padding: 26px 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+}
+@media (max-width: 520px) {
+  .about-authors-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+.about-avatar-wrap {
+  width: 130px;
+  height: 130px;
+  min-width: 130px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 4px solid var(--border-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.about-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.about-authors-content {
+  flex: 1;
+}
+.about-authors-tag {
+  display: inline-block;
+  color: #14B8A6;
+  font-family: var(--font-h);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+.about-authors-names {
+  font-family: var(--font-h);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.about-authors-dept {
+  font-family: var(--font-b);
+  font-size: 0.84rem;
+  color: var(--text-sub);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.about-tutor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F1F5F9;
+  border: 1px solid var(--border-card);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.about-tutor-badge svg {
+  color: var(--accent-c1);
+  flex-shrink: 0;
+}
+
+/* Tarjeta Derecha (Misión) */
+.about-card.about-mission::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: #8B5CF6;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.about-mission-img-wrap {
+  width: 100%;
+  height: 160px;
+  background: #F1F5F9;
+  overflow: hidden;
+  position: relative;
+}
+.about-mission-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.about-card.about-mission:hover .about-mission-img {
+  transform: scale(1.03);
+}
+.about-mission-body {
+  padding: 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-mission-title {
+  font-family: var(--font-h);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.about-mission-text {
+  font-family: var(--font-b);
+  font-size: 0.86rem;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+
 </style>
 <style id="mobile-opt">
 /* ── Optimización móvil CAP-SV-DIGITAL ── */
@@ -992,7 +1186,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
   <!-- NAVBAR -->
   <nav class="navbar">
     <a class="nav-brand" href="#">
-      <div class="nav-logo">🏍️</div>
+      <div class="nav-logo" title="Seguridad Vial"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h-3l-3 5.5h7.5z"/><path d="M9 11.5L6 7H2"/><path d="M15 17.5h-5.5"/></svg></div>
       <span class="nav-name">CAP-SV-DIGITAL</span>
     </a>
     <div class="nav-links">
@@ -1006,7 +1200,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-icon-wrap">🏍️</div>
+    <div class="hero-icon-wrap"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h-3l-3 5.5h7.5z"/><path d="M9 11.5L6 7H2"/><path d="M15 17.5h-5.5"/></svg></div>
     <h1>CAP-SV-DIGITAL</h1>
     <p class="hero-tagline">Instrumento de Seguridad Vial para Motociclistas</p>
     <p class="hero-sub">Intervención Educativa Digital · Ciudad Bolívar, Venezuela 2026</p>
@@ -1050,7 +1244,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
         <!-- PREGUNTA: ¿Es la misma persona? -->
         <div id="wPregunta" style="display:none;">
           <div style="background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:22px;text-align:center;">
-            <div style="font-size:1.8rem;margin-bottom:8px;">🔍</div>
+            <div style="font-size:1.8rem;margin-bottom:8px;color:#3B82F6;"><i class="fas fa-search"></i></div>
             <p style="font-family:var(--font-h);font-size:0.95rem;font-weight:800;color:var(--dark);margin-bottom:6px;">Este código ya está registrado</p>
             <p style="font-size:0.85rem;color:var(--gray);margin-bottom:18px;">
               El código <strong id="wPreguntaCod" style="color:var(--purple);letter-spacing:1px;font-family:monospace;"></strong> ya existe en el sistema.<br>
@@ -1072,7 +1266,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
         <!-- POST-TEST DISPONIBLE -->
         <div id="wPostOk" style="display:none;">
           <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.8rem;margin-bottom:8px;">🏁</div>
+            <div style="font-size:1.8rem;margin-bottom:8px;color:#14B8A6;"><i class="fas fa-flag-checkered"></i></div>
             <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#065f46;margin-bottom:6px;">¡El post-test está disponible!</p>
             <p style="font-size:0.85rem;color:#047857;line-height:1.5;">Tu código <strong id="wOkCod" style="font-family:monospace;"></strong> fue verificado y la segunda fase está habilitada. Puedes iniciar tu evaluación final ahora.</p>
           </div>
@@ -1117,7 +1311,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
         <!-- POST-TEST YA COMPLETADO -->
         <div id="wPostCompletado" style="display:none;">
           <div style="background:#ecfdf5;border:2px solid #6ee7b7;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.8rem;margin-bottom:8px;">🎉</div>
+            <div style="font-size:1.8rem;margin-bottom:8px;color:#8B5CF6;"><i class="fas fa-award"></i></div>
             <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#065f46;margin-bottom:6px;">¡Estudio completado!</p>
             <p style="font-size:0.85rem;color:#047857;line-height:1.6;">
               Ya has completado tanto el <strong>pre-test</strong> como el <strong>post-test</strong> con el código <strong id="wCompCod" style="font-family:monospace;"></strong>.<br>
@@ -1139,7 +1333,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
         <!-- PRE-TEST INICIADO PERO PENDIENTE -->
         <div id="wContinuarPre" style="display:none;">
           <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:14px;padding:22px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.8rem;margin-bottom:8px;">📝</div>
+            <div style="font-size:1.8rem;margin-bottom:8px;color:#3B82F6;"><i class="fas fa-clipboard-check"></i></div>
             <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#1e40af;margin-bottom:6px;">Pre-test iniciado pendiente</p>
             <p style="font-size:0.85rem;color:#1d4ed8;line-height:1.6;">
               Tienes un pre-test iniciado con el código <strong id="wContCod" style="font-family:monospace;"></strong> pero aún no lo has enviado.<br>
@@ -1161,7 +1355,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
         <!-- COLISIÓN: NO ES LA MISMA PERSONA -->
         <div id="wColision" style="display:none;">
           <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:14px;padding:22px;margin-bottom:14px;">
-            <div style="font-size:1.8rem;margin-bottom:8px;text-align:center;">⚠️</div>
+            <div style="font-size:1.8rem;margin-bottom:8px;text-align:center;color:#F59E0B;"><i class="fas fa-exclamation-triangle"></i></div>
             <p style="font-family:var(--font-h);font-size:1rem;font-weight:800;color:#92400e;margin-bottom:10px;text-align:center;">Este código ya está en uso</p>
             <p style="font-size:0.85rem;color:#b45309;line-height:1.6;margin-bottom:10px;">
               El código <strong id="wColisionCod" style="font-family:monospace;"></strong> ya está siendo utilizado por otro participante registrado en este estudio.
@@ -1170,7 +1364,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
               Para que tus datos sean completamente válidos y no se mezclen ni sobrescriban con los de otra persona, <strong>debes generar un código nuevo</strong>.
             </p>
             <div style="background:rgba(255,255,255,0.7);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:12px 14px;font-size:0.82rem;color:#92400e;line-height:1.6;">
-              <strong>💡 ¿Cómo generar tu nuevo código?</strong><br>
+              <strong><i class="fas fa-lightbulb" style="color:#F59E0B;margin-right:4px;"></i> ¿Cómo generar tu nuevo código?</strong><br>
               • Usa la inicial de tu <strong>segundo nombre</strong> o tu <strong>segundo apellido</strong>.<br>
               • <em>Ejemplo:</em> Si te llamas <strong>Carlos Andrés Pérez</strong> (nacido el 23 de nov), en vez de <strong>CAPE2311</strong> prueba con <strong>ANPE2311</strong> o con tu segundo apellido.
             </div>
@@ -1317,7 +1511,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
             <!-- TARJETA 1: Campañas -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#e17055,#d63031)">
-                <span class="nov-emoji">🎥</span>
+                <span class="nov-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
                 <span class="nov-chip">Video Oficial</span>
               </div>
               <div class="nov-card-body">
@@ -1336,7 +1530,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
             <!-- TARJETA 2: Redes Sociales -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#833ab4,#fd1d1d)">
-                <span class="nov-emoji">📱</span>
+                <span class="nov-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
                 <span class="nov-chip">Reels & TikTok</span>
               </div>
               <div class="nov-card-body">
@@ -1355,7 +1549,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
             <!-- TARJETA 3: Informes Oficiales -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#00b894,#00cec9)">
-                <span class="nov-emoji">🏛️</span>
+                <span class="nov-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="21" x2="22" y2="21"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg></span>
                 <span class="nov-chip">Oficial INTT</span>
               </div>
               <div class="nov-card-body">
@@ -1374,7 +1568,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
             <!-- TARJETA 4: Internacional -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#0984e3,#74b9ff)">
-                <span class="nov-emoji">🌎</span>
+                <span class="nov-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
                 <span class="nov-chip">OMS / OPS</span>
               </div>
               <div class="nov-card-body">
@@ -1393,7 +1587,7 @@ img,canvas,svg,video,iframe{max-width:100%;}
             <!-- TARJETA 5: Legislación -->
             <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)">
-                <span class="nov-emoji">⚖️</span>
+                <span class="nov-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path><path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg></span>
                 <span class="nov-chip">Gaceta Oficial</span>
               </div>
               <div class="nov-card-body">
@@ -1424,41 +1618,86 @@ img,canvas,svg,video,iframe{max-width:100%;}
       </div>
     </div>
 
+    <!-- NUEVA SECCIÓN: QUIÉNES SOMOS (Autores y Misión) -->
+    <div id="quienes-somos" class="about-section">
+      <p class="section-label"><i class="fas fa-users"></i> Quiénes Somos</p>
+      <div class="about-grid">
+
+        <!-- TARJETA IZQUIERDA (Autoras) -->
+        <div class="about-card about-authors">
+          <div class="about-authors-inner">
+            <div class="about-avatar-wrap">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Logo_UDO.svg"
+                   alt="Logo Universidad de Oriente"
+                   class="about-logo-img"
+                   onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/4/41/Logo_UDO.svg';">
+            </div>
+            <div class="about-authors-content">
+              <span class="about-authors-tag">INVESTIGADORAS PRINCIPALES</span>
+              <h2 class="about-authors-names">Meredith La Torraca &amp; Ana Carolina González</h2>
+              <p class="about-authors-dept">Escuela de Ciencias de la Salud "Dr. Francisco Battistini Casalta" - Depto. Enfermería</p>
+              <div class="about-tutor-badge">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                </svg>
+                <span>Tutor: Prof. Norsol Mata</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TARJETA DERECHA (Misión) -->
+        <div class="about-card about-mission">
+          <div class="about-mission-img-wrap">
+            <img src="URL_FOTO_AUTORAS"
+                 alt="Misión CAP-SV-DIGITAL"
+                 class="about-mission-img"
+                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80';">
+          </div>
+          <div class="about-mission-body">
+            <h3 class="about-mission-title"><i class="fas fa-bullseye" style="color:#8B5CF6;font-size:0.9rem;"></i> NUESTRA MISIÓN</h3>
+            <p class="about-mission-text">Creemos firmemente que la educación digital y la tecnología son herramientas poderosas para salvar vidas y generar un cambio cultural en la seguridad vial de Ciudad Bolívar.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- COMUNIDAD / MURO BIKER -->
     <div id="comunidad" class="community-section">
       <div class="community-header">
         <p class="section-label"><i class="fas fa-comments"></i> Comunidad Biker</p>
-        <h2 class="community-title">🏍️ La Voz de la Ruta · Muro de Consejos y Experiencias</h2>
+        <h2 class="community-title"><i class="fas fa-comment-dots" style="color:#3B82F6;margin-right:6px;"></i> La Voz de la Ruta · Muro de Consejos y Experiencias</h2>
         <p class="community-subtitle">Comparte un consejo, responde a otros y vota los mensajes que te parezcan útiles.</p>
       </div>
 
       <div id="muModBanner" class="mu-mod" style="display:none;">
-        <span>🛡️ <strong>Modo moderador:</strong> puedes borrar mensajes con el botón rojo.</span>
+        <span><i class="fas fa-shield-alt" style="color:#3B82F6;margin-right:4px;"></i> <strong>Modo moderador:</strong> puedes borrar mensajes con el botón rojo.</span>
         <button type="button" onclick="document.getElementById('muModBanner').style.display='none'">Ocultar aviso</button>
       </div>
 
       <!-- Publicar -->
       <div class="mu-composer">
         <div class="mu-comp-head">
-          <div class="mu-avatar" id="muMiAvatar">🏍️</div>
+          <div class="mu-avatar" id="muMiAvatar"><i class="fas fa-motorcycle"></i></div>
           <textarea id="muTexto" class="mu-textarea" rows="3" maxlength="500" placeholder="Comparte un consejo o una experiencia de la ruta…"></textarea>
         </div>
         <div class="mu-chips" id="muChips">
-          <button type="button" class="mu-chip" data-txt="¡El casco abrochado salva vidas, no lo lleven de adorno en el codo!">🪖 Casco abrochado</button>
-          <button type="button" class="mu-chip" data-txt="En lluvia reduzcan velocidad y mantengan el doble de distancia.">🌧️ Lluvia y frenos</button>
-          <button type="button" class="mu-chip" data-txt="El celular guardado mientras ruedan, un segundo de descuido cuesta caro.">📵 Cero celular</button>
+          <button type="button" class="mu-chip" data-txt="¡El casco abrochado salva vidas, no lo lleven de adorno en el codo!"><i class="fas fa-hard-hat" style="color:#14B8A6;margin-right:4px;"></i> Casco abrochado</button>
+          <button type="button" class="mu-chip" data-txt="En lluvia reduzcan velocidad y mantengan el doble de distancia!"><i class="fas fa-cloud-rain" style="color:#3B82F6;margin-right:4px;"></i> Lluvia y frenos</button>
+          <button type="button" class="mu-chip" data-txt="El celular guardado mientras ruedan, un segundo de descuido cuesta caro."><i class="fas fa-mobile-alt" style="color:#EF4444;margin-right:4px;"></i> Cero celular</button>
         </div>
         <div class="mu-comp-foot">
           <input type="text" id="muAutor" class="mu-input" maxlength="24" placeholder="Tu apodo" autocomplete="off">
           <select id="muRol" class="mu-select">
-            <option value="mototaxista">🏍️ Mototaxista</option>
-            <option value="delivery">🛵 Delivery</option>
-            <option value="particular">🛡️ Particular</option>
+            <option value="mototaxista">Mototaxista</option>
+            <option value="delivery">Delivery</option>
+            <option value="particular">Particular</option>
           </select>
           <span class="mu-count" id="muContador">0/500</span>
           <button type="button" class="mu-btn-primary" id="muPublicar"><i class="fas fa-paper-plane"></i> Publicar</button>
         </div>
-        <p class="mu-priv">🔒 Usa un apodo. No escribas tu código de participante ni datos personales.</p>
+        <p class="mu-priv"><i class="fas fa-lock" style="margin-right:4px;"></i> Usa un apodo. No escribas tu código de participante ni datos personales.</p>
         <div id="muFeedback" class="mu-feedback" role="status"></div>
       </div>
 
@@ -1475,9 +1714,9 @@ img,canvas,svg,video,iframe{max-width:100%;}
           </div>
           <select id="muFiltro" class="mu-select" aria-label="Filtrar por tipo de conductor">
             <option value="todos">Todos</option>
-            <option value="mototaxista">🏍️ Mototaxistas</option>
-            <option value="delivery">🛵 Delivery</option>
-            <option value="particular">🛡️ Particulares</option>
+            <option value="mototaxista">Mototaxistas</option>
+            <option value="delivery">Delivery</option>
+            <option value="particular">Particulares</option>
           </select>
         </div>
       </div>
@@ -2056,7 +2295,7 @@ var MU = {
   abiertos: {}, borradores: {}, borrandoLocal: {},
   flushing: false, syncing: false, online: null, pendRender: false
 };
-var MU_ROLES = { mototaxista: ['🏍️', 'Mototaxista', 'r-moto'], delivery: ['🛵', 'Delivery', 'r-delivery'], particular: ['🛡️', 'Particular', 'r-part'] };
+var MU_ROLES = { mototaxista: ['<i class="fas fa-motorcycle"></i>', 'Mototaxista', 'r-moto'], delivery: ['<i class="fas fa-box"></i>', 'Delivery', 'r-delivery'], particular: ['<i class="fas fa-user-shield"></i>', 'Particular', 'r-part'] };
 
 function muEsc(s){ return escaparHTML(s == null ? '' : s); }
 function muRol(r){ return MU_ROLES[r] || MU_ROLES.mototaxista; }
@@ -2215,11 +2454,11 @@ function muHace(c){
 }
 function muVotos(c){
   var id = muEsc(c.id);
-  return '<button type="button" class="mu-act' + (c.miVoto === 'like' ? ' on-like' : '') + '" data-a="like" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'like') + '" aria-label="Me gusta">👍 <span>' + c.likes + '</span></button>'
-       + '<button type="button" class="mu-act' + (c.miVoto === 'dislike' ? ' on-dislike' : '') + '" data-a="dislike" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'dislike') + '" aria-label="No me gusta">👎 <span>' + c.dislikes + '</span></button>';
+  return '<button type="button" class="mu-act' + (c.miVoto === 'like' ? ' on-like' : '') + '" data-a="like" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'like') + '" aria-label="Me gusta"><i class="fas fa-thumbs-up"></i> <span>' + c.likes + '</span></button>'
+       + '<button type="button" class="mu-act' + (c.miVoto === 'dislike' ? ' on-dislike' : '') + '" data-a="dislike" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'dislike') + '" aria-label="No me gusta"><i class="fas fa-thumbs-down"></i> <span>' + c.dislikes + '</span></button>';
 }
 function muBtnBorrar(id, admin){
-  return admin ? '<button type="button" class="mu-act mu-act-del" data-a="del" data-id="' + muEsc(id) + '">🗑 Borrar</button>' : '';
+  return admin ? '<button type="button" class="mu-act mu-act-del" data-a="del" data-id="' + muEsc(id) + '"><i class="fas fa-trash-alt"></i> Borrar</button>' : '';
 }
 function muRespuestaHTML(r, padreId, admin){
   var ro = muRol(r.rol);
@@ -2250,7 +2489,7 @@ function muTarjetaHTML(c, rs, esEj, admin){
     h += '<span class="mu-ej">Mensaje de ejemplo · desaparece cuando la comunidad empiece a publicar</span>';
   } else {
     h += '<div class="mu-actions">' + muVotos(c)
-      + '<button type="button" class="mu-act" data-a="reply" data-id="' + id + '">💬 Responder</button>';
+      + '<button type="button" class="mu-act" data-a="reply" data-id="' + id + '"><i class="fas fa-reply"></i> Responder</button>';
     if(rs.length) h += '<button type="button" class="mu-act mu-act-link" data-a="hilo" data-id="' + id + '">' + (ab.hilo ? 'Ocultar' : 'Ver') + ' ' + rs.length + (rs.length === 1 ? ' respuesta' : ' respuestas') + (ab.hilo ? ' ▴' : ' ▾') + '</button>';
     h += muBtnBorrar(c.id, admin) + '</div>';
     if(ab.hilo && rs.length) h += '<div class="mu-hilo">' + rs.map(function(r){ return muRespuestaHTML(r, c.id, admin); }).join('') + '</div>';
@@ -2301,7 +2540,7 @@ function muRender(forzar){
 function muEstado(){
   var el = document.getElementById('muEstado'); if(!el) return;
   var pend = MU.pend.posts.length + Object.keys(MU.pend.votes).length;
-  if(MU.online === false) el.textContent = pend ? '📴 Sin conexión · tus envíos se mandarán solos' : '📴 Sin conexión · mostrando lo último guardado';
+  if(MU.online === false) el.textContent = pend ? '<i class="fas fa-wifi"></i> Sin conexión · tus envíos se mandarán solos' : '<i class="fas fa-wifi"></i> Sin conexión · mostrando lo último guardado';
   else if(pend) el.textContent = '⏳ Enviando…';
   else if(MU.online) el.textContent = '● En vivo';
   else el.textContent = '';
@@ -2345,7 +2584,7 @@ function muPublicar(){
   muEncolar(muNuevo(texto, seg.nombre, ro.value, ''));
   tx.value = ''; document.getElementById('muContador').textContent = '0/500';
   if(seg.cambiado){ au.value = ''; muMensaje('Publicado como "Biker Anónimo": por tu privacidad no mostramos códigos de participante. Escribe un apodo si quieres.', 'ok'); }
-  else muMensaje('✅ ¡Tu mensaje se publicó en el muro!', 'ok');
+  else muMensaje('<i class="fas fa-check-circle"></i> ¡Tu mensaje se publicó en el muro!', 'ok');
 }
 function muEnviarRespuesta(padreId){
   var ta = document.querySelector('.mu-ta-reply[data-id="' + padreId + '"]'), inp = document.querySelector('.mu-in-reply[data-id="' + padreId + '"]');
@@ -2684,7 +2923,7 @@ function abrirVentanaImpresion(codigo, r){
   var w = window.open('', '_blank', 'width=760,height=900');
   w.document.write('<!DOCTYPE html><html lang="es"><head>'
     +'<meta charset="UTF-8"><title>Pre-test '+codigo+' · CAP-SV-DIGITAL</title>'
-    +'<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
+    +'<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">'
     +'<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
     +'.header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
     +'.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
@@ -2712,7 +2951,7 @@ function abrirVentanaImpresion(codigo, r){
     +'<div class="code-badge"><div class="lbl">Código</div><div class="val">'+codigo+'</div></div></div>'
     +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
     +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
-    +'<div class="pills"><span class="pill">📅 <strong>'+fecha+'</strong></span><span class="pill">🕐 <strong>'+hora+'</strong></span><span class="pill">📊 <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
+    +'<div class="pills"><span class="pill"><i class="fas fa-calendar-alt"></i> <strong>'+fecha+'</strong></span><span class="pill"><i class="fas fa-clock"></i> <strong>'+hora+'</strong></span><span class="pill"><i class="fas fa-chart-bar"></i> <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
     +'<div class="sec"><span class="sec-t c1">I · Perfil</span><tr>'+perfilHTML+'</table></div>'
     +'<div class="grid">'
     +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><td>'+vfHTML+'</table></div>'
