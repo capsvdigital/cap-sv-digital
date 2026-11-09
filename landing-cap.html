@@ -2454,11 +2454,11 @@ function muHace(c){
 }
 function muVotos(c){
   var id = muEsc(c.id);
-  return '<button type="button" class="mu-act' + (c.miVoto === 'like' ? ' on-like' : '') + '" data-a="like" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'like') + '" aria-label="Me gusta"><i class="fas fa-thumbs-up"></i> <span>' + c.likes + '</span></button>'
-       + '<button type="button" class="mu-act' + (c.miVoto === 'dislike' ? ' on-dislike' : '') + '" data-a="dislike" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'dislike') + '" aria-label="No me gusta"><i class="fas fa-thumbs-down"></i> <span>' + c.dislikes + '</span></button>';
+  return '<button type="button" class="mu-act' + (c.miVoto === 'like' ? ' on-like' : '') + '" data-a="like" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'like') + '" aria-label="Me gusta">👍 <span>' + c.likes + '</span></button>'
+       + '<button type="button" class="mu-act' + (c.miVoto === 'dislike' ? ' on-dislike' : '') + '" data-a="dislike" data-id="' + id + '" aria-pressed="' + (c.miVoto === 'dislike') + '" aria-label="No me gusta">👎 <span>' + c.dislikes + '</span></button>';
 }
 function muBtnBorrar(id, admin){
-  return admin ? '<button type="button" class="mu-act mu-act-del" data-a="del" data-id="' + muEsc(id) + '"><i class="fas fa-trash-alt"></i> Borrar</button>' : '';
+  return admin ? '<button type="button" class="mu-act mu-act-del" data-a="del" data-id="' + muEsc(id) + '">🗑 Borrar</button>' : '';
 }
 function muRespuestaHTML(r, padreId, admin){
   var ro = muRol(r.rol);
@@ -2489,7 +2489,7 @@ function muTarjetaHTML(c, rs, esEj, admin){
     h += '<span class="mu-ej">Mensaje de ejemplo · desaparece cuando la comunidad empiece a publicar</span>';
   } else {
     h += '<div class="mu-actions">' + muVotos(c)
-      + '<button type="button" class="mu-act" data-a="reply" data-id="' + id + '"><i class="fas fa-reply"></i> Responder</button>';
+      + '<button type="button" class="mu-act" data-a="reply" data-id="' + id + '">💬 Responder</button>';
     if(rs.length) h += '<button type="button" class="mu-act mu-act-link" data-a="hilo" data-id="' + id + '">' + (ab.hilo ? 'Ocultar' : 'Ver') + ' ' + rs.length + (rs.length === 1 ? ' respuesta' : ' respuestas') + (ab.hilo ? ' ▴' : ' ▾') + '</button>';
     h += muBtnBorrar(c.id, admin) + '</div>';
     if(ab.hilo && rs.length) h += '<div class="mu-hilo">' + rs.map(function(r){ return muRespuestaHTML(r, c.id, admin); }).join('') + '</div>';
@@ -2540,7 +2540,7 @@ function muRender(forzar){
 function muEstado(){
   var el = document.getElementById('muEstado'); if(!el) return;
   var pend = MU.pend.posts.length + Object.keys(MU.pend.votes).length;
-  if(MU.online === false) el.textContent = pend ? '<i class="fas fa-wifi"></i> Sin conexión · tus envíos se mandarán solos' : '<i class="fas fa-wifi"></i> Sin conexión · mostrando lo último guardado';
+  if(MU.online === false) el.textContent = pend ? '📴 Sin conexión · tus envíos se mandarán solos' : '📴 Sin conexión · mostrando lo último guardado';
   else if(pend) el.textContent = '⏳ Enviando…';
   else if(MU.online) el.textContent = '● En vivo';
   else el.textContent = '';
@@ -2584,7 +2584,7 @@ function muPublicar(){
   muEncolar(muNuevo(texto, seg.nombre, ro.value, ''));
   tx.value = ''; document.getElementById('muContador').textContent = '0/500';
   if(seg.cambiado){ au.value = ''; muMensaje('Publicado como "Biker Anónimo": por tu privacidad no mostramos códigos de participante. Escribe un apodo si quieres.', 'ok'); }
-  else muMensaje('<i class="fas fa-check-circle"></i> ¡Tu mensaje se publicó en el muro!', 'ok');
+  else muMensaje('✅ ¡Tu mensaje se publicó en el muro!', 'ok');
 }
 function muEnviarRespuesta(padreId){
   var ta = document.querySelector('.mu-ta-reply[data-id="' + padreId + '"]'), inp = document.querySelector('.mu-in-reply[data-id="' + padreId + '"]');
@@ -2951,7 +2951,7 @@ function abrirVentanaImpresion(codigo, r){
     +'<div class="code-badge"><div class="lbl">Código</div><div class="val">'+codigo+'</div></div></div>'
     +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
     +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
-    +'<div class="pills"><span class="pill"><i class="fas fa-calendar-alt"></i> <strong>'+fecha+'</strong></span><span class="pill"><i class="fas fa-clock"></i> <strong>'+hora+'</strong></span><span class="pill"><i class="fas fa-chart-bar"></i> <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
+    +'<div class="pills"><span class="pill">📅 <strong>'+fecha+'</strong></span><span class="pill">🕐 <strong>'+hora+'</strong></span><span class="pill">📊 <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
     +'<div class="sec"><span class="sec-t c1">I · Perfil</span><tr>'+perfilHTML+'</table></div>'
     +'<div class="grid">'
     +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><td>'+vfHTML+'</table></div>'
