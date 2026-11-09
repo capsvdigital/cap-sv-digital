@@ -2579,7 +2579,7 @@ function renderizarFeedComentarios(){
 
   var html = '';
   listaComentarios.forEach(function(c){
-    var avatarIcon = c.rol === 'delivery' ? '🛵' : (c.rol === 'particular' ? '🛡️' : '🏍️');
+    var avatarIcon = c.rol === 'delivery' ? '<i class="fas fa-box"></i>' : (c.rol === 'particular' ? '<i class="fas fa-shield-alt"></i>' : '<i class="fas fa-motorcycle"></i>');
     var rolClass = c.rol === 'delivery' ? 'role-delivery' : (c.rol === 'particular' ? 'role-particular' : 'role-moto');
     var rolLabel = c.rol === 'delivery' ? 'Delivery' : (c.rol === 'particular' ? 'Particular' : 'Mototaxista');
 
@@ -2608,9 +2608,9 @@ function renderizarFeedComentarios(){
           + '  </div>'
           + '  <div class="comm-text">' + escaparHTML(c.texto) + '</div>'
           + '  <div class="comm-actions">'
-          + '    <button type="button" class="comm-react-btn ' + activeMoto + '" onclick="reaccionarComentario(\'' + c.id + '\', \'moto\')">🏍️ <span>' + rMoto + '</span></button>'
-          + '    <button type="button" class="comm-react-btn ' + activeIdea + '" onclick="reaccionarComentario(\'' + c.id + '\', \'idea\')">💡 <span>' + rIdea + '</span></button>'
-          + '    <button type="button" class="comm-react-btn ' + activeLike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'like\')">👍 <span>' + rLike + '</span></button>'
+          + '    <button type="button" class="comm-react-btn ' + activeMoto + '" onclick="reaccionarComentario(\'' + c.id + '\', \'moto\')"><i class="fas fa-motorcycle"></i> <span>' + rMoto + '</span></button>'
+          + '    <button type="button" class="comm-react-btn ' + activeIdea + '" onclick="reaccionarComentario(\'' + c.id + '\', \'idea\')"><i class="fas fa-lightbulb"></i> <span>' + rIdea + '</span></button>'
+          + '    <button type="button" class="comm-react-btn ' + activeLike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'like\')"><i class="fas fa-thumbs-up"></i> <span>' + rLike + '</span></button>'
           + '  </div>'
           + '</div>';
   });
@@ -2672,7 +2672,7 @@ function publicarComentario(){
 
   if(feedback){
     feedback.className = 'comm-feedback success';
-    feedback.textContent = '✅ ¡Tu consejo se ha publicado en el Muro Biker!';
+    feedback.textContent = '¡Tu consejo se ha publicado en el Muro Biker!'; feedback.style.color = 'var(--green2)';
     setTimeout(function(){ feedback.style.display = 'none'; }, 4000);
   }
 
@@ -2733,7 +2733,7 @@ function renderizarNovedadesDinamicas(items){
 
   var html = '';
   items.forEach(function(item){
-    var emoji = item.emoji || '📢';
+    var emoji = item.emoji || '<i class="fas fa-bullhorn"></i>';
     var chip = item.chip || 'Nuevo';
     var cat = item.categoria || 'Actualidad';
     var titulo = item.titulo || 'Sin título';
@@ -2906,7 +2906,7 @@ function abrirVentanaImpresion(codigo, r){
     var resp = r[k] || '—';
     var ok   = resp === correctas[k];
     return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+'"><td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+'</td>'
-         + '<td style="padding:6px 10px;font-size:0.78rem;">'+(ok?'✓':'✗')+' '+resp+'</td></tr>';
+         + '<td style="padding:6px 10px;font-size:0.78rem;">'+(ok?'<i class="fas fa-check" style="color:#059669;margin-right:4px;"></i>':'<i class="fas fa-times" style="color:#dc2626;margin-right:4px;"></i>')+' '+resp+'</td></tr>';
   }).join('');
 
   var actFields = ['a1','a2','a3','a4','a5','a6','a7','a8'];
@@ -2962,7 +2962,7 @@ function abrirVentanaImpresion(codigo, r){
     +'<div class="code-badge"><div class="lbl">Código</div><div class="val">'+codigo+'</div></div></div>'
     +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
     +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
-    +'<div class="pills"><span class="pill">📅 <strong>'+fecha+'</strong></span><span class="pill">🕐 <strong>'+hora+'</strong></span><span class="pill">📊 <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
+    +'<div class="pills"><span class="pill"><i class="fas fa-calendar-alt" style="margin-right:4px;color:var(--purple);"></i> <strong>'+fecha+'</strong></span><span class="pill"><i class="fas fa-clock" style="margin-right:4px;color:var(--purple);"></i> <strong>'+hora+'</strong></span><span class="pill"><i class="fas fa-chart-pie" style="margin-right:4px;color:var(--purple);"></i> <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
     +'<div class="sec"><span class="sec-t c1">I · Perfil</span><tr>'+perfilHTML+'</table></div>'
     +'<div class="grid">'
     +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><td>'+vfHTML+'</table></div>'
