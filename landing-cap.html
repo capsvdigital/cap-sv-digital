@@ -713,6 +713,39 @@ p, span, a, input, button, select, textarea, label {
   margin: 0;
 }
 
+
+.footer-admin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94A3B8;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 16px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  font-family: var(--font-h);
+}
+.footer-admin-link:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+.nav-link.nav-admin-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  display: inline-flex;
+  align-items: center;
+}
+.nav-link.nav-admin-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
 /* ── FOOTER INSTITUCIONAL ── */
 .inst-footer{
   background: #1E293B;
@@ -1316,6 +1349,7 @@ p, span, a, input, button, select, textarea, label {
       <a href="#noticias" class="nav-link">Novedades</a>
       <a href="#comunidad" class="nav-link">Muro Biker</a>
       <a href="#equipo" class="nav-link">Equipo</a>
+      <a href="admin-cap.html" class="nav-link nav-admin-btn" title="Panel de Control del Administrador"><i class="fas fa-lock" style="margin-right:5px;font-size:0.72rem;"></i>Admin</a>
     </div>
   </nav>
 
@@ -1890,13 +1924,10 @@ p, span, a, input, button, select, textarea, label {
       </div>
     </div>
 
-    
-    </div>
-
     <p class="inst-copyright">© 2026 CAP-SV-DIGITAL · Instrumento de Seguridad Vial para Motociclistas · Universidad de Oriente, Venezuela · Todos los derechos reservados para fines académicos.</p>
-    <p style="margin-top:12px;">
-      <a href="admin-cap.html" style="font-size:0.72rem;color:rgba(255,255,255,0.2);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">
-        <i class="fas fa-lock" style="margin-right:4px;font-size:0.65rem;"></i>Acceso Administrador
+    <p style="margin-top:16px;text-align:center;">
+      <a href="admin-cap.html" class="footer-admin-link" title="Panel de Administración CAP-SV">
+        <i class="fas fa-lock" style="color:var(--accent-teal);"></i> Acceso Administrador
       </a>
     </p>
   </footer>
