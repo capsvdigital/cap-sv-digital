@@ -697,6 +697,22 @@ body{
 
   <div class="main">
 
+    <!-- AVISO DE CONEXIÓN CON GOOGLE SHEETS -->
+    <div id="connWarning" style="display:none;background:rgba(239,68,68,0.15);border:1.5px solid rgba(239,68,68,0.4);color:#fca5a5;padding:12px 18px;border-radius:12px;margin-bottom:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fas fa-exclamation-triangle" style="color:#ef4444;font-size:1.2rem;flex-shrink:0;"></i>
+        <div>
+          <strong style="color:white;font-size:0.9rem;">Sin conexión con la base de datos de Google Sheets</strong>
+          <p style="font-size:0.78rem;color:#fca5a5;margin-top:2px;line-height:1.4;">
+            No se pudieron descargar los datos centrales de la nube. Mostrando únicamente datos guardados en la memoria de este equipo (modo fuera de línea).
+          </p>
+        </div>
+      </div>
+      <button onclick="cargarDesdeSheets(false)" style="padding:8px 16px;background:#ef4444;color:white;border:none;border-radius:8px;font-family:var(--font-h);font-size:0.8rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;">
+        <i class="fas fa-sync-alt"></i> Reintentar conexión
+      </button>
+    </div>
+
     <!-- FILA SUPERIOR: CONTROL Y STATS EN VIVO -->
     <div class="top-row">
 
@@ -1207,11 +1223,12 @@ function cargarDesdeSheets(silencioso){
       actualizarBadgePost(hab);
     }
 
-    // 4. FUSIONAR con TODO el progreso local registrado en el dispositivo
-    fusionarConDatosLocales();
+    const warnEl = document.getElementById('connWarning');
+    if(warnEl) warnEl.style.display = 'none';
+
     marcarEstadoAuto(true);
     actualizarUI();
-    if(!silencioso) showToast('Datos actualizados (' + Object.keys(datosPre).length + ' participantes)', 'check-circle');
+    if(!silencioso) showToast('Sincronizado con Google Sheets (' + Object.keys(datosPre).length + ' participantes)', 'check-circle');
   };
 
   // NOTA: Se llama a 'action=getData' (que es el manejador nativo en Apps Script)
@@ -1297,8 +1314,10 @@ function cargarDesdeLocal(esFallback){
   marcarEstadoAuto(false);
   actualizarUI();
   if(esFallback){
+    const warnEl = document.getElementById('connWarning');
+    if(warnEl) warnEl.style.display = 'flex';
     const total = Object.keys(datosPre).length;
-    showToast('Mostrando datos del equipo (' + total + ' encontrados)', 'info-circle');
+    showToast('Modo sin conexión. Mostrando datos locales (' + total + ')', 'exclamation-circle');
   }
 }
 
