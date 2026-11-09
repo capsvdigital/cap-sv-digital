@@ -416,7 +416,7 @@ table{max-width:100%;}
         <h2>Perfil Sociodemográfico y Laboral</h2>
         <p>Información general sobre usted y su actividad como conductor</p>
       </div>
-      <span class="section-badge sb-purple">8 preguntas</span>
+      <span class="section-badge sb-purple">9 preguntas</span>
     </div>
     <div class="section-body" style="padding-top:20px;">
 
@@ -527,6 +527,23 @@ table{max-width:100%;}
         </div>
       </div>
 
+      <!-- P9 Evaluación Previa a Licencia -->
+      <div class="q-block" id="qb-p9" data-qid="p9">
+        <div class="q-head">
+          <div class="q-num qn-purple">9</div>
+          <span class="q-text">¿Antes de obtener su licencia de conducir, recibió alguna capacitación o presentó alguna prueba para evaluar sus conocimientos en seguridad vial?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+            <label class="opt-label"><input type="radio" name="p9" value="Sí" onchange="markQ('p9')"> Sí</label>
+            <label class="opt-label"><input type="radio" name="p9" value="No" onchange="markQ('p9')"> No</label>
+          </div>
+          <div class="q-clarification-note">
+            <i class="fas fa-shield-alt" style="color:#5b6ceb;font-size:0.9rem;flex-shrink:0;"></i>
+            <span>Recuerde que esta encuesta es totalmente anónima y confidencial. Por favor, responda con sinceridad con fines exclusivamente de investigación académica.</span>
+          </div>
+        </div>
+      </div>
     </div><!-- /section-body -->
   </div><!-- /section I -->
 
@@ -1121,7 +1138,7 @@ table{max-width:100%;}
 // CONFIG
 // ══════════════════════════════════════════
 const API_URL = 'https://script.google.com/macros/s/AKfycbws-sxtqJ2bLGHn9UNggJdHPCYKUfjGwyKU5oeq-RUCacUlwv53LWQ2MZTwi40JlQVo/exec';
-const TOTAL = 39; // 8 perfil + 10 VF + 8 actitudes + 8 prácticas + 5 digital
+const TOTAL = 40; // 9 perfil + 10 VF + 8 actitudes + 8 prácticas + 5 digital
 
 // Respuestas correctas sección II (Opción Múltiple: A, B, C, D)
 const correctas = {
@@ -1306,8 +1323,8 @@ function setModoSecV(modo) {
 function updateProgress() {
   let count = 0;
 
-  // Perfil (8)
-  for (let i = 1; i <= 8; i++) {
+  // Perfil (9)
+  for (let i = 1; i <= 9; i++) {
     if (answered.has('p' + i)) count++;
   }
 
@@ -1331,7 +1348,7 @@ function updateProgress() {
     });
   }
 
-  const total = isPostTest ? TOTAL : 34; // 34 sin sección V
+  const total = isPostTest ? TOTAL : 35; // 35 sin sección V
   count = Math.min(count, total);
   const pct = Math.round((count / total) * 100);
 
@@ -1346,7 +1363,7 @@ function updateProgress() {
 // ── Etiquetas de preguntas para el aviso de incompleto ──
 const qLabels = {
   p1:'Rango de edad', p2:'Sexo', p3:'Nivel educativo', p4:'Años trabajando',
-  p5:'Licencia de conducir', p6:'Capacitación previa', p7:'Accidentes (12 meses)', p8:'Plataforma preferida',
+  p5:'Licencia de conducir', p6:'Capacitación previa', p7:'Accidentes (12 meses)', p8:'Plataforma preferida', p9:'Evaluación previa a licencia',
   c1:'C1: Menores en moto', c2:'C2: Prioridad en redomas', c3:'C3: Circulación entre canales',
   c4:'C4: Señal de PARE', c5:'C5: Distribución de frenado', c6:'C6: Puntos ciegos de camiones',
   c7:'C7: Primeros auxilios (casco)', c8:'C8: Homologación del casco', c9:'C9: Distancia en lluvia', c10:'C10: Documentación obligatoria',
@@ -1366,7 +1383,7 @@ function obtenerFaltantes() {
   const faltantes = { perfil:[], conocimientos:[], actitudes:[], practicas:[], digital:[] };
 
   // Perfil
-  for (let i = 1; i <= 8; i++) {
+  for (let i = 1; i <= 9; i++) {
     if (!document.querySelector(`input[name="p${i}"]:checked`))
       faltantes.perfil.push('p' + i);
   }
@@ -1679,7 +1696,7 @@ function recopilarRespuestas() {
   const datos  = { codigo, modo, _ts: Date.now() };
 
   // Perfil
-  for (let i = 1; i <= 8; i++) {
+  for (let i = 1; i <= 9; i++) {
     const r = document.querySelector(`input[name="p${i}"]:checked`);
     if (r) datos['p' + i] = r.value;
   }
@@ -1805,7 +1822,7 @@ function restaurar(datos) {
   if (!datos) return;
 
   // Perfil
-  for (let i = 1; i <= 8; i++) {
+  for (let i = 1; i <= 9; i++) {
     const k = 'p' + i;
     if (!datos[k]) continue;
     const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
@@ -1897,7 +1914,7 @@ function imprimirResultados() {
   const perfilDefs = [
     ['Edad','p1'],['Sexo','p2'],['Nivel educativo','p3'],['Años trabajando','p4'],
     ['Licencia de conducir','p5'],['Capacitación previa','p6'],
-    ['Accidentes (12 meses)','p7'],['Plataforma preferida','p8']
+    ['Accidentes (12 meses)','p7'],['Plataforma preferida','p8'],['Evaluación previa a licencia','p9']
   ];
   const perfilHTML = perfilDefs.map(function(x) {
     const el = document.querySelector('input[name="'+x[1]+'"]:checked');
