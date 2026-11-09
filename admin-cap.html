@@ -460,6 +460,16 @@ body{
   background:rgba(56,189,248,0.15);color:var(--accent-blue);border:1px solid rgba(56,189,248,0.3);
 }
 .btn-export-csv:hover{background:rgba(56,189,248,0.25);transform:translateY(-1px);}
+.btn-export-clear{
+  background:rgba(248,113,113,0.15);color:var(--accent-red);border:1px solid rgba(248,113,113,0.3);
+}
+.btn-export-clear:hover{background:rgba(248,113,113,0.25);transform:translateY(-1px);}
+.btn-trash{
+  padding:5px 8px;background:rgba(248,113,113,0.12);color:var(--accent-red);
+  border:1px solid rgba(248,113,113,0.25);border-radius:6px;font-size:0.75rem;
+  cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;
+}
+.btn-trash:hover{background:var(--accent-red);color:#0B0F19;}
 
 .table-wrap{
   overflow-x:auto;border-radius:10px;border:1px solid var(--border-light);
@@ -771,6 +781,7 @@ body{
           </div>
           <select id="filterModo" class="filter-select" onchange="filtrarTabla()">
             <option value="todos">Todos los participantes</option>
+            <option value="completados">Solo completados (Google Sheets)</option>
             <option value="pre">Solo Pre-test</option>
             <option value="post">Solo Post-test</option>
             <option value="ambos">Pareados (Pre y Post)</option>
@@ -781,6 +792,9 @@ body{
           </button>
           <button class="btn-export btn-export-csv" onclick="exportarReporte()" title="Descargar resumen de puntuaciones pareadas">
             <i class="fas fa-file-csv"></i> Resumen Pareado
+          </button>
+          <button class="btn-export btn-export-clear" onclick="limpiarIntentosLocales()" title="Eliminar intentos de prueba y borradores locales de este navegador">
+            <i class="fas fa-broom"></i> Limpiar pruebas
           </button>
         </div>
       </div>
@@ -1330,6 +1344,7 @@ function poblarTabla(){
   todos.forEach(cod=>{
     const pre = datosPre[cod], post = datosPost[cod];
     if(search && !cod.includes(search)) return;
+    if(filtro==='completados' && (!pre || pre.completado!=='SI') && (!post || post.completado!=='SI')) return;
     if(filtro==='pre'   && !pre)           return;
     if(filtro==='post'  && !post)          return;
     if(filtro==='ambos' && (!pre||!post))  return;
@@ -1366,7 +1381,10 @@ function poblarTabla(){
         (!pc && !qc ? '<span class="badge-comp badge-no"><i class="fas fa-spinner fa-spin" style="margin-right:3px;"></i> En progreso</span>' : '') +
       '</td>' +
       '<td>' +
+        '<div style="display:inline-flex;gap:4px;align-items:center;">' +
         '<button class="btn-detail" onclick="verDetalleParticipante(\'' + cod + '\')"><i class="fas fa-eye"></i> Ficha</button>' +
+        '<button class="btn-trash" onclick="eliminarParticipanteLocal(\'' + cod + '\')" title="Eliminar intento de prueba / registro local"><i class="fas fa-trash-alt"></i></button>' +
+      '</div>' +
       '</td>';
 
     tbody.appendChild(tr);
@@ -1404,6 +1422,72 @@ function nivelTexto(s){
 }
 
 // ── FICHA DETALLADA DEL PARTICIPANTE (MODAL) ──
+function eliminarParticipanteLocal(cod){
+  if(!cod) return;
+  const pre = datosPre[cod], post = datosPost[cod];
+  const esLocal = (pre && (pre._enProgreso || pre.completado !== 'SI')) ||
+                  (post && (post._enProgreso || post.completado !== 'SI'));
+  const msg = esLocal
+    ? '¿Deseas eliminar el intento de prueba local [' + cod + '] de este navegador?\n\nSe borrará completamente de la memoria local.'
+    : '¿Deseas quitar a [' + cod + '] de la vista local del panel?\n\n(Nota: Si aún existe en Google Sheets, asegúrate de borrar la fila allí también para que no se recargue).';
+  if(!confirm(msg)) return;
+  try {
+    let cods = JSON.parse(localStorage.getItem('cap_codigos_registrados') || '[]');
+    cods = cods.filter(c => String(c).trim().toUpperCase() !== cod.toUpperCase());
+    localStorage.setItem('cap_codigos_registrados', JSON.stringify(cods));
+  } catch(e){}
+  try {
+    const codUpper = cod.toUpperCase();
+    Object.keys(localStorage).forEach(k => {
+      if(k.toUpperCase().includes(codUpper)){
+        localStorage.removeItem(k);
+      }
+    });
+  } catch(e){}
+  delete datosPre[cod];
+  delete datosPost[cod];
+  actualizarUI();
+  showToast('Registro ' + cod + ' eliminado localmente', 'check-circle');
+}
+
+function limpiarIntentosLocales(){
+  const listaEnProgreso = [...new Set([...Object.keys(datosPre), ...Object.keys(datosPost)])].filter(c => {
+    const pre = datosPre[c], post = datosPost[c];
+    const pc = pre && pre.completado === 'SI';
+    const qc = post && post.completado === 'SI';
+    return !pc && !qc;
+  });
+  const cant = listaEnProgreso.length;
+  const detalle = cant > 0 ? (' (' + listaEnProgreso.join(', ') + ')') : '';
+  if(!confirm('¿Deseas purgar todos los intentos y borradores locales de prueba guardados en la memoria de este navegador?\n\n• Códigos en progreso a eliminar: ' + cant + detalle + '\n• Los registros guardados en Google Sheets se mantendrán intactos.\n\n¿Continuar?')) return;
+  try {
+    localStorage.removeItem('cap_codigos_registrados');
+  } catch(e){}
+  try {
+    Object.keys(localStorage).forEach(k => {
+      if(
+        k.startsWith('cap_registrado_') ||
+        k.startsWith('cap_progreso_') ||
+        k.startsWith('cap_respuestas_') ||
+        k.startsWith('cap_sent_') ||
+        k.startsWith('cap_sync_') ||
+        k.startsWith('cap_final_') ||
+        k.startsWith('cap_chk_')
+      ){
+        localStorage.removeItem(k);
+      }
+    });
+  } catch(e){}
+  Object.keys(datosPre).forEach(c => {
+    if(datosPre[c]._enProgreso || datosPre[c].completado !== 'SI') delete datosPre[c];
+  });
+  Object.keys(datosPost).forEach(c => {
+    if(datosPost[c]._enProgreso || datosPost[c].completado !== 'SI') delete datosPost[c];
+  });
+  cargarDatos(false);
+  showToast('Se purgaron los intentos locales de prueba', 'check-circle');
+}
+
 function verDetalleParticipante(cod){
   const pre = datosPre[cod];
   const post = datosPost[cod];
