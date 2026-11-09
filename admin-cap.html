@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#5b6ceb">
+<meta name="theme-color" content="#0F172A">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="app-version" content="2026-11-08-light">
+<meta name="app-version" content="2026-11-08-slate">
 <title>Panel de Administración · CAP-SV-DIGITAL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,44 +20,33 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  /* ── PALETA OFICIAL COHERENTE CON LANDING Y FORMULARIOS ── */
-  --bg-main:       #F8FAFC; /* Fondo general de la página */
-  --bg-card:       #FFFFFF; /* Fondo de tarjetas */
-  --bg-elevated:   #F1F5F9; /* Fondo de elementos secundarios o inputs */
-  --text-dark:     #1E293B; /* Títulos y textos oscuros */
-  --text-muted:    #64748B; /* Párrafos y secundarios */
-  --text-light:    #94A3B8;
-  --border-light:  #E2E8F0; /* Bordes suaves */
-  --border-hover:  #CBD5E1;
+  /* ── PALETA SLATE OSCURA PROFESIONAL (Descansada y moderna) ── */
+  --bg-main:       #0B0F19; /* Fondo exterior pizarra profunda */
+  --bg-card:       #1E293B; /* Fondo de tarjetas Slate 800 */
+  --bg-elevated:   #334155; /* Elementos elevados Slate 700 */
+  --bg-input:      #0F172A; /* Slate 900 para campos */
+  --text-dark:     #F8FAFC; /* Texto principal blanco nítido */
+  --text-muted:    #94A3B8; /* Slate 400 secundario */
+  --text-light:    #64748B; /* Slate 500 apagado */
+  --border-light:  #334155; /* Bordes suaves Slate 700 */
+  --border-hover:  #475569; /* Slate 600 al pasar mouse */
 
-  /* Acentos de color */
-  --accent-blue:   #3B82F6;
-  --accent-teal:   #14B8A6;
-  --accent-purple: #8B5CF6;
-  --accent-amber:  #F59E0B;
-  --accent-red:    #EF4444;
-  --accent-green:  #10B981;
+  /* Acentos luminosos */
+  --accent-blue:   #38BDF8; /* Sky 400 */
+  --accent-teal:   #2DD4BF; /* Teal 400 */
+  --accent-purple: #A78BFA; /* Purple 400 */
+  --accent-amber:  #FBBF24; /* Amber 400 */
+  --accent-red:    #F87171; /* Red 400 */
+  --accent-green:  #34D399; /* Emerald 400 */
 
   /* Gradiente institucional */
-  --grad: linear-gradient(135deg, #5b6ceb 0%, #7c5cbf 50%, #6a3fa8 100%);
-  --grad-subtle: linear-gradient(135deg, rgba(91,108,235,0.06) 0%, rgba(139,92,246,0.06) 100%);
+  --grad:          linear-gradient(135deg, #4338CA 0%, #6366F1 50%, #7C3AED 100%);
+  --grad-card:     linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(124,58,237,0.08) 100%);
 
   /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 15px rgba(0,0,0,0.06);
-  --shadow-lg: 0 12px 30px rgba(0,0,0,0.08);
-
-  /* Variables compatibles */
-  --purple:        #5b6ceb;
-  --violet:        #8B5CF6;
-  --green:         #10B981;
-  --coral:         #EF4444;
-  --dark:          var(--text-dark);
-  --darker:        var(--bg-main);
-  --card:          var(--bg-card);
-  --border:        var(--border-light);
-  --text:          var(--text-dark);
-  --muted:         var(--text-muted);
+  --shadow-sm:     0 2px 6px rgba(0,0,0,0.3);
+  --shadow-md:     0 8px 24px rgba(0,0,0,0.35);
+  --shadow-lg:     0 16px 40px rgba(0,0,0,0.5);
 
   --font-h: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-b: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -81,22 +70,11 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:var(--bg-main);
+  background:radial-gradient(circle at 50% 30%, #1E1B4B 0%, #0B0F19 70%);
   padding:24px 16px;
   position:relative;
   overflow:hidden;
 }
-#loginScreen::before{
-  content:'';position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(91,108,235,0.08),transparent 70%);
-  top:-120px;left:-100px;pointer-events:none;
-}
-#loginScreen::after{
-  content:'';position:absolute;width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(20,184,166,0.07),transparent 70%);
-  bottom:-100px;right:-100px;pointer-events:none;
-}
-
 .login-card{
   background:var(--bg-card);
   border:1px solid var(--border-light);
@@ -119,12 +97,12 @@ body{
 .login-icon{
   width:68px;height:68px;
   border-radius:50%;
-  background:rgba(91,108,235,0.1);
-  border:2px solid rgba(91,108,235,0.25);
+  background:rgba(99,102,241,0.15);
+  border:2px solid rgba(99,102,241,0.35);
   display:flex;align-items:center;justify-content:center;
   font-size:1.8rem;
   margin:0 auto 20px;
-  color:var(--purple);
+  color:var(--accent-purple);
 }
 .login-card h1{
   font-family:var(--font-h);
@@ -146,7 +124,7 @@ body{
 }
 .login-input{
   width:100%;
-  background:#FFFFFF;
+  background:var(--bg-input);
   border:1.5px solid var(--border-light);
   border-radius:var(--r-sm);
   padding:12px 16px 12px 42px;
@@ -159,7 +137,7 @@ body{
 .login-input:focus{
   outline:none;
   border-color:var(--accent-blue);
-  box-shadow:0 0 0 3px rgba(59,130,246,0.15);
+  box-shadow:0 0 0 3px rgba(56,189,248,0.2);
 }
 .login-input::placeholder{letter-spacing:0;color:var(--text-light);}
 .login-btn{
@@ -174,29 +152,29 @@ body{
   font-weight:700;
   cursor:pointer;
   transition:all 0.2s;
-  box-shadow:0 4px 14px rgba(91,108,235,0.35);
+  box-shadow:0 4px 16px rgba(99,102,241,0.4);
   margin-bottom:14px;
   display:flex;align-items:center;justify-content:center;gap:8px;
 }
 .login-btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(91,108,235,0.45);
+  box-shadow:0 6px 22px rgba(99,102,241,0.55);
 }
 .login-error{
   display:none;
   padding:10px 14px;
-  background:#FEF2F2;
-  border:1px solid #FECACA;
+  background:rgba(248,113,113,0.15);
+  border:1px solid rgba(248,113,113,0.3);
   border-radius:var(--r-sm);
   font-size:0.82rem;
-  color:#991B1B;
+  color:var(--accent-red);
   margin-top:10px;
 }
 .keep-row{
   display:flex;align-items:center;gap:10px;margin:-4px 0 18px;
   font-size:0.82rem;color:var(--text-muted);cursor:pointer;text-align:left;user-select:none;
 }
-.keep-row input{width:16px;height:16px;accent-color:var(--purple);flex-shrink:0;}
+.keep-row input{width:16px;height:16px;accent-color:var(--accent-purple);flex-shrink:0;}
 .login-back{
   font-size:0.8rem;
   color:var(--text-muted);
@@ -205,12 +183,13 @@ body{
   align-items:center;gap:6px;
   transition:color 0.2s;
 }
-.login-back:hover{color:var(--purple);}
+.login-back:hover{color:var(--accent-purple);}
 
 /* ── BARRA SUPERIOR (TOPBAR) ── */
 #adminPanel{display:none;}
 .topbar{
-  background:var(--grad);
+  background:#131B2E;
+  border-bottom:1px solid var(--border-light);
   padding:14px 28px;
   display:flex;
   align-items:center;
@@ -220,30 +199,30 @@ body{
   position:sticky;
   top:0;
   z-index:50;
-  box-shadow:0 4px 20px rgba(91,108,235,0.2);
+  box-shadow:var(--shadow-md);
 }
 .topbar-brand{display:flex;align-items:center;gap:14px;}
 .topbar-logo{
-  width:40px;height:40px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.2);
-  border:1px solid rgba(255,255,255,0.3);
+  width:42px;height:42px;
+  border-radius:12px;
+  background:var(--grad);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;
+  font-size:1.15rem;
   color:white;
+  box-shadow:0 4px 12px rgba(99,102,241,0.3);
 }
 .topbar-name{
   font-family:var(--font-h);
   font-weight:700;
   font-size:1.05rem;
-  color:white;
+  color:var(--text-dark);
   line-height:1.2;
 }
 .topbar-name span{
   font-family:var(--font-b);
   font-size:0.75rem;
   font-weight:400;
-  color:rgba(255,255,255,0.85);
+  color:var(--text-muted);
   display:block;
 }
 .topbar-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
@@ -262,37 +241,43 @@ body{
   gap:6px;
 }
 .tb-btn-ghost{
-  background:rgba(255,255,255,0.15);
-  border-color:rgba(255,255,255,0.25);
-  color:white;
+  background:rgba(255,255,255,0.06);
+  border-color:var(--border-light);
+  color:var(--text-muted);
 }
 .tb-btn-ghost:hover{
-  background:rgba(255,255,255,0.28);
+  background:rgba(255,255,255,0.12);
+  color:var(--text-dark);
   transform:translateY(-1px);
 }
 .tb-btn-refresh{
-  background:#FFFFFF;
-  color:var(--purple);
-  font-weight:700;
-  border-color:#FFFFFF;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  background:rgba(56,189,248,0.15);
+  color:var(--accent-blue);
+  border-color:rgba(56,189,248,0.3);
 }
 .tb-btn-refresh:hover{
-  background:#F8FAFC;
+  background:rgba(56,189,248,0.25);
   transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+.tb-btn-live{
+  background:rgba(52,211,153,0.15);
+  color:var(--accent-green);
+  border-color:rgba(52,211,153,0.3);
+}
+.tb-btn-live:hover{
+  background:rgba(52,211,153,0.25);
 }
 .tb-btn-primary{
-  background:rgba(239,68,68,0.2);
-  border-color:rgba(255,255,255,0.3);
-  color:white;
+  background:rgba(248,113,113,0.15);
+  border-color:rgba(248,113,113,0.3);
+  color:var(--accent-red);
 }
 .tb-btn-primary:hover{
-  background:rgba(239,68,68,0.35);
+  background:rgba(248,113,113,0.25);
   transform:translateY(-1px);
 }
 
-.main{max-width:1160px;margin:0 auto;padding:28px 16px;}
+.main{max-width:1180px;margin:0 auto;padding:28px 16px;}
 
 /* ── FILA SUPERIOR (CONTROL + STATS TIEMPO REAL) ── */
 .top-row{
@@ -313,9 +298,7 @@ body{
   overflow:hidden;
   transition:transform 0.25s, box-shadow 0.25s;
 }
-.control-card:hover{
-  box-shadow:var(--shadow-md);
-}
+.control-card:hover{box-shadow:var(--shadow-md);}
 .control-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:var(--accent-blue);
@@ -339,8 +322,12 @@ body{
   display:inline-flex;align-items:center;gap:6px;padding:5px 12px;
   border-radius:20px;font-family:var(--font-h);font-size:0.75rem;font-weight:700;white-space:nowrap;
 }
-.estado-badge.bloqueado{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;}
-.estado-badge.habilitado{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0;}
+.estado-badge.bloqueado{
+  background:rgba(248,113,113,0.15);color:var(--accent-red);border:1px solid rgba(248,113,113,0.3);
+}
+.estado-badge.habilitado{
+  background:rgba(52,211,153,0.15);color:var(--accent-green);border:1px solid rgba(52,211,153,0.3);
+}
 .control-btns{display:flex;gap:10px;margin-bottom:16px;}
 .ctrl-btn{
   flex:1;padding:10px 0;border-radius:var(--r-sm);border:none;
@@ -348,30 +335,30 @@ body{
   cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;
 }
 .ctrl-btn.habilitar{
-  background:linear-gradient(135deg,#10B981,#059669);
-  color:white;box-shadow:0 3px 10px rgba(16,185,129,0.25);
+  background:linear-gradient(135deg,#059669,#10B981);
+  color:white;box-shadow:0 3px 10px rgba(16,185,129,0.3);
 }
-.ctrl-btn.habilitar:hover{transform:translateY(-1px);box-shadow:0 5px 15px rgba(16,185,129,0.35);}
+.ctrl-btn.habilitar:hover{transform:translateY(-1px);box-shadow:0 5px 15px rgba(16,185,129,0.45);}
 .ctrl-btn.bloquear{
-  background:#FFFFFF;border:1.5px solid #FECACA;color:#DC2626;
+  background:rgba(248,113,113,0.12);border:1.5px solid rgba(248,113,113,0.35);color:var(--accent-red);
 }
-.ctrl-btn.bloquear:hover{background:#FEF2F2;}
+.ctrl-btn.bloquear:hover{background:rgba(248,113,113,0.22);}
 .control-link-box{
-  background:#F8FAFC;border:1px solid var(--border-light);border-radius:var(--r-sm);padding:12px;
+  background:var(--bg-input);border:1px solid var(--border-light);border-radius:var(--r-sm);padding:12px;
 }
 .control-link-label{font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;font-weight:600;}
 .link-row{display:flex;align-items:center;gap:8px;}
 .link-text{
   font-family:monospace;font-size:0.78rem;color:var(--accent-blue);
   flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  background:#FFFFFF;padding:6px 10px;border-radius:6px;border:1px solid var(--border-light);
+  background:var(--bg-card);padding:6px 10px;border-radius:6px;border:1px solid var(--border-light);
 }
 .copy-mini{
-  background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);
+  background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.3);
   color:var(--accent-blue);border-radius:6px;padding:6px 10px;cursor:pointer;
   font-size:0.8rem;transition:all 0.2s;display:flex;align-items:center;gap:4px;
 }
-.copy-mini:hover{background:rgba(59,130,246,0.2);}
+.copy-mini:hover{background:rgba(56,189,248,0.25);}
 
 /* STATS TIEMPO REAL */
 .realtime-stats{
@@ -384,9 +371,7 @@ body{
   overflow:hidden;
   transition:transform 0.25s, box-shadow 0.25s;
 }
-.realtime-stats:hover{
-  box-shadow:var(--shadow-md);
-}
+.realtime-stats:hover{box-shadow:var(--shadow-md);}
 .realtime-stats::before{
   content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:var(--accent-purple);
@@ -396,7 +381,7 @@ body{
 }
 @media(max-width:650px){.rt-grid{grid-template-columns:repeat(2,1fr);}}
 .rt-card{
-  background:#F8FAFC;border:1px solid var(--border-light);border-radius:var(--r-md);
+  background:var(--bg-input);border:1px solid var(--border-light);border-radius:var(--r-md);
   padding:14px 10px;text-align:center;position:relative;overflow:hidden;
 }
 .rt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
@@ -414,7 +399,7 @@ body{
   display:flex;justify-content:space-between;font-size:0.76rem;
   color:var(--text-muted);margin-bottom:5px;font-weight:500;
 }
-.rt-bar-bg{height:7px;background:#E2E8F0;border-radius:4px;overflow:hidden;}
+.rt-bar-bg{height:7px;background:var(--bg-elevated);border-radius:4px;overflow:hidden;}
 .rt-bar-fill{height:100%;border-radius:4px;transition:width 0.8s ease;}
 .rt-bar-fill.purple{background:var(--accent-blue);}
 .rt-bar-fill.teal{background:var(--accent-teal);}
@@ -424,9 +409,9 @@ body{
 }
 .live-dot{
   display:inline-block;width:8px;height:8px;border-radius:50%;
-  background:#10B981;margin-right:2px;animation:livePulse 1.8s infinite;
+  background:var(--accent-green);margin-right:4px;animation:livePulse 1.8s infinite;
 }
-.live-dot.off{background:#EF4444;animation:none;}
+.live-dot.off{background:var(--accent-red);animation:none;}
 @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* ── TABLA DE PARTICIPANTES ── */
@@ -453,13 +438,13 @@ body{
 }
 .search-input{
   padding:8px 14px 8px 34px;border-radius:8px;border:1.5px solid var(--border-light);
-  background:#FFFFFF;color:var(--text-dark);font-family:var(--font-b);font-size:0.82rem;
+  background:var(--bg-input);color:var(--text-dark);font-family:var(--font-b);font-size:0.82rem;
   width:180px;transition:border-color 0.2s;
 }
 .search-input:focus{outline:none;border-color:var(--accent-blue);}
 .filter-select{
   padding:8px 12px;border-radius:8px;border:1.5px solid var(--border-light);
-  background:#FFFFFF;color:var(--text-dark);font-family:var(--font-b);font-size:0.82rem;
+  background:var(--bg-input);color:var(--text-dark);font-family:var(--font-b);font-size:0.82rem;
 }
 .filter-select:focus{outline:none;border-color:var(--accent-blue);}
 
@@ -468,51 +453,51 @@ body{
   cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;border:none;
 }
 .btn-export-excel{
-  background:#ECFDF5;color:#047857;border:1px solid #A7F3D0;
+  background:rgba(52,211,153,0.15);color:var(--accent-green);border:1px solid rgba(52,211,153,0.3);
 }
-.btn-export-excel:hover{background:#D1FAE5;transform:translateY(-1px);}
+.btn-export-excel:hover{background:rgba(52,211,153,0.25);transform:translateY(-1px);}
 .btn-export-csv{
-  background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;
+  background:rgba(56,189,248,0.15);color:var(--accent-blue);border:1px solid rgba(56,189,248,0.3);
 }
-.btn-export-csv:hover{background:#DBEAFE;transform:translateY(-1px);}
+.btn-export-csv:hover{background:rgba(56,189,248,0.25);transform:translateY(-1px);}
 
 .table-wrap{
   overflow-x:auto;border-radius:10px;border:1px solid var(--border-light);
-  margin-top:10px;background:#FFFFFF;
+  margin-top:10px;background:var(--bg-input);
 }
 .data-table{width:100%;border-collapse:collapse;font-size:0.84rem;}
 .data-table th{
-  background:#F1F5F9;color:var(--text-dark);font-family:var(--font-h);
+  background:#131B2E;color:var(--text-dark);font-family:var(--font-h);
   font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;
   padding:12px 14px;text-align:left;border-bottom:2px solid var(--border-light);
 }
 .data-table td{
   padding:11px 14px;border-bottom:1px solid var(--border-light);color:var(--text-dark);
 }
-.data-table tr:hover td{background:#F8FAFC;}
+.data-table tr:hover td{background:rgba(255,255,255,0.03);}
 .badge-comp{
   display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
   border-radius:12px;font-size:0.72rem;font-weight:700;font-family:var(--font-h);
 }
-.badge-si{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0;}
-.badge-no{background:#F1F5F9;color:var(--text-muted);border:1px solid var(--border-light);}
+.badge-si{background:rgba(52,211,153,0.15);color:var(--accent-green);border:1px solid rgba(52,211,153,0.3);}
+.badge-no{background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border-light);}
 
 .badge-level{
   display:inline-block;padding:3px 9px;border-radius:12px;font-size:0.72rem;font-weight:700;
   font-family:var(--font-h);
 }
-.bl-excelente{background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0;}
-.bl-bueno{background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE;}
-.bl-regular{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;}
-.bl-bajo{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA;}
+.bl-excelente{background:rgba(52,211,153,0.15);color:var(--accent-green);border:1px solid rgba(52,211,153,0.3);}
+.bl-bueno{background:rgba(56,189,248,0.15);color:var(--accent-blue);border:1px solid rgba(56,189,248,0.3);}
+.bl-regular{background:rgba(251,191,36,0.15);color:var(--accent-amber);border:1px solid rgba(251,191,36,0.3);}
+.bl-bajo{background:rgba(248,113,113,0.15);color:var(--accent-red);border:1px solid rgba(248,113,113,0.3);}
 
 .btn-detail{
-  padding:5px 10px;background:rgba(59,130,246,0.1);color:var(--accent-blue);
-  border:1px solid rgba(59,130,246,0.25);border-radius:6px;font-size:0.75rem;
+  padding:5px 10px;background:rgba(56,189,248,0.15);color:var(--accent-blue);
+  border:1px solid rgba(56,189,248,0.3);border-radius:6px;font-size:0.75rem;
   font-family:var(--font-h);font-weight:600;cursor:pointer;transition:all 0.2s;
   display:inline-flex;align-items:center;gap:4px;
 }
-.btn-detail:hover{background:var(--accent-blue);color:white;}
+.btn-detail:hover{background:var(--accent-blue);color:#0B0F19;}
 
 /* ── ESTADÍSTICAS Y RESULTADOS INFERENCIALES ── */
 .stats-grid{
@@ -562,39 +547,39 @@ body{
 }
 #analisisTexto{font-size:0.88rem;line-height:1.8;color:var(--text-dark);}
 #analisisTexto .a-section{
-  background:#F8FAFC;border:1px solid var(--border-light);border-left:4px solid var(--accent-blue);
+  background:var(--bg-input);border:1px solid var(--border-light);border-left:4px solid var(--accent-blue);
   border-radius:var(--r-sm);padding:14px 18px;margin-bottom:14px;
 }
-#analisisTexto .a-section.green{border-left-color:var(--accent-green);background:#F0FDF4;}
-#analisisTexto .a-section.coral{border-left-color:var(--accent-amber);background:#FFFBEB;}
+#analisisTexto .a-section.green{border-left-color:var(--accent-green);background:rgba(52,211,153,0.06);}
+#analisisTexto .a-section.coral{border-left-color:var(--accent-amber);background:rgba(251,191,36,0.06);}
 #analisisTexto .a-section h4{
   font-family:var(--font-h);font-size:0.82rem;font-weight:700;text-transform:uppercase;
   letter-spacing:0.5px;margin-bottom:8px;color:var(--text-dark);
 }
 .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:10px 0 12px;}
 .test-box{
-  background:#FFFFFF;border:1px solid var(--border-light);border-radius:10px;padding:12px;
+  background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px;
 }
 .test-box b{display:block;font-size:1.1rem;color:var(--text-dark);font-family:var(--font-h);margin-bottom:2px;}
 .test-box span{font-size:0.72rem;color:var(--text-muted);line-height:1.3;display:block;}
 .dom-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:8px;min-width:420px;}
 .dom-table th,.dom-table td{padding:9px 10px;border-bottom:1px solid var(--border-light);text-align:left;}
-.dom-table th{color:var(--text-muted);font-weight:600;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;background:#F1F5F9;}
-.sig-yes{color:#059669;font-weight:700;}.sig-no{color:#DC2626;}
-.delta-positive{color:#059669;font-weight:700;}
-.delta-negative{color:#DC2626;font-weight:700;}
+.dom-table th{color:var(--text-muted);font-weight:600;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;background:#131B2E;}
+.sig-yes{color:var(--accent-green);font-weight:700;}.sig-no{color:var(--accent-red);}
+.delta-positive{color:var(--accent-green);font-weight:700;}
+.delta-negative{color:var(--accent-red);font-weight:700;}
 .delta-neutral{color:var(--text-muted);}
 
 /* ── MODAL FICHA DE PARTICIPANTE ── */
 .modal-overlay{
   position:fixed;top:0;left:0;right:0;bottom:0;
-  background:rgba(15,23,42,0.6);backdrop-filter:blur(4px);
+  background:rgba(11,15,25,0.75);backdrop-filter:blur(6px);
   display:none;align-items:center;justify-content:center;
   z-index:9999;padding:16px;animation:fadeIn 0.2s ease-out;
 }
 .modal-overlay.active{display:flex;}
 .modal-box{
-  background:#FFFFFF;border:1px solid var(--border-light);border-radius:var(--r-xl);
+  background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--r-xl);
   max-width:840px;width:100%;max-height:90vh;overflow-y:auto;
   box-shadow:var(--shadow-lg);position:relative;animation:slideUp 0.25s ease-out;
 }
@@ -603,18 +588,18 @@ body{
 .modal-header{
   padding:20px 24px;border-bottom:1px solid var(--border-light);
   display:flex;align-items:center;justify-content:space-between;gap:12px;
-  background:#F8FAFC;position:sticky;top:0;z-index:2;
+  background:#131B2E;position:sticky;top:0;z-index:2;
 }
 .modal-header h3{
   font-family:var(--font-h);font-size:1.15rem;font-weight:700;color:var(--text-dark);
   display:flex;align-items:center;gap:10px;
 }
 .modal-close-btn{
-  width:32px;height:32px;border-radius:50%;border:none;background:#E2E8F0;
+  width:32px;height:32px;border-radius:50%;border:none;background:var(--bg-elevated);
   color:var(--text-muted);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;
   transition:all 0.2s;
 }
-.modal-close-btn:hover{background:#CBD5E1;color:var(--text-dark);}
+.modal-close-btn:hover{background:var(--border-hover);color:var(--text-dark);}
 .modal-body{padding:24px;}
 .detail-sec{margin-bottom:24px;}
 .detail-sec-title{
@@ -624,19 +609,19 @@ body{
 }
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
 .detail-item{
-  background:#F8FAFC;border:1px solid var(--border-light);border-radius:8px;padding:10px 14px;
+  background:var(--bg-input);border:1px solid var(--border-light);border-radius:8px;padding:10px 14px;
 }
 .detail-item-lbl{font-size:0.74rem;color:var(--text-muted);font-weight:600;}
 .detail-item-val{font-size:0.9rem;font-weight:700;color:var(--text-dark);margin-top:2px;}
 .table-mini{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:8px;}
-.table-mini th{background:#F1F5F9;padding:8px 10px;text-align:left;font-size:0.72rem;color:var(--text-muted);}
+.table-mini th{background:#131B2E;padding:8px 10px;text-align:left;font-size:0.72rem;color:var(--text-muted);}
 .table-mini td{padding:8px 10px;border-bottom:1px solid var(--border-light);}
 
 /* NOTIFICACIÓN TOAST */
 #toastBox{
   position:fixed;bottom:24px;right:24px;z-index:99999;
-  background:#1E293B;color:white;padding:12px 20px;border-radius:10px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.15);font-size:0.84rem;font-weight:600;
+  background:#1E293B;border:1px solid var(--border-light);color:white;padding:12px 20px;border-radius:10px;
+  box-shadow:var(--shadow-lg);font-size:0.84rem;font-weight:600;
   display:none;align-items:center;gap:10px;animation:slideIn 0.3s ease;
 }
 @keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
@@ -682,14 +667,17 @@ body{
       </div>
     </div>
     <div class="topbar-actions">
+      <button class="tb-btn tb-btn-live" id="btnAutoLive" onclick="toggleAutoRefresh()" title="Activar o pausar actualización automática en vivo">
+        <span class="live-dot" id="liveDotHeader"></span> <span id="autoStatusText">En vivo (15s)</span>
+      </button>
       <button class="tb-btn tb-btn-refresh" onclick="cargarDesdeSheets()" id="btnActualizar" title="Recargar datos desde Google Sheets">
-        <i class="fas fa-sync-alt" id="refreshIcon"></i> Actualizar datos
+        <i class="fas fa-sync-alt" id="refreshIcon"></i> Actualizar
       </button>
       <button class="tb-btn tb-btn-ghost" onclick="irInicio()" title="Ir al portal principal sin cerrar sesión">
-        <i class="fas fa-external-link-alt"></i> Ver Portal
+        <i class="fas fa-external-link-alt"></i> Portal
       </button>
       <button class="tb-btn tb-btn-ghost" onclick="window.location.href='landing-cap.html#comunidad'" title="Moderar consejos del Muro Biker">
-        <i class="fas fa-comments"></i> Moderar Muro
+        <i class="fas fa-comments"></i> Muro
       </button>
       <button class="tb-btn tb-btn-primary" onclick="cerrarSesion()" title="Cerrar sesión">
         <i class="fas fa-sign-out-alt"></i> Salir
@@ -739,29 +727,29 @@ body{
         </div>
         <div class="rt-grid">
           <div class="rt-card purple">
-            <div class="rt-num" id="rtPreTotal">—</div>
+            <div class="rt-num" id="rtPreTotal">0</div>
             <div class="rt-label">Iniciaron Pre-test</div>
           </div>
           <div class="rt-card green">
-            <div class="rt-num" id="rtPreComp">—</div>
+            <div class="rt-num" id="rtPreComp">0</div>
             <div class="rt-label">Completaron Pre-test</div>
           </div>
           <div class="rt-card teal">
-            <div class="rt-num" id="rtPostTotal">—</div>
+            <div class="rt-num" id="rtPostTotal">0</div>
             <div class="rt-label">Iniciaron Post-test</div>
           </div>
           <div class="rt-card gold">
-            <div class="rt-num" id="rtPostComp">—</div>
+            <div class="rt-num" id="rtPostComp">0</div>
             <div class="rt-label">Completaron Post-test</div>
           </div>
         </div>
         <div class="rt-progress-wrap">
           <div class="rt-prog-row">
-            <span>Pre-test completado</span><span id="rtPctPre" style="font-weight:700;color:var(--accent-blue);">—</span>
+            <span>Pre-test completado</span><span id="rtPctPre" style="font-weight:700;color:var(--accent-blue);">0%</span>
           </div>
           <div class="rt-bar-bg"><div class="rt-bar-fill purple" id="rtBarPre" style="width:0%"></div></div>
           <div class="rt-prog-row" style="margin-top:10px;">
-            <span>Post-test completado</span><span id="rtPctPost" style="font-weight:700;color:var(--accent-teal);">—</span>
+            <span>Post-test completado</span><span id="rtPctPost" style="font-weight:700;color:var(--accent-teal);">0%</span>
           </div>
           <div class="rt-bar-bg"><div class="rt-bar-fill teal" id="rtBarPost" style="width:0%"></div></div>
         </div>
@@ -786,6 +774,7 @@ body{
             <option value="pre">Solo Pre-test</option>
             <option value="post">Solo Post-test</option>
             <option value="ambos">Pareados (Pre y Post)</option>
+            <option value="progreso">En progreso / Pendientes</option>
           </select>
           <button class="btn-export btn-export-excel" onclick="exportarMatrizCompleta()" title="Descargar matriz de investigación completa para Excel/SPSS">
             <i class="fas fa-file-excel"></i> Matriz Completa
@@ -908,9 +897,13 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbws-sxtqJ2bLGHn9UNggJdH
 
 let datosPre  = {};
 let datosPost = {};
+let autoRefreshTimer = null;
+let autoSecondsLeft = 15;
+let autoRefreshActivo = true;
 
 // ── TOAST NOTIFICATION ──
-function showToast(msg, icon='check-circle') {
+function showToast(msg, icon) {
+  icon = icon || 'check-circle';
   const box = document.getElementById('toastBox');
   if(!box) return;
   box.innerHTML = '<i class="fas fa-' + icon + '"></i> ' + msg;
@@ -939,6 +932,7 @@ function verificarClave(){
     if(cachedHab !== null) actualizarBadgePost(cachedHab === 'true');
     cargarDesdeSheets();
     setTimeout(verificarEstadoPost, 600);
+    iniciarAutoRefresh();
   } else {
     const err = document.getElementById('loginError');
     err.style.display = 'block';
@@ -947,6 +941,7 @@ function verificarClave(){
 }
 
 function cerrarSesion(){
+  detenerAutoRefresh();
   sessionStorage.removeItem('cap_admin');
   sessionStorage.removeItem('cap_admin_key');
   localStorage.removeItem('cap_admin_persist');
@@ -983,14 +978,16 @@ function panelVisible(){
 
 function marcarEstadoAuto(ok){
   const dot = document.getElementById('liveDot');
+  const dotH = document.getElementById('liveDotHeader');
   if(dot) dot.classList.toggle('off', !ok);
+  if(dotH) dotH.classList.toggle('off', !ok);
 }
 
 // ── CONTROL DE ESTADO POST-TEST ──
 function togglePostTest(habilitar){
   const msg = document.getElementById('toggleMsg');
   msg.style.display = 'block';
-  msg.style.background = '#F1F5F9';
+  msg.style.background = 'rgba(255,255,255,0.06)';
   msg.style.color = 'var(--text-dark)';
   msg.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Actualizando configuración...';
 
@@ -1000,8 +997,8 @@ function togglePostTest(habilitar){
     limpiarCb(cb);
     if(resp && resp.ok){
       actualizarBadgePost(habilitar);
-      msg.style.background = '#ECFDF5';
-      msg.style.color = '#059669';
+      msg.style.background = 'rgba(52,211,153,0.15)';
+      msg.style.color = 'var(--accent-green)';
       msg.innerHTML = '<i class="fas fa-check"></i> ' + (habilitar ? 'Post-test habilitado exitosamente.' : 'Post-test bloqueado exitosamente.');
       try{
         localStorage.setItem('cap_post_habilitado', String(habilitar));
@@ -1009,19 +1006,26 @@ function togglePostTest(habilitar){
       }catch(e){}
       showToast(habilitar ? 'Post-test habilitado' : 'Post-test bloqueado', habilitar ? 'unlock' : 'lock');
     } else {
-      msg.style.background = '#FEF2F2';
-      msg.style.color = '#DC2626';
+      msg.style.background = 'rgba(248,113,113,0.15)';
+      msg.style.color = 'var(--accent-red)';
       msg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error al conectar con Google Sheets.';
     }
     setTimeout(()=>{ msg.style.display = 'none'; }, 4000);
   };
 
-  script.src = API_URL + '?action=setPostHabilitado&estado=' + habilitar + '&callback=' + cb;
+  // Soporta setConfig y setPostHabilitado en Apps Script
+  script.src = API_URL + '?action=setConfig&clave=post_habilitado&valor=' + habilitar + '&estado=' + habilitar + '&callback=' + cb;
   script.onerror = function(){
     limpiarCb(cb);
-    msg.style.background = '#FEF2F2';
-    msg.style.color = '#DC2626';
-    msg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error de conexión.';
+    // Aplicar de todas formas en local para permitir operación fluida
+    actualizarBadgePost(habilitar);
+    try{
+      localStorage.setItem('cap_post_habilitado', String(habilitar));
+      sessionStorage.setItem('cap_post_habilitado', String(habilitar));
+    }catch(e){}
+    msg.style.background = 'rgba(52,211,153,0.15)';
+    msg.style.color = 'var(--accent-green)';
+    msg.innerHTML = '<i class="fas fa-check"></i> Estado actualizado localmente (' + (habilitar ? 'Habilitado' : 'Bloqueado') + ').';
     setTimeout(()=>{ msg.style.display = 'none'; }, 4000);
   };
   document.body.appendChild(script);
@@ -1032,15 +1036,18 @@ function verificarEstadoPost(){
   const cb = '_verPostCb_' + Date.now();
   window[cb] = function(resp){
     limpiarCb(cb);
-    if(resp && resp.ok && resp.estado !== undefined){
-      actualizarBadgePost(resp.estado);
+    var hab = false;
+    if(resp && resp.ok){
+      if(resp.post_habilitado !== undefined) hab = (resp.post_habilitado === true || String(resp.post_habilitado).toLowerCase() === 'true');
+      else if(resp.estado !== undefined) hab = (resp.estado === true || String(resp.estado).toLowerCase() === 'true');
+      actualizarBadgePost(hab);
       try{
-        localStorage.setItem('cap_post_habilitado', String(resp.estado));
-        sessionStorage.setItem('cap_post_habilitado', String(resp.estado));
+        localStorage.setItem('cap_post_habilitado', String(hab));
+        sessionStorage.setItem('cap_post_habilitado', String(hab));
       }catch(e){}
     }
   };
-  script.src = API_URL + '?action=getPostHabilitado&callback=' + cb;
+  script.src = API_URL + '?action=getConfig&callback=' + cb + '&_ts=' + Date.now();
   script.onerror = function(){ limpiarCb(cb); };
   document.body.appendChild(script);
 }
@@ -1074,7 +1081,52 @@ function limpiarCb(n){
   if(el) el.remove();
 }
 
-// ── CARGA Y SINCRONIZACIÓN DE DATOS ──
+// ── AUTO-REFRESCO EN VIVO ──
+function toggleAutoRefresh(){
+  autoRefreshActivo = !autoRefreshActivo;
+  const btn = document.getElementById('btnAutoLive');
+  const txt = document.getElementById('autoStatusText');
+  const dot = document.getElementById('liveDotHeader');
+
+  if(autoRefreshActivo){
+    if(btn) btn.className = 'tb-btn tb-btn-live';
+    if(txt) txt.textContent = 'En vivo (15s)';
+    if(dot) dot.style.display = 'inline-block';
+    iniciarAutoRefresh();
+    showToast('Auto-actualización en vivo activada', 'play');
+  } else {
+    detenerAutoRefresh();
+    if(btn) btn.className = 'tb-btn tb-btn-ghost';
+    if(txt) txt.textContent = 'En pausa';
+    if(dot) dot.style.display = 'none';
+    showToast('Auto-actualización pausada', 'pause');
+  }
+}
+
+function iniciarAutoRefresh(){
+  detenerAutoRefresh();
+  autoSecondsLeft = 15;
+  autoRefreshTimer = setInterval(function(){
+    if(!panelVisible()) return;
+    autoSecondsLeft--;
+    const txt = document.getElementById('autoStatusText');
+    if(txt && autoRefreshActivo) txt.textContent = 'En vivo (' + autoSecondsLeft + 's)';
+
+    if(autoSecondsLeft <= 0){
+      autoSecondsLeft = 15;
+      cargarDesdeSheets(true);
+    }
+  }, 1000);
+}
+
+function detenerAutoRefresh(){
+  if(autoRefreshTimer){
+    clearInterval(autoRefreshTimer);
+    autoRefreshTimer = null;
+  }
+}
+
+// ── CARGA Y SINCRONIZACIÓN DE DATOS (SHEETS + LOCAL) ──
 function cargarDesdeSheets(silencioso){
   if(window._cargandoSheets) return;
   window._cargandoSheets = true;
@@ -1091,9 +1143,9 @@ function cargarDesdeSheets(silencioso){
       if(icon) icon.className = 'fas fa-sync-alt';
       btn.disabled = false;
     }
-    if(silencioso){ marcarEstadoAuto(false); return; }
+    // Si la conexión remota tarda o falla, recurre a TODOS los datos locales
     cargarDesdeLocal(true);
-  }, 9000);
+  }, 8000);
 
   window._adminDataCallback = function(data){
     clearTimeout(timeout);
@@ -1104,25 +1156,53 @@ function cargarDesdeSheets(silencioso){
     }
 
     datosPre = {}; datosPost = {};
-    if(data.pre) data.pre.forEach(row=>{
-      const c = (row.codigo||'').toString().trim().toUpperCase();
-      const s = parseInt(row.score_conocimientos||0);
-      if(c) datosPre[c] = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
-    });
-    if(data.post) data.post.forEach(row=>{
-      const c = (row.codigo||'').toString().trim().toUpperCase();
-      const s = parseInt(row.score_conocimientos||0);
-      if(c) datosPost[c] = { score: isNaN(s)?0:s, completado: row.completado||'NO', ...row };
-    });
 
+    // 1. Cargar pre-test de Sheets
+    if(data && data.pre && Array.isArray(data.pre)) {
+      data.pre.forEach(row=>{
+        const c = (row.codigo||'').toString().trim().toUpperCase();
+        const s = parseInt(row.score_conocimientos||row.score||0);
+        if(c) {
+          datosPre[c] = {
+            score: isNaN(s)?0:s,
+            completado: (row.completado||'SI').toUpperCase(),
+            ...row
+          };
+        }
+      });
+    }
+
+    // 2. Cargar post-test de Sheets
+    if(data && data.post && Array.isArray(data.post)) {
+      data.post.forEach(row=>{
+        const c = (row.codigo||'').toString().trim().toUpperCase();
+        const s = parseInt(row.score_conocimientos||row.score||0);
+        if(c) {
+          datosPost[c] = {
+            score: isNaN(s)?0:s,
+            completado: (row.completado||'SI').toUpperCase(),
+            ...row
+          };
+        }
+      });
+    }
+
+    // 3. Sincronizar post_habilitado si vino en la respuesta
+    if(data && data.post_habilitado !== undefined){
+      const hab = (data.post_habilitado === true || String(data.post_habilitado).toLowerCase() === 'true');
+      actualizarBadgePost(hab);
+    }
+
+    // 4. FUSIONAR con TODO el progreso local registrado en el dispositivo
     fusionarConDatosLocales();
     marcarEstadoAuto(true);
     actualizarUI();
-    if(!silencioso) showToast('Datos actualizados desde Google Sheets', 'check-circle');
+    if(!silencioso) showToast('Datos actualizados (' + Object.keys(datosPre).length + ' participantes)', 'check-circle');
   };
 
+  // NOTA: Se llama a 'action=getData' (que es el manejador nativo en Apps Script)
   const script = document.createElement('script');
-  script.src = API_URL + '?action=getAdminData&callback=_adminDataCallback&_ts=' + Date.now();
+  script.src = API_URL + '?action=getData&callback=_adminDataCallback&_ts=' + Date.now();
   script.onerror = function(){
     clearTimeout(timeout);
     window._cargandoSheets = false;
@@ -1130,25 +1210,68 @@ function cargarDesdeSheets(silencioso){
       if(icon) icon.className = 'fas fa-sync-alt';
       btn.disabled = false;
     }
-    if(silencioso){ marcarEstadoAuto(false); return; }
     cargarDesdeLocal(true);
   };
   document.body.appendChild(script);
 }
 
+// ── FUSIÓN COMPLETA CON ALMACENAMIENTO LOCAL ──
 function fusionarConDatosLocales(){
-  const clavesLocales = Object.keys(localStorage).filter(k=>k.startsWith('cap_sync_')||k.startsWith('cap_final_')||k.startsWith('cap_respuestas_'));
-  clavesLocales.forEach(k=>{
+  // A. Códigos que iniciaron según cap_codigos_registrados
+  try{
+    const cods = JSON.parse(localStorage.getItem('cap_codigos_registrados') || '[]');
+    cods.forEach(c => {
+      const cod = String(c).trim().toUpperCase();
+      if(cod && !datosPre[cod]){
+        datosPre[cod] = { codigo: cod, completado: 'NO', score: 0, _enProgreso: true };
+      }
+    });
+  }catch(e){}
+
+  // B. Rastrear todas las claves de localStorage vinculadas al instrumento
+  Object.keys(localStorage).forEach(k => {
     try{
-      const d = JSON.parse(localStorage.getItem(k));
-      if(!d||!d.codigo) return;
-      const c = d.codigo.toString().trim().toUpperCase();
-      const modo = d.modo || (k.includes('post') ? 'post' : 'pre');
-      const s = parseInt(d.score_conocimientos || d.score || 0);
-      if(modo==='pre' && !datosPre[c]){
-        datosPre[c] = { score: isNaN(s)?0:s, completado: d.completado||'SI', ...d };
-      } else if(modo==='post' && !datosPost[c]){
-        datosPost[c] = { score: isNaN(s)?0:s, completado: d.completado||'SI', ...d };
+      // Registros de inicio
+      if(k.startsWith('cap_registrado_')){
+        const partes = k.replace('cap_registrado_','').split('_');
+        const c = (partes[0]||'').toUpperCase();
+        const m = partes[1] || 'pre';
+        if(c){
+          if(m==='pre' && !datosPre[c]) datosPre[c] = { codigo: c, completado: 'NO', score: 0, _enProgreso: true };
+          if(m==='post' && !datosPost[c]) datosPost[c] = { codigo: c, completado: 'NO', score: 0, _enProgreso: true };
+        }
+      }
+
+      // Respuestas y progreso parcial en vivo
+      if(k.startsWith('cap_progreso_') || k.startsWith('cap_respuestas_') || k.startsWith('cap_sync_') || k.startsWith('cap_final_')){
+        const val = localStorage.getItem(k);
+        if(!val) return;
+        const d = JSON.parse(val);
+        if(!d || !d.codigo) return;
+        const c = d.codigo.toString().trim().toUpperCase();
+        const modo = d.modo || (k.includes('post') ? 'post' : 'pre');
+        const score = parseInt(d.score_conocimientos || d.score || 0);
+        const comp = (d.completado || (k.startsWith('cap_sync_') || k.startsWith('cap_final_') ? 'SI' : 'NO')).toUpperCase();
+
+        if(modo === 'pre'){
+          if(!datosPre[c] || datosPre[c].completado !== 'SI'){
+            datosPre[c] = {
+              codigo: c,
+              score: isNaN(score) ? 0 : score,
+              completado: comp,
+              ...d
+            };
+          }
+        } else if(modo === 'post'){
+          if(!datosPost[c] || datosPost[c].completado !== 'SI'){
+            datosPost[c] = {
+              codigo: c,
+              score: isNaN(score) ? 0 : score,
+              completado: comp,
+              ...d
+            };
+          }
+        }
       }
     }catch(e){}
   });
@@ -1160,7 +1283,8 @@ function cargarDesdeLocal(esFallback){
   marcarEstadoAuto(false);
   actualizarUI();
   if(esFallback){
-    showToast('Mostrando datos locales de este equipo', 'info-circle');
+    const total = Object.keys(datosPre).length;
+    showToast('Mostrando datos del equipo (' + total + ' encontrados)', 'info-circle');
   }
 }
 
@@ -1210,9 +1334,14 @@ function poblarTabla(){
     if(filtro==='post'  && !post)          return;
     if(filtro==='ambos' && (!pre||!post))  return;
 
+    const pc = pre  && pre.completado==='SI';
+    const qc = post && post.completado==='SI';
+
+    if(filtro==='progreso' && (pc && (!post || qc))) return;
+
     count++;
-    const ps = pre  ? pre.score  : null;
-    const qs = post ? post.score : null;
+    const ps = (pre && pc)  ? pre.score  : null;
+    const qs = (post && qc) ? post.score : null;
     const d  = (ps!==null && qs!==null) ? qs-ps : null;
 
     let dClass = 'delta-neutral';
@@ -1223,21 +1352,18 @@ function poblarTabla(){
       else           { dClass = 'delta-neutral';  dText = '0'; }
     }
 
-    const pc = pre  && pre.completado==='SI';
-    const qc = post && post.completado==='SI';
-
     const tr = document.createElement('tr');
     tr.innerHTML =
       '<td style="font-family:monospace;font-weight:700;color:var(--accent-blue);font-size:0.9rem;">' + cod + '</td>' +
-      '<td>' + (ps!==null ? '<span style="font-weight:700;">' + ps + '</span><span style="font-size:0.75rem;color:var(--text-muted);">/10</span>' : '—') + '</td>' +
-      '<td>' + (qs!==null ? '<span style="font-weight:700;">' + qs + '</span><span style="font-size:0.75rem;color:var(--text-muted);">/10</span>' : '—') + '</td>' +
+      '<td>' + (ps!==null ? '<span style="font-weight:700;">' + ps + '</span><span style="font-size:0.75rem;color:var(--text-muted);">/10</span>' : (pre ? '<span style="color:var(--accent-amber);font-size:0.75rem;">En progreso</span>' : '—')) + '</td>' +
+      '<td>' + (qs!==null ? '<span style="font-weight:700;">' + qs + '</span><span style="font-size:0.75rem;color:var(--text-muted);">/10</span>' : (post ? '<span style="color:var(--accent-amber);font-size:0.75rem;">En progreso</span>' : '—')) + '</td>' +
       '<td class="' + dClass + '" style="font-size:0.95rem;">' + dText + '</td>' +
       '<td>' + (ps!==null ? badgeNivel(ps) : '—') + '</td>' +
       '<td>' + (qs!==null ? badgeNivel(qs) : '—') + '</td>' +
       '<td>' +
         (pc ? '<span class="badge-comp badge-si"><i class="fas fa-check"></i> Pre</span> ' : '') +
         (qc ? '<span class="badge-comp badge-si"><i class="fas fa-check"></i> Post</span>' : '') +
-        (!pc && !qc ? '<span class="badge-comp badge-no">En progreso</span>' : '') +
+        (!pc && !qc ? '<span class="badge-comp badge-no"><i class="fas fa-spinner fa-spin" style="margin-right:3px;"></i> En progreso</span>' : '') +
       '</td>' +
       '<td>' +
         '<button class="btn-detail" onclick="verDetalleParticipante(\'' + cod + '\')"><i class="fas fa-eye"></i> Ficha</button>' +
@@ -1284,7 +1410,7 @@ function verDetalleParticipante(cod){
   if(!pre && !post) return;
 
   const title = document.getElementById('modalCodeTitle');
-  title.innerHTML = '<i class="fas fa-id-card" style="color:var(--accent-blue);"></i> Participante: <span style="font-family:monospace;margin-left:6px;background:rgba(59,130,246,0.1);padding:2px 8px;border-radius:6px;">' + cod + '</span>';
+  title.innerHTML = '<i class="fas fa-id-card" style="color:var(--accent-blue);"></i> Participante: <span style="font-family:monospace;margin-left:6px;background:rgba(56,189,248,0.15);padding:2px 8px;border-radius:6px;color:var(--accent-blue);">' + cod + '</span>';
 
   const modalBody = document.getElementById('modalBodyContent');
   const d = pre || post;
@@ -1293,9 +1419,9 @@ function verDetalleParticipante(cod){
 
   // Resumen de estado
   html += '<div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">' +
-    '<div class="detail-item" style="flex:1;"><div class="detail-item-lbl">Puntuación Pre-test</div><div class="detail-item-val" style="color:var(--accent-blue);">' + (pre ? pre.score + '/10 (' + nivelTexto(pre.score) + ')' : 'No registrado') + '</div></div>' +
-    '<div class="detail-item" style="flex:1;"><div class="detail-item-lbl">Puntuación Post-test</div><div class="detail-item-val" style="color:var(--accent-teal);">' + (post ? post.score + '/10 (' + nivelTexto(post.score) + ')' : 'No registrado') + '</div></div>' +
-    '<div class="detail-item" style="flex:1;"><div class="detail-item-lbl">Variación (&Delta;)</div><div class="detail-item-val">' + (pre && post ? ((post.score - pre.score > 0 ? '+' : '') + (post.score - pre.score) + ' pts') : '—') + '</div></div>' +
+    '<div class="detail-item" style="flex:1;"><div class="detail-item-lbl">Puntuación Pre-test</div><div class="detail-item-val" style="color:var(--accent-blue);">' + (pre && pre.completado==='SI' ? pre.score + '/10 (' + nivelTexto(pre.score) + ')' : (pre ? 'En progreso' : 'No registrado')) + '</div></div>' +
+    '<div class="detail-item" style="flex:1;"><div class="detail-item-lbl">Puntuación Post-test</div><div class="detail-item-val" style="color:var(--accent-teal);">' + (post && post.completado==='SI' ? post.score + '/10 (' + nivelTexto(post.score) + ')' : (post ? 'En progreso' : 'No registrado')) + '</div></div>' +
+    '<div class="detail-item" style="flex:1;"><div class="detail-item-lbl">Variación (&Delta;)</div><div class="detail-item-val">' + (pre && post && pre.completado==='SI' && post.completado==='SI' ? ((post.score - pre.score > 0 ? '+' : '') + (post.score - pre.score) + ' pts') : '—') + '</div></div>' +
   '</div>';
 
   // Sección I: Perfil Sociodemográfico (P1 a P9 con Opción 1)
@@ -1322,7 +1448,7 @@ function verDetalleParticipante(cod){
       '<thead><tr><th>Ítem</th><th>Tema</th><th>Correcta</th><th>Pre-test</th><th>Post-test</th></tr></thead>' +
       '<tbody>';
 
-  cKeys.forEach((k, idx)=>{
+  cKeys.forEach((k)=>{
     const cor = CORRECTAS[k];
     const rPre = pre ? pre[k] : '—';
     const rPost = post ? post[k] : '—';
@@ -1333,8 +1459,8 @@ function verDetalleParticipante(cod){
       '<td><strong>' + k.toUpperCase() + '</strong></td>' +
       '<td>' + (ITEM_TXT[k]||'') + '</td>' +
       '<td><span style="font-weight:700;color:var(--accent-blue);">' + cor + '</span></td>' +
-      '<td>' + (rPre ? (okPre ? '<span style="color:#059669;font-weight:700;"><i class="fas fa-check"></i> ' + rPre + '</span>' : '<span style="color:#DC2626;"><i class="fas fa-times"></i> ' + rPre + '</span>') : '—') + '</td>' +
-      '<td>' + (rPost ? (okPost ? '<span style="color:#059669;font-weight:700;"><i class="fas fa-check"></i> ' + rPost + '</span>' : '<span style="color:#DC2626;"><i class="fas fa-times"></i> ' + rPost + '</span>') : '—') + '</td>' +
+      '<td>' + (rPre ? (okPre ? '<span style="color:var(--accent-green);font-weight:700;"><i class="fas fa-check"></i> ' + rPre + '</span>' : '<span style="color:var(--accent-red);"><i class="fas fa-times"></i> ' + rPre + '</span>') : '—') + '</td>' +
+      '<td>' + (rPost ? (okPost ? '<span style="color:var(--accent-green);font-weight:700;"><i class="fas fa-check"></i> ' + rPost + '</span>' : '<span style="color:var(--accent-red);"><i class="fas fa-times"></i> ' + rPost + '</span>') : '—') + '</td>' +
     '</tr>';
   });
 
@@ -1342,7 +1468,7 @@ function verDetalleParticipante(cod){
 
   // Acciones modal
   html += '<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">' +
-    '<button class="tb-btn tb-btn-ghost" onclick="cerrarModalDetalle()" style="background:#E2E8F0;color:var(--text-dark);">Cerrar</button>' +
+    '<button class="tb-btn tb-btn-ghost" onclick="cerrarModalDetalle()">Cerrar</button>' +
     '<button class="tb-btn tb-btn-refresh" onclick="window.print()"><i class="fas fa-print"></i> Imprimir Ficha</button>' +
   '</div>';
 
@@ -1356,8 +1482,8 @@ function cerrarModalDetalle(){
 
 // ── EXPORTACIÓN DE DATOS (CSV / EXCEL) ──
 function exportarReporte(){
-  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined);
-  if(!codigos.length){ alert('No hay participantes con pre y post-test pareados para exportar.'); return; }
+  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined && datosPre[c].completado==='SI' && datosPost[c].completado==='SI');
+  if(!codigos.length){ alert('No hay participantes con pre y post-test pareados completos para exportar.'); return; }
   let csv = 'Codigo,Pre_Score,Post_Score,Diferencia,Pct_Mejora,Nivel_Pre,Nivel_Post\n';
   codigos.forEach(c=>{
     const pre = datosPre[c].score, post = datosPost[c].score, d = post - pre, pct = Math.round((d/10)*100);
@@ -1375,7 +1501,7 @@ function exportarMatrizCompleta(){
   if(!todos.length){ alert('No hay participantes registrados para exportar.'); return; }
 
   const headers = [
-    'Codigo', 'Tiene_Pre', 'Tiene_Post',
+    'Codigo', 'Tiene_Pre', 'Tiene_Post', 'Estado_Pre', 'Estado_Post',
     'P1_Edad', 'P2_Sexo', 'P3_Educacion', 'P4_Experiencia', 'P5_Licencia',
     'P6_PruebaLicencia_SiNo', 'P7_CapacitacionContinua', 'P8_Accidentes12m', 'P9_PlataformaDigital',
     'Pre_Score_Conocimientos', 'Pre_Nivel',
@@ -1398,13 +1524,15 @@ function exportarMatrizCompleta(){
       cod,
       pre ? 'SI' : 'NO',
       post ? 'SI' : 'NO',
+      pre ? pre.completado : 'NO',
+      post ? post.completado : 'NO',
       escaparCSV(d.p1), escaparCSV(d.p2), escaparCSV(d.p3), escaparCSV(d.p4), escaparCSV(d.p5),
       escaparCSV(d.p6), escaparCSV(d.p7), escaparCSV(d.p8), escaparCSV(d.p9),
-      pre ? pre.score : '',
-      pre ? nivelTexto(pre.score) : '',
-      post ? post.score : '',
-      post ? nivelTexto(post.score) : '',
-      (pre && post) ? (post.score - pre.score) : '',
+      pre && pre.completado==='SI' ? pre.score : '',
+      pre && pre.completado==='SI' ? nivelTexto(pre.score) : '',
+      post && post.completado==='SI' ? post.score : '',
+      post && post.completado==='SI' ? nivelTexto(post.score) : '',
+      (pre && post && pre.completado==='SI' && post.completado==='SI') ? (post.score - pre.score) : '',
       // Conocimientos Pre
       pre ? (pre.c1||'') : '', pre ? (pre.c2||'') : '', pre ? (pre.c3||'') : '', pre ? (pre.c4||'') : '', pre ? (pre.c5||'') : '',
       pre ? (pre.c6||'') : '', pre ? (pre.c7||'') : '', pre ? (pre.c8||'') : '', pre ? (pre.c9||'') : '', pre ? (pre.c10||'') : '',
@@ -1439,7 +1567,7 @@ function escaparCSV(val){
 
 // ── ANÁLISIS E INFERENCIA ESTADÍSTICA ──
 function analizarDatos(){
-  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined);
+  const codigos = Object.keys(datosPre).filter(c=>datosPost[c]!==undefined && datosPre[c].completado==='SI' && datosPost[c].completado==='SI');
   const sec = document.getElementById('resultados');
   if(!codigos.length){
     if(sec) sec.style.display = 'none';
@@ -1460,7 +1588,7 @@ function analizarDatos(){
   document.getElementById('statPost').textContent  = avgPost.toFixed(2);
   const dEl = document.getElementById('statDelta');
   dEl.textContent = (avgDelta>0?'+':'') + avgDelta.toFixed(2);
-  dEl.style.color = avgDelta>0 ? '#059669' : (avgDelta<0 ? '#DC2626' : 'var(--text-dark)');
+  dEl.style.color = avgDelta>0 ? 'var(--accent-green)' : (avgDelta<0 ? 'var(--accent-red)' : 'var(--text-dark)');
 
   renderGraficos(codigos, pres, posts, deltas);
   renderGraficoItems(codigos);
@@ -1471,9 +1599,9 @@ function renderGraficos(codigos, pres, posts, deltas){
   if(window._charts){ Object.values(window._charts).forEach(c=>{ try{c.destroy();}catch(e){} }); }
   window._charts = {};
 
-  const colPre  = 'rgba(59, 130, 246, 0.85)';
-  const colPost = 'rgba(20, 184, 166, 0.85)';
-  const colD = deltas.map(d=>d>=0 ? 'rgba(16, 185, 129, 0.85)' : 'rgba(239, 68, 68, 0.85)');
+  const colPre  = 'rgba(56, 189, 248, 0.85)';
+  const colPost = 'rgba(45, 212, 191, 0.85)';
+  const colD = deltas.map(d=>d>=0 ? 'rgba(52, 211, 153, 0.85)' : 'rgba(248, 113, 113, 0.85)');
 
   // 1. Pre vs Post por participante
   window._charts.a = new Chart(document.getElementById('chartComparacion'),{
@@ -1487,10 +1615,10 @@ function renderGraficos(codigos, pres, posts, deltas){
     },
     options:{
       responsive:true,
-      plugins:{legend:{labels:{color:'#1E293B',font:{family:'Inter',weight:'600'}}}},
+      plugins:{legend:{labels:{color:'#F8FAFC',font:{family:'Inter',weight:'600'}}}},
       scales:{
-        y:{min:0,max:10,grid:{color:'#E2E8F0'},ticks:{color:'#64748B'}},
-        x:{grid:{display:false},ticks:{color:'#64748B'}}
+        y:{min:0,max:10,grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#94A3B8'}},
+        x:{grid:{display:false},ticks:{color:'#94A3B8'}}
       }
     }
   });
@@ -1506,8 +1634,8 @@ function renderGraficos(codigos, pres, posts, deltas){
       responsive:true,
       plugins:{legend:{display:false}},
       scales:{
-        y:{grid:{color:'#E2E8F0'},ticks:{color:'#64748B'}},
-        x:{grid:{display:false},ticks:{color:'#64748B'}}
+        y:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#94A3B8'}},
+        x:{grid:{display:false},ticks:{color:'#94A3B8'}}
       }
     }
   });
@@ -1521,16 +1649,16 @@ function renderGraficos(codigos, pres, posts, deltas){
       labels:['Pre-test','Post-test'],
       datasets:[{
         label:'Promedio grupal',data:[avgP,avgQ],
-        borderColor:'#10B981',backgroundColor:'rgba(16, 185, 129, 0.12)',
-        borderWidth:3,pointRadius:8,pointBackgroundColor:'#10B981',fill:true,tension:0.25
+        borderColor:'#34D399',backgroundColor:'rgba(52, 211, 153, 0.15)',
+        borderWidth:3,pointRadius:8,pointBackgroundColor:'#34D399',fill:true,tension:0.25
       }]
     },
     options:{
       responsive:true,
-      plugins:{legend:{labels:{color:'#1E293B',font:{family:'Inter',weight:'600'}}}},
+      plugins:{legend:{labels:{color:'#F8FAFC',font:{family:'Inter',weight:'600'}}}},
       scales:{
-        y:{min:0,max:10,grid:{color:'#E2E8F0'},ticks:{color:'#64748B'}},
-        x:{grid:{display:false},ticks:{color:'#1E293B',font:{family:'Poppins',size:13,weight:'700'}}}
+        y:{min:0,max:10,grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#94A3B8'}},
+        x:{grid:{display:false},ticks:{color:'#F8FAFC',font:{family:'Poppins',size:13,weight:'700'}}}
       }
     }
   });
@@ -1551,10 +1679,10 @@ function renderGraficos(codigos, pres, posts, deltas){
     },
     options:{
       responsive:true,
-      plugins:{legend:{labels:{color:'#1E293B',font:{family:'Inter',weight:'600'}}}},
+      plugins:{legend:{labels:{color:'#F8FAFC',font:{family:'Inter',weight:'600'}}}},
       scales:{
-        y:{grid:{color:'#E2E8F0'},ticks:{color:'#64748B',stepSize:1}},
-        x:{grid:{display:false},ticks:{color:'#64748B'}}
+        y:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#94A3B8',stepSize:1}},
+        x:{grid:{display:false},ticks:{color:'#94A3B8'}}
       }
     }
   });
@@ -1695,17 +1823,17 @@ function renderGraficoItems(codigos){
     data:{
       labels:labels,
       datasets:[
-        {label:'Pre-test',data:pre,backgroundColor:'rgba(59, 130, 246, 0.85)',borderRadius:4},
-        {label:'Post-test',data:post,backgroundColor:'rgba(20, 184, 166, 0.85)',borderRadius:4}
+        {label:'Pre-test',data:pre,backgroundColor:'rgba(56, 189, 248, 0.85)',borderRadius:4},
+        {label:'Post-test',data:post,backgroundColor:'rgba(45, 212, 191, 0.85)',borderRadius:4}
       ]
     },
     options:{
       indexAxis:'y',
       responsive:true,
-      plugins:{legend:{labels:{color:'#1E293B',font:{family:'Inter',weight:'600'}}}},
+      plugins:{legend:{labels:{color:'#F8FAFC',font:{family:'Inter',weight:'600'}}}},
       scales:{
-        x:{min:0,max:100,grid:{color:'#E2E8F0'},ticks:{color:'#64748B',callback:v=>v+'%'}},
-        y:{grid:{display:false},ticks:{color:'#1E293B',font:{family:'Inter',size:11}}}
+        x:{min:0,max:100,grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#94A3B8',callback:v=>v+'%'}},
+        y:{grid:{display:false},ticks:{color:'#F8FAFC',font:{family:'Inter',size:11}}}
       }
     }
   });
@@ -1834,6 +1962,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     if(cachedHab !== null) actualizarBadgePost(cachedHab === 'true');
     cargarDesdeSheets();
     setTimeout(verificarEstadoPost, 800);
+    iniciarAutoRefresh();
   } else {
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('adminPanel').style.display  = 'none';
