@@ -13,37 +13,66 @@
 <title>CAP-SV-DIGITAL · Seguridad Vial · Ciudad Bolívar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
-:root{
-  --bg:#f0f2ff; --bg-card:#ffffff; --bg-elevated:#f8f9ff; --bg-input:#f1f3ff;
-  --border:#e2e5f0; --border-hover:#c7cce8;
-  --purple:#5b6ceb; --purple-glow:rgba(91,108,235,0.15); --purple-dim:rgba(91,108,235,0.08);
-  --violet:#6a3fa8; --violet-glow:rgba(106,63,168,0.15); --violet-dim:rgba(106,63,168,0.07);
-  --green:#00b894; --green-glow:rgba(0,184,148,0.15); --green-dim:rgba(0,184,148,0.07);
-  --amber:#f59e0b; --amber-glow:rgba(245,158,11,0.15); --amber-dim:rgba(245,158,11,0.08);
-  --rose:#e17055; --rose-glow:rgba(225,112,85,0.15); --rose-dim:rgba(225,112,85,0.07);
-  --text:#2d3436; --text-sec:#636e72; --text-muted:#b2bec3;
-  --font-h:'Montserrat',sans-serif; --font-b:'Inter',sans-serif;
+:root {
+  /* ── PALETA COHERENTE CON LANDING PAGE ── */
+  --bg:             #F8FAFC; /* Fondo general exterior */
+  --bg-card:        #FFFFFF; /* Fondo de tarjetas */
+  --bg-elevated:    #F8FAFC;
+  --bg-input:       #F1F5F9;
+  --border:         #E2E8F0; /* Bordes suaves */
+  --border-hover:   #CBD5E1;
+  --border-card:    #E2E8F0;
+
+  /* Acentos de color */
+  --accent-blue:    #3B82F6;
+  --accent-teal:    #14B8A6;
+  --accent-purple:  #8B5CF6;
+  --accent-amber:   #F59E0B;
+
+  --purple:         #5b6ceb;
+  --purple-glow:    rgba(91,108,235,0.15);
+  --purple-dim:     rgba(91,108,235,0.08);
+  --violet:         #8B5CF6;
+  --violet-glow:    rgba(139,92,246,0.15);
+  --violet-dim:     rgba(139,92,246,0.07);
+  --green:          #14B8A6;
+  --green-glow:     rgba(20,184,166,0.15);
+  --green-dim:      rgba(20,184,166,0.07);
+  --amber:          #F59E0B;
+  --amber-glow:     rgba(245,158,11,0.15);
+  --amber-dim:      rgba(245,158,11,0.08);
+  --rose:           #EF4444;
+  --rose-glow:      rgba(239,68,68,0.15);
+  --rose-dim:       rgba(239,68,68,0.07);
+
+  --text:           #1E293B; /* Títulos y textos oscuros */
+  --text-sec:       #64748B; /* Párrafos y secundarios */
+  --text-muted:     #94A3B8;
+
+  --font-h:         'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-b:         'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px;
 }
 
 html{scroll-behavior:smooth;}
 body{
   font-family:var(--font-b);
-  background:linear-gradient(135deg,#5b6ceb 0%,#7c5cbf 50%,#6a3fa8 100%);
-  min-height:100vh; color:var(--text); line-height:1.6; font-size:15px; padding:16px;
+  background-color:var(--bg);
+  min-height:100vh; color:var(--text); line-height:1.6; font-size:15px; padding:24px 16px;
 }
 
 /* ── LAYOUT ── */
 .page-wrap{
-  max-width:860px; margin:0 auto;
-  background:rgba(255,255,255,0.97);
+  max-width:920px; margin:0 auto;
+  background:var(--bg-card);
+  border:1px solid var(--border);
   border-radius:var(--r-xl);
-  box-shadow:0 20px 60px rgba(0,0,0,0.25);
+  box-shadow:0 12px 40px rgba(0,0,0,0.08);
   overflow:hidden;
 }
 
@@ -128,32 +157,103 @@ body{
 .pb-count{font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#5b6ceb;white-space:nowrap;}
 
 /* ── SECCIÓN BLOCK ── */
-.section-block{background:var(--bg-card);border:2px solid #e8eaf6;border-radius:var(--r-xl);overflow:hidden;margin-bottom:16px;box-shadow:0 4px 20px rgba(91,108,235,0.08);}
-.section-header{padding:20px 28px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:#f8f9ff;}
-.section-header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
-.sh-purple::before{background:var(--purple);}
-.sh-violet::before{background:var(--violet);}
-.sh-green::before{background:var(--green);}
-.sh-amber::before{background:var(--amber);}
-.sh-rose::before{background:var(--rose);}
-.section-num{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:1.3rem;font-weight:900;flex-shrink:0;border:2px solid;}
-.sn-purple{background:var(--purple-dim);border-color:var(--purple);color:var(--purple);}
-.sn-violet{background:var(--violet-dim);border-color:var(--violet);color:var(--violet);}
-.sn-green{background:var(--green-dim);border-color:var(--green);color:var(--green);}
-.sn-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
-.sn-rose{background:var(--rose-dim);border-color:var(--rose);color:var(--rose);}
-.section-meta h2{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:var(--text);}
-.section-meta p{font-size:0.78rem;color:var(--text-muted);margin-top:2px;}
-.section-badge{margin-left:auto;padding:4px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;border:1px solid;white-space:nowrap;}
-.sb-purple{background:var(--purple-dim);border-color:var(--purple);color:var(--purple);}
-.sb-violet{background:var(--violet-dim);border-color:var(--violet);color:var(--violet);}
-.sb-green{background:var(--green-dim);border-color:var(--green);color:var(--green);}
-.sb-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
-.sb-rose{background:var(--rose-dim);border-color:var(--rose);color:var(--rose);}
-.section-notice{margin:16px 28px 0;padding:10px 14px;border-left:3px solid var(--purple);border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:0.82rem;color:#5a5f9e;background:#eef0ff;margin-bottom:16px;}
-.section-notice.green{border-left-color:var(--green);background:#ecfdf5;color:#065f46;}
-.section-notice.amber{border-left-color:var(--amber);background:#fffbeb;color:#92400e;}
-.section-notice.rose{border-left-color:var(--rose);background:#fff4f0;color:#9a4a30;}
+
+/* ── SECTION BLOCK (Tarjetas coherentes con landing) ── */
+.section-block{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.section-block:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+.section-block::before{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  z-index: 2;
+}
+.section-block.sec-perfil::before{ background: var(--accent-blue); }
+.section-block.sec-conocimientos::before{ background: var(--accent-purple); }
+.section-block.sec-actitudes::before{ background: var(--accent-teal); }
+.section-block.sec-practicas::before{ background: var(--accent-amber); }
+.section-block.sec-digital::before, #seccionV::before{ background: var(--rose); }
+
+.section-header{
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: #FFFFFF;
+}
+.section-num{
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-h); font-size: 1.25rem; font-weight: 700;
+  flex-shrink: 0; border: 1.5px solid;
+}
+.sn-purple{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:var(--accent-blue);}
+.sn-violet{background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);color:var(--accent-purple);}
+.sn-green{background:rgba(20,184,166,0.1);border-color:rgba(20,184,166,0.3);color:var(--accent-teal);}
+.sn-amber{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);color:var(--accent-amber);}
+.sn-rose{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--rose);}
+
+.section-meta h2{font-family:var(--font-h);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:2px;}
+.section-meta p{font-size:0.82rem;color:var(--text-sec);}
+.section-badge{margin-left:auto;padding:5px 14px;border-radius:20px;font-family:var(--font-h);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;border:1px solid;white-space:nowrap;}
+.sb-purple{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.25);color:var(--accent-blue);}
+.sb-violet{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);color:var(--accent-purple);}
+.sb-green{background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.25);color:var(--accent-teal);}
+.sb-amber{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);color:var(--accent-amber);}
+.sb-rose{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.25);color:var(--rose);}
+
+.section-notice{margin:16px 24px 0;padding:12px 16px;border-left:3px solid var(--accent-blue);border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:0.83rem;color:var(--text-sec);background:#F1F5F9;margin-bottom:16px;}
+.section-notice.green{border-left-color:var(--accent-teal);background:#F0FDFA;color:#0F766E;}
+.section-notice.amber{border-left-color:var(--accent-amber);background:#FFFBEB;color:#92400E;}
+.section-notice.rose{border-left-color:var(--rose);background:#FEF2F2;color:#991B1B;}
+
+.q-block{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;transition:border-color 0.2s,box-shadow 0.2s;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);}
+.q-block:hover{border-color:var(--border-hover);box-shadow:0 3px 10px rgba(0,0,0,0.04);}
+.q-block.answered{border-color:rgba(59,130,246,0.35);}
+.q-head{padding:12px 16px;display:flex;align-items:center;gap:12px;background:#F8FAFC;border-bottom:1px solid var(--border);}
+.q-num{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:0.78rem;font-weight:700;flex-shrink:0;}
+.qn-purple{background:rgba(59,130,246,0.12);color:var(--accent-blue);}
+.qn-violet{background:rgba(139,92,246,0.12);color:var(--accent-purple);}
+.qn-green{background:rgba(20,184,166,0.12);color:var(--accent-teal);}
+.qn-amber{background:rgba(245,158,11,0.12);color:var(--accent-amber);}
+.qn-rose{background:rgba(239,68,68,0.12);color:var(--rose);}
+.q-text{font-size:0.92rem;font-weight:600;color:var(--text);line-height:1.4;}
+.q-body{padding:14px 16px;}
+
+.opt-label{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#FFFFFF;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;font-size:0.88rem;color:var(--text);user-select:none;box-shadow:0 1px 2px rgba(0,0,0,0.02);}
+.opt-label:hover{border-color:var(--accent-blue);background:#F8FAFC;transform:translateY(-1px);}
+.opt-label:has(input:checked){border-color:var(--accent-blue);background:rgba(59,130,246,0.06);font-weight:600;color:var(--accent-blue);}
+
+.q-clarification-note{
+  margin-top: 10px;
+  padding: 11px 14px;
+  background: #F1F5F9;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 8px;
+  font-size: 0.81rem;
+  color: var(--text-sec);
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .section-body{padding:0 28px 28px;}
 
 /* ── Q BLOCK ── */
@@ -341,6 +441,9 @@ table{max-width:100%;}
   .hero-inst{font-size:0.72rem;}
 }
 </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="page-wrap">
@@ -362,7 +465,7 @@ table{max-width:100%;}
   <div class="hero-participant-bar">
     <span class="hpb-label"><i class="fas fa-fingerprint"></i> Código</span>
     <span class="hpb-code" id="codigoDisplay">——</span>
-    <span id="modoBadge">📋 PRE-TEST</span>
+    <span id="modoBadge"><i class="fas fa-clipboard-list" style="margin-right:5px;"></i> PRE-TEST</span>
     <input type="hidden" id="codigoParticipante">
     <a href="landing-cap.html" class="hpb-back"><i class="fas fa-arrow-left"></i> Volver</a>
   </div>
@@ -407,9 +510,9 @@ table{max-width:100%;}
   <div style="padding:0 16px 16px;">
 
   <!-- ══════════════════════════════════════════
-       SECCIÓN I — PERFIL SOCIODEMOGRÁFICO
+       SECCIÓN I — PERFIL SOCIODEMOGRÁFICO Y LABORAL
   ══════════════════════════════════════════ -->
-  <div class="section-block">
+  <div class="section-block sec-perfil">
     <div class="section-header sh-purple">
       <div class="section-num sn-purple">I</div>
       <div class="section-meta">
@@ -465,11 +568,11 @@ table{max-width:100%;}
         <div class="q-head"><div class="q-num qn-purple">4</div><span class="q-text">¿Cuántos años lleva trabajando como mototaxista o delivery?</span></div>
         <div class="q-body">
           <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p4" value="<1 año" onchange="markQ('p4')"> Menos de 1 año</label>
+            <label class="opt-label"><input type="radio" name="p4" value="Menos de 1 año" onchange="markQ('p4')"> Menos de 1 año</label>
             <label class="opt-label"><input type="radio" name="p4" value="1-3 años" onchange="markQ('p4')"> 1 – 3 años</label>
             <label class="opt-label"><input type="radio" name="p4" value="4-6 años" onchange="markQ('p4')"> 4 – 6 años</label>
             <label class="opt-label"><input type="radio" name="p4" value="7-10 años" onchange="markQ('p4')"> 7 – 10 años</label>
-            <label class="opt-label"><input type="radio" name="p4" value=">10 años" onchange="markQ('p4')"> Más de 10 años</label>
+            <label class="opt-label"><input type="radio" name="p4" value="Más de 10 años" onchange="markQ('p4')"> Más de 10 años</label>
           </div>
         </div>
       </div>
@@ -479,7 +582,7 @@ table{max-width:100%;}
         <div class="q-head"><div class="q-num qn-purple">5</div><span class="q-text">¿Posee licencia de conducir vigente?</span></div>
         <div class="q-body">
           <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p5" value="Sí, tipo A" onchange="markQ('p5')"> Sí, tipo A</label>
+            <label class="opt-label"><input type="radio" name="p5" value="Sí, tipo A" onchange="markQ('p5')"> Sí, tipo A (motocicleta)</label>
             <label class="opt-label"><input type="radio" name="p5" value="Sí, otro tipo" onchange="markQ('p5')"> Sí, otro tipo</label>
             <label class="opt-label"><input type="radio" name="p5" value="Vencida" onchange="markQ('p5')"> Vencida</label>
             <label class="opt-label"><input type="radio" name="p5" value="No poseo" onchange="markQ('p5')"> No poseo</label>
@@ -487,70 +590,74 @@ table{max-width:100%;}
         </div>
       </div>
 
-      <!-- P6 Capacitación -->
+      <!-- P6 Requisito inicial para licencia (OPCIÓN 1) -->
       <div class="q-block" id="qb-p6" data-qid="p6">
-        <div class="q-head"><div class="q-num qn-purple">6</div><span class="q-text">¿Ha recibido alguna capacitación en seguridad vial?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p6" value="Nunca" onchange="markQ('p6')"> Nunca</label>
-            <label class="opt-label"><input type="radio" name="p6" value="Hace más de 2 años" onchange="markQ('p6')"> Hace más de 2 años</label>
-            <label class="opt-label"><input type="radio" name="p6" value="Último año" onchange="markQ('p6')"> En el último año</label>
-            <label class="opt-label"><input type="radio" name="p6" value="Más de una vez" onchange="markQ('p6')"> Más de una vez</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P7 Accidentes -->
-      <div class="q-block" id="qb-p7" data-qid="p7">
-        <div class="q-head"><div class="q-num qn-purple">7</div><span class="q-text">¿Ha tenido algún accidente de tránsito en los últimos 12 meses?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p7" value="Ninguno" onchange="markQ('p7')"> Ninguno</label>
-            <label class="opt-label"><input type="radio" name="p7" value="1 accidente" onchange="markQ('p7')"> 1 accidente</label>
-            <label class="opt-label"><input type="radio" name="p7" value="2 accidentes" onchange="markQ('p7')"> 2 accidentes</label>
-            <label class="opt-label"><input type="radio" name="p7" value="3 o más" onchange="markQ('p7')"> 3 o más</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P8 Red social -->
-      <div class="q-block" id="qb-p8" data-qid="p8">
-        <div class="q-head"><div class="q-num qn-purple">8</div><span class="q-text">¿Qué plataforma digital preferiría para recibir información sobre seguridad vial?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p8" value="WhatsApp" onchange="markQ('p8')"> WhatsApp</label>
-            <label class="opt-label"><input type="radio" name="p8" value="Instagram" onchange="markQ('p8')"> Instagram</label>
-            <label class="opt-label"><input type="radio" name="p8" value="TikTok" onchange="markQ('p8')"> TikTok</label>
-            <label class="opt-label"><input type="radio" name="p8" value="YouTube" onchange="markQ('p8')"> YouTube</label>
-            <label class="opt-label"><input type="radio" name="p8" value="Indiferente" onchange="markQ('p8')"> Indiferente</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P9 Evaluación Previa a Licencia -->
-      <div class="q-block" id="qb-p9" data-qid="p9">
         <div class="q-head">
-          <div class="q-num qn-purple">9</div>
-          <span class="q-text">¿Antes de obtener su licencia de conducir, recibió alguna capacitación o presentó alguna prueba para evaluar sus conocimientos en seguridad vial?</span>
+          <div class="q-num qn-purple">6</div>
+          <span class="q-text">¿Para obtener su licencia de conducir, le exigieron presentar prueba o realizar algún curso de seguridad vial?</span>
         </div>
         <div class="q-body">
           <div class="opts-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
-            <label class="opt-label"><input type="radio" name="p9" value="Sí" onchange="markQ('p9')"> Sí</label>
-            <label class="opt-label"><input type="radio" name="p9" value="No" onchange="markQ('p9')"> No</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Sí" onchange="markQ('p6')"> Sí</label>
+            <label class="opt-label"><input type="radio" name="p6" value="No" onchange="markQ('p6')"> No</label>
           </div>
           <div class="q-clarification-note">
-            <i class="fas fa-shield-alt" style="color:#5b6ceb;font-size:0.9rem;flex-shrink:0;"></i>
+            <i class="fas fa-shield-alt" style="color:var(--accent-blue);font-size:0.95rem;flex-shrink:0;"></i>
             <span>Recuerde que esta encuesta es totalmente anónima y confidencial. Por favor, responda con sinceridad con fines exclusivamente de investigación académica.</span>
           </div>
         </div>
       </div>
+
+      <!-- P7 Capacitación vial continua posterior -->
+      <div class="q-block" id="qb-p7" data-qid="p7">
+        <div class="q-head">
+          <div class="q-num qn-purple">7</div>
+          <span class="q-text">Fuera del trámite de la licencia, ¿ha recibido alguna capacitación o charla de actualización en seguridad vial?</span>
+        </div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p7" value="Nunca" onchange="markQ('p7')"> Nunca</label>
+            <label class="opt-label"><input type="radio" name="p7" value="Hace más de 2 años" onchange="markQ('p7')"> Hace más de 2 años</label>
+            <label class="opt-label"><input type="radio" name="p7" value="En el último año" onchange="markQ('p7')"> En el último año</label>
+            <label class="opt-label"><input type="radio" name="p7" value="Más de una vez" onchange="markQ('p7')"> Más de una vez</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P8 Accidentes -->
+      <div class="q-block" id="qb-p8" data-qid="p8">
+        <div class="q-head"><div class="q-num qn-purple">8</div><span class="q-text">¿Ha tenido algún accidente de tránsito en los últimos 12 meses?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p8" value="Ninguno" onchange="markQ('p8')"> Ninguno</label>
+            <label class="opt-label"><input type="radio" name="p8" value="1 accidente" onchange="markQ('p8')"> 1 accidente</label>
+            <label class="opt-label"><input type="radio" name="p8" value="2 accidentes" onchange="markQ('p8')"> 2 accidentes</label>
+            <label class="opt-label"><input type="radio" name="p8" value="3 o más" onchange="markQ('p8')"> 3 o más</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- P9 Plataforma digital preferida -->
+      <div class="q-block" id="qb-p9" data-qid="p9">
+        <div class="q-head"><div class="q-num qn-purple">9</div><span class="q-text">¿Qué plataforma digital preferiría para recibir información sobre seguridad vial?</span></div>
+        <div class="q-body">
+          <div class="opts-grid">
+            <label class="opt-label"><input type="radio" name="p9" value="WhatsApp" onchange="markQ('p9')"> WhatsApp</label>
+            <label class="opt-label"><input type="radio" name="p9" value="Instagram" onchange="markQ('p9')"> Instagram</label>
+            <label class="opt-label"><input type="radio" name="p9" value="TikTok" onchange="markQ('p9')"> TikTok</label>
+            <label class="opt-label"><input type="radio" name="p9" value="YouTube" onchange="markQ('p9')"> YouTube</label>
+            <label class="opt-label"><input type="radio" name="p9" value="Indiferente" onchange="markQ('p9')"> Indiferente</label>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /section-body -->
   </div><!-- /section I -->
 
   <!-- ══════════════════════════════════════════
        SECCIÓN II — CONOCIMIENTOS SOBRE SEGURIDAD VIAL
   ══════════════════════════════════════════ -->
-  <div class="section-block">
+  <div class="section-block sec-conocimientos">
     <div class="section-header sh-violet">
       <div class="section-num sn-violet">II</div>
       <div class="section-meta">
@@ -731,7 +838,7 @@ table{max-width:100%;}
   <!-- ══════════════════════════════════════════
        SECCIÓN III — ACTITUDES (Likert 4)
   ══════════════════════════════════════════ -->
-  <div class="section-block">
+  <div class="section-block sec-actitudes">
     <div class="section-header sh-green">
       <div class="section-num sn-green">III</div>
       <div class="section-meta">
@@ -834,7 +941,7 @@ table{max-width:100%;}
   <!-- ══════════════════════════════════════════
        SECCIÓN IV — PRÁCTICAS (Likert frecuencia)
   ══════════════════════════════════════════ -->
-  <div class="section-block">
+  <div class="section-block sec-practicas">
     <div class="section-header sh-amber">
       <div class="section-num sn-amber">IV</div>
       <div class="section-meta">
@@ -937,7 +1044,7 @@ table{max-width:100%;}
   <!-- ══════════════════════════════════════════
        SECCIÓN V — EVALUACIÓN DIGITAL (solo post-test)
   ══════════════════════════════════════════ -->
-  <div class="section-block" id="seccionV">
+  <div class="section-block sec-digital" id="seccionV">
     <div class="section-header sh-rose">
       <div class="section-num sn-rose">V</div>
       <div class="section-meta">
@@ -1082,7 +1189,7 @@ table{max-width:100%;}
 <div class="incomplete-overlay" id="incompleteModal">
   <div class="incomplete-card">
     <div class="incomplete-header">
-      <div class="incomplete-icon">⚠️</div>
+      <div class="incomplete-icon"><i class="fas fa-exclamation-triangle"></i></div>
       <div>
         <div class="incomplete-title">Cuestionario incompleto</div>
         <div class="incomplete-subtitle">Responde todas las preguntas antes de enviar</div>
@@ -1210,14 +1317,14 @@ window.addEventListener('DOMContentLoaded', function() {
 
   const badge = document.getElementById('modoBadge');
   if (modo === 'post') {
-    badge.textContent = '📋 POST-TEST';
+    badge.innerHTML = '<i class="fas fa-clipboard-check" style="margin-right:5px;"></i> POST-TEST';
     badge.style.background = 'rgba(0,184,148,0.25)';
     badge.style.borderColor = '#00b894';
     badge.style.color = '#82e8ce';
     document.getElementById('seccionV').style.display = 'block';
     setModoSecV('post');
   } else {
-    badge.textContent = '📋 PRE-TEST';
+    badge.innerHTML = '<i class="fas fa-clipboard-list" style="margin-right:5px;"></i> PRE-TEST';
     // Sección V no aplica en pre-test — ocultar completamente
     document.getElementById('seccionV').style.display = 'none';
   }
@@ -1363,7 +1470,8 @@ function updateProgress() {
 // ── Etiquetas de preguntas para el aviso de incompleto ──
 const qLabels = {
   p1:'Rango de edad', p2:'Sexo', p3:'Nivel educativo', p4:'Años trabajando',
-  p5:'Licencia de conducir', p6:'Capacitación previa', p7:'Accidentes (12 meses)', p8:'Plataforma preferida', p9:'Evaluación previa a licencia',
+  p5:'Licencia de conducir', p6:'Evaluación inicial de licencia',
+  p7:'Capacitación vial continua', p8:'Accidentes (12 meses)', p9:'Plataforma preferida',
   c1:'C1: Menores en moto', c2:'C2: Prioridad en redomas', c3:'C3: Circulación entre canales',
   c4:'C4: Señal de PARE', c5:'C5: Distribución de frenado', c6:'C6: Puntos ciegos de camiones',
   c7:'C7: Primeros auxilios (casco)', c8:'C8: Homologación del casco', c9:'C9: Distancia en lluvia', c10:'C10: Documentación obligatoria',
@@ -1483,10 +1591,10 @@ function submitForm() {
   const pct    = Math.round((scoreC / 10) * 100);
 
   let level, desc, color;
-  if      (scoreC >= 9)  { level = '🏆 Conocimiento Excelente'; desc = 'Dominio sobresaliente de la normativa vial venezolana. Sus conocimientos son una base sólida para una conducción segura.'; color = '#10b981'; }
-  else if (scoreC >= 7)  { level = '✅ Conocimiento Bueno';     desc = 'Buen nivel de conocimiento. Algunos aspectos normativos pueden reforzarse con la intervención educativa.'; color = '#3b82f6'; }
-  else if (scoreC >= 5)  { level = '⚠️ Conocimiento Regular';   desc = 'Existen vacíos importantes. La intervención educativa digital es especialmente útil para usted.'; color = '#f59e0b'; }
-  else                   { level = '🔴 Conocimiento Bajo';       desc = 'Se identifican brechas significativas en el conocimiento de la normativa. La intervención puede marcar una diferencia importante.'; color = '#ef4444'; }
+  if      (scoreC >= 9)  { level = 'Conocimiento Excelente'; desc = 'Dominio sobresaliente de la normativa vial venezolana. Sus conocimientos son una base sólida para una conducción segura.'; color = '#10b981'; }
+  else if (scoreC >= 7)  { level = 'Conocimiento Bueno';     desc = 'Buen nivel de conocimiento. Algunos aspectos normativos pueden reforzarse con la intervención educativa.'; color = '#3b82f6'; }
+  else if (scoreC >= 5)  { level = 'Conocimiento Regular';   desc = 'Existen vacíos importantes. La intervención educativa digital es especialmente útil para usted.'; color = '#f59e0b'; }
+  else                   { level = 'Conocimiento Bajo';       desc = 'Se identifican brechas significativas en el conocimiento de la normativa. La intervención puede marcar una diferencia importante.'; color = '#ef4444'; }
 
   const ring = document.querySelector('.modal-ring');
   ring.style.borderColor    = color;
@@ -1515,7 +1623,7 @@ function submitForm() {
       <i class="fas fa-home"></i> Volver al menú
     </button>`;
 
-  // 🔥 GUARDAR EN LOCAL STORAGE (SIEMPRE) Y ENVIAR A SHEETS CON REINTENTOS
+  // GUARDAR EN LOCAL STORAGE (SIEMPRE) Y ENVIAR A SHEETS CON REINTENTOS
   enviarConReintentos(scoreC);
 
   // Bloquear formulario completo — no se pueden cambiar respuestas
@@ -1555,10 +1663,10 @@ function enviarYExportar() {
   enviarConReintentos(scoreC);
   // Cerrar modal automáticamente
   document.getElementById('resultModal').classList.remove('show');
-  mostrarSync('✅ Enviado correctamente');
+  mostrarSync('Enviado correctamente');
 }
 
-// 🔥 NUEVA FUNCIÓN: Guardar local + enviar con reintentos
+// GUARDAR LOCAL + ENVIAR CON REINTENTOS
 function enviarConReintentos(scoreC) {
   var codigo = document.getElementById('codigoParticipante').value || '---';
   var modo = sessionStorage.getItem('cap_modo') || 'pre';
@@ -1573,7 +1681,7 @@ function enviarConReintentos(scoreC) {
   datos.nivel_conocimientos = scoreC >= 9 ? 'Excelente' : scoreC >= 7 ? 'Bueno' : scoreC >= 5 ? 'Regular' : 'Bajo';
   datos.completado = 'SI';
 
-  // 🔥 PASO 1: GUARDAR EN LOCAL STORAGE (SIEMPRE)
+  // PASO 1: GUARDAR EN LOCAL STORAGE (SIEMPRE)
   try {
     var respuestasGuardadas = JSON.parse(localStorage.getItem('cap_respuestas') || '[]');
     // Buscar si ya existe este código para no duplicar
@@ -1594,13 +1702,13 @@ function enviarConReintentos(scoreC) {
     localStorage.setItem('cap_respuestas', JSON.stringify(respuestasGuardadas));
     localStorage.setItem('cap_sent_' + datos.codigo + '_' + modo, '1');
     localStorage.setItem('cap_chk_' + datos.codigo, JSON.stringify({ existe: true, completadoPre: true, ts: Date.now() }));
-    console.log('✅ Datos guardados localmente');
-    mostrarSync('💾 Datos guardados');
+    console.log('Datos guardados localmente');
+    mostrarSync('Datos guardados');
   } catch(e) {
     console.warn('Error guardando local:', e);
   }
 
-  // 🔥 PASO 2: INTENTAR ENVIAR A SHEETS (con reintentos)
+  // PASO 2: INTENTAR ENVIAR A SHEETS (con reintentos)
   enviarASheetsConReintentos(datos, 3);
 }
 
@@ -1615,8 +1723,8 @@ function enviarASheetsConReintentos(datos, intentosRestantes) {
       console.log('⏳ Reintentando envío a Sheets... (' + (intentosRestantes-1) + ' intentos restantes)');
       setTimeout(function() { enviarASheetsConReintentos(datos, intentosRestantes - 1); }, 3000);
     } else {
-      console.warn('⚠️ No se pudo enviar a Sheets, pero los datos están guardados localmente.');
-      mostrarSync('💾 Guardado local (sin conexión)');
+      console.warn('No se pudo enviar a Sheets, pero los datos estan guardados localmente.');
+      mostrarSync('Guardado local (sin conexión)');
     }
   }, 15000);
 
@@ -1624,15 +1732,15 @@ function enviarASheetsConReintentos(datos, intentosRestantes) {
     clearTimeout(timeout);
     limpiarCb(cb);
     if (respuesta && respuesta.ok) {
-      console.log('✅ Datos enviados a Sheets correctamente');
-      mostrarSync('✅ Enviado a Sheets');
+      console.log('Datos enviados a Sheets correctamente');
+      mostrarSync('Enviado a Sheets');
     } else {
       if (intentosRestantes > 0) {
         console.log('⏳ Reintentando envío a Sheets... (' + (intentosRestantes-1) + ' intentos restantes)');
         setTimeout(function() { enviarASheetsConReintentos(datos, intentosRestantes - 1); }, 3000);
       } else {
-        console.warn('⚠️ No se pudo enviar a Sheets');
-        mostrarSync('💾 Guardado local');
+        console.warn('No se pudo enviar a Sheets');
+        mostrarSync('Guardado local');
       }
     }
   };
@@ -1650,7 +1758,7 @@ function enviarASheetsConReintentos(datos, intentosRestantes) {
       console.log('⏳ Error de conexión, reintentando...');
       setTimeout(function() { enviarASheetsConReintentos(datos, intentosRestantes - 1); }, 3000);
     } else {
-      mostrarSync('💾 Guardado local');
+      mostrarSync('Guardado local');
     }
   };
   document.head.appendChild(s);
@@ -1740,14 +1848,14 @@ function guardarProgreso() {
     const cb = '_cb_save_' + Date.now();
     window[cb] = function(r) {
       try { delete window[cb]; } catch(e) {}
-      mostrarSync(r && r.ok ? '✓ Guardado' : '💾 Local');
+      mostrarSync(r && r.ok ? 'Guardado' : 'Local');
     };
     const s = document.createElement('script');
     s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
           + '&modo=' + encodeURIComponent(payload.modo || 'pre')
           + '&datos=' + encodeURIComponent(JSON.stringify(payload))
           + '&callback=' + cb + '&t=' + Date.now();
-    s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('💾 Local'); };
+    s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('Local'); };
     document.head.appendChild(s);
   }, 1500);
 }
@@ -1913,8 +2021,8 @@ function imprimirResultados() {
 
   const perfilDefs = [
     ['Edad','p1'],['Sexo','p2'],['Nivel educativo','p3'],['Años trabajando','p4'],
-    ['Licencia de conducir','p5'],['Capacitación previa','p6'],
-    ['Accidentes (12 meses)','p7'],['Plataforma preferida','p8'],['Evaluación previa a licencia','p9']
+    ['Licencia de conducir','p5'],['Evaluación para licencia','p6'],
+    ['Capacitación continua','p7'],['Accidentes (12 meses)','p8'],['Plataforma preferida','p9']
   ];
   const perfilHTML = perfilDefs.map(function(x) {
     const el = document.querySelector('input[name="'+x[1]+'"]:checked');
@@ -1934,7 +2042,7 @@ function imprimirResultados() {
     const ok   = resp === correctas[k];
     return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+';">'
       +'<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+' · '+vfTitulos[i]+'</td>'
-      +'<td style="padding:6px 10px;font-size:0.78rem;font-weight:700;color:'+(ok?'#059669':'#dc2626')+';">'+(ok?'✓ Correcta':'✗ Incorrecta')+' (Opción '+resp+')</td>'
+      +'<td style="padding:6px 10px;font-size:0.78rem;font-weight:700;color:'+(ok?'#059669':'#dc2626')+';">'+(ok?'<i class="fas fa-check" style="margin-right:4px;"></i> Correcta':'<i class="fas fa-times" style="margin-right:4px;"></i> Incorrecta')+' (Opción '+resp+')</td>'
       +'</tr>';
   }).join('');
 
@@ -1967,7 +2075,7 @@ function imprimirResultados() {
   const html = '<!DOCTYPE html><html lang="es"><head>'
     + '<meta charset="UTF-8">'
     + '<title>'+modoLabel+' '+codigo+' \u00b7 CAP-SV-DIGITAL</title>'
-    + '<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
+    + ''
     + '<style>'
     + '*{margin:0;padding:0;box-sizing:border-box;}'
     + 'body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
