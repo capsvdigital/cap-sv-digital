@@ -1855,6 +1855,7 @@ function submitForm() {
   verificarEnviadoEnSheets(function(yaEnv) {
     if (!yaEnv) { enviarAGoogleSheets(scoreC); try { localStorage.setItem(claveSent(),'1'); } catch(e) {} }
   });
+  window._formularioFinalizado = true;
   bloquearFormulario();
   document.getElementById('resultModal').classList.add('show');
 }
@@ -2004,28 +2005,25 @@ function guardarEnLocal(datos) { try{localStorage.setItem(claveStorage(datos.cod
 function leerDeLocal(codigo)   { try{const r=localStorage.getItem(claveStorage(codigo));return r?JSON.parse(r):null;}catch(e){return null;} }
 let _syncT = null;
 function guardarProgreso() {
-  const datos = recopilarRespuestas(); guardarEnLocal(datos);
+  const datos = recopilarRespuestas();
+  datos.completado = 'NO';
+  guardarEnLocal(datos);
   clearTimeout(_syncT);
   _syncT = setTimeout(function() {
     mostrarSync('⏳ Guardando...');
-    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
+    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase(), completado: 'NO' };
     const cb = '_cb_save_' + Date.now();
-    window[cb] = function(r) {
-      try { delete window[cb]; } catch(e) {}
+    const tid = setTimeout(function(){ limpiarCb(cb); mostrarSync('Local'); }, 12000);
+    window[cb] = function(r){
+      clearTimeout(tid); limpiarCb(cb);
       mostrarSync(r && r.ok ? 'Guardado' : 'Local');
     };
-    var cb2 = '_cb_save_' + Date.now();
-    var tid2 = setTimeout(function(){ limpiarCb(cb2); mostrarSync('Local'); }, 12000);
-    window[cb2] = function(r){
-      clearTimeout(tid2); limpiarCb(cb2);
-      mostrarSync(r && r.ok ? 'Guardado' : 'Local');
-    };
-    var s2 = document.createElement('script');
-    s2.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
+    const s = document.createElement('script');
+    s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
           + '&modo=post&datos=' + encodeURIComponent(JSON.stringify(payload))
-          + '&callback=' + cb2 + '&t=' + Date.now();
-    s2.onerror = function(){ clearTimeout(tid2); limpiarCb(cb2); s2.remove(); mostrarSync('Local'); };
-    document.head.appendChild(s2);
+          + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function(){ clearTimeout(tid); limpiarCb(cb); s.remove(); mostrarSync('Local'); };
+    document.head.appendChild(s);
   }, 1500);
 }
 let _syncEl = null;
@@ -2043,4 +2041,169 @@ function cargarProgresoInicial(codigo) {
     try { delete window[cb]; } catch(e) {}
     const l = leerDeLocal(codigo); if(l) restaurar(l);
   }, 6000);
-  windo
+  window[cb] = function(data) {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {}
+    const lista = data.post || [];
+    const registro = lista.find(r => (r.codigo||'').toUpperCase() === codigo.toUpperCase());
+    if (registro && Object.keys(registro).filter(k => registro[k] !== '').length > 3) {
+      guardarEnLocal(registro); restaurar(registro);
+    } else {
+      const l = leerDeLocal(codigo); if(l) restaurar(l);
+    }
+  };
+  const s = document.createElement('script');
+  s.src = API_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
+  s.onerror = function() {
+    clearTimeout(to); try { delete window[cb]; } catch(e) {} s.remove();
+    const l = leerDeLocal(codigo); if(l) restaurar(l);
+  };
+  document.head.appendChild(s);
+}
+function restaurar(datos) {
+  if (!datos) return;
+  ['p6','p7'].forEach(k => {
+    if (!datos[k]) return;
+    const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
+    if (r) { r.checked=true; answered.add(k); const el=document.getElementById('qb-'+k); if(el) el.classList.add('answered'); }
+  });
+  // Conocimientos
+  Object.keys(correctas).forEach(k => {
+    if (!datos[k]) return;
+    vfAnswers[k] = datos[k];
+    const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
+    if (r) { r.checked = true; }
+    const el = document.getElementById('qb-' + k);
+    if (el) el.classList.add('answered');
+  });
+  ['a1','a2','a3','a4','a5','a6','a7','a8','pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8','d1','d2','d3','d4','d5'].forEach(n => {
+    if (!datos[n]) return;
+    const r = document.querySelector(`input[name="${n}"][value="${datos[n]}"]`);
+    if (r) { r.checked=true; const el=document.getElementById('qb-'+n); if(el) el.classList.add('answered'); }
+  });
+  checkLikert(); checkPracticas(); checkDigital(); updateProgress();
+  const banner = document.createElement('div');
+  banner.innerHTML = '<i class="fas fa-history" style="margin-right:6px;"></i> Progreso restaurado — continúa desde donde lo dejaste.';
+  banner.style.cssText = 'background:linear-gradient(135deg,#00b894,#0984e3);color:white;text-align:center;padding:10px 20px;font-family:Montserrat,sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+  banner.onclick = function(){ this.remove(); };
+  const fw = document.getElementById('formWrapper'); if(fw) fw.insertAdjacentElement('afterbegin', banner);
+  setTimeout(()=>{ if(banner.parentNode) banner.remove(); }, 6000);
+}
+
+// ── IMPRIMIR ──
+function imprimirResultados() {
+  const codigo = document.getElementById('codigoParticipante').value || '---';
+  const score  = window._lastScore !== undefined ? window._lastScore : 0;
+  const color  = window._lastColor || '#00b894';
+  const nivel  = document.getElementById('mLevel').textContent.replace(/^[^\w\s]+\s*/,'');
+  const pct    = Math.round((score / 10) * 100);
+  const fecha  = new Date().toISOString().slice(0,10);
+  const hora   = new Date().toLocaleTimeString('es-VE');
+
+  const perfilDefs = [['Capacitación adicional','p6'],['Accidentes durante intervención','p7']];
+  const perfilHTML = perfilDefs.map(function(x) {
+    const el = document.querySelector('input[name="'+x[1]+'"]:checked');
+    if (!el) return '';
+    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+x[0]+'</td><td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+el.value+'</td></tr>';
+  }).join('');
+
+  const vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
+  const vfTitulos = [
+    'Menores en moto', 'Prioridad en redomas', 'Circulación entre canales',
+    'Señal de PARE', 'Frenada de emergencia', 'Puntos ciegos camiones',
+    'Primeros auxilios (casco)', 'Homologación del casco', 'Distancia en lluvia', 'Documentación obligatoria'
+  ];
+  const vfHTML = vfKeys.map(function(k,i) {
+    const resp = vfAnswers[k]||'—'; const ok = resp===correctas[k];
+    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+'">'
+      +'<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+' · '+vfTitulos[i]+'</td>'
+      +'<td style="padding:6px 10px;font-size:0.78rem;font-weight:700;color:'+(ok?'#059669':'#dc2626')+';">'+(ok?'<i class="fas fa-check" style="margin-right:4px;"></i> Correcta':'<i class="fas fa-times" style="margin-right:4px;"></i> Incorrecta')+' (Opción '+resp+')</td>'
+      +'</tr>';
+  }).join('');
+
+  const actLabels=['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Cambio de hábitos','Autoresponsabilidad'];
+  const actHTML = ['a1','a2','a3','a4','a5','a6','a7','a8'].map(function(k,i) {
+    const el=document.querySelector('input[name="'+k+'"]:checked'); if(!el) return '';
+    const v=parseInt(el.value);
+    const bars=[1,2,3,4].map(n=>'<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#00b894':'#e2e5f0')+'"></span>').join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+actLabels[i]+'</td><td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#00b894;font-weight:700;">'+v+'/4</span></td></tr>';
+  }).join('');
+
+  const prLabels=['Uso de casco','Respeto semáforos','Evita celular','Revisión vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
+  const prHTML = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].map(function(k,i) {
+    const el=document.querySelector('input[name="'+k+'"]:checked'); if(!el) return '';
+    const v=parseInt(el.value);
+    const bars=[1,2,3,4].map(n=>'<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#f59e0b':'#e2e5f0')+'"></span>').join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+prLabels[i]+'</td><td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#f59e0b;font-weight:700;">'+v+'/4</span></td></tr>';
+  }).join('');
+
+  const digLabels=['Consciencia del casco','Cambio de hábito concreto','Formato digital vs presencial','Recomendaría el programa','Seguridad al conducir'];
+  const digHTML = ['d1','d2','d3','d4','d5'].map(function(k,i) {
+    const el=document.querySelector('input[name="'+k+'"]:checked'); if(!el) return '';
+    const v=parseInt(el.value);
+    const bars=[1,2,3,4].map(n=>'<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#0984e3':'#e2e5f0')+'"></span>').join('');
+    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+digLabels[i]+'</td><td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#0984e3;font-weight:700;">'+v+'/4</span></td></tr>';
+  }).join('');
+
+  const w = window.open('','_blank','width=760,height=920');
+  const html = '<!DOCTYPE html><html lang="es"><head>'
+    +'<meta charset="UTF-8"><title>POST-TEST '+codigo+' \u00b7 CAP-SV-DIGITAL</title>'
+    +''
+    +'<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
+    +'.header{background:linear-gradient(135deg,#00b894,#0984e3,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
+    +'.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
+    +'.header p{font-size:0.82rem;opacity:0.85;}'
+    +'.code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}'
+    +'.code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}'
+    +'.code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}'
+    +'.score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}'
+    +'.ring{width:90px;height:90px;border-radius:50%;border:4px solid '+color+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:'+color+'18;}'
+    +'.ring .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:'+color+';line-height:1;}'
+    +'.ring .max{font-size:0.68rem;color:#b2bec3;font-weight:700;}'
+    +'.si h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:'+color+';margin-bottom:4px;}'
+    +'.si p{font-size:0.82rem;color:#636e72;}'
+    +'.pills{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}'
+    +'.pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:4px 10px;font-size:0.72rem;color:#636e72;}'
+    +'.pill strong{color:#2d3436;}'
+    +'.sec{margin-bottom:16px;}'
+    +'.sec-t{font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:6px 12px;border-radius:6px;margin-bottom:8px;display:inline-block;}'
+    +'.c1{background:#5b6ceb;}.c2{background:#6a3fa8;}.c3{background:#00b894;}.c4{background:#f59e0b;}.c5{background:#0984e3;}'
+    +'table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}'
+    +'.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}'
+    +'.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}'
+    +'.footer{text-align:center;margin-top:20px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:12px;}'
+    +'@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
+    +'</style></head><body>'
+    +'<div class="header"><div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial \u00b7 POST-TEST</p>'
+    +'<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente \u00b7 Dpto. Enfermer\u00eda \u00b7 Ciudad Bol\u00edvar 2026</p></div>'
+    +'<div class="code-badge"><div class="lbl">C\u00f3digo</div><div class="val">'+codigo+'</div></div></div>'
+    +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
+    +'<div class="si"><h2>'+nivel+'</h2><p>Secci\u00f3n de Conocimientos \u00b7 POST-TEST completado</p>'
+    +'<div class="pills"><span class="pill">&#128197; <strong>'+fecha+'</strong></span><span class="pill">&#128336; <strong>'+hora+'</strong></span><span class="pill">&#128202; <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
+    +'<div class="sec"><span class="sec-t c1">I \u00b7 Actualizaci\u00f3n de datos</span><table>'+perfilHTML+'</table></div>'
+    +'<div class="grid3">'
+    +'<div class="sec"><span class="sec-t c2">II \u00b7 Conocimientos V/F</span><table>'+vfHTML+'</table></div>'
+    +'<div><div class="sec"><span class="sec-t c3">III \u00b7 Actitudes</span><table>'+actHTML+'</table></div>'
+    +'<div class="sec"><span class="sec-t c4">IV \u00b7 Pr\u00e1cticas</span><table>'+prHTML+'</table></div></div>'
+    +'<div class="sec"><span class="sec-t c5">V \u00b7 Impacto digital</span><table>'+digHTML+'</table></div>'
+    +'</div>'
+    +'<div class="footer">CAP-SV-DIGITAL \u00b7 Post-test \u00b7 Universidad de Oriente \u00b7 '+new Date().toLocaleDateString('es-VE')+'</div>'
+    +'<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt></body></html>';
+  w.document.write(html); w.document.close();
+}
+
+document.getElementById('resultModal').addEventListener('click', function(e) { if(e.target===this) this.classList.remove('show'); });
+document.getElementById('incompleteModal').addEventListener('click', function(e) { if(e.target===this) cerrarIncompleto(); });
+
+// Advertencia para evitar salidas accidentales con el instrumento a medias
+window.addEventListener('beforeunload', function(e) {
+  if (!window._formularioFinalizado && (answered.size > 0 || Object.keys(vfAnswers).length > 0)) {
+    e.preventDefault();
+    e.returnValue = 'Tienes respuestas en progreso. Tu avance queda guardado, pero debes completar todas las preguntas para enviar tu evaluación.';
+    return e.returnValue;
+  }
+});
+
+updateProgress();
+</script>
+</body>
+</html>
