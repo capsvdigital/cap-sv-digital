@@ -2119,9 +2119,7 @@ a, button, label, select, input, textarea {
       <a href="admin-cap.html" class="footer-admin-link" title="Panel de Administración CAP-SV">
         <i class="fas fa-lock" style="color:var(--accent-teal);"></i> Acceso Administrador
       </a>
-      <a href="dossier-validacion-expertos.html" target="_blank" class="footer-admin-link" style="margin-left:16px;" title="Dossier Académico para Juicio de Expertos (PDF)">
-        <i class="fas fa-file-signature" style="color:var(--accent-teal);"></i> Dossier de Validación
-      </a>
+      
     </p>
   </footer>
 
@@ -3271,4 +3269,46 @@ function abrirVentanaImpresion(codigo, r){
     var val = r[k]; if(!val) return '';
     var bars = [1,2,3,4].map(function(n){
       return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#5b6ceb':'#e2e5f0')+'"></span>';
-    }).
+    }).join('');
+    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+actLabels[i]+'</td><td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;">'+bars+'</td></tr>';
+  }).join('');
+
+  var prFields = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'];
+  var prLabels = ['Uso de casco','Semáforos','Evita celular','Revisión vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
+  var prHTML = prFields.map(function(k, i){
+    var val = r[k]; if(!val) return '';
+    var bars = [1,2,3,4].map(function(n){
+      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#00b894':'#e2e5f0')+'"></span>';
+    }).join('');
+    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+prLabels[i]+'</td><td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;">'+bars+'</td></tr>';
+  }).join('');
+
+  var w = window.open('', '_blank', 'width=800,height=900');
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Comprobante Pre-test · ' + codigo + '</title>'
+           + '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">'
+           + '<style>body{font-family:sans-serif;padding:24px;color:#2d3436;line-height:1.5;} h2{color:#6a3fa8;margin-bottom:6px;} h3{margin-top:16px;margin-bottom:8px;font-size:1rem;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:4px;} table{width:100%;border-collapse:collapse;margin-bottom:16px;} .badge{display:inline-block;padding:4px 12px;border-radius:12px;font-weight:bold;color:white;background:' + color + ';} .info-hdr{background:#f8fafc;padding:12px 16px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;} @media print{body{padding:10px;}}</style>'
+           + '</head><body>'
+           + '<h2>Comprobante de Pre-test · CAP-SV-DIGITAL</h2>'
+           + '<p style="color:#64748b;font-size:0.9rem;margin-bottom:12px;">Universidad de Oriente · Escuela de Ciencias de la Salud · Dpto. de Enfermería</p>'
+           + '<div class="info-hdr">'
+           + '  <div><strong>Código de Participante:</strong> ' + codigo + '</div>'
+           + '  <div><strong>Fecha:</strong> ' + fecha + ' ' + hora + '</div>'
+           + '  <div><strong>Nivel de Conocimiento:</strong> <span class="badge">' + nivel + ' (' + score + '/10 · ' + pct + '%)</span></div>'
+           + '</div>'
+           + '<h3>I. Perfil Sociodemográfico</h3><table>' + (perfilHTML || '<tr><td style="padding:8px;color:#94a3b8;">Sin datos registrados</td></tr>') + '</table>'
+           + '<h3>II. Conocimientos</h3><table>' + vfHTML + '</table>'
+           + '<h3>III. Actitudes (Likert 1-4)</h3><table>' + actHTML + '</table>'
+           + '<h3>IV. Prácticas (Frecuencia 1-4)</h3><table>' + prHTML + '</table>'
+           + '<' + 'script>window.onload=function(){window.print();};<' + '/script>'
+           + '</body></html>';
+  w.document.write(html);
+  w.document.close();
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  cargarComentariosLocales();
+  sincronizarNovedadesConSheets();
+});
+</script>
+</body>
+</html>
