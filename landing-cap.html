@@ -1829,82 +1829,6 @@ a, button, label, select, input, textarea {
       </div>
     </div>
 
-    <!-- MODAL LEY DE TRANSPORTE TERRESTRE -->
-    <div id="modalLey" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(20,20,40,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;">
-      <div style="background:white;border-radius:24px;padding:28px 24px;max-width:520px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.35);position:relative;text-align:left;animation:qrPop 0.35s cubic-bezier(0.34,1.56,0.64,1);max-height:92vh;overflow-y:auto;">
-        <button onclick="cerrarModalLey()" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.3rem;color:#b2bec3;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#2d3436'" onmouseout="this.style.color='#b2bec3'"><i class="fas fa-times"></i></button>
-
-        <!-- Header -->
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 18px rgba(108,92,231,0.35);">
-            <i class="fas fa-balance-scale" style="color:white;font-size:1.3rem;"></i>
-          </div>
-          <div>
-            <span style="font-size:0.68rem;font-weight:800;color:#6c5ce7;background:#f3f0ff;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:0.5px;">Gaceta Oficial N° 38.985</span>
-            <h3 style="font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:900;color:#2d3436;margin-top:2px;line-height:1.25;">Ley de Transporte Terrestre</h3>
-          </div>
-        </div>
-
-        <p style="font-size:0.78rem;color:#636e72;margin-bottom:14px;line-height:1.45;">
-          Marco legal de la República Bolivariana de Venezuela aplicable a mototaxistas, repartidores delivery y conductores de motocicletas en Ciudad Bolívar.
-        </p>
-
-        <!-- Puntos claves de la ley para motorizados -->
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
-          <div style="background:#f8f9ff;border:1px solid #e8eaf6;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;">
-            <div style="background:#eff2fe;color:#5b6ceb;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;"><i class="fas fa-hard-hat"></i></div>
-            <div>
-              <strong style="font-size:0.78rem;color:#2d3436;display:block;">Art. 63 · Uso Obligatorio de Casco</strong>
-              <span style="font-size:0.72rem;color:#636e72;line-height:1.35;display:block;">Tanto el conductor como el acompañante deben usar casco protector reglamentario debidamente abrochado y ajustado a la cabeza.</span>
-            </div>
-          </div>
-
-          <div style="background:#f8f9ff;border:1px solid #e8eaf6;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;">
-            <div style="background:#fef2f2;color:#dc2626;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;"><i class="fas fa-ban"></i></div>
-            <div>
-              <strong style="font-size:0.78rem;color:#2d3436;display:block;">Art. 64 · Prohibiciones Expresas</strong>
-              <span style="font-size:0.72rem;color:#636e72;line-height:1.35;display:block;">Prohibido transportar más de un (1) pasajero, trasladar niños menores de 10 años, mujeres embarazadas o cargas que comprometan la maniobrabilidad.</span>
-            </div>
-          </div>
-
-          <div style="background:#f8f9ff;border:1px solid #e8eaf6;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;">
-            <div style="background:#ecfdf5;color:#059669;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;"><i class="fas fa-id-card"></i></div>
-            <div>
-              <strong style="font-size:0.78rem;color:#2d3436;display:block;">Art. 73 · Documentos Exigibles</strong>
-              <span style="font-size:0.72rem;color:#636e72;line-height:1.35;display:block;">Licencia de Conducir de 2do Grado vigente, Certificado Médico de Salud Integral vial, Certificado de Registro de Vehículo y Seguro RCV obligatorio.</span>
-            </div>
-          </div>
-
-          <div style="background:#f8f9ff;border:1px solid #e8eaf6;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;">
-            <div style="background:#fefce8;color:#ca8a04;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;"><i class="fas fa-gavel"></i></div>
-            <div>
-              <strong style="font-size:0.78rem;color:#2d3436;display:block;">Art. 169 - 170 · Infracciones y Sanciones</strong>
-              <span style="font-size:0.72rem;color:#636e72;line-height:1.35;display:block;">Circular sin casco, adelantar entre vehículos en movimiento, exceso de velocidad o desacatar señales conlleva multas en UT y retención del vehículo.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botones de Acción -->
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <!-- Botón Descargar PDF Directo -->
-          <a id="btnDescargarLeyPDF" href="ley-transporte-terrestre.pdf" download="Ley_de_Transporte_Terrestre_Venezuela_GO38985.pdf" target="_blank" rel="noopener noreferrer" style="padding:11px 14px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.82rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;box-shadow:0 4px 14px rgba(108,92,231,0.35);transition:all 0.2s;">
-            <i class="fas fa-file-download"></i> Descargar Documento Oficial (PDF 1.9 MB)
-          </a>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <!-- Visor Online Google Docs -->
-            <a id="btnVisorOnlineLey" href="https://docs.google.com/viewer?url=https://capsvdigital.github.io/cap-sv-digital/ley-transporte-terrestre.pdf" target="_blank" rel="noopener noreferrer" style="padding:9px 10px;background:#f8f9ff;color:#6c5ce7;border:1.5px solid #dcd6f7;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:all 0.2s;">
-              <i class="fas fa-eye"></i> Visor Online
-            </a>
-            <!-- Portal INTT -->
-            <a href="http://www.intt.gob.ve/" target="_blank" rel="noopener noreferrer" style="padding:9px 10px;background:#f8f9ff;color:#0984e3;border:1.5px solid #d5e8fb;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:0.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:all 0.2s;">
-              <i class="fas fa-landmark"></i> Portal INTT
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- NOTICIAS -->
     <div id="noticias" class="news-section">
       <p class="section-label"><i class="fas fa-bell"></i> Novedades y Campañas Oficiales</p>
@@ -1991,7 +1915,7 @@ a, button, label, select, input, textarea {
             </div>
 
             <!-- TARJETA 5: Legislación -->
-            <div class="novelty-card" style="cursor:pointer;" onclick="abrirModalLey()">
+            <div class="novelty-card">
               <div class="nov-card-top" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)">
                 <span class="nov-emoji"><i class="fas fa-balance-scale"></i></span>
                 <span class="nov-chip">Gaceta Oficial</span>
@@ -2002,9 +1926,9 @@ a, button, label, select, input, textarea {
                 <p class="nov-desc">Deberes de los conductores de motocicletas: documentación exigible, seguro RCV, casco obligatorio y sanciones.</p>
                 <div class="nov-action-row">
                   <span class="nov-source-badge"><i class="fas fa-balance-scale" style="color:#6c5ce7;"></i> Ley Vigente</span>
-                  <button type="button" class="nov-btn" onclick="event.stopPropagation();abrirModalLey();" title="Consultar artículos o descargar la Ley de Transporte Terrestre">
+                  <a href="ley-transporte-terrestre.pdf" target="_blank" rel="noopener noreferrer" class="nov-btn" title="Descargar o consultar la Ley de Transporte Terrestre oficial (Gaceta Oficial)">
                     <i class="fas fa-file-pdf"></i> Ver / Descargar PDF Ley
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
