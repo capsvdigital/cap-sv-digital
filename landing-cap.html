@@ -2713,7 +2713,36 @@ function compartirWhatsAppQR(){
 })();
 
 // ── COMUNIDAD BIKER / MURO INTERACTIVO ─────────────────────
-var COMENTARIOS_DEFAULT = [];
+var COMENTARIOS_DEFAULT = [
+  {
+    id: "c_1794862053486",
+    fecha: "15/11/2026",
+    hora: "04:47 p. m.",
+    autor: "Hermesrapid2/ muby",
+    rol: "mototaxista",
+    texto: "Tu vida es tu prioridad",
+    reacciones: { like: 2, dislike: 1 }
+  },
+  {
+    id: "c_1794858580431",
+    fecha: "15/11/2026",
+    hora: "03:49 p. m.",
+    autor: "AnaGod98",
+    rol: "particular",
+    texto: "Chicos si ven tierra en el camino, sepan que no deben ni frenar ni acelerar bruscamente porque se van a caer 🥲",
+    reacciones: { like: 2, dislike: 2 }
+  },
+  {
+    id: "c_1794856379716",
+    fecha: "15/11/2026",
+    hora: "03:12 p. m.",
+    autor: "Motopirueta",
+    rol: "mototaxista",
+    texto: "Si no nos mata un accidente nos mata el calor en esta ciudad",
+    reacciones: { like: 2, dislike: 1 }
+  }
+];
+
 var listaComentarios = [];
 
 function formatearFechaComentario(f){
@@ -2734,8 +2763,8 @@ function formatearFechaComentario(f){
 function cargarComentariosLocales(){
   try {
     var guardados = JSON.parse(localStorage.getItem('cap_muro_comentarios') || '[]');
-    if (guardados && Array.isArray(guardados)) {
-      // Eliminar definitivamente cualquier comentario de bots de la memoria local
+    if (guardados && Array.isArray(guardados) && guardados.length > 0) {
+      // Filtrar bots pero mantener comentarios reales de la comunidad
       listaComentarios = guardados.filter(function(c){
         if(!c || !c.id) return false;
         var idStr = String(c.id);
@@ -2744,13 +2773,16 @@ function cargarComentariosLocales(){
         if(autorStr.indexOf('Manuel R') !== -1 || autorStr.indexOf('Junior (') !== -1 || autorStr.indexOf('Carlos M') !== -1) return false;
         return true;
       });
-      localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
+      if(listaComentarios.length === 0){
+        listaComentarios = COMENTARIOS_DEFAULT.slice();
+      }
     } else {
-      listaComentarios = [];
+      listaComentarios = COMENTARIOS_DEFAULT.slice();
     }
   } catch(e){
-    listaComentarios = [];
+    listaComentarios = COMENTARIOS_DEFAULT.slice();
   }
+  localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
   renderizarFeedComentarios();
   sincronizarComentariosConSheets();
 }
@@ -2761,24 +2793,24 @@ function sincronizarComentariosConSheets(manual){
 
   var cb = '_cb_get_comms_' + Date.now();
   var tid = setTimeout(function(){
-    limpiarCb(cb);
     if(icon) icon.classList.remove('fa-spin');
-  }, 7000);
+  }, 20000);
 
   window[cb] = function(res){
     clearTimeout(tid);
-    limpiarCb(cb);
     if(icon) icon.classList.remove('fa-spin');
 
-    if(res && res.comentarios && Array.isArray(res.comentarios)){
+    if(res && res.comentarios && Array.isArray(res.comentarios) && res.comentarios.length > 0){
       var map = {};
-      // 1. Mantener comentarios locales no-bots
+      // 1. Cargar comentarios predeterminados reales
+      COMENTARIOS_DEFAULT.forEach(function(c){ map[c.id] = c; });
+      // 2. Fusionar los guardados localmente
       listaComentarios.forEach(function(c){
         if(c && c.id && !String(c.id).startsWith('c_init_')){
           map[c.id] = c;
         }
       });
-      // 2. Sobrescribir con los de Google Sheets (filtrando bots)
+      // 3. Sobrescribir con los de Google Sheets actualizados
       res.comentarios.forEach(function(c){
         if(c && c.id && !String(c.id).startsWith('c_init_')){
           var autorStr = String(c.autor || '');
@@ -2796,15 +2828,16 @@ function sincronizarComentariosConSheets(manual){
       localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
       renderizarFeedComentarios();
     }
+    try { delete window[cb]; } catch(e){}
   };
 
   var s = document.createElement('script');
   s.src = API_URL + '?action=getComentarios&callback=' + cb + '&t=' + Date.now();
   s.onerror = function(){
     clearTimeout(tid);
-    limpiarCb(cb);
-    s.remove();
     if(icon) icon.classList.remove('fa-spin');
+    try { delete window[cb]; } catch(e){}
+    s.remove();
   };
   document.head.appendChild(s);
 }
