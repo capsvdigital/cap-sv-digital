@@ -823,6 +823,251 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
     gap: 12px !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   OPTIMIZACIONES MÓVILES PARA CONSENTIMIENTO, PRE Y POST-TEST
+   ══════════════════════════════════════════════════════════ */
+.consent-header-top {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+.consent-badge-udo {
+  font-family: var(--font-h);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #5b6ceb;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.consent-badge-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+.consent-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.consent-icon-box {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #5b6ceb, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: white;
+  box-shadow: 0 4px 14px rgba(91,108,235,0.25);
+}
+.consent-hero-info {
+  display: flex;
+  flex-direction: column;
+}
+.consent-title {
+  font-family: var(--font-h);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+.consent-lead {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+.consent-intro-text {
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.consent-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+@media (min-width: 641px) {
+  .consent-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.c-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+}
+.c-card:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+.c-card-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  background: rgba(91,108,235,0.08);
+  color: #5b6ceb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.c-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.c-card-body strong {
+  font-size: 0.84rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+.c-card-body span {
+  font-size: 0.77rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+.c-card-highlight {
+  background: rgba(245,158,11,0.04);
+  border-color: rgba(245,158,11,0.3);
+}
+.c-card-highlight .c-card-icon {
+  background: rgba(245,158,11,0.12);
+  color: #d97706;
+}
+
+.consent-check-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 15px 16px;
+  background: white;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  margin-top: 10px;
+}
+.consent-check-wrap:active {
+  transform: scale(0.99);
+}
+.consent-check-wrap.checked {
+  border-color: #10b981 !important;
+  background: #f0fdf4 !important;
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.12) !important;
+}
+.consent-checkbox-custom {
+  display: none;
+}
+#consentCheck {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  accent-color: #10b981;
+  cursor: pointer;
+  margin-top: 2px;
+}
+.consent-check-txt {
+  font-size: 0.86rem;
+  color: #1e293b;
+  line-height: 1.5;
+}
+.consent-check-txt strong {
+  color: #059669;
+}
+
+.consent-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px 20px;
+  min-height: 52px;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-h);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 0.45;
+  pointer-events: none;
+  background: #94a3b8;
+  color: white;
+  box-shadow: none;
+}
+.consent-btn.active {
+  opacity: 1;
+  pointer-events: all;
+  background: linear-gradient(135deg, #5b6ceb 0%, #7c3aed 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(91,108,235,0.35);
+}
+.consent-btn.active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(91,108,235,0.45);
+}
+.consent-btn.active:active {
+  transform: scale(0.98);
+}
+
+/* Badges específicos para Pre-Test y Post-Test */
+.badge-pre {
+  background: rgba(91,108,235,0.2) !important;
+  border: 1.5px solid #5b6ceb !important;
+  color: #e0e7ff !important;
+  font-weight: 800 !important;
+}
+.badge-post {
+  background: rgba(16,185,129,0.2) !important;
+  border: 1.5px solid #10b981 !important;
+  color: #a7f3d0 !important;
+  font-weight: 800 !important;
+}
+
+/* Banner de contexto del modo en dispositivos */
+.mode-banner-strip {
+  margin: 12px 16px 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.mode-banner-pre {
+  background: #eef2ff;
+  border: 1.5px solid #c7d2fe;
+  color: #3730a3;
+}
+.mode-banner-post {
+  background: #ecfdf5;
+  border: 1.5px solid #a7f3d0;
+  color: #065f46;
+}
 </style>
 
 </head>
@@ -854,26 +1099,72 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
 
 <!-- ══════════════════ CONSENTIMIENTO ══════════════════ -->
 <div class="consent-gate" id="consentGate">
-  <div class="consent-icon"><i class="fas fa-file-signature"></i></div>
-  <div class="consent-title">Consentimiento Informado</div>
-  <div class="consent-body">
-    <p>Estimado/a participante, antes de iniciar el cuestionario lea detenidamente la siguiente información:</p>
-    <ul>
-      <li>Esta investigación es de <strong>carácter académico</strong>, desarrollada por estudiantes de Enfermería de la Universidad de Oriente.</li>
-      <li>Su participación es <strong>completamente voluntaria</strong>. Puede abandonar en cualquier momento sin ninguna consecuencia.</li>
-      <li>El cuestionario es <strong>anónimo</strong>. Su nombre no aparece en ningún registro — solo se usa el código que usted mismo generó.</li>
-      <li>Los datos serán tratados de forma <strong>confidencial</strong> y usados únicamente con fines estadísticos y académicos.</li>
-      <li>No existen respuestas "correctas" o "incorrectas" — responda con total <strong>honestidad</strong>.</li>
-    </ul>
+  <div class="consent-header-top">
+    <span class="consent-badge-udo"><i class="fas fa-university"></i> UNIVERSIDAD DE ORIENTE · NÚCLEO BOLÍVAR</span>
+    <span class="consent-badge-sub">ESCUELA DE CIENCIAS DE LA SALUD · DPTO. ENFERMERÍA</span>
   </div>
+
+  <div class="consent-hero-row">
+    <div class="consent-icon-box"><i class="fas fa-file-signature"></i></div>
+    <div class="consent-hero-info">
+      <h3 class="consent-title">Consentimiento Informado</h3>
+      <p class="consent-lead">Protocolo Ético de Investigación · Seguridad Vial en Motociclistas</p>
+    </div>
+  </div>
+
+  <div class="consent-intro-text">
+    Estimado/a conductor/a: Antes de responder, por favor revise las condiciones éticas de este estudio:
+  </div>
+
+  <div class="consent-cards-grid">
+    <div class="c-card">
+      <div class="c-card-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="c-card-body">
+        <strong>Carácter Académico</strong>
+        <span>Investigación científica para el Trabajo Especial de Grado en Enfermería.</span>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card-icon"><i class="fas fa-handshake"></i></div>
+      <div class="c-card-body">
+        <strong>100% Voluntario</strong>
+        <span>Libertad plena para participar o retirarse cuando lo desee sin consecuencias.</span>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card-icon"><i class="fas fa-user-shield"></i></div>
+      <div class="c-card-body">
+        <strong>Totalmente Anónimo</strong>
+        <span>Sin nombres ni cédula. Solo se identifica mediante su código privado autogenerado.</span>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="c-card-body">
+        <strong>Uso Confidencial</strong>
+        <span>Datos protegidos y empleados exclusivamente para análisis estadístico y de salud pública.</span>
+      </div>
+    </div>
+    <div class="c-card c-card-highlight">
+      <div class="c-card-icon"><i class="fas fa-motorcycle"></i></div>
+      <div class="c-card-body">
+        <strong>Honestidad al Conducir</strong>
+        <span>No hay respuestas "buenas" ni "malas" en sus hábitos. Responda con su realidad vial diaria.</span>
+      </div>
+    </div>
+  </div>
+
   <label class="consent-check-wrap" id="consentWrap">
     <input type="checkbox" id="consentCheck" onchange="onConsentChange()">
+    <span class="consent-checkbox-custom"><i class="fas fa-check"></i></span>
     <span class="consent-check-txt">
       He leído y comprendido la información anterior. <strong>Acepto participar voluntariamente</strong> en esta investigación y autorizo el uso anónimo de mis respuestas con fines académicos.
     </span>
   </label>
+
   <button class="consent-btn" id="consentBtn" onclick="habilitarFormulario()">
-    <i class="fas fa-play-circle"></i> Comenzar Cuestionario
+    <span>Comenzar Cuestionario</span>
+    <i class="fas fa-arrow-right"></i>
   </button>
 </div>
 
@@ -1697,17 +1988,35 @@ window.addEventListener('DOMContentLoaded', function() {
   } catch(e) {}
 
   const badge = document.getElementById('modoBadge');
+  const btnSubmit = document.querySelector('.form-footer .btn-action');
+  const heroInfo = document.querySelector('.hero-info-box');
+
   if (modo === 'post') {
-    badge.innerHTML = '<i class="fas fa-clipboard-check" style="margin-right:5px;"></i> POST-TEST';
-    badge.style.background = 'rgba(0,184,148,0.25)';
-    badge.style.borderColor = '#00b894';
-    badge.style.color = '#82e8ce';
+    isPostTest = true;
+    badge.className = 'badge-post';
+    badge.innerHTML = '<i class="fas fa-clipboard-check" style="margin-right:5px;"></i> POST-TEST (EVALUACIÓN FINAL)';
     document.getElementById('seccionV').style.display = 'block';
     setModoSecV('post');
+    if (btnSubmit) {
+      btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Finalizar y Enviar Post-Test';
+    }
+    if (heroInfo) {
+      heroInfo.innerHTML = '<p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">7–8 minutos</strong> · 40 ítems (incluye evaluación de intervención digital)</p>' +
+                           '<p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y confidenciales</p>';
+    }
   } else {
-    badge.innerHTML = '<i class="fas fa-clipboard-list" style="margin-right:5px;"></i> PRE-TEST';
+    isPostTest = false;
+    badge.className = 'badge-pre';
+    badge.innerHTML = '<i class="fas fa-clipboard-list" style="margin-right:5px;"></i> PRE-TEST (LÍNEA BASE)';
     // Sección V no aplica en pre-test — ocultar completamente
     document.getElementById('seccionV').style.display = 'none';
+    if (btnSubmit) {
+      btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Finalizar y Enviar Pre-Test';
+    }
+    if (heroInfo) {
+      heroInfo.innerHTML = '<p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">6–7 minutos</strong> · 35 ítems de línea base</p>' +
+                           '<p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y confidenciales</p>';
+    }
   }
 
   updateProgress();
@@ -2219,312 +2528,3 @@ function guardarEnLocal(datos) { try { localStorage.setItem(claveStorage(datos.c
 function leerDeLocal(codigo, modo) { try { const r = localStorage.getItem(claveStorage(codigo, modo)); return r ? JSON.parse(r) : null; } catch(e) { return null; } }
 
 let _syncT = null;
-function guardarProgreso() {
-  const datos = recopilarRespuestas();
-  guardarEnLocal(datos);
-  clearTimeout(_syncT);
-  _syncT = setTimeout(function() {
-    mostrarSync('⏳ Guardando...');
-    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
-    const cb = '_cb_save_' + Date.now();
-    window[cb] = function(r) {
-      try { delete window[cb]; } catch(e) {}
-      mostrarSync(r && r.ok ? 'Guardado' : 'Local');
-    };
-    const s = document.createElement('script');
-    s.src = API_URL + '?action=guardar&codigo=' + encodeURIComponent(payload.codigo)
-          + '&modo=' + encodeURIComponent(payload.modo || 'pre')
-          + '&datos=' + encodeURIComponent(JSON.stringify(payload))
-          + '&callback=' + cb + '&t=' + Date.now();
-    s.onerror = function() { try { delete window[cb]; } catch(e) {} s.remove(); mostrarSync('Local'); };
-    document.head.appendChild(s);
-  }, 1500);
-}
-
-let _syncEl = null;
-function mostrarSync(txt) {
-  if (_syncEl) _syncEl.remove();
-  const el = document.createElement('div');
-  el.textContent = txt;
-  el.style.cssText = 'position:fixed;bottom:16px;right:16px;background:#5b6ceb;color:white;padding:7px 14px;border-radius:20px;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;z-index:8888;box-shadow:0 4px 12px rgba(91,108,235,0.4);transition:opacity 0.5s;';
-  document.body.appendChild(el);
-  _syncEl = el;
-  setTimeout(() => { el.style.opacity = '0'; }, 2500);
-  setTimeout(() => { el.remove(); }, 3200);
-}
-
-function registrarInicio(codigo, modo) {
-  if (!codigo) return;
-  codigo = codigo.toUpperCase();
-  modo = modo || 'pre';
-  try {
-    var cods = JSON.parse(localStorage.getItem('cap_codigos_registrados') || '[]');
-    if(cods.indexOf(codigo) === -1) {
-      cods.push(codigo);
-      localStorage.setItem('cap_codigos_registrados', JSON.stringify(cods));
-    }
-    localStorage.setItem('cap_registrado_' + codigo + '_' + modo, '1');
-  } catch(e){}
-
-  var cb = '_cb_reg_' + Date.now();
-  window[cb] = function(){ try{ delete window[cb]; }catch(e){} };
-  var s = document.createElement('script');
-  s.src = API_URL + '?action=registrar&codigo=' + encodeURIComponent(codigo)
-        + '&modo=' + encodeURIComponent(modo) + '&callback=' + cb + '&t=' + Date.now();
-  s.onerror = function(){ try{ delete window[cb]; }catch(e){} s.remove(); };
-  document.head.appendChild(s);
-}
-
-function cargarProgresoInicial(codigo, modo) {
-  // Intentar cargar desde Sheets primero
-  const cb = '_cb_load_' + Date.now();
-  const to = setTimeout(function() {
-    try { delete window[cb]; } catch(e) {}
-    const local = leerDeLocal(codigo, modo);
-    if (local) restaurar(local);
-  }, 6000);
-  window[cb] = function(data) {
-    clearTimeout(to);
-    try { delete window[cb]; } catch(e) {}
-    // getData devuelve {pre:[...], post:[...]}
-    const lista = modo === 'post' ? (data.post || []) : (data.pre || []);
-    const registro = lista.find(r => (r.codigo||'').toUpperCase() === codigo.toUpperCase());
-    if (registro && Object.keys(registro).filter(k => registro[k] !== '').length > 3) {
-      guardarEnLocal(registro);
-      restaurar(registro);
-    } else {
-      const local = leerDeLocal(codigo, modo);
-      if (local) restaurar(local);
-    }
-  };
-  const s = document.createElement('script');
-  s.src = API_URL + '?action=getData&callback=' + cb + '&t=' + Date.now();
-  s.onerror = function() {
-    clearTimeout(to); try { delete window[cb]; } catch(e) {} s.remove();
-    const local = leerDeLocal(codigo, modo);
-    if (local) restaurar(local);
-  };
-  document.head.appendChild(s);
-}
-
-function restaurar(datos) {
-  if (!datos) return;
-
-  // Perfil
-  for (let i = 1; i <= 9; i++) {
-    const k = 'p' + i;
-    if (!datos[k]) continue;
-    const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
-    if (r) { r.checked = true; answered.add(k); const el = document.getElementById('qb-' + k); if (el) el.classList.add('answered'); }
-  }
-
-  // Conocimientos
-  Object.keys(correctas).forEach(k => {
-    if (!datos[k]) return;
-    vfAnswers[k] = datos[k];
-    const r = document.querySelector(`input[name="${k}"][value="${datos[k]}"]`);
-    if (r) { r.checked = true; }
-    const el = document.getElementById('qb-' + k);
-    if (el) el.classList.add('answered');
-  });
-
-  // Actitudes, prácticas, digital
-  ['a1','a2','a3','a4','a5','a6','a7','a8',
-   'pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8',
-   'd1','d2','d3','d4','d5'].forEach(n => {
-    if (!datos[n]) return;
-    const r = document.querySelector(`input[name="${n}"][value="${datos[n]}"]`);
-    if (r) { r.checked = true; const el = document.getElementById('qb-' + n); if (el) el.classList.add('answered'); }
-  });
-
-  checkLikert(); checkPracticas(); checkDigital();
-  updateProgress();
-
-  // Banner
-  const banner = document.createElement('div');
-  banner.innerHTML = '<i class="fas fa-history" style="margin-right:6px;"></i> Progreso restaurado — continúa desde donde lo dejaste.';
-  banner.style.cssText = 'background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;text-align:center;padding:10px 20px;font-family:Montserrat,sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;';
-  banner.onclick = function() { this.remove(); };
-  const fw = document.getElementById('formWrapper');
-  if (fw) fw.insertAdjacentElement('afterbegin', banner);
-  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 6000);
-}
-
-// ══════════════════════════════════════════
-// EXPORTAR CSV
-// ══════════════════════════════════════════
-function exportarCSV(scoreC) {
-  const codigo = document.getElementById('codigoParticipante').value || '---';
-  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
-  const fecha  = new Date().toISOString().slice(0,10);
-  const hora   = new Date().toLocaleTimeString('es-VE');
-  const rows   = [['codigo','modo','fecha','hora','seccion','item','respuesta']];
-
-  const datos = recopilarRespuestas();
-  for (let i = 1; i <= 8; i++) {
-    const k = 'p' + i;
-    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'I-Perfil', k, `"${datos[k]}"`]);
-  }
-  Object.keys(correctas).forEach(k => {
-    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'II-Conocimientos', k, datos[k]]);
-  });
-  rows.push([codigo, modo, fecha, hora, 'II-Score', 'conocimientos', `${scoreC}/10`]);
-  ['a1','a2','a3','a4','a5','a6','a7','a8'].forEach(k => {
-    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'III-Actitudes', k, datos[k]]);
-  });
-  ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].forEach(k => {
-    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'IV-Practicas', k, datos[k]]);
-  });
-  ['d1','d2','d3','d4','d5'].forEach(k => {
-    if (datos[k]) rows.push([codigo, modo, fecha, hora, 'V-Digital', k, datos[k]]);
-  });
-
-  const csv  = rows.map(r => r.join(',')).join('\n');
-  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = `${codigo}_${modo}_${fecha}.csv`; a.click();
-  URL.revokeObjectURL(url);
-}
-
-// ══════════════════════════════════════════
-// IMPRIMIR RESULTADOS
-// ══════════════════════════════════════════
-function imprimirResultados() {
-  const codigo = document.getElementById('codigoParticipante').value || '---';
-  const modo   = sessionStorage.getItem('cap_modo') || 'pre';
-  const score  = window._lastScore !== undefined ? window._lastScore : (parseInt(document.getElementById('mScore').textContent) || 0);
-  const color  = window._lastColor || '#5b6ceb';
-  const nivel  = document.getElementById('mLevel').textContent.replace(/^[^\w\s]+\s*/,'');
-  const pct    = Math.round((score / 10) * 100);
-  const fecha  = new Date().toISOString().slice(0,10);
-  const hora   = new Date().toLocaleTimeString('es-VE');
-
-  const perfilDefs = [
-    ['Edad','p1'],['Sexo','p2'],['Nivel educativo','p3'],['Años trabajando','p4'],
-    ['Licencia de conducir','p5'],['Evaluación para licencia','p6'],
-    ['Capacitación continua','p7'],['Accidentes (12 meses)','p8'],['Plataforma preferida','p9']
-  ];
-  const perfilHTML = perfilDefs.map(function(x) {
-    const el = document.querySelector('input[name="'+x[1]+'"]:checked');
-    if (!el) return '';
-    return '<tr><td style="padding:6px 12px;color:#636e72;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+x[0]+'</td>'
-          +'<td style="padding:6px 12px;font-weight:600;font-size:0.82rem;border-bottom:1px solid #f0f0f0;">'+el.value+'</td></tr>';
-  }).join('');
-
-  const vfKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'];
-  const vfTitulos = [
-    'Menores en moto', 'Prioridad en redomas', 'Circulación entre canales',
-    'Señal de PARE', 'Frenada de emergencia', 'Puntos ciegos camiones',
-    'Primeros auxilios (casco)', 'Homologación del casco', 'Distancia en lluvia', 'Documentación obligatoria'
-  ];
-  const vfHTML = vfKeys.map(function(k,i) {
-    const resp = vfAnswers[k] || '—';
-    const ok   = resp === correctas[k];
-    return '<tr style="background:'+(ok?'#f0fdf4':'#fef2f2')+';">'
-      +'<td style="padding:6px 10px;font-weight:700;color:#6a3fa8;font-size:0.78rem;">C'+(i+1)+' · '+vfTitulos[i]+'</td>'
-      +'<td style="padding:6px 10px;font-size:0.78rem;font-weight:700;color:'+(ok?'#059669':'#dc2626')+';">'+(ok?'<i class="fas fa-check" style="margin-right:4px;"></i> Correcta':'<i class="fas fa-times" style="margin-right:4px;"></i> Incorrecta')+' (Opción '+resp+')</td>'
-      +'</tr>';
-  }).join('');
-
-  const actLabels=['Uso del casco','Respetar velocidad','Celular al conducir','Alcohol inaceptable','Normas siempre','Capacitación efectiva','Cambio de hábitos','Autoresponsabilidad'];
-  const actHTML = ['a1','a2','a3','a4','a5','a6','a7','a8'].map(function(k,i) {
-    const el = document.querySelector('input[name="'+k+'"]:checked');
-    if (!el) return '';
-    const v = parseInt(el.value);
-    const bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#5b6ceb':'#e2e5f0')+'"></span>';
-    }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+actLabels[i]+'</td>'
-          +'<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#5b6ceb;font-weight:700;">'+v+'/4</span></td></tr>';
-  }).join('');
-
-  const prLabels=['Uso de casco','Respeto semáforos','Evita celular','Revisión vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
-  const prHTML = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'].map(function(k,i) {
-    const el = document.querySelector('input[name="'+k+'"]:checked');
-    if (!el) return '';
-    const v = parseInt(el.value);
-    const bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:2px;background:'+(n<=v?'#f59e0b':'#e2e5f0')+'"></span>';
-    }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+prLabels[i]+'</td>'
-          +'<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.72rem;color:#f59e0b;font-weight:700;">'+v+'/4</span></td></tr>';
-  }).join('');
-
-  const modoLabel = modo.toUpperCase() + '-TEST';
-  const w = window.open('', '_blank', 'width=760,height=900');
-  const html = '<!DOCTYPE html><html lang="es"><head>'
-    + '<meta charset="UTF-8">'
-    + '<title>'+modoLabel+' '+codigo+' \u00b7 CAP-SV-DIGITAL</title>'
-    + ''
-    + '<style>'
-    + '*{margin:0;padding:0;box-sizing:border-box;}'
-    + 'body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
-    + '.header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
-    + '.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
-    + '.header p{font-size:0.82rem;opacity:0.85;}'
-    + '.code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}'
-    + '.code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}'
-    + '.code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}'
-    + '.score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}'
-    + '.ring{width:90px;height:90px;border-radius:50%;border:4px solid '+color+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:'+color+'18;}'
-    + '.ring .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:'+color+';line-height:1;}'
-    + '.ring .max{font-size:0.68rem;color:#b2bec3;font-weight:700;}'
-    + '.si h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:'+color+';margin-bottom:4px;}'
-    + '.si p{font-size:0.82rem;color:#636e72;}'
-    + '.pills{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}'
-    + '.pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:4px 10px;font-size:0.72rem;color:#636e72;}'
-    + '.pill strong{color:#2d3436;}'
-    + '.sec{margin-bottom:20px;}'
-    + '.sec-t{font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:6px 12px;border-radius:6px;margin-bottom:8px;display:inline-block;}'
-    + '.c1{background:#5b6ceb;}.c2{background:#6a3fa8;}.c3{background:#00b894;}.c4{background:#f59e0b;}'
-    + 'table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}'
-    + '.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}'
-    + '.footer{text-align:center;margin-top:24px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:14px;}'
-    + '@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
-    + '</style></head><body>'
-    + '<div class="header">'
-    +   '<div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial \u00b7 '+modoLabel+'</p>'
-    +   '<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente \u00b7 Dpto. Enfermer\u00eda \u00b7 Ciudad Bol\u00edvar 2026</p></div>'
-    +   '<div class="code-badge"><div class="lbl">C\u00f3digo</div><div class="val">'+codigo+'</div></div>'
-    + '</div>'
-    + '<div class="score-box">'
-    +   '<div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
-    +   '<div class="si"><h2>'+nivel+'</h2><p>Secci\u00f3n de Conocimientos \u00b7 '+modoLabel+' completado</p>'
-    +   '<div class="pills">'
-    +     '<span class="pill">&#128197; <strong>'+fecha+'</strong></span>'
-    +     '<span class="pill">&#128336; <strong>'+hora+'</strong></span>'
-    +     '<span class="pill">&#128202; <strong>'+pct+'%</strong> de acierto</span>'
-    +   '</div></div>'
-    + '</div>'
-    + '<div class="sec"><span class="sec-t c1">I \u00b7 Perfil</span>'
-    +   '<table>'+(perfilHTML||'<tr><td style="padding:10px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table>'
-    + '</div>'
-    + '<div class="grid">'
-    +   '<div class="sec"><span class="sec-t c2">II \u00b7 Conocimientos V/F</span><table>'+vfHTML+'</table></div>'
-    +   '<div>'
-    +     '<div class="sec"><span class="sec-t c3">III \u00b7 Actitudes</span>'
-    +       '<table>'+(actHTML||'<tr><td style="padding:10px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
-    +     '<div class="sec"><span class="sec-t c4">IV \u00b7 Pr\u00e1cticas</span>'
-    +       '<table>'+(prHTML||'<tr><td style="padding:10px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
-    +   '</div>'
-    + '</div>'
-    + '<div class="footer">CAP-SV-DIGITAL \u00b7 Instrumento de Seguridad Vial \u00b7 Universidad de Oriente \u00b7 '+new Date().toLocaleDateString('es-VE')+'</div>'
-    + '<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt>'
-    + '</body></html>';
-  w.document.write(html);
-  w.document.close();
-}
-
-// Cerrar modales al hacer clic fuera
-document.getElementById('resultModal').addEventListener('click', function(e) {
-  if (e.target === this) this.classList.remove('show');
-});
-document.getElementById('incompleteModal').addEventListener('click', function(e) {
-  if (e.target === this) cerrarIncompleto();
-});
-
-updateProgress();
-</script>
-</body>
-</html>
