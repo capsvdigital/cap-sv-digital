@@ -1301,32 +1301,58 @@ p, span, a, input, button, select, textarea, label {
   .comm-actions{
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    margin-top: 10px;
   }
   .comm-react-btn{
     background: white;
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
+    padding: 5px 12px;
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--gray);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    transition: all 0.15s;
+    gap: 6px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .comm-react-btn .react-emoji{
+    font-size: 0.95rem;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.2s ease;
   }
   .comm-react-btn:hover{
-    border-color: var(--purple);
-    color: var(--purple);
-    background: #f8f9ff;
-    transform: scale(1.04);
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
   }
-  .comm-react-btn.reacted{
-    border-color: var(--purple);
-    background: rgba(91,108,235,0.12);
-    color: var(--purple);
+  .comm-react-btn:hover .react-emoji{
+    transform: scale(1.22);
+  }
+  .comm-react-btn.btn-like:hover{
+    border-color: #3b82f6;
+    color: #1d4ed8;
+    background: #eff6ff;
+  }
+  .comm-react-btn.btn-dislike:hover{
+    border-color: #ef4444;
+    color: #b91c1c;
+    background: #fef2f2;
+  }
+  .comm-react-btn.reacted-like{
+    border-color: #3b82f6 !important;
+    background: #eff6ff !important;
+    color: #1d4ed8 !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.22) !important;
+  }
+  .comm-react-btn.reacted-dislike{
+    border-color: #ef4444 !important;
+    background: #fef2f2 !important;
+    color: #b91c1c !important;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.22) !important;
   }
 </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2687,49 +2713,43 @@ function compartirWhatsAppQR(){
 })();
 
 // ── COMUNIDAD BIKER / MURO INTERACTIVO ─────────────────────
-var COMENTARIOS_DEFAULT = [
-  {
-    id: 'c_init_1',
-    autor: 'Carlos M. (Línea Paseo Caroní)',
-    rol: 'mototaxista',
-    texto: 'Colegas, no se confíen en la lluvia. En asfalto mojado la distancia de frenado se triplica y el freno delantero puede bloquearse fácil. Prudencia y buena ruta.',
-    fecha: '15/03/2026',
-    hora: '09:30 a.m.',
-    reacciones: { moto: 18, idea: 12, like: 24 }
-  },
-  {
-    id: 'c_init_2',
-    autor: 'Junior (Delivery Express Bolívar)',
-    rol: 'delivery',
-    texto: 'A todos los compañeros de pedidos: ningún pedido vale más que tu vida o quedar accidentado. Respeten los semáforos aunque el cliente esté apurado.',
-    fecha: '15/03/2026',
-    hora: '02:15 p.m.',
-    reacciones: { moto: 27, idea: 19, like: 35 }
-  },
-  {
-    id: 'c_init_3',
-    autor: 'Manuel R. (San Félix)',
-    rol: 'particular',
-    texto: 'El casco debe ir con la correa abrochada y ajustada siempre. El año pasado tuve un derrape y el casco me salvó. Si va suelto, en el impacto sale volando.',
-    fecha: '14/03/2026',
-    hora: '05:40 p.m.',
-    reacciones: { moto: 31, idea: 15, like: 42 }
-  }
-];
-
+var COMENTARIOS_DEFAULT = [];
 var listaComentarios = [];
+
+function formatearFechaComentario(f){
+  if(!f) return '';
+  var str = String(f).trim();
+  if(str.indexOf('GMT') !== -1 || str.length > 15){
+    var d = new Date(str);
+    if(!isNaN(d.getTime())){
+      var dia = String(d.getDate()).padStart(2, '0');
+      var mes = String(d.getMonth() + 1).padStart(2, '0');
+      var anio = d.getFullYear();
+      return dia + '/' + mes + '/' + anio;
+    }
+  }
+  return str;
+}
 
 function cargarComentariosLocales(){
   try {
-    var guardados = JSON.parse(localStorage.getItem('cap_muro_comentarios') || 'null');
-    if (guardados && Array.isArray(guardados) && guardados.length > 0) {
-      listaComentarios = guardados;
-    } else {
-      listaComentarios = COMENTARIOS_DEFAULT.slice();
+    var guardados = JSON.parse(localStorage.getItem('cap_muro_comentarios') || '[]');
+    if (guardados && Array.isArray(guardados)) {
+      // Eliminar definitivamente cualquier comentario de bots de la memoria local
+      listaComentarios = guardados.filter(function(c){
+        if(!c || !c.id) return false;
+        var idStr = String(c.id);
+        var autorStr = String(c.autor || '');
+        if(idStr.startsWith('c_init_')) return false;
+        if(autorStr.indexOf('Manuel R') !== -1 || autorStr.indexOf('Junior (') !== -1 || autorStr.indexOf('Carlos M') !== -1) return false;
+        return true;
+      });
       localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
+    } else {
+      listaComentarios = [];
     }
   } catch(e){
-    listaComentarios = COMENTARIOS_DEFAULT.slice();
+    listaComentarios = [];
   }
   renderizarFeedComentarios();
   sincronizarComentariosConSheets();
@@ -2750,16 +2770,22 @@ function sincronizarComentariosConSheets(manual){
     limpiarCb(cb);
     if(icon) icon.classList.remove('fa-spin');
 
-    if(res && res.comentarios && Array.isArray(res.comentarios) && res.comentarios.length > 0){
+    if(res && res.comentarios && Array.isArray(res.comentarios)){
       var map = {};
-      // 1. Cargar predeterminados
-      COMENTARIOS_DEFAULT.forEach(function(c){ map[c.id] = c; });
-      // 2. Fusionar con los que ya tiene en local (por si tiene alguno propio recién creado)
-      listaComentarios.forEach(function(c){ map[c.id] = c; });
-      // 3. Sobrescribir con los reales de Google Sheets (actualiza reacciones globales)
+      // 1. Mantener comentarios locales no-bots
+      listaComentarios.forEach(function(c){
+        if(c && c.id && !String(c.id).startsWith('c_init_')){
+          map[c.id] = c;
+        }
+      });
+      // 2. Sobrescribir con los de Google Sheets (filtrando bots)
       res.comentarios.forEach(function(c){
-        // Preservar si el usuario local ya reaccionó
-        map[c.id] = c;
+        if(c && c.id && !String(c.id).startsWith('c_init_')){
+          var autorStr = String(c.autor || '');
+          if(autorStr.indexOf('Manuel R') === -1 && autorStr.indexOf('Junior (') === -1 && autorStr.indexOf('Carlos M') === -1){
+            map[c.id] = c;
+          }
+        }
       });
       listaComentarios = Object.values(map);
       listaComentarios.sort(function(a,b){
@@ -2787,10 +2813,14 @@ function renderizarFeedComentarios(){
   var feed = document.getElementById('commFeed');
   var badge = document.getElementById('commTotalBadge');
   if(!feed) return;
-  if(badge) badge.textContent = listaComentarios.length + (listaComentarios.length === 1 ? ' mensaje' : ' mensajes');
+  if(badge) badge.textContent = listaComentarios.length + (listaComentarios.length === 1 ? ' consejo' : ' consejos');
 
   if(listaComentarios.length === 0){
-    feed.innerHTML = '<div style="text-align:center;padding:24px;color:var(--gray);font-size:0.85rem;">Sé el primero en dejar un consejo para la comunidad biker.</div>';
+    feed.innerHTML = '<div style="text-align:center;padding:36px 18px;background:white;border:1.5px dashed var(--border);border-radius:var(--r-md);color:var(--gray);">'
+                   + '  <div style="font-size:2.2rem;margin-bottom:10px;color:var(--purple);"><i class="fas fa-motorcycle"></i></div>'
+                   + '  <p style="font-family:var(--font-h);font-size:0.95rem;font-weight:700;color:var(--dark);margin-bottom:6px;">¡Sé el primero en compartir en el Muro Biker!</p>'
+                   + '  <p style="font-size:0.83rem;color:var(--gray);max-width:340px;margin:0 auto;">Escribe tu consejo de prevención vial arriba y compártelo con todos los motorizados de Ciudad Bolívar.</p>'
+                   + '</div>';
     return;
   }
 
@@ -2800,17 +2830,18 @@ function renderizarFeedComentarios(){
     var rolClass = c.rol === 'delivery' ? 'role-delivery' : (c.rol === 'particular' ? 'role-particular' : 'role-moto');
     var rolLabel = c.rol === 'delivery' ? 'Delivery' : (c.rol === 'particular' ? 'Particular' : 'Mototaxista');
 
-    var rMoto = (c.reacciones && c.reacciones.moto) || 0;
-    var rIdea = (c.reacciones && c.reacciones.idea) || 0;
-    var rLike = (c.reacciones && c.reacciones.like) || 0;
+    // Manejo de reacciones exclusivamente Like y Dislike
+    var rLike = (c.reacciones && (c.reacciones.like !== undefined ? c.reacciones.like : c.reacciones.moto)) || 0;
+    var rDislike = (c.reacciones && c.reacciones.dislike !== undefined) ? c.reacciones.dislike : 0;
 
-    var kMoto = 'cap_react_' + c.id + '_moto';
-    var kIdea = 'cap_react_' + c.id + '_idea';
     var kLike = 'cap_react_' + c.id + '_like';
+    var kDislike = 'cap_react_' + c.id + '_dislike';
 
-    var activeMoto = localStorage.getItem(kMoto) === '1' ? 'reacted' : '';
-    var activeIdea = localStorage.getItem(kIdea) === '1' ? 'reacted' : '';
-    var activeLike = localStorage.getItem(kLike) === '1' ? 'reacted' : '';
+    var activeLike = localStorage.getItem(kLike) === '1' ? 'reacted reacted-like' : '';
+    var activeDislike = localStorage.getItem(kDislike) === '1' ? 'reacted reacted-dislike' : '';
+
+    var fechaLimpia = formatearFechaComentario(c.fecha);
+    var timeDisplay = (fechaLimpia ? fechaLimpia : '') + (c.hora ? (fechaLimpia ? ' · ' : '') + c.hora : '');
 
     html += '<div class="comm-card" id="comm_' + c.id + '">'
           + '  <div class="comm-card-top">'
@@ -2818,16 +2849,19 @@ function renderizarFeedComentarios(){
           + '      <div class="comm-avatar">' + avatarIcon + '</div>'
           + '      <div>'
           + '        <div class="comm-author">' + escaparHTML(c.autor || 'Biker') + '</div>'
-          + '        <div class="comm-time">' + (c.fecha || '') + (c.hora ? ' · ' + c.hora : '') + '</div>'
+          + '        <div class="comm-time">' + timeDisplay + '</div>'
           + '      </div>'
           + '      <span class="comm-role-badge ' + rolClass + '">' + rolLabel + '</span>'
           + '    </div>'
           + '  </div>'
           + '  <div class="comm-text">' + escaparHTML(c.texto) + '</div>'
           + '  <div class="comm-actions">'
-          + '    <button type="button" class="comm-react-btn ' + activeMoto + '" onclick="reaccionarComentario(\'' + c.id + '\', \'moto\')" title="¡Rueda seguro!"><i class="fas fa-motorcycle"></i> <span>' + rMoto + '</span></button>'
-          + '    <button type="button" class="comm-react-btn ' + activeIdea + '" onclick="reaccionarComentario(\'' + c.id + '\', \'idea\')" title="¡Buen consejo!"><i class="fas fa-lightbulb"></i> <span>' + rIdea + '</span></button>'
-          + '    <button type="button" class="comm-react-btn ' + activeLike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'like\')" title="Apoyo"><i class="fas fa-thumbs-up"></i> <span>' + rLike + '</span></button>'
+          + '    <button type="button" class="comm-react-btn btn-like ' + activeLike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'like\')" title="De acuerdo / Me gusta">'
+          + '      <span class="react-emoji">👍</span> <span>' + rLike + '</span>'
+          + '    </button>'
+          + '    <button type="button" class="comm-react-btn btn-dislike ' + activeDislike + '" onclick="reaccionarComentario(\'' + c.id + '\', \'dislike\')" title="En desacuerdo / No me gusta">'
+          + '      <span class="react-emoji">👎</span> <span>' + rDislike + '</span>'
+          + '    </button>'
           + '  </div>'
           + '</div>';
   });
@@ -2879,14 +2913,19 @@ function publicarComentario(){
     btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
   }
 
+  var hoy = new Date();
+  var dia = String(hoy.getDate()).padStart(2, '0');
+  var mes = String(hoy.getMonth() + 1).padStart(2, '0');
+  var anio = hoy.getFullYear();
+
   var nuevo = {
     id: 'c_' + Date.now(),
     autor: autor,
     rol: rol,
     texto: texto,
-    fecha: new Date().toLocaleDateString('es-VE'),
-    hora: new Date().toLocaleTimeString('es-VE', {hour: '2-digit', minute:'2-digit'}),
-    reacciones: { moto: 1, idea: 1, like: 1 }
+    fecha: dia + '/' + mes + '/' + anio,
+    hora: hoy.toLocaleTimeString('es-VE', {hour: '2-digit', minute:'2-digit'}),
+    reacciones: { like: 1, dislike: 0 }
   };
 
   // Optimistic UI: Mostrar de inmediato en pantalla
@@ -2936,29 +2975,51 @@ function publicarComentario(){
 }
 
 function reaccionarComentario(id, tipo){
+  if(tipo !== 'like' && tipo !== 'dislike') return;
+  var otroTipo = (tipo === 'like') ? 'dislike' : 'like';
+
   var kReact = 'cap_react_' + id + '_' + tipo;
+  var kOtro = 'cap_react_' + id + '_' + otroTipo;
+
   var yaReacciono = localStorage.getItem(kReact) === '1';
+  var yaReaccionoOtro = localStorage.getItem(kOtro) === '1';
 
   var c = listaComentarios.find(function(item){ return item.id === id; });
   if(!c) return;
-  if(!c.reacciones) c.reacciones = { moto:0, idea:0, like:0 };
+  if(!c.reacciones) c.reacciones = { like: 0, dislike: 0 };
+  if(c.reacciones.like === undefined) c.reacciones.like = 0;
+  if(c.reacciones.dislike === undefined) c.reacciones.dislike = 0;
 
-  var delta = 1;
+  var deltaTipo = 0;
+
   if(yaReacciono){
-    delta = -1;
+    // Quitar la reacción actual
     c.reacciones[tipo] = Math.max(0, (c.reacciones[tipo] || 1) - 1);
     localStorage.removeItem(kReact);
+    deltaTipo = -1;
   } else {
-    delta = 1;
+    // Si tenía la otra reacción puesta (ej: dislike), se retira primero
+    if(yaReaccionoOtro){
+      c.reacciones[otroTipo] = Math.max(0, (c.reacciones[otroTipo] || 1) - 1);
+      localStorage.removeItem(kOtro);
+      sincronizarDeltaReaccion(id, otroTipo, -1);
+    }
+    // Agregar la nueva reacción
     c.reacciones[tipo] = (c.reacciones[tipo] || 0) + 1;
     localStorage.setItem(kReact, '1');
+    deltaTipo = 1;
   }
 
   localStorage.setItem('cap_muro_comentarios', JSON.stringify(listaComentarios));
   renderizarFeedComentarios();
 
-  // Sincronizar reacción con Google Sheets en segundo plano
-  var cb = '_cb_react_' + Date.now();
+  if(deltaTipo !== 0){
+    sincronizarDeltaReaccion(id, tipo, deltaTipo);
+  }
+}
+
+function sincronizarDeltaReaccion(id, tipo, delta){
+  var cb = '_cb_react_' + Date.now() + '_' + Math.floor(Math.random()*1000);
   window[cb] = function(){ try{ delete window[cb]; }catch(e){} };
   var s = document.createElement('script');
   s.src = API_URL + '?action=reaccionarComentario&id=' + encodeURIComponent(id) + '&tipo=' + encodeURIComponent(tipo) + '&delta=' + delta + '&callback=' + cb + '&t=' + Date.now();
@@ -3177,65 +3238,4 @@ function abrirVentanaImpresion(codigo, r){
     var val = r[k]; if(!val) return '';
     var bars = [1,2,3,4].map(function(n){
       return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#5b6ceb':'#e2e5f0')+'"></span>';
-    }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+actLabels[i]+'</td>'
-         + '<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.75rem;color:#5b6ceb;font-weight:700;">'+val+'/4</span></td></tr>';
-  }).join('');
-
-  var prFields = ['pr1','pr2','pr3','pr4','pr5','pr6','pr7','pr8'];
-  var prLabels = ['Uso de casco','Respeto semáforos','Evita celular','Revisión del vehículo','Distancia seguridad','Evita fatiga','Cede a peatones','Busca información'];
-  var prHTML = prFields.map(function(k, i){
-    var val = r[k]; if(!val) return '';
-    var bars = [1,2,3,4].map(function(n){
-      return '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:2px;background:'+(n<=parseInt(val)?'#f59e0b':'#e2e5f0')+'"></span>';
-    }).join('');
-    return '<tr><td style="padding:5px 10px;font-size:0.78rem;color:#636e72;">'+prLabels[i]+'</td>'
-         + '<td style="padding:5px 10px;">'+bars+' <span style="font-size:0.75rem;color:#f59e0b;font-weight:700;">'+val+'/4</span></td></tr>';
-  }).join('');
-
-  var w = window.open('', '_blank', 'width=760,height=900');
-  w.document.write('<!DOCTYPE html><html lang="es"><head>'
-    +'<meta charset="UTF-8"><title>Pre-test '+codigo+' · CAP-SV-DIGITAL</title>'
-    +''
-    +'<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Inter,sans-serif;background:white;color:#2d3436;padding:32px;font-size:14px;}'
-    +'.header{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}'
-    +'.header h1{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:4px;}'
-    +'.code-badge{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:10px;padding:10px 20px;text-align:center;}'
-    +'.code-badge .lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:4px;}'
-    +'.code-badge .val{font-family:monospace;font-size:1.4rem;font-weight:700;letter-spacing:3px;}'
-    +'.score-box{display:flex;align-items:center;gap:24px;background:#f8f9ff;border:2px solid #e8eaf6;border-radius:14px;padding:20px 24px;margin-bottom:24px;}'
-    +'.ring{width:90px;height:90px;border-radius:50%;border:4px solid '+color+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:'+color+'18;}'
-    +'.ring .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:'+color+';line-height:1;}'
-    +'.ring .max{font-size:0.68rem;color:#b2bec3;font-weight:700;}'
-    +'.si h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:'+color+';margin-bottom:4px;}'
-    +'.si p{font-size:0.82rem;color:#636e72;}'
-    +'.pills{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}'
-    +'.pill{background:white;border:1px solid #e8eaf6;border-radius:8px;padding:4px 10px;font-size:0.72rem;color:#636e72;}'
-    +'.sec{margin-bottom:20px;}'
-    +'.sec-t{font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;padding:6px 12px;border-radius:6px;margin-bottom:8px;display:inline-block;}'
-    +'.c1{background:#5b6ceb;}.c2{background:#6a3fa8;}.c3{background:#00b894;}.c4{background:#f59e0b;}'
-    +'table{width:100%;border-collapse:collapse;background:white;border:1px solid #e8eaf6;border-radius:10px;overflow:hidden;}'
-    +'.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}'
-    +'.footer{text-align:center;margin-top:28px;font-size:0.72rem;color:#b2bec3;border-top:1px solid #f0f0f0;padding-top:16px;}'
-    +'@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}'
-    +'</style></head><body>'
-    +'<div class="header"><div><h1>CAP-SV-DIGITAL</h1><p>Instrumento de Seguridad Vial · Pre-test</p>'
-    +'<p style="margin-top:4px;font-size:0.72rem;opacity:0.7;">Universidad de Oriente · Dpto. Enfermería · Ciudad Bolívar 2025</p></div>'
-    +'<div class="code-badge"><div class="lbl">Código</div><div class="val">'+codigo+'</div></div></div>'
-    +'<div class="score-box"><div class="ring"><div class="num">'+score+'</div><div class="max">/ 10</div></div>'
-    +'<div class="si"><h2>'+nivel+'</h2><p>Sección de Conocimientos · Pre-test completado</p>'
-    +'<div class="pills"><span class="pill"><i class="fas fa-calendar-alt" style="margin-right:4px;color:var(--purple);"></i> <strong>'+fecha+'</strong></span><span class="pill"><i class="fas fa-clock" style="margin-right:4px;color:var(--purple);"></i> <strong>'+hora+'</strong></span><span class="pill"><i class="fas fa-chart-pie" style="margin-right:4px;color:var(--purple);"></i> <strong>'+pct+'%</strong> de acierto</span></div></div></div>'
-    +'<div class="sec"><span class="sec-t c1">I · Perfil</span><tr>'+perfilHTML+'</table></div>'
-    +'<div class="grid">'
-    +'<div class="sec"><span class="sec-t c2">II · Conocimientos V/F</span><td>'+vfHTML+'</table></div>'
-    +'<div><div class="sec"><span class="sec-t c3">III · Actitudes</span></td>'+(actHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div>'
-    +'<div class="sec"><span class="sec-t c4">IV · Prácticas</span><table>'+(prHTML||'<tr><td style="padding:12px;color:#b2bec3;font-size:0.8rem;">Sin datos</td></tr>')+'</table></div></div>'
-    +'</div>'
-    +'<div class="footer">CAP-SV-DIGITAL · Instrumento de Seguridad Vial · Universidad de Oriente · '+new Date().toLocaleDateString('es-VE')+'</div>'
-    +'<scr'+'ipt>window.onload=function(){window.print();};<\/scr'+'ipt></body></html>');
-  w.document.close();
-}
-</script>
-<!-- Al final del body, antes de </body> -->
-</body>
-</html>
+    }).
