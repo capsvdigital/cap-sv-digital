@@ -742,6 +742,251 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
     gap: 12px !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   OPTIMIZACIONES MÓVILES PARA CONSENTIMIENTO, PRE Y POST-TEST
+   ══════════════════════════════════════════════════════════ */
+.consent-header-top {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+.consent-badge-udo {
+  font-family: var(--font-h);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #5b6ceb;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.consent-badge-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+.consent-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.consent-icon-box {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #5b6ceb, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: white;
+  box-shadow: 0 4px 14px rgba(91,108,235,0.25);
+}
+.consent-hero-info {
+  display: flex;
+  flex-direction: column;
+}
+.consent-title {
+  font-family: var(--font-h);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+.consent-lead {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+.consent-intro-text {
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.consent-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+@media (min-width: 641px) {
+  .consent-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.c-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+}
+.c-card:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+.c-card-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  background: rgba(91,108,235,0.08);
+  color: #5b6ceb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.c-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.c-card-body strong {
+  font-size: 0.84rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+.c-card-body span {
+  font-size: 0.77rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+.c-card-highlight {
+  background: rgba(245,158,11,0.04);
+  border-color: rgba(245,158,11,0.3);
+}
+.c-card-highlight .c-card-icon {
+  background: rgba(245,158,11,0.12);
+  color: #d97706;
+}
+
+.consent-check-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 15px 16px;
+  background: white;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  margin-top: 10px;
+}
+.consent-check-wrap:active {
+  transform: scale(0.99);
+}
+.consent-check-wrap.checked {
+  border-color: #10b981 !important;
+  background: #f0fdf4 !important;
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.12) !important;
+}
+.consent-checkbox-custom {
+  display: none;
+}
+#consentCheck {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  accent-color: #10b981;
+  cursor: pointer;
+  margin-top: 2px;
+}
+.consent-check-txt {
+  font-size: 0.86rem;
+  color: #1e293b;
+  line-height: 1.5;
+}
+.consent-check-txt strong {
+  color: #059669;
+}
+
+.consent-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px 20px;
+  min-height: 52px;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-h);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 0.45;
+  pointer-events: none;
+  background: #94a3b8;
+  color: white;
+  box-shadow: none;
+}
+.consent-btn.active {
+  opacity: 1;
+  pointer-events: all;
+  background: linear-gradient(135deg, #5b6ceb 0%, #7c3aed 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(91,108,235,0.35);
+}
+.consent-btn.active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(91,108,235,0.45);
+}
+.consent-btn.active:active {
+  transform: scale(0.98);
+}
+
+/* Badges específicos para Pre-Test y Post-Test */
+.badge-pre {
+  background: rgba(91,108,235,0.2) !important;
+  border: 1.5px solid #5b6ceb !important;
+  color: #e0e7ff !important;
+  font-weight: 800 !important;
+}
+.badge-post {
+  background: rgba(16,185,129,0.2) !important;
+  border: 1.5px solid #10b981 !important;
+  color: #a7f3d0 !important;
+  font-weight: 800 !important;
+}
+
+/* Banner de contexto del modo en dispositivos */
+.mode-banner-strip {
+  margin: 12px 16px 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.mode-banner-pre {
+  background: #eef2ff;
+  border: 1.5px solid #c7d2fe;
+  color: #3730a3;
+}
+.mode-banner-post {
+  background: #ecfdf5;
+  border: 1.5px solid #a7f3d0;
+  color: #065f46;
+}
 </style>
 
 </head>
@@ -774,24 +1019,64 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
 
 <!-- ── CONSENTIMIENTO ── -->
 <div class="consent-gate" id="consentGate">
-  <div class="consent-icon"><i class="fas fa-flag-checkered"></i></div>
-  <div class="consent-title">Post-test · Segunda Fase</div>
-  <div class="consent-body">
-    <p>Ha completado la intervención educativa digital de 8 semanas. Este cuestionario mide los cambios en sus conocimientos, actitudes y prácticas de seguridad vial.</p>
-    <ul>
-      <li>Sus respuestas son <strong>completamente anónimas</strong> e independientes del pre-test.</li>
-      <li>Responda con total <strong>honestidad</strong> — no hay respuestas correctas o incorrectas.</li>
-      <li>El cuestionario incluye una sección nueva sobre su <strong>experiencia con el programa digital</strong>.</li>
-    </ul>
+  <div class="consent-header-top">
+    <span class="consent-badge-udo"><i class="fas fa-university"></i> UNIVERSIDAD DE ORIENTE · NÚCLEO BOLÍVAR</span>
+    <span class="consent-badge-sub">ESCUELA DE CIENCIAS DE LA SALUD · DPTO. ENFERMERÍA</span>
   </div>
+
+  <div class="consent-hero-row">
+    <div class="consent-icon-box" style="background:linear-gradient(135deg, #10b981, #059669);"><i class="fas fa-flag-checkered"></i></div>
+    <div class="consent-hero-info">
+      <h3 class="consent-title">Post-test · Segunda Fase</h3>
+      <p class="consent-lead">Cuestionario de Salida · Programa Educativo Código Biker</p>
+    </div>
+  </div>
+
+  <div class="consent-intro-text">
+    Estimado/a conductor/a: Ha completado las 8 semanas del programa educativo digital. Este cuestionario evalúa los cambios en conocimientos, actitudes y prácticas de seguridad vial:
+  </div>
+
+  <div class="consent-cards-grid">
+    <div class="c-card">
+      <div class="c-card-icon" style="background:rgba(16,185,129,0.1);color:#059669;"><i class="fas fa-graduation-cap"></i></div>
+      <div class="c-card-body">
+        <strong>Evaluación Científica</strong>
+        <span>Permite cuantificar la ganancia de conocimiento y el impacto del programa.</span>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card-icon" style="background:rgba(16,185,129,0.1);color:#059669;"><i class="fas fa-user-shield"></i></div>
+      <div class="c-card-body">
+        <strong>Totalmente Anónimo</strong>
+        <span>Respuestas protegidas bajo su mismo código privado de participante.</span>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-card-icon" style="background:rgba(16,185,129,0.1);color:#059669;"><i class="fas fa-mobile-alt"></i></div>
+      <div class="c-card-body">
+        <strong>Módulo Digital Exclusivo</strong>
+        <span>Incluye la evaluación de los videos e infografías publicados en redes.</span>
+      </div>
+    </div>
+    <div class="c-card c-card-highlight">
+      <div class="c-card-icon"><i class="fas fa-motorcycle"></i></div>
+      <div class="c-card-body">
+        <strong>Honestidad al Conducir</strong>
+        <span>Responda con total sinceridad sobre su comportamiento real en la vía.</span>
+      </div>
+    </div>
+  </div>
+
   <label class="consent-check-wrap" id="consentWrap">
     <input type="checkbox" id="consentCheck" onchange="onConsentChange()">
     <span class="consent-check-txt">
       Confirmo que participé en la intervención educativa y <strong>acepto completar este post-test voluntariamente</strong>.
     </span>
   </label>
-  <button class="consent-btn" id="consentBtn" onclick="habilitarFormulario()">
-    <i class="fas fa-play-circle"></i> Comenzar Post-test
+
+  <button class="consent-btn" id="consentBtn" onclick="habilitarFormulario()" style="background:linear-gradient(135deg, #10b981, #059669);">
+    <span>Comenzar Post-test</span>
+    <i class="fas fa-arrow-right"></i>
   </button>
 </div>
 
