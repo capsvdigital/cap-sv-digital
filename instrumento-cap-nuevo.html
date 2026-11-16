@@ -1068,6 +1068,161 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
   border: 1.5px solid #a7f3d0;
   color: #065f46;
 }
+
+/* ── TARJETA UNIFICADA HERO STATUS (ORDENADA Y LIMPIA EN MÓVIL) ── */
+.hero-status-card {
+  max-width: 580px;
+  margin: 14px auto 0;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 1;
+}
+
+.hsc-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hsc-code-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.22);
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hsc-code-label {
+  font-family: var(--font-h);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #82e8ce;
+  letter-spacing: 1px;
+}
+
+.hsc-code-value {
+  font-family: monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 2px;
+}
+
+#modoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--font-h);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.badge-pre {
+  background: rgba(91, 108, 235, 0.28) !important;
+  border: 1.5px solid #818cf8 !important;
+  color: #ffffff !important;
+}
+
+.badge-post {
+  background: rgba(16, 185, 129, 0.28) !important;
+  border: 1.5px solid #34d399 !important;
+  color: #ffffff !important;
+}
+
+.hsc-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 10px 0;
+}
+
+.hsc-row-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hsc-info-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.hsc-info-pill i {
+  color: #82e8ce;
+  font-size: 0.82rem;
+}
+
+.hsc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-h);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.hsc-back-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+@media (max-width: 480px) {
+  .hero-status-card {
+    padding: 10px 12px;
+    margin: 10px auto 0;
+  }
+  .hsc-row-top {
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .hsc-code-badge {
+    padding: 5px 9px;
+  }
+  .hsc-code-value {
+    font-size: 0.95rem;
+  }
+  #modoBadge {
+    padding: 5px 10px;
+    font-size: 0.74rem;
+  }
+  .hsc-info-pill {
+    padding: 4px 8px;
+    font-size: 0.74rem;
+  }
+  .hsc-back-btn {
+    padding: 4px 10px;
+    font-size: 0.74rem;
+  }
+}
 </style>
 
 </head>
@@ -1084,16 +1239,36 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
       <div class="hero-inst">Universidad de Oriente · Núcleo Bolívar · Dpto. Enfermería</div>
     </div>
   </div>
-  <div class="hero-info-box">
-    <p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">6–7 minutos</strong> · 39 ítems en 5 secciones</p>
-    <p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y se usan con fines académicos</p>
-  </div>
-  <div class="hero-participant-bar">
-    <span class="hpb-label"><i class="fas fa-fingerprint"></i> Código</span>
-    <span class="hpb-code" id="codigoDisplay">——</span>
-    <span id="modoBadge"><i class="fas fa-clipboard-list" style="margin-right:5px;"></i> PRE-TEST</span>
+
+  <!-- Tarjeta Unificada de Estado y Participante (Ultra ordenada y móvil) -->
+  <div class="hero-status-card">
+    <div class="hsc-row-top">
+      <div class="hsc-code-badge">
+        <span class="hsc-code-label"><i class="fas fa-fingerprint"></i> CÓDIGO</span>
+        <span class="hsc-code-value" id="codigoDisplay">——</span>
+      </div>
+      <div id="modoBadge" class="badge-pre">
+        <i class="fas fa-clipboard-list"></i> PRE-TEST
+      </div>
+    </div>
+
+    <div class="hsc-divider"></div>
+
+    <div class="hsc-row-bottom">
+      <div class="hsc-info-pill" id="heroInfoTime">
+        <i class="fas fa-clock"></i>
+        <span>6–7 min · 35 ítems</span>
+      </div>
+      <div class="hsc-info-pill">
+        <i class="fas fa-user-shield"></i>
+        <span>100% Anónimo</span>
+      </div>
+      <a href="landing-cap.html" class="hsc-back-btn">
+        <i class="fas fa-sign-out-alt"></i> Salir
+      </a>
+    </div>
+
     <input type="hidden" id="codigoParticipante">
-    <a href="landing-cap.html" class="hpb-back"><i class="fas fa-arrow-left"></i> Volver</a>
   </div>
 </div>
 
@@ -1991,31 +2166,31 @@ window.addEventListener('DOMContentLoaded', function() {
   const btnSubmit = document.querySelector('.form-footer .btn-action');
   const heroInfo = document.querySelector('.hero-info-box');
 
+  const infoTime = document.getElementById('heroInfoTime');
+
   if (modo === 'post') {
     isPostTest = true;
     badge.className = 'badge-post';
-    badge.innerHTML = '<i class="fas fa-clipboard-check" style="margin-right:5px;"></i> POST-TEST (EVALUACIÓN FINAL)';
+    badge.innerHTML = '<i class="fas fa-clipboard-check" style="margin-right:4px;"></i> POST-TEST';
     document.getElementById('seccionV').style.display = 'block';
     setModoSecV('post');
     if (btnSubmit) {
       btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Finalizar y Enviar Post-Test';
     }
-    if (heroInfo) {
-      heroInfo.innerHTML = '<p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">7–8 minutos</strong> · 40 ítems (incluye evaluación de intervención digital)</p>' +
-                           '<p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y confidenciales</p>';
+    if (infoTime) {
+      infoTime.innerHTML = '<i class="fas fa-clock"></i> <span>7–8 min · 40 ítems</span>';
     }
   } else {
     isPostTest = false;
     badge.className = 'badge-pre';
-    badge.innerHTML = '<i class="fas fa-clipboard-list" style="margin-right:5px;"></i> PRE-TEST (LÍNEA BASE)';
+    badge.innerHTML = '<i class="fas fa-clipboard-list" style="margin-right:4px;"></i> PRE-TEST';
     // Sección V no aplica en pre-test — ocultar completamente
     document.getElementById('seccionV').style.display = 'none';
     if (btnSubmit) {
       btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Finalizar y Enviar Pre-Test';
     }
-    if (heroInfo) {
-      heroInfo.innerHTML = '<p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">6–7 minutos</strong> · 35 ítems de línea base</p>' +
-                           '<p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y confidenciales</p>';
+    if (infoTime) {
+      infoTime.innerHTML = '<i class="fas fa-clock"></i> <span>6–7 min · 35 ítems</span>';
     }
   }
 
