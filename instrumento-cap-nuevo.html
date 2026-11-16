@@ -2491,7 +2491,8 @@ function submitForm() {
   // GUARDAR EN LOCAL STORAGE (SIEMPRE) Y ENVIAR A SHEETS CON REINTENTOS
   enviarConReintentos(scoreC);
 
-  // Bloquear formulario completo — no se pueden cambiar respuestas
+  // Marcar como finalizado y bloquear formulario
+  window._formularioFinalizado = true;
   bloquearFormulario();
 
   document.getElementById('resultModal').classList.add('show');
@@ -2705,11 +2706,12 @@ function leerDeLocal(codigo, modo) { try { const r = localStorage.getItem(claveS
 let _syncT = null;
 function guardarProgreso() {
   const datos = recopilarRespuestas();
+  datos.completado = 'NO';
   guardarEnLocal(datos);
   clearTimeout(_syncT);
   _syncT = setTimeout(function() {
     mostrarSync('⏳ Guardando...');
-    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase() };
+    const payload = { ...datos, codigo: (datos.codigo||'').toUpperCase(), completado: 'NO' };
     const cb = '_cb_save_' + Date.now();
     window[cb] = function(r) {
       try { delete window[cb]; } catch(e) {}
@@ -3006,6 +3008,15 @@ document.getElementById('resultModal').addEventListener('click', function(e) {
 });
 document.getElementById('incompleteModal').addEventListener('click', function(e) {
   if (e.target === this) cerrarIncompleto();
+});
+
+// Advertencia para evitar salidas accidentales con el instrumento a medias
+window.addEventListener('beforeunload', function(e) {
+  if (!window._formularioFinalizado && (answered.size > 0 || Object.keys(vfAnswers).length > 0)) {
+    e.preventDefault();
+    e.returnValue = 'Tienes respuestas en progreso. Tu avance queda guardado, pero debes completar todas las preguntas para enviar tu evaluación.';
+    return e.returnValue;
+  }
 });
 
 updateProgress();
