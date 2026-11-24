@@ -10,25 +10,22 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="app-version" content="2026-10-10-m2">
-<title>CAP-SV-DIGITAL · Seguridad Vial · Ciudad Bolívar 2026</title>
+<title>CAP-SV-DIGITAL · Post-test · Ciudad Bolívar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-
 :root {
-  /* ── PALETA COHERENTE CON LANDING PAGE ── */
-  --bg:             #F8FAFC; /* Fondo general exterior */
-  --bg-card:        #FFFFFF; /* Fondo de tarjetas */
+  --bg:             #F8FAFC;
+  --bg-card:        #FFFFFF;
   --bg-elevated:    #F8FAFC;
   --bg-input:       #F1F5F9;
-  --border:         #E2E8F0; /* Bordes suaves */
+  --border:         #E2E8F0;
   --border-hover:   #CBD5E1;
   --border-card:    #E2E8F0;
 
-  /* Acentos de color */
   --accent-blue:    #3B82F6;
   --accent-teal:    #14B8A6;
   --accent-purple:  #8B5CF6;
@@ -50,111 +47,65 @@
   --rose-glow:      rgba(239,68,68,0.15);
   --rose-dim:       rgba(239,68,68,0.07);
 
-  --text:           #1E293B; /* Títulos y textos oscuros */
-  --text-sec:       #64748B; /* Párrafos y secundarios */
+  --text:           #1E293B;
+  --text-sec:       #64748B;
   --text-muted:     #94A3B8;
 
   --font-h:         'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-b:         'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px;
 }
-
 html{scroll-behavior:smooth;}
-body{
-  font-family:var(--font-b);
-  background-color:var(--bg);
-  min-height:100vh; color:var(--text); line-height:1.6; font-size:15px; padding:24px 16px;
-}
+body{font-family:var(--font-b);background:linear-gradient(135deg,#00b894 0%,#0984e3 50%,#6a3fa8 100%);min-height:100vh;color:var(--text);line-height:1.6;font-size:15px;padding:16px;}
+.page-wrap{max-width:860px;margin:0 auto;background:rgba(255,255,255,0.97);border-radius:var(--r-xl);box-shadow:0 20px 60px rgba(0,0,0,0.25);overflow:hidden;}
 
-/* ── LAYOUT ── */
-.page-wrap{
-  max-width:920px; margin:0 auto;
-  background:var(--bg-card);
-  border:1px solid var(--border);
-  border-radius:var(--r-xl);
-  box-shadow:0 12px 40px rgba(0,0,0,0.08);
-  overflow:hidden;
-}
-
-/* ── HERO ── */
-.hero{
-  background:linear-gradient(135deg,#5b6ceb 0%,#7c5cbf 50%,#6a3fa8 100%);
-  padding:36px 40px 28px; position:relative; overflow:hidden;
-}
+/* ── HERO POST-TEST (teal/verde para distinguir del pre) ── */
+.hero{background:linear-gradient(135deg,#00b894 0%,#0984e3 60%,#6a3fa8 100%);padding:36px 40px 28px;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.02) 20px,rgba(255,255,255,0.02) 40px);}
 .hero-inner{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:1;}
-.hero-avatar{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:rgba(255,255,255,0.85);flex-shrink:0;}
+.hero-avatar{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:rgba(255,255,255,0.9);flex-shrink:0;}
 .hero-text{text-align:left;}
 .hero-title{font-family:var(--font-h);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:white;letter-spacing:-0.5px;line-height:1.1;margin-bottom:6px;}
 .hero-subtitle{font-family:var(--font-h);font-size:1rem;font-weight:600;color:rgba(255,255,255,0.88);margin-bottom:4px;}
 .hero-inst{font-family:var(--font-h);font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.75);}
+.post-badge-hero{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:5px 14px;font-family:var(--font-h);font-size:0.78rem;font-weight:800;color:white;text-transform:uppercase;letter-spacing:1px;margin-top:8px;}
 .hero-info-box{background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:14px 20px;max-width:580px;margin:0 auto 16px;position:relative;z-index:1;}
 .hero-info-box p{font-size:0.83rem;color:rgba(255,255,255,0.88);line-height:1.6;display:flex;align-items:flex-start;gap:7px;}
 .hero-info-box p+p{margin-top:5px;}
 .hero-participant-bar{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;max-width:580px;margin:0 auto;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:10px 18px;position:relative;z-index:1;}
 .hpb-label{font-family:var(--font-h);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#82e8ce;}
 .hpb-code{font-family:monospace;font-size:1rem;font-weight:700;color:white;letter-spacing:3px;background:rgba(255,255,255,0.15);padding:3px 12px;border-radius:8px;min-width:90px;text-align:center;}
-#modoBadge{padding:4px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.72rem;font-weight:700;background:rgba(91,108,235,0.3);border:1px solid rgba(91,108,235,0.5);color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:0.5px;}
+#modoBadge{padding:4px 12px;border-radius:20px;font-family:var(--font-h);font-size:0.72rem;font-weight:700;background:rgba(0,184,148,0.35);border:1px solid rgba(0,184,148,0.6);color:rgba(255,255,255,0.95);text-transform:uppercase;letter-spacing:0.5px;}
 .hpb-back{font-family:var(--font-h);font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.65);text-decoration:none;transition:color 0.2s;}
 .hpb-back:hover{color:white;}
 
 /* ── CONSENTIMIENTO ── */
-.consent-gate{
-  margin:20px 16px; padding:28px 28px 24px;
-  background:linear-gradient(135deg,#f8f9ff,#f0f2ff);
-  border:2px solid var(--border); border-radius:var(--r-xl);
-  box-shadow:0 4px 20px rgba(91,108,235,0.10);
-  position:relative; overflow:hidden;
-}
-.consent-gate::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5b6ceb,#6a3fa8);}
-.consent-icon{width:52px;height:52px;border-radius:var(--r-md);background:linear-gradient(135deg,#5b6ceb,#6a3fa8);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:white;margin-bottom:16px;}
+.consent-gate{margin:20px 16px;padding:28px 28px 24px;background:linear-gradient(135deg,#f0fdf8,#ecfdf5);border:2px solid #a7f3d0;border-radius:var(--r-xl);box-shadow:0 4px 20px rgba(0,184,148,0.10);position:relative;overflow:hidden;}
+.consent-gate::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#00b894,#0984e3);}
+.consent-icon{width:52px;height:52px;border-radius:var(--r-md);background:linear-gradient(135deg,#00b894,#0984e3);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:white;margin-bottom:16px;}
 .consent-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:12px;}
 .consent-body{font-size:0.875rem;color:var(--text-sec);line-height:1.7;margin-bottom:20px;}
 .consent-body strong{color:var(--text);font-weight:600;}
 .consent-body ul{margin:10px 0 10px 20px;}
 .consent-body ul li{margin-bottom:4px;}
-.consent-check-wrap{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:16px 20px;
-  background:white;border:2px solid var(--border);
-  border-radius:var(--r-lg);cursor:pointer;
-  transition:all 0.2s; user-select:none;
-}
-.consent-check-wrap:hover{border-color:var(--purple);box-shadow:0 0 0 3px rgba(91,108,235,0.1);}
+.consent-check-wrap{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:white;border:2px solid var(--border);border-radius:var(--r-lg);cursor:pointer;transition:all 0.2s;user-select:none;}
+.consent-check-wrap:hover{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,184,148,0.1);}
 .consent-check-wrap.checked{border-color:var(--green);background:linear-gradient(135deg,rgba(0,184,148,0.05),rgba(0,184,148,0.02));box-shadow:0 0 0 3px rgba(0,184,148,0.1);}
 #consentCheck{width:20px;height:20px;accent-color:var(--green);cursor:pointer;flex-shrink:0;margin-top:2px;}
 .consent-check-txt{font-size:0.88rem;color:var(--text);line-height:1.5;}
-.consent-check-txt strong{color:var(--purple);}
-.consent-btn{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;margin-top:16px;padding:14px;
-  background:linear-gradient(135deg,#5b6ceb,#6a3fa8);
-  color:white;border:none;border-radius:var(--r-lg);
-  font-family:var(--font-h);font-size:0.95rem;font-weight:800;
-  cursor:pointer;transition:all 0.25s;
-  box-shadow:0 4px 16px rgba(91,108,235,0.35);
-  opacity:0.45;pointer-events:none;
-}
+.consent-check-txt strong{color:#00b894;}
+.consent-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,#00b894,#0984e3);color:white;border:none;border-radius:var(--r-lg);font-family:var(--font-h);font-size:0.95rem;font-weight:800;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 16px rgba(0,184,148,0.35);opacity:0.45;pointer-events:none;}
 .consent-btn.active{opacity:1;pointer-events:auto;}
-.consent-btn.active:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(91,108,235,0.45);}
+.consent-btn.active:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,184,148,0.45);}
 
-/* ── FORMULARIO (oculto hasta consentir) ── */
 #formWrapper{display:none;}
 
-/* ── BARRA DE PROGRESO ── */
-.progress-bar-sticky{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
-  padding:10px 16px;
-  display:flex;align-items:center;gap:16px;
-}
+/* ── BARRA PROGRESO ── */
+.progress-bar-sticky{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:10px 16px;display:flex;align-items:center;gap:16px;}
 .pb-label{font-family:var(--font-h);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-sec);white-space:nowrap;}
 .pb-track{flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
-.pb-fill{height:100%;background:linear-gradient(90deg,#5b6ceb,#6a3fa8);border-radius:3px;width:0%;transition:width 0.4s cubic-bezier(0.4,0,0.2,1);}
-.pb-count{font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#5b6ceb;white-space:nowrap;}
+.pb-fill{height:100%;background:linear-gradient(90deg,#00b894,#0984e3);border-radius:3px;width:0%;transition:width 0.4s cubic-bezier(0.4,0,0.2,1);}
+.pb-count{font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:#00b894;white-space:nowrap;}
 
 /* ── SECCIÓN BLOCK ── */
 
@@ -184,7 +135,7 @@ body{
 .section-block.sec-conocimientos::before{ background: var(--accent-purple); }
 .section-block.sec-actitudes::before{ background: var(--accent-teal); }
 .section-block.sec-practicas::before{ background: var(--accent-amber); }
-.section-block.sec-digital::before, #seccionV::before{ background: var(--rose); }
+.section-block.sec-digital::before{ background: var(--accent-teal); }
 
 .section-header{
   padding: 18px 24px;
@@ -207,7 +158,7 @@ body{
 .sn-violet{background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);color:var(--accent-purple);}
 .sn-green{background:rgba(20,184,166,0.1);border-color:rgba(20,184,166,0.3);color:var(--accent-teal);}
 .sn-amber{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);color:var(--accent-amber);}
-.sn-rose{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--rose);}
+.sn-teal{background:rgba(20,184,166,0.1);border-color:rgba(20,184,166,0.3);color:var(--accent-teal);}
 
 .section-meta h2{font-family:var(--font-h);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:2px;}
 .section-meta p{font-size:0.82rem;color:var(--text-sec);}
@@ -216,12 +167,12 @@ body{
 .sb-violet{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);color:var(--accent-purple);}
 .sb-green{background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.25);color:var(--accent-teal);}
 .sb-amber{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);color:var(--accent-amber);}
-.sb-rose{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.25);color:var(--rose);}
+.sb-teal{background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.25);color:var(--accent-teal);}
 
 .section-notice{margin:16px 24px 0;padding:12px 16px;border-left:3px solid var(--accent-blue);border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:0.83rem;color:var(--text-sec);background:#F1F5F9;margin-bottom:16px;}
 .section-notice.green{border-left-color:var(--accent-teal);background:#F0FDFA;color:#0F766E;}
 .section-notice.amber{border-left-color:var(--accent-amber);background:#FFFBEB;color:#92400E;}
-.section-notice.rose{border-left-color:var(--rose);background:#FEF2F2;color:#991B1B;}
+.section-notice.teal{border-left-color:var(--accent-teal);background:#F0FDFA;color:#0F766E;}
 
 .q-block{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;transition:border-color 0.2s,box-shadow 0.2s;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);}
 .q-block:hover{border-color:var(--border-hover);box-shadow:0 3px 10px rgba(0,0,0,0.04);}
@@ -232,33 +183,18 @@ body{
 .qn-violet{background:rgba(139,92,246,0.12);color:var(--accent-purple);}
 .qn-green{background:rgba(20,184,166,0.12);color:var(--accent-teal);}
 .qn-amber{background:rgba(245,158,11,0.12);color:var(--accent-amber);}
-.qn-rose{background:rgba(239,68,68,0.12);color:var(--rose);}
+.qn-teal{background:rgba(20,184,166,0.12);color:var(--accent-teal);}
 .q-text{font-size:0.92rem;font-weight:600;color:var(--text);line-height:1.4;}
 .q-body{padding:14px 16px;}
 
 .opt-label{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#FFFFFF;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;font-size:0.88rem;color:var(--text);user-select:none;box-shadow:0 1px 2px rgba(0,0,0,0.02);}
 .opt-label:hover{border-color:var(--accent-blue);background:#F8FAFC;transform:translateY(-1px);}
 .opt-label:has(input:checked){border-color:var(--accent-blue);background:rgba(59,130,246,0.06);font-weight:600;color:var(--accent-blue);}
-
-.q-clarification-note{
-  margin-top: 10px;
-  padding: 11px 14px;
-  background: #F1F5F9;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent-blue);
-  border-radius: 8px;
-  font-size: 0.81rem;
-  color: var(--text-sec);
-  line-height: 1.45;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 .section-body{padding:0 28px 28px;}
 
 /* ── Q BLOCK ── */
 .q-block{background:#f8f9ff;border:2px solid #e8eaf6;border-radius:var(--r-md);margin-bottom:12px;transition:border-color 0.2s,box-shadow 0.2s;overflow:hidden;box-shadow:0 2px 8px rgba(91,108,235,0.06);}
-.q-block:hover{border-color:#5b6ceb;box-shadow:0 4px 16px rgba(91,108,235,0.12);}
+.q-block:hover{border-color:#00b894;box-shadow:0 4px 16px rgba(0,184,148,0.12);}
 .q-block.answered{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,184,148,0.1);}
 .q-head{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid #e8eaf6;background:white;}
 .q-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:0.82rem;flex-shrink:0;margin-top:1px;color:white;}
@@ -266,24 +202,16 @@ body{
 .qn-violet{background:var(--violet);}
 .qn-green{background:var(--green);}
 .qn-amber{background:var(--amber);}
-.qn-rose{background:var(--rose);}
+.qn-teal{background:var(--teal);}
 .q-text{font-size:0.92rem;font-weight:600;color:var(--text);line-height:1.5;flex:1;font-family:var(--font-h);}
-.q-source{font-size:0.68rem;color:var(--text-muted);font-family:var(--font-b);font-weight:400;font-style:italic;display:block;margin-top:3px;}
 .q-body{padding:14px 20px;background:#f8f9ff;}
 
-/* ── SELECTS / OPTS ── */
-.sel-wrap{position:relative;}
-.sel-wrap::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;}
-.sel-field{width:100%;background:white;border:1.5px solid var(--border);border-radius:var(--r-sm);padding:9px 36px 9px 14px;color:var(--text);font-family:var(--font-b);font-size:0.88rem;appearance:none;cursor:pointer;transition:border-color 0.15s;}
-.sel-field:focus{outline:none;border-color:var(--purple);}
+/* ── OPTS ── */
 .opts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-.opts-col{display:flex;flex-direction:column;gap:8px;}
 .opt-label{display:flex;align-items:center;gap:10px;padding:11px 14px;background:white;border:2px solid #e8eaf6;border-radius:var(--r-sm);cursor:pointer;transition:all 0.15s;font-size:0.88rem;color:var(--text-sec);user-select:none;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
-.opt-label:hover{border-color:var(--purple);color:var(--text);background:#f0f2ff;transform:translateY(-1px);}
-.opt-label input[type="radio"]{width:16px;height:16px;flex-shrink:0;accent-color:var(--purple);cursor:pointer;}
-.opt-label:has(input:checked){border-color:var(--purple);background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;font-weight:600;box-shadow:0 4px 12px rgba(91,108,235,0.28);}
-.opt-label.g:has(input:checked){background:linear-gradient(135deg,#00b894,#55efc4);border-color:var(--green);}
-.opt-label.a:has(input:checked){background:linear-gradient(135deg,#f59e0b,#fcd34d);border-color:var(--amber);color:var(--text);}
+.opt-label:hover{border-color:var(--green);color:var(--text);background:#f0fdf8;transform:translateY(-1px);}
+.opt-label input[type="radio"]{width:16px;height:16px;flex-shrink:0;accent-color:var(--green);cursor:pointer;}
+.opt-label:has(input:checked){border-color:var(--green);background:linear-gradient(135deg,#00b894,#0984e3);color:white;font-weight:600;box-shadow:0 4px 12px rgba(0,184,148,0.28);}
 
 /* ── V/F ── */
 .vf-list{display:flex;flex-direction:column;gap:8px;}
@@ -307,36 +235,29 @@ body{
 .likert-opts{display:grid;grid-template-columns:repeat(4,1fr);}
 .likert-opt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;cursor:pointer;transition:background 0.15s;border-right:1px solid var(--border);text-align:center;}
 .likert-opt:last-child{border-right:none;}
-.likert-opt:hover{background:#f0f2ff;}
+.likert-opt:hover{background:#ecfdf5;}
 .likert-opt input[type="radio"]{accent-color:var(--green);width:16px;height:16px;cursor:pointer;}
 .likert-lbl{font-size:0.67rem;color:var(--text-muted);line-height:1.2;}
 .likert-item:has(input:checked){border-color:#059669;}
 .freq-item .likert-opt input[type="radio"]{accent-color:var(--amber);}
 .freq-item:has(input:checked){border-color:var(--amber);}
 .freq-item .likert-opt:hover{background:#fffbeb;}
+/* Likert teal (sección V) */
+.teal-item .likert-opt input[type="radio"]{accent-color:var(--teal);}
+.teal-item:has(input:checked){border-color:var(--teal);}
+.teal-item .likert-opt:hover{background:#eff6ff;}
 @media(max-width:480px){.likert-opts{grid-template-columns:repeat(2,1fr);}.likert-opt{border-bottom:1px solid var(--border);}}
-
-/* ── POST-TEST ── */
-.post-toggle{display:flex;align-items:center;justify-content:center;gap:14px;padding:14px 28px;background:#f8fafc;border-bottom:1px solid var(--border);flex-wrap:wrap;}
-.post-toggle p{font-size:0.85rem;color:var(--text-sec);}
-.toggle-wrap{display:flex;gap:4px;background:#e2e8f0;border-radius:20px;padding:3px;}
-.toggle-btn{padding:5px 16px;border-radius:16px;border:none;font-family:var(--font-h);font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;color:var(--text-muted);background:transparent;text-transform:uppercase;letter-spacing:0.5px;}
-.toggle-btn.active{background:var(--violet);color:white;box-shadow:0 2px 8px var(--violet-glow);}
-.post-content{display:none;}
-.post-content.visible{display:block;}
-.pre-msg{padding:40px 28px;text-align:center;color:var(--text-muted);font-size:0.88rem;}
-.pre-msg i{font-size:2rem;display:block;margin-bottom:14px;color:var(--violet);}
 
 /* ── FOOTER FORM ── */
 .form-footer{background:white;border:1px solid var(--border);border-radius:var(--r-xl);padding:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
 .footer-info{text-align:center;flex:1;}
 .footer-info p{font-size:0.82rem;color:var(--text-muted);}
-.f-count{font-family:var(--font-h);font-size:1.4rem;font-weight:800;color:var(--purple);}
+.f-count{font-family:var(--font-h);font-size:1.4rem;font-weight:800;color:var(--green);}
 .btn-action{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;border:none;cursor:pointer;font-family:var(--font-h);font-size:0.92rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;}
-.btn-primary{background:linear-gradient(135deg,#5b6ceb,#6a3fa8);color:white;box-shadow:0 4px 16px rgba(91,108,235,0.35);}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,108,235,0.5);}
+.btn-primary{background:linear-gradient(135deg,#00b894,#0984e3);color:white;box-shadow:0 4px 16px rgba(0,184,148,0.35);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,184,148,0.5);}
 .btn-ghost{background:white;color:var(--text-sec);border:1.5px solid var(--border);}
-.btn-ghost:hover{border-color:#a5b4fc;color:var(--purple);}
+.btn-ghost:hover{border-color:#6ee7b7;color:var(--green);}
 
 /* ── ADVERTENCIA INCOMPLETO ── */
 .incomplete-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:16px;}
@@ -361,10 +282,10 @@ body{
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(12px);z-index:1000;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.show{display:flex;}
 .modal-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:48px;max-width:520px;width:100%;text-align:center;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden;}
-.modal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--rose),var(--violet));}
+.modal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#00b894,#0984e3,#6a3fa8);}
 @keyframes popIn{from{transform:scale(0.85);opacity:0;}to{transform:scale(1);opacity:1;}}
-.modal-ring{width:130px;height:130px;border-radius:50%;border:4px solid var(--purple);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 40px rgba(91,108,235,0.25);background:var(--purple-dim);}
-.modal-score{font-family:var(--font-h);font-size:2.8rem;font-weight:900;color:var(--purple);line-height:1;}
+.modal-ring{width:130px;height:130px;border-radius:50%;border:4px solid var(--green);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 40px rgba(0,184,148,0.25);background:var(--green-dim);}
+.modal-score{font-family:var(--font-h);font-size:2.8rem;font-weight:900;color:var(--green);line-height:1;}
 .modal-max{font-size:0.72rem;color:var(--text-muted);font-family:var(--font-h);font-weight:700;}
 .modal-level{font-family:var(--font-h);font-size:1.4rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
 .modal-desc{font-size:0.88rem;color:var(--text-sec);line-height:1.6;margin-bottom:24px;max-width:380px;margin-left:auto;margin-right:auto;}
@@ -376,7 +297,7 @@ body{
 
 /* ── FOOTER INSTITUCIONAL ── */
 .inst-footer{background:#2d3436;color:#dfe6e9;padding:40px 28px;border-radius:0 0 var(--r-xl) var(--r-xl);position:relative;overflow:hidden;margin-top:16px;}
-.inst-footer::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(135deg,#5b6ceb,#6a3fa8);}
+.inst-footer::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(135deg,#00b894,#0984e3);}
 .inst-footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-bottom:32px;}
 .inst-footer-sec h4{font-family:var(--font-h);color:var(--green);margin-bottom:12px;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;position:relative;padding-bottom:8px;}
 .inst-footer-sec h4::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:2px;background:var(--green);border-radius:1px;}
@@ -391,9 +312,7 @@ body{
 .inst-authors-dept{font-size:0.8rem;color:#b2bec3;margin-bottom:4px;}
 .inst-authors-tutor{font-size:0.78rem;color:#74b9ff;}
 .inst-copyright{text-align:center;font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:24px;}
-
-@media print{body>*{display:none!important;}.modal-overlay,.modal-overlay *{display:block!important;}.modal-overlay{position:static!important;background:white!important;padding:0!important;}.modal-card{box-shadow:none!important;}.modal-actions{display:none!important;}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}
-@media(max-width:600px){.hero{padding:24px 16px 20px;}.hero-inner{flex-direction:column;text-align:center;}.hero-text{text-align:center;}.hero-participant-bar{flex-direction:column;}.section-body{padding:0 16px 20px;}.section-header{padding:16px 20px;}.q-head{padding:12px 14px;}.q-body{padding:12px 14px;}}
+@media(max-width:600px){.hero{padding:24px 16px 20px;}.hero-inner{flex-direction:column;text-align:center;}.hero-text{text-align:center;}.section-body{padding:0 16px 20px;}.section-header{padding:16px 20px;}.q-head{padding:12px 14px;}.q-body{padding:12px 14px;}}
 </style>
 
 
@@ -1229,49 +1148,31 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
 <body>
 <div class="page-wrap">
 
-<!-- ══════════════════ HERO ══════════════════ -->
+<!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-avatar"><i class="fas fa-motorcycle"></i></div>
+    <div class="hero-avatar"><i class="fas fa-flag-checkered"></i></div>
     <div class="hero-text">
       <div class="hero-title">CAP-SV-DIGITAL</div>
       <div class="hero-subtitle">Seguridad Vial · Mototaxistas y Delivery</div>
       <div class="hero-inst">Universidad de Oriente · Núcleo Bolívar · Dpto. Enfermería</div>
+      <div class="post-badge-hero"><i class="fas fa-check-double"></i> POST-TEST · Fase 2</div>
     </div>
   </div>
-
-  <!-- Tarjeta Unificada de Estado y Participante (Ultra ordenada y móvil) -->
-  <div class="hero-status-card">
-    <div class="hsc-row-top">
-      <div class="hsc-code-badge">
-        <span class="hsc-code-label"><i class="fas fa-fingerprint"></i> CÓDIGO</span>
-        <span class="hsc-code-value" id="codigoDisplay">——</span>
-      </div>
-      <div id="modoBadge" class="badge-pre">
-        <i class="fas fa-clipboard-list"></i> PRE-TEST
-      </div>
-    </div>
-
-    <div class="hsc-divider"></div>
-
-    <div class="hsc-row-bottom">
-      <div class="hsc-info-pill" id="heroInfoTime">
-<i class="fas fa-clock"></i>
-<span>8–10 min · Instrumento CAP</span>
-</div>
-<div class="hsc-info-pill">
-<i class="fas fa-user-shield"></i>
-<span>Confidencial · Seudonimizado</span>
-</div>
-      <a href="landing-cap.html" class="hsc-back-btn">
-        <i class="fas fa-sign-out-alt"></i> Salir
-      </a>
-    </div>
-
+  <div class="hero-info-box">
+    <p><i class="fas fa-clock"></i> Duración estimada: <strong style="color:#82e8ce">5–6 minutos</strong> · 33 ítems en 5 secciones</p>
+    <p><i class="fas fa-shield-alt"></i> Sus respuestas son <strong style="color:#82e8ce">completamente anónimas</strong> y se usan con fines académicos</p>
+  </div>
+  <div class="hero-participant-bar">
+    <span class="hpb-label"><i class="fas fa-fingerprint"></i> Código</span>
+    <span class="hpb-code" id="codigoDisplay">——</span>
+    <span id="modoBadge"><i class="fas fa-clipboard-check" style="margin-right:5px;"></i> POST-TEST</span>
     <input type="hidden" id="codigoParticipante">
+    <a href="landing-cap.html" class="hpb-back"><i class="fas fa-arrow-left"></i> Volver</a>
   </div>
 </div>
 
+<!-- ── CONSENTIMIENTO ── -->
 
 <!-- ══════════════════ CONSENTIMIENTO ══════════════════ -->
 <div class="consent-gate" id="consentGate">
@@ -1283,8 +1184,8 @@ a, button, label, select, input, textarea, .opt-label, .likert-opt, .vf-btn {
 <div class="consent-hero-row">
 <div class="consent-icon-box"><i class="fas fa-file-signature"></i></div>
 <div class="consent-hero-info">
-<h3 class="consent-title">Consentimiento Informado</h3>
-<p class="consent-lead">Protocolo Ético de Investigación · Trabajo Especial de Grado</p>
+<h3 class="consent-title">Consentimiento Informado · Fase Post-Test</h3>
+<p class="consent-lead">Protocolo Ético de Investigación · Evaluación Final de Cierre</p>
 <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
 <strong>Investigación:</strong> Tecnología Digital para la Prevención de Lesiones Traumáticas por Accidentes de Tránsito en Conductores de Motocicletas en Ciudad Bolívar.<br>
 <strong>Autoras:</strong> Meredith Michell La Torraca Hernández y Ana Carolina González Goddeliett · <strong>Tutor:</strong> MSc. Norsol Mata
@@ -1350,7 +1251,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
 </label>
 
 <button class="consent-btn" id="consentBtn" onclick="habilitarFormulario()">
-<span>Comenzar Cuestionario</span>
+<span>Comenzar Post-Test</span>
 <i class="fas fa-arrow-right"></i>
 </button>
 </div>
@@ -1362,171 +1263,51 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
   <div class="progress-bar-sticky">
     <span class="pb-label"><i class="fas fa-tasks"></i> Progreso</span>
     <div class="pb-track"><div class="pb-fill" id="pbFill"></div></div>
-    <span class="pb-count" id="pbCount">0 / 37</span>
+    <span class="pb-count" id="pbCount">0 / 36</span>
   </div>
 
   <form id="capForm">
   <div style="padding:0 16px 16px;">
 
   <!-- ══════════════════════════════════════════
-       SECCIÓN I — PERFIL SOCIODEMOGRÁFICO Y LABORAL
+       SECCIÓN I — ACTUALIZACIÓN Y SEGUIMIENTO DE SINIESTRALIDAD
   ══════════════════════════════════════════ -->
   <div class="section-block sec-perfil">
     <div class="section-header sh-purple">
       <div class="section-num sn-purple">I</div>
       <div class="section-meta">
-        <h2>Perfil Sociodemográfico y Laboral</h2>
-        <p>Información general sobre usted y su actividad como conductor</p>
+        <h2>Actualización y Seguimiento</h2>
+        <p>Información de seguimiento durante las 8 semanas de la intervención educativa</p>
       </div>
-      <span class="section-badge sb-purple">11 preguntas</span>
+      <span class="section-badge sb-purple">2 preguntas</span>
     </div>
     <div class="section-body" style="padding-top:20px;">
 
-      <!-- P1 Edad -->
-      <div class="q-block" id="qb-p1" data-qid="p1">
-        <div class="q-head"><div class="q-num qn-purple">1</div><span class="q-text">¿Cuál es su rango de edad?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p1" value="18-24" onchange="markQ('p1')"> 18 – 24 años</label>
-            <label class="opt-label"><input type="radio" name="p1" value="25-34" onchange="markQ('p1')"> 25 – 34 años</label>
-            <label class="opt-label"><input type="radio" name="p1" value="35-44" onchange="markQ('p1')"> 35 – 44 años</label>
-            <label class="opt-label"><input type="radio" name="p1" value="45-54" onchange="markQ('p1')"> 45 – 54 años</label>
-            <label class="opt-label"><input type="radio" name="p1" value="55+" onchange="markQ('p1')"> 55 años o más</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P2 Sexo -->
-      <div class="q-block" id="qb-p2" data-qid="p2">
-        <div class="q-head"><div class="q-num qn-purple">2</div><span class="q-text">Sexo</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p2" value="Masculino" onchange="markQ('p2')"> Masculino</label>
-            <label class="opt-label"><input type="radio" name="p2" value="Femenino" onchange="markQ('p2')"> Femenino</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P3 Educación -->
-      <div class="q-block" id="qb-p3" data-qid="p3">
-        <div class="q-head"><div class="q-num qn-purple">3</div><span class="q-text">Nivel educativo alcanzado</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p3" value="Sin estudios" onchange="markQ('p3')"> Sin estudios formales</label>
-            <label class="opt-label"><input type="radio" name="p3" value="Primaria incompleta" onchange="markQ('p3')"> Primaria incompleta</label>
-            <label class="opt-label"><input type="radio" name="p3" value="Primaria completa" onchange="markQ('p3')"> Primaria completa</label>
-            <label class="opt-label"><input type="radio" name="p3" value="Bachillerato incompleto" onchange="markQ('p3')"> Secundaria / Bachillerato incompleto</label>
-            <label class="opt-label"><input type="radio" name="p3" value="Bachillerato completo" onchange="markQ('p3')"> Secundaria / Bachillerato completo</label>
-            <label class="opt-label"><input type="radio" name="p3" value="Técnico superior" onchange="markQ('p3')"> Técnico Superior Universitario (TSU)</label>
-            <label class="opt-label"><input type="radio" name="p3" value="Universitario" onchange="markQ('p3')"> Universitario / Postgrado</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P4a Años conduciendo moto -->
-      <div class="q-block" id="qb-p4a" data-qid="p4a">
-        <div class="q-head"><div class="q-num qn-purple">4a</div><span class="q-text">¿Cuántos años cumplidos lleva conduciendo motocicleta en general?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p4a" value="Menos de 1 año" onchange="markQ('p4a')"> Menos de 1 año</label>
-            <label class="opt-label"><input type="radio" name="p4a" value="1-3 años" onchange="markQ('p4a')"> 1 – 3 años</label>
-            <label class="opt-label"><input type="radio" name="p4a" value="4-6 años" onchange="markQ('p4a')"> 4 – 6 años</label>
-            <label class="opt-label"><input type="radio" name="p4a" value="7-10 años" onchange="markQ('p4a')"> 7 – 10 años</label>
-            <label class="opt-label"><input type="radio" name="p4a" value="Más de 10 años" onchange="markQ('p4a')"> Más de 10 años</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P4b Actividad principal -->
-      <div class="q-block" id="qb-p4b" data-qid="p4b">
-        <div class="q-head"><div class="q-num qn-purple">4b</div><span class="q-text">¿Cuál es su actividad principal con la motocicleta?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p4b" value="Mototaxi" onchange="markQ('p4b')"> Mototaxi</label>
-            <label class="opt-label"><input type="radio" name="p4b" value="Delivery" onchange="markQ('p4b')"> Delivery / Reparto</label>
-            <label class="opt-label"><input type="radio" name="p4b" value="Ambas" onchange="markQ('p4b')"> Ambas actividades (Mototaxi y Delivery)</label>
-            <label class="opt-label"><input type="radio" name="p4b" value="Particular" onchange="markQ('p4b')"> Particular / Transporte propio</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P4c Años trabajando en la actividad -->
-      <div class="q-block" id="qb-p4c" data-qid="p4c">
-        <div class="q-head"><div class="q-num qn-purple">4c</div><span class="q-text">¿Cuántos años lleva trabajando en dicha actividad (mototaxi / delivery)?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p4c" value="Menos de 1 año" onchange="markQ('p4c')"> Menos de 1 año</label>
-            <label class="opt-label"><input type="radio" name="p4c" value="1-3 años" onchange="markQ('p4c')"> 1 – 3 años</label>
-            <label class="opt-label"><input type="radio" name="p4c" value="4-6 años" onchange="markQ('p4c')"> 4 – 6 años</label>
-            <label class="opt-label"><input type="radio" name="p4c" value="7-10 años" onchange="markQ('p4c')"> 7 – 10 años</label>
-            <label class="opt-label"><input type="radio" name="p4c" value="Más de 10 años" onchange="markQ('p4c')"> Más de 10 años</label>
-            <label class="opt-label"><input type="radio" name="p4c" value="No aplica" onchange="markQ('p4c')"> No aplica (solo uso particular)</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P5 Licencia -->
-      <div class="q-block" id="qb-p5" data-qid="p5">
-        <div class="q-head"><div class="q-num qn-purple">5</div><span class="q-text">¿Posee licencia de conducir vigente?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p5" value="Segundo grado tipo B" onchange="markQ('p5')"> Sí, segundo grado (tipo B - motocicleta)</label>
-            <label class="opt-label"><input type="radio" name="p5" value="Otro grado" onchange="markQ('p5')"> Sí, otro grado</label>
-            <label class="opt-label"><input type="radio" name="p5" value="Vencida" onchange="markQ('p5')"> Licencia vencida</label>
-            <label class="opt-label"><input type="radio" name="p5" value="No poseo" onchange="markQ('p5')"> No poseo licencia</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- P6 Prueba o curso -->
       <div class="q-block" id="qb-p6" data-qid="p6">
-        <div class="q-head"><div class="q-num qn-purple">6</div><span class="q-text">Para tramitar u obtener su licencia de conducir, ¿le exigieron presentar prueba teórica/práctica o realizar algún curso de seguridad vial?</span></div>
+        <div class="q-head"><div class="q-num qn-purple">1</div>
+          <span class="q-text">Durante las últimas 8 semanas, ¿recibió alguna capacitación, charla o taller de seguridad vial adicional a este programa educativo?</span>
+        </div>
         <div class="q-body">
           <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p6" value="Sí" onchange="markQ('p6')"> Sí (prueba teórica, práctica o curso)</label>
-            <label class="opt-label"><input type="radio" name="p6" value="No" onchange="markQ('p6')"> No</label>
-            <label class="opt-label"><input type="radio" name="p6" value="No recuerdo" onchange="markQ('p6')"> No recuerdo / No aplica</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Ninguna adicional" onchange="markQ('p6')"> Ninguna adicional</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Charla o taller" onchange="markQ('p6')"> Charla o taller breve</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Curso formal" onchange="markQ('p6')"> Curso formal institucional</label>
+            <label class="opt-label"><input type="radio" name="p6" value="Autodidacta" onchange="markQ('p6')"> Videos o lecturas autodidactas en redes</label>
           </div>
         </div>
       </div>
 
-      <!-- P7 Capacitación vial continua -->
       <div class="q-block" id="qb-p7" data-qid="p7">
-        <div class="q-head"><div class="q-num qn-purple">7</div><span class="q-text">Fuera del trámite de la licencia, ¿cuándo recibió por última vez una charla, curso o taller de seguridad vial?</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p7" value="Nunca" onchange="markQ('p7')"> Nunca</label>
-            <label class="opt-label"><input type="radio" name="p7" value="En los últimos 12 meses" onchange="markQ('p7')"> En los últimos 12 meses</label>
-            <label class="opt-label"><input type="radio" name="p7" value="Hace 1 a 2 años" onchange="markQ('p7')"> Hace 1 a 2 años</label>
-            <label class="opt-label"><input type="radio" name="p7" value="Hace más de 2 años" onchange="markQ('p7')"> Hace más de 2 años</label>
-          </div>
+        <div class="q-head"><div class="q-num qn-purple">2</div>
+          <span class="q-text">¿Ha sufrido algún siniestro vial o accidente (cualquier colisión o caída en motocicleta, con o sin lesiones) durante las últimas 8 semanas de la intervención?</span>
         </div>
-      </div>
-
-      <!-- P8 Accidentes -->
-      <div class="q-block" id="qb-p8" data-qid="p8">
-        <div class="q-head"><div class="q-num qn-purple">8</div><span class="q-text">¿Ha sufrido algún siniestro vial o accidente (cualquier colisión o caída en motocicleta, con o sin lesiones) en los últimos 12 meses?</span></div>
         <div class="q-body">
           <div class="opts-grid">
-            <label class="opt-label"><input type="radio" name="p8" value="Sí" onchange="markQ('p8')"> Sí</label>
-            <label class="opt-label"><input type="radio" name="p8" value="No" onchange="markQ('p8')"> No</label>
+            <label class="opt-label"><input type="radio" name="p7" value="Ninguno" onchange="markQ('p7')"> Ninguno (0 incidentes)</label>
+            <label class="opt-label"><input type="radio" name="p7" value="1 accidente" onchange="markQ('p7')"> 1 siniestro o caída</label>
+            <label class="opt-label"><input type="radio" name="p7" value="2 accidentes" onchange="markQ('p7')"> 2 siniestros o caídas</label>
+            <label class="opt-label"><input type="radio" name="p7" value="3 o más" onchange="markQ('p7')"> 3 o más siniestros o caídas</label>
           </div>
-        </div>
-      </div>
-
-      <!-- P9 Plataforma digital -->
-      <div class="q-block" id="qb-p9" data-qid="p9">
-        <div class="q-head"><div class="q-num qn-purple">9</div><span class="q-text">¿Qué plataformas digitales preferiría para recibir información y contenidos educativos sobre seguridad vial? (Puede marcar varias)</span></div>
-        <div class="q-body">
-          <div class="opts-grid">
-            <label class="opt-label"><input type="checkbox" name="p9_opt" value="WhatsApp" onchange="markP9Multi()"> <i class="fab fa-whatsapp" style="color:#25d366;margin-right:4px;"></i> WhatsApp</label>
-            <label class="opt-label"><input type="checkbox" name="p9_opt" value="Instagram" onchange="markP9Multi()"> <i class="fab fa-instagram" style="color:#e1306c;margin-right:4px;"></i> Instagram</label>
-            <label class="opt-label"><input type="checkbox" name="p9_opt" value="Telegram" onchange="markP9Multi()"> <i class="fab fa-telegram" style="color:#0088cc;margin-right:4px;"></i> Telegram</label>
-            <label class="opt-label"><input type="checkbox" name="p9_opt" value="Facebook" onchange="markP9Multi()"> <i class="fab fa-facebook" style="color:#1877f2;margin-right:4px;"></i> Facebook</label>
-            <label class="opt-label"><input type="checkbox" name="p9_opt" value="YouTube / Web" onchange="markP9Multi()"> <i class="fab fa-youtube" style="color:#ff0000;margin-right:4px;"></i> YouTube / Portal Web</label>
-            <label class="opt-label"><input type="checkbox" name="p9_opt" value="Ninguna" onchange="markP9Ninguna()"> <i class="fas fa-ban" style="color:#64748b;margin-right:4px;"></i> Ninguna / No utilizo redes</label>
-          </div>
-          <input type="hidden" name="p9" id="hidden_p9">
         </div>
       </div>
 
@@ -1929,41 +1710,27 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
   </div><!-- /section IV -->
 
   <!-- ══════════════════════════════════════════
-       SECCIÓN V — EVALUACIÓN DE LA INTERVENCIÓN DIGITAL
+       SECCIÓN V — EVALUACIÓN E IMPACTO DE LA INTERVENCIÓN DIGITAL
   ══════════════════════════════════════════ -->
   <div class="section-block sec-digital" id="seccionV">
-    <div class="section-header sh-rose">
-      <div class="section-num sn-rose">V</div>
+    <div class="section-header sh-teal">
+      <div class="section-num sn-teal">V</div>
       <div class="section-meta">
         <h2>Evaluación e Impacto de la Intervención Digital</h2>
         <p>Valoración de los contenidos, utilidad y efectividad del programa educativo</p>
       </div>
-      <span class="section-badge sb-rose">8 preguntas · EVALUACIÓN</span>
+      <span class="section-badge sb-teal">8 preguntas · EVALUACIÓN</span>
     </div>
 
-    <div class="post-toggle">
-      <p><i class="fas fa-lock" style="margin-right:6px;color:#6a3fa8;"></i> Esta sección se habilita en el post-test</p>
-      <div class="toggle-wrap">
-        <button type="button" class="toggle-btn active" id="btnPre" onclick="setModoSecV('pre')">Pre-test</button>
-        <button type="button" class="toggle-btn" id="btnPost" onclick="setModoSecV('post')">Post-test</button>
-      </div>
-    </div>
-
-    <div id="preMsg" class="pre-msg">
-      <i class="fas fa-hourglass-half"></i>
-      Esta sección estará disponible luego de la intervención educativa digital de 8 semanas.<br>
-      <span style="font-size:0.78rem;margin-top:6px;display:inline-block;">Si estás en el <strong>post-test</strong>, activa el modo arriba.</span>
-    </div>
-
-    <div id="postContent" class="post-content">
-      <div class="section-notice rose" style="margin-top:16px;">
+    
+      <div class="section-notice teal" style="margin-top:16px;">
         <i class="fas fa-info-circle" style="margin-right:6px;"></i>
         <strong>1</strong> = Totalmente en desacuerdo &nbsp;·&nbsp; <strong>2</strong> = En desacuerdo &nbsp;·&nbsp; <strong>3</strong> = De acuerdo &nbsp;·&nbsp; <strong>4</strong> = Totalmente de acuerdo
       </div>
       <div class="section-body" style="padding-top:4px;">
         <div class="likert-list">
 
-          <div class="likert-item" id="qb-d1" data-qid="d1">
+          <div class="likert-item teal-item" id="qb-d1" data-qid="d1">
             <div class="likert-q">D1. Los contenidos educativos publicados en el programa digital fueron claros, didácticos y fáciles de comprender.</div>
             <div class="likert-opts">
               <label class="likert-opt"><input type="radio" name="d1" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
@@ -1973,7 +1740,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
             </div>
           </div>
 
-          <div class="likert-item" id="qb-d2" data-qid="d2">
+          <div class="likert-item teal-item" id="qb-d2" data-qid="d2">
             <div class="likert-q">D2. La información recibida mejoró mi forma de conducir la motocicleta en la vía pública.</div>
             <div class="likert-opts">
               <label class="likert-opt"><input type="radio" name="d2" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
@@ -1983,7 +1750,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
             </div>
           </div>
 
-          <div class="likert-item" id="qb-d3" data-qid="d3">
+          <div class="likert-item teal-item" id="qb-d3" data-qid="d3">
             <div class="likert-q">D3. El formato digital (videos cortos, infografías, mensajes clave) facilitó mi aprendizaje sobre seguridad vial.</div>
             <div class="likert-opts">
               <label class="likert-opt"><input type="radio" name="d3" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
@@ -1993,7 +1760,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
             </div>
           </div>
 
-          <div class="likert-item" id="qb-d4" data-qid="d4">
+          <div class="likert-item teal-item" id="qb-d4" data-qid="d4">
             <div class="likert-q">D4. Recomendaría y compartiría los contenidos de este programa educativo con otros compañeros motociclistas.</div>
             <div class="likert-opts">
               <label class="likert-opt"><input type="radio" name="d4" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
@@ -2003,7 +1770,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
             </div>
           </div>
 
-          <div class="likert-item" id="qb-d5" data-qid="d5">
+          <div class="likert-item teal-item" id="qb-d5" data-qid="d5">
             <div class="likert-q">D5. La intervención digital aumentó mi motivación y compromiso personal para cumplir las normas de tránsito.</div>
             <div class="likert-opts">
               <label class="likert-opt"><input type="radio" name="d5" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
@@ -2013,7 +1780,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
             </div>
           </div>
 
-          <div class="likert-item" id="qb-d6" data-qid="d6">
+          <div class="likert-item teal-item" id="qb-d6" data-qid="d6">
             <div class="likert-q">D6. Durante las semanas del programa busqué por iniciativa propia más información sobre seguridad vial (en redes, internet o charlas).</div>
             <div class="likert-opts">
               <label class="likert-opt"><input type="radio" name="d6" value="1" onchange="checkDigital()"><span class="likert-lbl">Totalmente<br>en desacuerdo</span></label>
@@ -2024,7 +1791,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
           </div>
 
           <!-- D7 Exposición / Medios -->
-          <div class="likert-item" id="qb-d7" data-qid="d7" style="display:block;padding:14px 16px;">
+          <div class="likert-item teal-item" id="qb-d7" data-qid="d7" style="display:block;padding:14px 16px;">
             <div class="likert-q" style="margin-bottom:10px;">D7. ¿A través de cuáles medios o canales digitales consultó o interactuó con los contenidos educativos? (Puede marcar varios)</div>
             <div class="opts-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:8px;">
               <label class="opt-label"><input type="checkbox" name="d7_opt" value="WhatsApp" onchange="markD7Multi()"> WhatsApp</label>
@@ -2036,7 +1803,7 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
           </div>
 
           <!-- D8 Frecuencia -->
-          <div class="likert-item" id="qb-d8" data-qid="d8" style="display:block;padding:14px 16px;">
+          <div class="likert-item teal-item" id="qb-d8" data-qid="d8" style="display:block;padding:14px 16px;">
             <div class="likert-q" style="margin-bottom:10px;">D8. ¿Con qué frecuencia promedio visualizó o consultó los contenidos del programa durante las 8 semanas?</div>
             <div class="opts-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:8px;">
               <label class="opt-label"><input type="radio" name="d8" value="Diariamente" onchange="checkDigital()"> Diariamente o casi a diario</label>
@@ -2048,16 +1815,112 @@ He leído y comprendido la información anterior. Declaro tener 18 años o más,
 
         </div>
       </div>
-    </div>
+    
   </div><!-- /section V -->
 
-  
+  <!-- ── FOOTER FORM ── -->
+  <div class="form-footer">
+    <button type="button" class="btn-action btn-ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <i class="fas fa-arrow-up"></i> Inicio
+    </button>
+    <div class="footer-info">
+      <div class="f-count" id="footerCount">0 / 35</div>
+      <p>ítems respondidos</p>
+    </div>
+    <button type="button" class="btn-action btn-primary" onclick="submitForm()">
+      <i class="fas fa-chart-bar"></i> Ver resultados
+    </button>
+  </div>
+
+  </div>
+  </form>
+
+  <!-- ── FOOTER INSTITUCIONAL ── -->
+  <footer class="inst-footer">
+    <div class="inst-footer-grid">
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-graduation-cap"></i> Contexto Académico</h4>
+        <p><i class="fas fa-book"></i> Investigación de Pregrado</p>
+        <p><i class="fas fa-university"></i> Universidad de Oriente · Núcleo Bolívar</p>
+        <p><i class="fas fa-stethoscope"></i> Departamento de Enfermería</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-map-marker-alt"></i> Muestra</h4>
+        <p><i class="fas fa-map-pin"></i> Ciudad Bolívar, Estado Bolívar</p>
+        <p><i class="fas fa-motorcycle"></i> Mototaxistas y delivery activos</p>
+        <p><i class="fas fa-calendar-alt"></i> Período: 2026</p>
+      </div>
+      <div class="inst-footer-sec">
+        <h4><i class="fas fa-flask"></i> Diseño Metodológico</h4>
+        <p><i class="fas fa-cogs"></i> Cuasi-experimental</p>
+        <p><i class="fas fa-chart-line"></i> Pre / Post test</p>
+        <p><i class="fas fa-calculator"></i> Análisis estadístico inferencial</p>
+      </div>
+    </div>
+    <hr class="inst-footer-sep">
+    <div class="inst-authors-box">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Logo_UDO.svg" alt="UDO" class="inst-udo-logo">
+      <div class="inst-authors-info">
+        <div class="inst-authors-label">Investigadoras Principales</div>
+        <div class="inst-authors-names">Meredith La Torraca &amp; Ana Carolina González</div>
+        <div class="inst-authors-dept">Escuela de Ciencias de la Salud "Dr. Francisco Battistini Casalta" · Depto. Enfermería</div>
+        <div class="inst-authors-tutor"><i class="fas fa-chalkboard-teacher"></i> Tutor Académico: Prof. Norsol Mata</div>
+      </div>
+    </div>
+    <p class="inst-copyright">© 2026 CAP-SV-DIGITAL · Post-test · Universidad de Oriente · Venezuela</p>
+  </footer>
+</div>
+
+<!-- ── MODAL INCOMPLETO ── -->
+<div class="incomplete-overlay" id="incompleteModal">
+  <div class="incomplete-card">
+    <div class="incomplete-header">
+      <div class="incomplete-icon"><i class="fas fa-exclamation-triangle"></i></div>
+      <div>
+        <div class="incomplete-title">Cuestionario incompleto</div>
+        <div class="incomplete-subtitle">Responde todas las preguntas antes de enviar</div>
+      </div>
+    </div>
+    <div class="missing-list" id="missingList"></div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn-action btn-ghost" onclick="cerrarIncompleto()" style="font-size:0.88rem;padding:10px 20px;">
+        <i class="fas fa-times"></i> Cerrar
+      </button>
+      <button class="btn-action btn-primary" onclick="irAPrimeraPendiente()" style="font-size:0.88rem;padding:10px 20px;">
+        <i class="fas fa-arrow-right"></i> Ir a la primera pendiente
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL RESULTADOS ── -->
+<div class="modal-overlay" id="resultModal">
+  <div class="modal-card">
+    <div class="modal-ring">
+      <div class="modal-score" id="mScore">—</div>
+      <div class="modal-max">/ 10 pts</div>
+    </div>
+    <div class="modal-level" id="mLevel">—</div>
+    <div class="modal-desc" id="mDesc">—</div>
+    <div class="modal-breakdown">
+      <div class="bk-item"><div class="bk-lbl">Correctas</div><div class="bk-val" id="bkCorrectas">—</div></div>
+      <div class="bk-item"><div class="bk-lbl">Incorrectas</div><div class="bk-val" id="bkIncorrectas">—</div></div>
+      <div class="bk-item"><div class="bk-lbl">Porcentaje</div><div class="bk-val" id="bkPct">—</div></div>
+    </div>
+    <div class="modal-actions" id="modalAcciones"></div>
+  </div>
+</div>
+
+<iframe name="_sheetsFrame" id="_sheetsFrame" style="display:none;"></iframe>
+</div>
+
+
   <script>
 // ══════════════════════════════════════════
 // CONFIG
 // ══════════════════════════════════════════
 const API_URL = 'https://script.google.com/macros/s/AKfycbwoflEA7e6JORrVmL0e7T-NK3rHRL0TbH_Pr9IvTsg0IE9WToPal09HQQLv945wep35/exec';
-const TOTAL = 45; // 11 perfil + 10 VF + 8 actitudes + 8 prácticas + 8 digital
+const TOTAL = 36; // 2 seguimiento + 10 VF + 8 actitudes + 8 prácticas + 8 digital
 
 // Respuestas correctas sección II (Clave Balanceada por Juicio de Experto: 3A, 3B, 2C, 2D)
 const correctas = {
@@ -2093,7 +1956,7 @@ const qLabels = {
 
 const vfAnswers = {};
 const answered  = new Set();
-let isPostTest  = false;
+let isPostTest  = true;
 let _primeraPendiente = null;
 
 // ── CONSENTIMIENTO ──
@@ -2222,7 +2085,7 @@ function updateProgress() {
     if (document.getElementById('hidden_d7')?.value || document.querySelector('input[name="d7_opt"]:checked')) count++;
   }
 
-  const total = isPostTest ? TOTAL : 37;
+  const total = TOTAL;
   count = Math.min(count, total);
   const pct = Math.round((count / total) * 100);
 
